@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import javax.jdo.annotations.Join;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
-import javax.jdo.annotations.PrimaryKey;
 
 
 @PersistenceCapable(detachable = "true")
@@ -17,8 +16,6 @@ public class Cliente {
 		HOMBRE,
 		NO_BINARIO
 	}
-	
-	@PrimaryKey
 	public String DNI;
 	private String nombre;
 	private String apellidos;
@@ -31,7 +28,7 @@ public class Cliente {
 	private String provincia;
 	private String localidad;
 	
-	@Persistent(defaultFetchGroup = "true", mappedBy = "usuario", dependentElement = "true")
+	@Persistent(defaultFetchGroup = "true", mappedBy = "cliente", dependentElement = "true")
 	@Join
 	private ArrayList<Pedido> pedidos = new ArrayList<>(); 
 	
@@ -154,89 +151,7 @@ public class Cliente {
 			this.pedidos.remove(r);
 		}
 	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((DNI == null) ? 0 : DNI.hashCode());
-		result = prime * result + ((apellidos == null) ? 0 : apellidos.hashCode());
-		result = prime * result + cod_postal;
-		result = prime * result + ((direccion == null) ? 0 : direccion.hashCode());
-		result = prime * result + ((email == null) ? 0 : email.hashCode());
-		result = prime * result + ((genero == null) ? 0 : genero.hashCode());
-		result = prime * result + ((localidad == null) ? 0 : localidad.hashCode());
-		result = prime * result + ((nombre == null) ? 0 : nombre.hashCode());
-		result = prime * result + ((password == null) ? 0 : password.hashCode());
-		result = prime * result + ((pedidos == null) ? 0 : pedidos.hashCode());
-		result = prime * result + ((provincia == null) ? 0 : provincia.hashCode());
-		result = prime * result + telefono;
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Cliente other = (Cliente) obj;
-		if (DNI == null) {
-			if (other.DNI != null)
-				return false;
-		} else if (!DNI.equals(other.DNI))
-			return false;
-		if (apellidos == null) {
-			if (other.apellidos != null)
-				return false;
-		} else if (!apellidos.equals(other.apellidos))
-			return false;
-		if (cod_postal != other.cod_postal)
-			return false;
-		if (direccion == null) {
-			if (other.direccion != null)
-				return false;
-		} else if (!direccion.equals(other.direccion))
-			return false;
-		if (email == null) {
-			if (other.email != null)
-				return false;
-		} else if (!email.equals(other.email))
-			return false;
-		if (genero != other.genero)
-			return false;
-		if (localidad == null) {
-			if (other.localidad != null)
-				return false;
-		} else if (!localidad.equals(other.localidad))
-			return false;
-		if (nombre == null) {
-			if (other.nombre != null)
-				return false;
-		} else if (!nombre.equals(other.nombre))
-			return false;
-		if (password == null) {
-			if (other.password != null)
-				return false;
-		} else if (!password.equals(other.password))
-			return false;
-		if (pedidos == null) {
-			if (other.pedidos != null)
-				return false;
-		} else if (!pedidos.equals(other.pedidos))
-			return false;
-		if (provincia == null) {
-			if (other.provincia != null)
-				return false;
-		} else if (!provincia.equals(other.provincia))
-			return false;
-		if (telefono != other.telefono)
-			return false;
-		return true;
-	}
-
+	
 	@Override
 	public String toString() {
 		return "Cliente [DNI=" + DNI + ", nombre=" + nombre + ", apellidos=" + apellidos + ", email=" + email
