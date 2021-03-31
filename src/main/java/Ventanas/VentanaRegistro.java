@@ -2,6 +2,7 @@ package Ventanas;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
 
@@ -15,12 +16,19 @@ import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 
+import dao.IDBManager;
 import models.Cliente;
 
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import java.awt.Font;
 import java.awt.Color;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class VentanaRegistro extends JFrame {
 
@@ -44,6 +52,86 @@ public class VentanaRegistro extends JFrame {
 			"Malaga", "Melilla", "Murcia", "Navarra", "Ourense", "Palencia", "Pontevedra, Salamanca", "Segovia", "Sevilla", "Soria",
 			"Tarragona", "Teruel", "Toledo", "Valencia", "Valladolid", "Vizcaya", "Zamora", "Zaragoza"};
 
+	// metodo para validar el correo
+	protected static boolean elEmailCorrecto(String email) {
+
+		boolean valido = false;
+
+		Pattern patronEmail = Pattern
+				.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                        + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
+
+		Matcher mEmail = patronEmail.matcher(email.toLowerCase());
+		if (mEmail.matches()) {
+			valido = true;
+		}
+		return valido;
+	}
+	
+	// metodo para validar la contraseña
+	protected static String elPasswordCorrecto(String password) {
+		String resultado = "Muy Buena"; // Resultado de password valido
+
+		int length = 0; // Almacenamos numero de caracteres en el pass
+		int numCount = 0; // Variable usada para almacenar numeros en el password
+		int capCount = 0; // Variable usada para almacenar mayusculas en el password
+		int capSignos = 0; // Variable usada para almacenar los signos
+		int Arroba = 0; // solo la arroba -.-!
+
+		for (int x = 0; x < password.length(); x++) {
+			if ((password.charAt(x) >= 47 && password.charAt(x) <= 58) // numeros
+					|| (password.charAt(x) >= 64 && password.charAt(x) <= 91) // mayusculas
+					|| (password.charAt(x) >= 63 && password.charAt(x) <= 65) // Arroba
+					|| (password.charAt(x) >= 32 && password.charAt(x) <= 44) // signos
+					|| (password.charAt(x) >= 97 && password.charAt(x) <= 122)) { // minusculas
+
+			}
+			if ((password.charAt(x) > 63 && password.charAt(x) < 65)) { // Cuenta laS arrobas
+				Arroba++;
+			}
+			if ((password.charAt(x) > 32 && password.charAt(x) < 44)) { // Cuenta la cantidad signos
+				capSignos++;
+			}
+			if ((password.charAt(x) > 47 && password.charAt(x) < 58)) { // Cuenta la cantidad de numero
+				numCount++;
+			}
+
+			if ((password.charAt(x) > 64 && password.charAt(x) < 91)) { // Cuenta la cantidad de mayuscula
+				capCount++;
+			}
+
+			length = (x + 1); // Cuenta la longitud del password
+
+		} // Final del bucle
+
+		if (capSignos < 1) { // Revisa la longitud minima de 8 caracteres del password
+			resultado = "no tiene caracteres especiales como ( ! # $ % & ' ( ) + - )";
+		}
+		if (Arroba < 1) { // Revisa la longitud minima de 8 caracteres del password
+			resultado = "Coloque un @ para mayor seguridad";
+		}
+		if (numCount < 1) { // Revisa que el password contenga minimo 1 numero
+			resultado = "Medio";
+		}
+
+		if (capCount < 1) { // Revisa que el password contenga minimo 1 mayuscula
+			resultado = "Facil";
+		}
+
+		if (length < 5) { // Revisa la longitud minima de 8 caracteres del password
+			resultado = "Inutilizable: no cumple con el mínimo de caracteres!";
+		}
+
+		return(resultado);
+	}
+
+//	public VentanaRegistro(AutorizacionController controller) {
+//		initialize();
+//		frmRegistro.setVisible(true);
+//		this.controller = controller;
+//	}
+
+	
 	public VentanaRegistro() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("/img/Imagenes_sueltas/registro2.png")));
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -68,6 +156,19 @@ public class VentanaRegistro extends JFrame {
 		getContentPane().add(lblNombre);
 		
 		nombre = new JTextField();
+		nombre.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				//Declaramos una variable y le asignamos un evento
+				char car = e.getKeyChar();
+				//Condicion que nos permite ingresar datos numericos
+				if((car < 'a' || car > 'z') && (car < 'A' || car > 'Z')
+						&&(car!=(char)KeyEvent.VK_BACK_SPACE)) {
+					e.consume();
+					JOptionPane.showMessageDialog(null, "Solo se admite texto", "Validar texto", JOptionPane.INFORMATION_MESSAGE);
+				}
+			}
+		});
 		nombre.setBounds(93, 150, 106, 23);
 		getContentPane().add(nombre);
 		nombre.setColumns(10);
@@ -77,6 +178,19 @@ public class VentanaRegistro extends JFrame {
 		getContentPane().add(lblApellidos);
 		
 		apellidos = new JTextField();
+		apellidos.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				//Declaramos una variable y le asignamos un evento
+				char car = e.getKeyChar();
+				//Condicion que nos permite ingresar datos numericos
+				if((car < 'a' || car > 'z') && (car < 'A' || car > 'Z')
+						&&(car==(char)KeyEvent.VK_BACK_SPACE)) {
+					e.consume();
+					JOptionPane.showMessageDialog(null, "Solo se admite texto", "Validar texto", JOptionPane.INFORMATION_MESSAGE);
+				}
+			}
+		});
 		apellidos.setColumns(10);
 		apellidos.setBounds(337, 151, 223, 23);
 		getContentPane().add(apellidos);
@@ -84,10 +198,17 @@ public class VentanaRegistro extends JFrame {
 		JLabel lblContrasea = new JLabel("Contraseña");
 		lblContrasea.setBounds(10, 116, 86, 16);
 		getContentPane().add(lblContrasea);
-
+		
 		passwordField = new JPasswordField();
 		passwordField.setBounds(93, 114, 106, 21);
 		getContentPane().add(passwordField);
+		
+		passwordField.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				JOptionPane.showMessageDialog(null, elPasswordCorrecto(new String(passwordField.getPassword())), "Validar Contraseña", JOptionPane.INFORMATION_MESSAGE);	
+			}
+		});
 		
 		JLabel lbldni= new JLabel("DNI");
 		lbldni.setBounds(10, 195, 61, 16);
@@ -103,6 +224,27 @@ public class VentanaRegistro extends JFrame {
 		getContentPane().add(lbltelefono);
 		
 		telefono = new JTextField();
+		telefono.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				if(telefono.getText().length() != 9 ) {
+					JOptionPane.showMessageDialog(null, "Solo se admiten 9 numeros", "Validar Numeros", JOptionPane.INFORMATION_MESSAGE);
+				}
+			}
+		});
+		telefono.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				//Declaramos una variable y le asignamos un evento
+				char car = e.getKeyChar();
+				//Condicion que nos permite ingresar datos numericos
+				if((car < '0' || car > '9') 
+						&&(car!=(char)KeyEvent.VK_BACK_SPACE)) {
+					e.consume();
+					JOptionPane.showMessageDialog(null, "Solo se admiten numeros", "Validar Numeros", JOptionPane.INFORMATION_MESSAGE);
+				}
+			}
+		});
 		telefono.setColumns(10);
 		telefono.setBounds(337, 192, 106, 23);
 		getContentPane().add(telefono);
@@ -112,6 +254,17 @@ public class VentanaRegistro extends JFrame {
 		getContentPane().add(lblemail);
 		
 		email = new JTextField();
+		email.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				if(elEmailCorrecto(email.getText())) {
+					
+				}else {
+					JOptionPane.showMessageDialog(null, "Email incorrecto","Validar Email", JOptionPane.INFORMATION_MESSAGE);
+					email.requestFocus();
+				}
+			}
+		});
 		email.setColumns(10);
 		email.setBounds(94, 82, 168, 23);
 		getContentPane().add(email);
@@ -130,6 +283,27 @@ public class VentanaRegistro extends JFrame {
 		getContentPane().add(lblcod_postal);
 		
 		cod_postal = new JTextField();
+		cod_postal.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				//Declaramos una variable y le asignamos un evento
+				char car = e.getKeyChar();
+				//Condicion que nos permite ingresar datos numericos
+				if((car < '0' || car > '9') 
+						&&(car!=(char)KeyEvent.VK_BACK_SPACE)) {
+					e.consume();
+					JOptionPane.showMessageDialog(null, "Solo se admiten numeros", "Validar Numeros", JOptionPane.INFORMATION_MESSAGE);
+				}
+			}
+		});
+		cod_postal.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				if(cod_postal.getText().length() != 5 ) {
+					JOptionPane.showMessageDialog(null, "Solo se admiten 5 numeros", "Validar Numeros", JOptionPane.INFORMATION_MESSAGE);
+				}
+			}
+		});
 		cod_postal.setColumns(10);
 		cod_postal.setBounds(482, 240, 78, 23);
 		getContentPane().add(cod_postal);
@@ -139,6 +313,19 @@ public class VentanaRegistro extends JFrame {
 		getContentPane().add(lbllocalidad);
 		
 		localidad = new JTextField();
+		localidad.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				//Declaramos una variable y le asignamos un evento
+				char car = e.getKeyChar();
+				//Condicion que nos permite ingresar datos numericos
+				if((car < 'a' || car > 'z') && (car < 'A' || car > 'Z')
+						&&(car!=(char)KeyEvent.VK_BACK_SPACE)) {
+					e.consume();
+					JOptionPane.showMessageDialog(null, "Solo se admite texto", "Validar texto", JOptionPane.INFORMATION_MESSAGE);
+				}
+			}
+		});
 		localidad.setColumns(10);
 		localidad.setBounds(376, 287, 124, 23);
 		getContentPane().add(localidad);
@@ -234,6 +421,18 @@ public class VentanaRegistro extends JFrame {
 		btnAceptar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+//				//CONTROLLER --> REGISTRARUSUARIO	
+//				if(controller.registrarUsuario(dniUsuario, usuarioNick,apellidosUsuario,correo, password, telefonoUsuario,
+//						direccionUsuario, genero,cod_postalUsuario, provinciaSelecionada, localidadUsuario)) {
+//					
+//					AutorizacionController busController = new AutorizacionController(MainProgram.getServiceLocator());
+//					
+//					dispose();
+//				} else {
+//					// Usuario no insertado
+//					System.out.println("Error.");
+//				}
+				
 				Thread t = new Thread() {
 					public void run() {
 //						Connection con = BD.initBD(VentanaLoggin.NOMBRE_BD);
@@ -258,11 +457,12 @@ public class VentanaRegistro extends JFrame {
 						String localidadUsuario = localidad.getText();
 
 						Cliente cliente = new Cliente(dniUsuario, usuarioNick,apellidosUsuario,correo, password, telefonoUsuario,direccionUsuario, genero,cod_postalUsuario, provinciaSelecionada, localidadUsuario );
-//						boolean nuevoUsuario = BD.usuarioInsert(st, user);
+						
+//						 IDBManager.store(cliente);
 //						if (!nuevoUsuario)
 //							// Usuario no insertado
 //							System.out.println("Error.");
-//						new VentanaLoggin().setVisible(true);
+////						new VentanaLoggin().setVisible(true);
 						dispose();
 					}
 				};
@@ -274,6 +474,8 @@ public class VentanaRegistro extends JFrame {
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.setBounds(337, 429, 117, 29);
 		getContentPane().add(btnCancelar);
+		
+
 		
 		// Esto se lanza cuando alguien pulsa el boton de Cancelar
 		btnCancelar.addActionListener(new ActionListener() {
