@@ -1,9 +1,6 @@
 package models;
 
-import java.util.ArrayList;
-import javax.jdo.annotations.Join;
 import javax.jdo.annotations.PersistenceCapable;
-import javax.jdo.annotations.Persistent;
 
 @PersistenceCapable(detachable = "true")
 public class Categoria {

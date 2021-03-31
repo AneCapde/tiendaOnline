@@ -1,9 +1,7 @@
 package models;
 
-import java.util.ArrayList;
 import java.util.Date;
 
-import javax.jdo.annotations.Join;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 

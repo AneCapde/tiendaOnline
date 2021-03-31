@@ -76,6 +76,29 @@ public class Producto {
 	public void setImagen(String imagen) {
 		this.imagen = imagen;
 	}
+	public Marca getMarca() {
+		return this.marca;
+	}
+	public Categoria getCategoria() {
+		return this.categoria;
+	}
+
+	public ArrayList<Pedido> getPedidos() {
+		return this.pedidos;
+	}
+
+	public void setPedidos(ArrayList<Pedido> pedidos) {
+		this.pedidos = pedidos;
+	}
+	
+	public void removePedidos() {
+		for (Pedido r : this.pedidos) {
+			this.pedidos.remove(r);
+		}
+	}
+	public HashMap<Colores, Tallas> getTallas_colores() {
+		return this.tallas_colores;
+	}
 
 	@Override
 	public String toString() {
