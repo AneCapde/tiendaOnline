@@ -1,4 +1,4 @@
-package Modelos;
+package models;
 
 import java.util.ArrayList;
 import javax.jdo.annotations.Join;

@@ -1,4 +1,4 @@
-package Modelos;
+package models;
 
 import javax.jdo.annotations.PersistenceCapable;
 
