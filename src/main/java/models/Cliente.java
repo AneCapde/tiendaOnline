@@ -23,19 +23,19 @@ public class Cliente {
 	private String password;
 	private int telefono;
 	private String direccion;
-	private Genero genero ;
+	private Genero genero;
 	private int cod_postal;
 	private String provincia;
 	private String localidad;
 	
 	@Persistent(defaultFetchGroup = "true", mappedBy = "cliente", dependentElement = "true")
 	@Join
-	private ArrayList<Pedido> pedidos = new ArrayList<>(); 
+	private ArrayList<Pedido> pedidos = new ArrayList<Pedido>();
 	
 	
 	
 	public Cliente(String DNI, String nombre,String apellidos, String email, String password,
-			int telefono, String direccion, Genero genero, int cod_postal, String provincia, String localidad, ArrayList<Pedido> pedidos) {
+			int telefono, String direccion, Genero genero, int cod_postal, String provincia, String localidad) {
 		this.DNI = DNI;
 		this.nombre = nombre;
 		this.apellidos = apellidos;
@@ -47,19 +47,18 @@ public class Cliente {
 		this.cod_postal = cod_postal;
 		this.provincia = provincia;
 		this.localidad = localidad;
-		this.pedidos = pedidos;
 	}	
 	
 	public String getDNI() {
-		return DNI;
+		return this.DNI;
 	}
 
-	public void setDNI(String dNI) {
-		DNI = dNI;
+	public void setDNI(String DNI) {
+		this.DNI = DNI;
 	}
 
 	public String getNombre() {
-		return nombre;
+		return this.nombre;
 	}
 
 	public void setNombre(String nombre) {
@@ -67,7 +66,7 @@ public class Cliente {
 	}
 
 	public String getApellidos() {
-		return apellidos;
+		return this.apellidos;
 	}
 
 	public void setApellidos(String apellidos) {
@@ -75,7 +74,7 @@ public class Cliente {
 	}
 
 	public String getEmail() {
-		return email;
+		return this.email;
 	}
 
 	public void setEmail(String email) {
@@ -83,7 +82,7 @@ public class Cliente {
 	}
 
 	public String getPassword() {
-		return password;
+		return this.password;
 	}
 
 	public void setPassword(String password) {
@@ -91,7 +90,7 @@ public class Cliente {
 	}
 
 	public int getTelefono() {
-		return telefono;
+		return this.telefono;
 	}
 
 	public void setTelefono(int telefono) {
@@ -99,7 +98,7 @@ public class Cliente {
 	}
 
 	public String getDireccion() {
-		return direccion;
+		return this.direccion;
 	}
 
 	public void setDireccion(String direccion) {
@@ -107,7 +106,7 @@ public class Cliente {
 	}
 
 	public Genero getGenero() {
-		return genero;
+		return this.genero;
 	}
 
 	public void setGenero(Genero genero) {
@@ -115,7 +114,7 @@ public class Cliente {
 	}
 
 	public int getCod_postal() {
-		return cod_postal;
+		return this.cod_postal;
 	}
 
 	public void setCod_postal(int cod_postal) {
@@ -123,7 +122,7 @@ public class Cliente {
 	}
 
 	public String getProvincia() {
-		return provincia;
+		return this.provincia;
 	}
 
 	public void setProvincia(String provincia) {
@@ -131,7 +130,7 @@ public class Cliente {
 	}
 
 	public String getLocalidad() {
-		return localidad;
+		return this.localidad;
 	}
 
 	public void setLocalidad(String localidad) {
@@ -139,7 +138,7 @@ public class Cliente {
 	}
 
 	public ArrayList<Pedido> getPedidos() {
-		return pedidos;
+		return this.pedidos;
 	}
 
 	public void setPedidos(ArrayList<Pedido> pedidos) {
@@ -151,13 +150,13 @@ public class Cliente {
 			this.pedidos.remove(r);
 		}
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Cliente [DNI=" + DNI + ", nombre=" + nombre + ", apellidos=" + apellidos + ", email=" + email
 				+ ", password=" + password + ", telefono=" + telefono + ", direccion=" + direccion + ", genero="
 				+ genero + ", cod_postal=" + cod_postal + ", provincia=" + provincia + ", localidad=" + localidad
-				+ ", pedidos=" + pedidos + "]";
+				+ "]";
 	}
 	
 

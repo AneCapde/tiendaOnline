@@ -1,6 +1,7 @@
 package Modelos;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.jdo.annotations.Join;
 import javax.jdo.annotations.PersistenceCapable;
@@ -8,7 +9,7 @@ import javax.jdo.annotations.Persistent;
 
 
 @PersistenceCapable(detachable = "true")
-public class Productos {
+public class Producto {
 
 	public String nombre;
 	public String descripcion;
@@ -22,9 +23,12 @@ public class Productos {
 	@Join
 	private ArrayList<Pedido> pedidos = new ArrayList<Pedido>();
 
-	
+	@Persistent(defaultFetchGroup = "true", dependentElement = "true")
+	@Join
+	private HashMap<Colores, Tallas> tallas_colores = new HashMap<Colores, Tallas>();
 
-	public Productos( String nombre, String descripcion, int stock, int precio, String imagen) {
+	
+	public Producto( String nombre, String descripcion, int stock, int precio, String imagen) {
 		super();
 		this.nombre = nombre;
 		this.descripcion = descripcion;
@@ -75,9 +79,8 @@ public class Productos {
 
 	@Override
 	public String toString() {
-		return "Productos [nombre=" + nombre + ", descripcion=" + descripcion
-				+ ", stock=" + stock + ", precio=" + precio + ", imagen=" + imagen + 
-				"]";
+		return "Producto [nombre=" + nombre + ", descripcion=" + descripcion
+				+ ", stock=" + stock + ", precio=" + precio + ", imagen=" + imagen + "]";
 	}
 	
 	

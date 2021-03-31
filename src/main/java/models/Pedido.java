@@ -16,53 +16,45 @@ public class Pedido {
 	private int cantidad;
 	@Persistent(defaultFetchGroup = "true")
 	private Cliente cliente;
-	private Productos producto;
+	@Persistent(defaultFetchGroup = "true")
+	private Producto producto;
 	
-	public Pedido(Date fecha, String estado, int importe, int cantidad, Cliente cliente) {
+	public Pedido(Date fecha, String estado, int importe, int cantidad) {
 		super();
 		this.fecha = fecha;
 		this.estado = estado;
 		this.importe = importe;
 		this.cantidad = cantidad;
-		this.cliente = cliente;
 	}
 	
 	public Date getFecha() {
-		return fecha;
+		return this.fecha;
 	}
 	public void setFecha(Date fecha) {
 		this.fecha = fecha;
 	}
 	public String getEstado() {
-		return estado;
+		return this.estado;
 	}
 	public void setEstado(String estado) {
 		this.estado = estado;
 	}
 	public int getImporte() {
-		return importe;
+		return this.importe;
 	}
 	public void setImporte(int importe) {
 		this.importe = importe;
 	}
 	public int getCantidad() {
-		return cantidad;
+		return this.cantidad;
 	}
 	public void setCantidad(int cantidad) {
 		this.cantidad = cantidad;
 	}
-
-	public Cliente getCliente() {
-		return this.cliente;
-	}
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
-	}
 	
 	@Override
 	public String toString() {
-		return "Pedido [fecha=" + fecha + ", estado=" + estado + ", importe=" + importe
-				+ ", cantidad=" + cantidad  + "]";
+		return "Pedido [fecha=" + fecha + ", estado=" + estado + ", importe=" + importe + ", cantidad=" + cantidad  + "]";
 	}
 	
 	

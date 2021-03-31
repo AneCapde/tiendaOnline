@@ -2,15 +2,18 @@ package Modelos;
 
 import javax.jdo.annotations.PersistenceCapable;
 @PersistenceCapable(detachable = "true")
-public class Categoria {
-
-	public String nombre;
-	public String descripcion;
+public class SubCategoria {
 	
-	public Categoria(String nombre, String descripcion) {
+	private String nombre;
+	private String descripcion;
+	private Categoria categoria;
+
+
+	public SubCategoria(String nombre, String descripcion, Categoria categoria) {
 		super();
 		this.nombre = nombre;
 		this.descripcion = descripcion;
+		this.categoria = categoria;
 	}
 
 	public String getNombre() {
@@ -29,9 +32,17 @@ public class Categoria {
 		this.descripcion = descripcion;
 	}
 
+	public Categoria getCategoria() {
+		return this.categoria;
+	}
+
+	public void setCategoria(Categoria categoria) {
+		this.categoria = categoria;
+	}
+
 	@Override
 	public String toString() {
-		return "Categoria [nombre=" + nombre + ", descripcion=" + descripcion + "]";
+		return "SubCategoria [nombre=" + nombre + ", descripcion="+ descripcion + "]";
 	}
 	
 	
