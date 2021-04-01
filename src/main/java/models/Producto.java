@@ -99,11 +99,15 @@ public class Producto {
 	public HashMap<Colores, Tallas> getTallas_colores() {
 		return this.tallas_colores;
 	}
+	
+	public String toStringDebug() {
+		return "Producto [nombre=" + nombre + ", descripcion=" + descripcion
+				+ ", stock=" + stock + ", precio=" + precio + ", imagen=" + imagen + "]";
+	}
 
 	@Override
 	public String toString() {
-		return "Producto [nombre=" + nombre + ", descripcion=" + descripcion
-				+ ", stock=" + stock + ", precio=" + precio + ", imagen=" + imagen + "]";
+		return nombre;
 	}
 	
 	

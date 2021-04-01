@@ -39,10 +39,12 @@ public class SubCategoria {
 	public void setCategoria(Categoria categoria) {
 		this.categoria = categoria;
 	}
-
+	public String toStringDebug() {
+		return "SubCategoria [nombre=" + nombre + ", descripcion="+ descripcion + "]";
+	}
 	@Override
 	public String toString() {
-		return "SubCategoria [nombre=" + nombre + ", descripcion="+ descripcion + "]";
+		return nombre;
 	}
 	
 	
