@@ -36,12 +36,13 @@ public class VentanaLogin extends JFrame{
 	private JLabel lPassword;
 	private JLabel lTexto;
 	private HashMap<String, String> hmComprobar;
+	private static JPasswordField passwordField;
 	
 	public VentanaLogin() {
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);
-		setSize(600, 530);
+		setSize(599, 336);
 		setLocation(400, 150);
 		setTitle("Inicio de sesion");
 		
@@ -64,13 +65,14 @@ public class VentanaLogin extends JFrame{
 		pSuperior.add(lTexto);
 		
 		email = new JTextField(50);
+		email.setBounds(66, 36, 430, 35);
 		email.setBackground(Color.WHITE);
 		email.setPreferredSize(new Dimension(50, 35));
 		password = new JTextField(50);
 		password.setBackground(Color.WHITE);
 		password.setPreferredSize(new Dimension(50, 35));
-		pCentral.add(password);
-		pCentral.add(email);
+//		pCentral.add(password);
+//		pCentral.add(email);
 		
 		VentanaLogin.crearBoxLayout(pCentral, "Email:", email);
 		VentanaLogin.crearBoxLayout(pCentral, "Password:",password);
@@ -96,19 +98,28 @@ public class VentanaLogin extends JFrame{
 	public static void crearBoxLayout( Container cont, String etiqueta, Component campo) {
 		JPanel tempPanel = new JPanel();
 		tempPanel.setOpaque(false);
-		tempPanel.setLayout( new FlowLayout(FlowLayout.LEFT) ); 
+		tempPanel.setLayout(null);
 		JLabel l = new JLabel(etiqueta);
+		l.setBounds(5, 33, 200, 35);
 		l.setForeground(Color.BLACK);
-		l.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 24));
+		l.setFont(new Font("Segoe UI Black", Font.BOLD, 16));
 		l.setPreferredSize(new Dimension(200, 35));
 		tempPanel.add( l );
 		tempPanel.add( campo );
 		cont.add(tempPanel);
+		
+		passwordField = new JPasswordField();
+		passwordField.setBounds(90, 141, 406, 35);
+		tempPanel.add(passwordField);
+		
+		JLabel lblPassword = new JLabel("Password:");
+		lblPassword.setFont(new Font("Segoe UI Black", Font.PLAIN, 16));
+		lblPassword.setBounds(5, 140, 154, 30);
+		tempPanel.add(lblPassword);
 	}
 		
-//	public static void main(String[] args) {
-//		VentanaLogin v = new VentanaLogin();
-//		v.setVisible(true);
-//	}
-
+	public static void main(String[] args) {
+		VentanaLogin v = new VentanaLogin();
+		v.setVisible(true);
+	}
 }
