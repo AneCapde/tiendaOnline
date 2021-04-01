@@ -2,13 +2,17 @@ package Ventanas;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
 
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -19,7 +23,6 @@ import javax.swing.JTextField;
 
 import main.main;
 
-//NO ESTA TERMINADA
 public class VentanaLogin extends JFrame{
 
 	private static final long serialVersionUID = 1L;
@@ -43,10 +46,8 @@ public class VentanaLogin extends JFrame{
 		setTitle("Inicio de sesion");
 		
 		pCentral = new JPanel();
-		pCentral.setEnabled(false);
-		pCentral.setBackground(Color.GRAY);
-		getContentPane().add(pCentral,BorderLayout.CENTER);
-		
+		pCentral.setLayout(new BoxLayout(pCentral, BoxLayout.Y_AXIS));
+
 		pSuperior = new JPanel();
 		pSuperior.setEnabled(false);
 		pSuperior.setBackground(Color.LIGHT_GRAY);
@@ -62,24 +63,19 @@ public class VentanaLogin extends JFrame{
 		lTexto.setFont(new Font("Times New Roman", Font.BOLD, 36));
 		pSuperior.add(lTexto);
 		
-		lEmail = new JLabel("Email:");
-		lEmail.setFont(new Font("Tahoma", Font.PLAIN, 25));
-		lEmail.setBounds(10, 433, 81, 27);
-		pCentral.add(lEmail);
-		
-		lPassword = new JLabel("Password:");
-		lPassword.setFont(new Font("Tahoma", Font.PLAIN, 25));
-		lPassword.setBounds(266, 153, 61, 16);
-		pCentral.add(lPassword);
-		
 		email = new JTextField(50);
 		email.setBackground(Color.WHITE);
-		email.setBounds(93, 150, 106, 23);
+		email.setPreferredSize(new Dimension(50, 35));
 		password = new JTextField(50);
 		password.setBackground(Color.WHITE);
-		password.setBounds(337, 500, 223, 23);
+		password.setPreferredSize(new Dimension(50, 35));
 		pCentral.add(password);
 		pCentral.add(email);
+		
+		VentanaLogin.crearBoxLayout(pCentral, "Email:", email);
+		VentanaLogin.crearBoxLayout(pCentral, "Password:",password);
+		
+		getContentPane().add(pCentral, BorderLayout.CENTER);
 		
 		bAceptar = new JButton("Aceptar");
 		bAceptar.setBounds((this.getWidth()/100)*5, (this.getHeight()/18)*8, (this.getWidth()/35)*10, (this.getHeight()/18)*3);
@@ -90,7 +86,6 @@ public class VentanaLogin extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-	   
 			}
 		
 			});
@@ -98,8 +93,19 @@ public class VentanaLogin extends JFrame{
 		
 	}
 	
-
-	
+	public static void crearBoxLayout( Container cont, String etiqueta, Component campo) {
+		JPanel tempPanel = new JPanel();
+		tempPanel.setOpaque(false);
+		tempPanel.setLayout( new FlowLayout(FlowLayout.LEFT) ); 
+		JLabel l = new JLabel(etiqueta);
+		l.setForeground(Color.BLACK);
+		l.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 24));
+		l.setPreferredSize(new Dimension(200, 35));
+		tempPanel.add( l );
+		tempPanel.add( campo );
+		cont.add(tempPanel);
+	}
+		
 //	public static void main(String[] args) {
 //		VentanaLogin v = new VentanaLogin();
 //		v.setVisible(true);
