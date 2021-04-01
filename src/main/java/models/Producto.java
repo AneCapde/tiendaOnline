@@ -100,10 +100,14 @@ public class Producto {
 		return this.tallas_colores;
 	}
 
-	@Override
-	public String toString() {
+	public String toStringDebug() {
 		return "Producto [nombre=" + nombre + ", descripcion=" + descripcion
 				+ ", stock=" + stock + ", precio=" + precio + ", imagen=" + imagen + "]";
+	}
+	
+	@Override
+	public String toString() {
+		return nombre;
 	}
 	
 	

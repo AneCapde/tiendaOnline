@@ -40,9 +40,13 @@ public class SubCategoria {
 		this.categoria = categoria;
 	}
 
+	public String toStringDebug() {
+		return "SubCategoria [nombre=" + nombre + ", descripcion="+ descripcion + "]";
+	}
+	
 	@Override
 	public String toString() {
-		return "SubCategoria [nombre=" + nombre + ", descripcion="+ descripcion + "]";
+		return nombre;
 	}
 	
 	
