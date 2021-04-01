@@ -19,7 +19,7 @@ public class DBManager implements IDBManager{
     private static IDBManager instance;
 	private PersistenceManagerFactory pmf = null;
 	
-	private DBManager() {
+	public DBManager() {
 		pmf = JDOHelper.getPersistenceManagerFactory("datanucleus.properties");		
 	}
 	

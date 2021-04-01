@@ -16,7 +16,7 @@ import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 
-import dao.IDBManager;
+import dao.DBManager;
 import models.Cliente;
 
 import javax.swing.JComboBox;
@@ -51,7 +51,21 @@ public class VentanaRegistro extends JFrame {
 			"Gerona", "Granada", "Guadalajara", "Guipuzkoa", "Huelva", "Huesca", "Jaen", "La rioja", "Leon", "Lleida", "Lugo", "Madrid",
 			"Malaga", "Melilla", "Murcia", "Navarra", "Ourense", "Palencia", "Pontevedra, Salamanca", "Segovia", "Sevilla", "Soria",
 			"Tarragona", "Teruel", "Toledo", "Valencia", "Valladolid", "Vizcaya", "Zamora", "Zaragoza"};
-
+	
+//	private AutorizacionController controller;
+	private static DBManager instance;
+	
+		public static DBManager getInstance() {
+			if (instance == null) {
+				try {
+					instance = new DBManager();
+				} catch (Exception ex) {
+					System.err.println("# Error creating EasyBookingRemoteFacade: " + ex);
+				}
+			}	
+			return instance;
+		}
+	
 	// metodo para validar el correo
 	protected static boolean elEmailCorrecto(String email) {
 
@@ -124,13 +138,6 @@ public class VentanaRegistro extends JFrame {
 
 		return(resultado);
 	}
-
-//	public VentanaRegistro(AutorizacionController controller) {
-//		initialize();
-//		frmRegistro.setVisible(true);
-//		this.controller = controller;
-//	}
-
 	
 	public VentanaRegistro() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("/img/Imagenes_sueltas/registro2.png")));
@@ -215,6 +222,14 @@ public class VentanaRegistro extends JFrame {
 		getContentPane().add(lbldni);
 		
 		dni = new JTextField();
+		dni.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				if(dni.getText().length() != 9 ) {
+					JOptionPane.showMessageDialog(null, "Tienen que ser 9 caracteres, letra incluida", "Validar DNI", JOptionPane.INFORMATION_MESSAGE);
+				}
+			}
+		});
 		dni.setColumns(10);
 		dni.setBounds(93, 191, 106, 23);
 		getContentPane().add(dni);
@@ -421,23 +436,8 @@ public class VentanaRegistro extends JFrame {
 		btnAceptar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-//				//CONTROLLER --> REGISTRARUSUARIO	
-//				if(controller.registrarUsuario(dniUsuario, usuarioNick,apellidosUsuario,correo, password, telefonoUsuario,
-//						direccionUsuario, genero,cod_postalUsuario, provinciaSelecionada, localidadUsuario)) {
-//					
-//					AutorizacionController busController = new AutorizacionController(MainProgram.getServiceLocator());
-//					
-//					dispose();
-//				} else {
-//					// Usuario no insertado
-//					System.out.println("Error.");
-//				}
-				
 				Thread t = new Thread() {
 					public void run() {
-//						Connection con = BD.initBD(VentanaLoggin.NOMBRE_BD);
-//						Statement st = BD.usarCrearTablasBD(con);
-						
 						String dniUsuario = dni.getText();
 						String usuarioNick = nombre.getText();
 						String apellidosUsuario = apellidos.getText();
@@ -458,11 +458,8 @@ public class VentanaRegistro extends JFrame {
 
 						Cliente cliente = new Cliente(dniUsuario, usuarioNick,apellidosUsuario,correo, password, telefonoUsuario,direccionUsuario, genero,cod_postalUsuario, provinciaSelecionada, localidadUsuario );
 						
-//						 IDBManager.store(cliente);
-//						if (!nuevoUsuario)
-//							// Usuario no insertado
-//							System.out.println("Error.");
-////						new VentanaLoggin().setVisible(true);
+						DBManager.getInstance().store(cliente);
+//						new VentanaLoggin().setVisible(true);
 						dispose();
 					}
 				};
@@ -487,7 +484,7 @@ public class VentanaRegistro extends JFrame {
 		});
 
 	}
-
+	
 	public static void main(String[] args) {
 //		BD.initData();
 		try { // Cambiamos el look and feel (se tiene que hacer antes de crear la GUI
@@ -497,4 +494,5 @@ public class VentanaRegistro extends JFrame {
 		VentanaRegistro v = new VentanaRegistro();
 		v.setVisible(true);
 	}
+
 }
