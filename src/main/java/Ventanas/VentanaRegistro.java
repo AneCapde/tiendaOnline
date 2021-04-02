@@ -139,7 +139,7 @@ public class VentanaRegistro extends JFrame {
 		return(resultado);
 	}
 	
-	public VentanaRegistro() {
+	public VentanaRegistro(final JFrame ventanaPadre) {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("/img/Imagenes_sueltas/registro2.png")));
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setResizable(false);
@@ -482,17 +482,23 @@ public class VentanaRegistro extends JFrame {
 				dispose();
 			}
 		});
+		
+		addWindowListener(new java.awt.event.WindowAdapter() {
+			public void windowClosing(java.awt.event.WindowEvent e) {
+				ventanaPadre.setEnabled(true);
+			}
+		});
 
 	}
 	
-	public static void main(String[] args) {
-//		BD.initData();
-		try { // Cambiamos el look and feel (se tiene que hacer antes de crear la GUI
-			UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
-		} catch (Exception e) {
-		} // Si Nimbus no está disponible, se usa el l&f por defecto
-		VentanaRegistro v = new VentanaRegistro();
-		v.setVisible(true);
-	}
+//	public static void main(String[] args) {
+////		BD.initData();
+//		try { // Cambiamos el look and feel (se tiene que hacer antes de crear la GUI
+//			UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+//		} catch (Exception e) {
+//		} // Si Nimbus no está disponible, se usa el l&f por defecto
+//		VentanaRegistro v = new VentanaRegistro();
+//		v.setVisible(true);
+//	}
 
 }

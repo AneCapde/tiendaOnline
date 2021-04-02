@@ -29,10 +29,13 @@ public class Categoria {
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
-
+	public String toStringDebug() {
+		return "Categoria [nombre=" + nombre + ", descripcion=" + descripcion + "]";
+	}
+	
 	@Override
 	public String toString() {
-		return "Categoria [nombre=" + nombre + ", descripcion=" + descripcion + "]";
+		return nombre;
 	}
 	
 	

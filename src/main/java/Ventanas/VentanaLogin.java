@@ -22,6 +22,7 @@ import javax.swing.JSplitPane;
 import javax.swing.JTextField;
 
 import main.main;
+import javax.swing.DropMode;
 
 public class VentanaLogin extends JFrame{
 
@@ -29,7 +30,7 @@ public class VentanaLogin extends JFrame{
 	private JPanel pCentral;
 	private JPanel pSuperior;
 	private JPanel pInferior;
-	private JTextField email;
+	private JTextField emailTextField;
 	private JTextField password;
 	private JButton bAceptar;
 	private JLabel lEmail;
@@ -38,16 +39,15 @@ public class VentanaLogin extends JFrame{
 	private HashMap<String, String> hmComprobar;
 	private static JPasswordField passwordField;
 	
-	public VentanaLogin() {
+	public VentanaLogin(final JFrame ventanaPadre) {
 		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setResizable(false);
 		setSize(599, 336);
 		setLocation(400, 150);
 		setTitle("Inicio de sesion");
 		
 		pCentral = new JPanel();
-		pCentral.setLayout(new BoxLayout(pCentral, BoxLayout.Y_AXIS));
 
 		pSuperior = new JPanel();
 		pSuperior.setEnabled(false);
@@ -64,20 +64,40 @@ public class VentanaLogin extends JFrame{
 		lTexto.setFont(new Font("Times New Roman", Font.BOLD, 36));
 		pSuperior.add(lTexto);
 		
-		email = new JTextField(50);
-		email.setBounds(66, 36, 430, 35);
-		email.setBackground(Color.WHITE);
-		email.setPreferredSize(new Dimension(50, 35));
 		password = new JTextField(50);
 		password.setBackground(Color.WHITE);
 		password.setPreferredSize(new Dimension(50, 35));
-//		pCentral.add(password);
-//		pCentral.add(email);
-		
-		VentanaLogin.crearBoxLayout(pCentral, "Email:", email);
-		VentanaLogin.crearBoxLayout(pCentral, "Password:",password);
+//		VentanaLogin.crearBoxLayout(pCentral, "Password:",password);
 		
 		getContentPane().add(pCentral, BorderLayout.CENTER);
+		pCentral.setLayout(null);
+		JLabel Email = new JLabel("Email:");
+		Email.setToolTipText("");
+		Email.setBounds(22, 37, 54, 35);
+		pCentral.add(Email);
+		Email.setForeground(Color.BLACK);
+		Email.setFont(new Font("Segoe UI Black", Font.BOLD, 16));
+		Email.setPreferredSize(new Dimension(200, 35));
+		
+		emailTextField = new JTextField(50);
+		emailTextField.setBounds(86, 40, 472, 35);
+		pCentral.add(emailTextField);
+		emailTextField.setBackground(Color.WHITE);
+		emailTextField.setPreferredSize(new Dimension(50, 35));
+		//		pCentral.add(password);
+		//		pCentral.add(email);
+				
+//				VentanaLogin.crearBoxLayout(pCentral, "Email:", emailTextField);
+				
+				passwordField = new JPasswordField();
+				passwordField.setBounds(114, 129, 444, 35);
+				pCentral.add(passwordField);
+//				passwordField.setDropMode(DropMode.ON);
+				
+				JLabel lblPassword = new JLabel("Password:");
+				lblPassword.setBounds(22, 132, 82, 23);
+				pCentral.add(lblPassword);
+				lblPassword.setFont(new Font("Segoe UI Black", Font.PLAIN, 16));
 		
 		bAceptar = new JButton("Aceptar");
 		bAceptar.setBounds((this.getWidth()/100)*5, (this.getHeight()/18)*8, (this.getWidth()/35)*10, (this.getHeight()/18)*3);
@@ -91,35 +111,19 @@ public class VentanaLogin extends JFrame{
 			}
 		
 			});
-
+	    
+	    addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent e) {
+            	ventanaPadre.setEnabled(true);
+            }
+        });
+	    
+	    
 		
 	}
-	
-	public static void crearBoxLayout( Container cont, String etiqueta, Component campo) {
-		JPanel tempPanel = new JPanel();
-		tempPanel.setOpaque(false);
-		tempPanel.setLayout(null);
-		JLabel l = new JLabel(etiqueta);
-		l.setBounds(5, 33, 200, 35);
-		l.setForeground(Color.BLACK);
-		l.setFont(new Font("Segoe UI Black", Font.BOLD, 16));
-		l.setPreferredSize(new Dimension(200, 35));
-		tempPanel.add( l );
-		tempPanel.add( campo );
-		cont.add(tempPanel);
 		
-		passwordField = new JPasswordField();
-		passwordField.setBounds(90, 141, 406, 35);
-		tempPanel.add(passwordField);
-		
-		JLabel lblPassword = new JLabel("Password:");
-		lblPassword.setFont(new Font("Segoe UI Black", Font.PLAIN, 16));
-		lblPassword.setBounds(5, 140, 154, 30);
-		tempPanel.add(lblPassword);
-	}
-		
-	public static void main(String[] args) {
-		VentanaLogin v = new VentanaLogin();
-		v.setVisible(true);
-	}
+//	public static void main(String[] args) {
+//		VentanaLogin v = new VentanaLogin();
+//		v.setVisible(true);
+//	}
 }

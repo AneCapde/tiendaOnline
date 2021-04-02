@@ -55,40 +55,47 @@ public class TiendaGUI extends JFrame {
 	private JTextField txtBuscador;
 	private DefaultListModel<Producto> model = new DefaultListModel<>();
 	private Colores col;
-	private ActionListener actualizador;
+	private JList<Producto> listaElementos;
+	
+//	private ActionListener actualizador;
 	private Categoria categoriaSeleccionada;
+	private String textoBuscador;
+	private SubCategoria subCategoriaSeleccionada;
 	
-//	public static void main(String[] args) {
-//		ArrayList<Producto> productosTest = new ArrayList<Producto>();
-//		ArrayList<Categoria> categoriasTest = new ArrayList<Categoria>();
-//		ArrayList<SubCategoria> subCategoriasTest = new ArrayList<SubCategoria>();
-//		
-//		Producto pr1 = new Producto("Patata", "descripcion", 1 , 20, "no");
-//		Producto pr2 = new Producto("pantalon", "descripcion", 0 , 1, "imagen");
-//		
-//		Categoria c1 = new Categoria("comida", "comiiiida");
-//		Categoria c2 = new Categoria("ropa", "ropaaaa");
-//		
-//		SubCategoria sc1 = new SubCategoria("tuber", "tuberculo", c1);
-//		SubCategoria sc2 = new SubCategoria("baquero", "muuuu", c2);
-//						
-//		productosTest.add(pr1);
-//		productosTest.add(pr2);
-//		categoriasTest.add(c1);
-//		categoriasTest.add(c2);
-//		subCategoriasTest.add(sc1);
-//		subCategoriasTest.add(sc2);
-//		
-//		TiendaGUI test = new TiendaGUI(productosTest, categoriasTest, subCategoriasTest);
-//		test.setVisible(true);
-//	}
+	public static void main(String[] args) {
+		ArrayList<Producto> productosTest = new ArrayList<Producto>();
+		ArrayList<Categoria> categoriasTest = new ArrayList<Categoria>();
+		ArrayList<SubCategoria> subCategoriasTest = new ArrayList<SubCategoria>();
+		
+		Producto pr1 = new Producto("Patata", "descripcion", 1 , 20, "no");
+		Producto pr2 = new Producto("pantalon", "descripcion", 0 , 1, "imagen");
+		
+		Categoria c1 = new Categoria("comida", "comiiiida");
+		Categoria c2 = new Categoria("ropa", "ropaaaa");
+		
+		SubCategoria sc1 = new SubCategoria("tuber", "tuberculo", c1);
+		SubCategoria sc2 = new SubCategoria("baquero", "muuuu", c2);
+						
+		productosTest.add(pr1);
+		productosTest.add(pr2);
+		categoriasTest.add(c1);
+		categoriasTest.add(c2);
+		subCategoriasTest.add(sc1);
+		subCategoriasTest.add(sc2);
+		
+		TiendaGUI test = new TiendaGUI(productosTest, categoriasTest, subCategoriasTest);
+		test.setVisible(true);
+	}
 	
-	public TiendaGUI(ArrayList<Producto> productos, ArrayList<Categoria> categorias, final ArrayList<SubCategoria> subCategorias) {
+	public TiendaGUI(final ArrayList<Producto> productos, ArrayList<Categoria> categorias, final ArrayList<SubCategoria> subCategorias) {
+		
+		final TiendaGUI esto = this;
+		
 		for (int i = 0; i < productos.size(); i++) {
 			model.addElement(productos.get(i));
 		}
 		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 842, 560);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -110,17 +117,7 @@ public class TiendaGUI extends JFrame {
 		panel.add(txtBuscador);
 		txtBuscador.setColumns(10);
 		
-		//#################################################################################################
-		JButton botonBuscar = new JButton("Buscar");
-		botonBuscar.setFont(new Font("Segoe UI Black", Font.PLAIN, 11));
-		botonBuscar.setToolTipText("Buscar");
-		botonBuscar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-			}
-		});
-		botonBuscar.setBounds(136, 11, 70, 38);
-		panel.add(botonBuscar);
+		
 		
 		//#################################################################################################
 		JButton botonHistorial = new JButton("Historial");
@@ -177,6 +174,7 @@ public class TiendaGUI extends JFrame {
 					if (categoriaSeleccionada.getNombre() == subCategorias.get(i).getCategoria().getNombre()) {
 						System.out.println("Meto:" + subCategorias.get(i));
 						comboBox_Subcategoria.addItem(subCategorias.get(i));
+						
 					}
 					
 				}
@@ -227,12 +225,33 @@ public class TiendaGUI extends JFrame {
 		//#################################################################################################
 		JButton botonLogin = new JButton("Log in");
 		botonLogin.setBounds(518, 10, 122, 23);
+		botonLogin.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				esto.setEnabled(false);
+				VentanaLogin ventanaLogin = new VentanaLogin(esto);
+				ventanaLogin.setVisible(true);
+				contentPane.setEnabled(false);
+				
+			}
+		});
 		contentPane.add(botonLogin);
 		
 		//#################################################################################################
 		JButton botonSignIn = new JButton("Sign in");
 		botonSignIn.setBounds(679, 10, 122, 23);
 		contentPane.add(botonSignIn);
+		botonSignIn.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				esto.setEnabled(false);
+				VentanaRegistro ventanaRegistro = new VentanaRegistro(esto);
+				ventanaRegistro.setVisible(true);
+				contentPane.setEnabled(false);
+			}
+		});
 		
 		//#################################################################################################
 		JScrollPane scrollPane = new JScrollPane();
@@ -240,7 +259,34 @@ public class TiendaGUI extends JFrame {
 		contentPane.add(scrollPane);
 		
 		//#################################################################################################
-		JList<Producto> list = new JList<Producto>(model);
-		scrollPane.setViewportView(list);
+		listaElementos = new JList<Producto>(model);
+		scrollPane.setViewportView(listaElementos);
+		
+		//#################################################################################################
+		JButton botonBuscar = new JButton("Buscar");
+		botonBuscar.setFont(new Font("Segoe UI Black", Font.PLAIN, 11));
+		botonBuscar.setToolTipText("Buscar");
+		
+		
+		botonBuscar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				textoBuscador = txtBuscador.getText();
+				categoriaSeleccionada = (Categoria) comboBox_Categoria.getSelectedItem();
+				subCategoriaSeleccionada = (SubCategoria) comboBox_Subcategoria.getSelectedItem();
+				model.removeAllElements();
+				System.out.println(productos);
+				for (int i = 0; i < productos.size(); i++) {
+					
+					if (productos.get(i).getCategoria() == categoriaSeleccionada) {
+						model.addElement(productos.get(i));
+					}
+					
+				}
+			}
+		});
+		
+		
+		botonBuscar.setBounds(136, 11, 70, 38);
+		panel.add(botonBuscar);
 	}
 }
