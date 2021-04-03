@@ -29,10 +29,12 @@ public class Marca {
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
-
+	public String toStringDebug() {
+		return "Marca [nombre=" + nombre + ", descripcion=" + descripcion + "]";
+	}
 	@Override
 	public String toString() {
-		return "Marca [nombre=" + nombre + ", descripcion=" + descripcion + "]";
+		return nombre;
 	}
 	
 	

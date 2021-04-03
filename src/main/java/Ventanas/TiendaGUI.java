@@ -30,7 +30,9 @@ import javax.swing.border.SoftBevelBorder;
 import models.Categoria;
 import models.Producto;
 import models.SubCategoria;
+import models.Tallas;
 import models.Colores;
+import models.Marca;
 
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EtchedBorder;
@@ -42,6 +44,7 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.awt.event.ActionEvent;
 import javax.swing.JTable;
 import java.awt.List;
@@ -55,6 +58,7 @@ public class TiendaGUI extends JFrame {
 	private JTextField txtBuscador;
 	private DefaultListModel<Producto> model = new DefaultListModel<>();
 	private Colores col;
+	private Tallas tall;
 	private JList<Producto> listaElementos;
 	
 //	private ActionListener actualizador;
@@ -66,6 +70,7 @@ public class TiendaGUI extends JFrame {
 		ArrayList<Producto> productosTest = new ArrayList<Producto>();
 		ArrayList<Categoria> categoriasTest = new ArrayList<Categoria>();
 		ArrayList<SubCategoria> subCategoriasTest = new ArrayList<SubCategoria>();
+		ArrayList<Marca> marcasTest = new ArrayList<Marca>();
 		
 		Producto pr1 = new Producto("Patata", "descripcion", 1 , 20, "no");
 		Producto pr2 = new Producto("pantalon", "descripcion", 0 , 1, "imagen");
@@ -75,6 +80,9 @@ public class TiendaGUI extends JFrame {
 		
 		SubCategoria sc1 = new SubCategoria("tuber", "tuberculo", c1);
 		SubCategoria sc2 = new SubCategoria("baquero", "muuuu", c2);
+		
+		Marca ma1 = new Marca("Pats", "ico");
+		Marca ma2 = new Marca("Levis", "sa");
 						
 		productosTest.add(pr1);
 		productosTest.add(pr2);
@@ -82,12 +90,14 @@ public class TiendaGUI extends JFrame {
 		categoriasTest.add(c2);
 		subCategoriasTest.add(sc1);
 		subCategoriasTest.add(sc2);
+		marcasTest.add(ma1);
+		marcasTest.add(ma2);
 		
-		TiendaGUI test = new TiendaGUI(productosTest, categoriasTest, subCategoriasTest);
+		TiendaGUI test = new TiendaGUI(productosTest, categoriasTest, subCategoriasTest, marcasTest);
 		test.setVisible(true);
 	}
 	
-	public TiendaGUI(final ArrayList<Producto> productos, ArrayList<Categoria> categorias, final ArrayList<SubCategoria> subCategorias) {
+	public TiendaGUI(final ArrayList<Producto> productos, ArrayList<Categoria> categorias, final ArrayList<SubCategoria> subCategorias, ArrayList<Marca> marcas) {
 		
 		final TiendaGUI esto = this;
 		
@@ -276,11 +286,13 @@ public class TiendaGUI extends JFrame {
 				model.removeAllElements();
 				System.out.println(productos);
 				for (int i = 0; i < productos.size(); i++) {
-					
-					if (productos.get(i).getCategoria() == categoriaSeleccionada) {
-						model.addElement(productos.get(i));
+				
+					if (productos.get(i).getNombre().toLowerCase().indexOf(textoBuscador.toLowerCase()) == 0) {
+						if (productos.get(i).getCategoria() == categoriaSeleccionada) {
+							model.addElement(productos.get(i));
+						}
 					}
-					
+
 				}
 			}
 		});
@@ -288,5 +300,36 @@ public class TiendaGUI extends JFrame {
 		
 		botonBuscar.setBounds(136, 11, 70, 38);
 		panel.add(botonBuscar);
+		
+		//######################################################################
+		JComboBox<Tallas> comboBoxTalla = new JComboBox<Tallas>();
+		comboBoxTalla.addItem(null);
+		
+		for (Tallas tall : tall.values()) {
+			comboBoxTalla.addItem(tall);
+		}
+
+		comboBoxTalla.setBounds(10, 251, 196, 30);
+		panel.add(comboBoxTalla);
+			
+		
+		//######################################################################
+		JLabel lblTalla = new JLabel("Talla");
+		lblTalla.setBounds(10, 237, 46, 14);
+		panel.add(lblTalla);
+		
+		//#####################################################################
+		JComboBox<Marca> comboBoxMarca = new JComboBox<Marca>();
+		comboBoxMarca.addItem(null);
+		for (Marca marca : marcas) {
+			comboBoxMarca.addItem(marca);
+		}
+		comboBoxMarca.setBounds(10, 310, 196, 30);
+		panel.add(comboBoxMarca);
+		
+		//#####################################################################
+		JLabel lblMarca = new JLabel("Marca");
+		lblMarca.setBounds(10, 296, 46, 14);
+		panel.add(lblMarca);
 	}
 }
