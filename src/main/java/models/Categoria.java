@@ -1,12 +1,20 @@
 package models;
 
+import java.util.ArrayList;
+
+import javax.jdo.annotations.Join;
 import javax.jdo.annotations.PersistenceCapable;
+import javax.jdo.annotations.Persistent;
 
 @PersistenceCapable(detachable = "true")
 public class Categoria {
 
 	public String nombre;
 	public String descripcion;
+	@Persistent(defaultFetchGroup = "true", mappedBy = "producto", dependentElement = "true")
+	@Join
+	private ArrayList<SubCategoria> subcategorias = new ArrayList<SubCategoria>();
+
 	
 	public Categoria(String nombre, String descripcion) {
 		super();
