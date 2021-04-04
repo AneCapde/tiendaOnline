@@ -18,6 +18,7 @@ public class Producto {
 	public String imagen;
 	private Categoria categoria;
 	private Marca marca;
+	private SubCategoria subcategoria;
 
 	@Persistent(defaultFetchGroup = "true", mappedBy = "producto", dependentElement = "true")
 	@Join
@@ -28,13 +29,16 @@ public class Producto {
 	private HashMap<Colores, Tallas> tallas_colores = new HashMap<Colores, Tallas>();
 
 	
-	public Producto( String nombre, String descripcion, int stock, int precio, String imagen) {
+	public Producto( String nombre, String descripcion, int stock, int precio, String imagen, SubCategoria subcategoria, Marca marca) {
 		super();
 		this.nombre = nombre;
 		this.descripcion = descripcion;
 		this.stock = stock;
 		this.precio = precio;
 		this.imagen = imagen;
+		this.subcategoria = subcategoria;
+		this.categoria = subcategoria.getCategoria();
+		this.marca = marca;
 	}
 
 	public String getNombre() {
@@ -100,6 +104,26 @@ public class Producto {
 		return this.tallas_colores;
 	}
 	
+	public SubCategoria getSubcategoria() {
+		return subcategoria;
+	}
+
+	public void setSubcategoria(SubCategoria subcategoria) {
+		this.subcategoria = subcategoria;
+	}
+
+	public void setCategoria(Categoria categoria) {
+		this.categoria = categoria;
+	}
+
+	public void setMarca(Marca marca) {
+		this.marca = marca;
+	}
+
+	public void setTallas_colores(HashMap<Colores, Tallas> tallas_colores) {
+		this.tallas_colores = tallas_colores;
+	}
+
 	public String toStringDebug() {
 		return "Producto [nombre=" + nombre + ", descripcion=" + descripcion
 				+ ", stock=" + stock + ", precio=" + precio + ", imagen=" + imagen + "]";

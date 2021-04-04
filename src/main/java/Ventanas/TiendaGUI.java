@@ -26,6 +26,8 @@ import javax.swing.JLayeredPane;
 import javax.swing.JMenuBar;
 import java.awt.Color;
 import javax.swing.border.SoftBevelBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import models.Categoria;
 import models.Producto;
@@ -43,6 +45,8 @@ import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.awt.event.ActionEvent;
@@ -51,6 +55,8 @@ import java.awt.List;
 import java.awt.Point;
 import javax.swing.ListSelectionModel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextPane;
+import javax.swing.JTextArea;
 
 public class TiendaGUI extends JFrame {
 
@@ -60,11 +66,21 @@ public class TiendaGUI extends JFrame {
 	private Colores col;
 	private Tallas tall;
 	private JList<Producto> listaElementos;
+	private JComboBox<Colores> comboBox_colores;
+	private JComboBox<Tallas> comboBoxTalla;
+	private JComboBox<Marca> comboBoxMarca;
+	private JTextArea textArea;
 	
 //	private ActionListener actualizador;
 	private Categoria categoriaSeleccionada;
 	private String textoBuscador;
 	private SubCategoria subCategoriaSeleccionada;
+	private Marca marcaSeleccionada;
+	private Tallas tallaSeleccionada;
+	private Colores colorSelecionado;
+	private Producto productoSeleccionado;
+
+	
 	
 	public static void main(String[] args) {
 		ArrayList<Producto> productosTest = new ArrayList<Producto>();
@@ -72,8 +88,6 @@ public class TiendaGUI extends JFrame {
 		ArrayList<SubCategoria> subCategoriasTest = new ArrayList<SubCategoria>();
 		ArrayList<Marca> marcasTest = new ArrayList<Marca>();
 		
-		Producto pr1 = new Producto("Patata", "descripcion", 1 , 20, "no");
-		Producto pr2 = new Producto("pantalon", "descripcion", 0 , 1, "imagen");
 		
 		Categoria c1 = new Categoria("comida", "comiiiida");
 		Categoria c2 = new Categoria("ropa", "ropaaaa");
@@ -83,7 +97,10 @@ public class TiendaGUI extends JFrame {
 		
 		Marca ma1 = new Marca("Pats", "ico");
 		Marca ma2 = new Marca("Levis", "sa");
-						
+		
+		Producto pr1 = new Producto("Patata", "descripcion", 1 , 20, "no", sc1, ma1);
+		Producto pr2 = new Producto("pantalon", "descripcion", 0 , 1, "imagen", sc2, ma2);
+		
 		productosTest.add(pr1);
 		productosTest.add(pr2);
 		categoriasTest.add(c1);
@@ -147,7 +164,7 @@ public class TiendaGUI extends JFrame {
 		
 		
 		//#################################################################################################
-		JComboBox<Colores> comboBox_colores = new JComboBox<Colores>();
+		comboBox_colores = new JComboBox<Colores>();
 		comboBox_colores.addItem(null);
 		for (Colores col : col.values()) {
 			comboBox_colores.addItem(col);
@@ -220,13 +237,6 @@ public class TiendaGUI extends JFrame {
 		contentPane.add(lblCaracteristicas);
 		
 		//#################################################################################################
-//		ScrollPane caracteristicasPane = new ScrollPane();
-//		caracteristicasPane.setScrollPosition(new Point(0, 0));
-//		caracteristicasPane.setBackground(Color.WHITE);
-//		caracteristicasPane.setBounds(507, 381, 309, 83);
-//		contentPane.add(caracteristicasPane);
-//		
-		//#################################################################################################
 		JButton botonComprar = new JButton("COMPRAR");
 		botonComprar.setBounds(507, 470, 309, 41);
 		botonComprar.setFont(new Font("Segoe UI Black", Font.PLAIN, 20));
@@ -267,42 +277,37 @@ public class TiendaGUI extends JFrame {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(240, 10, 252, 500);
 		contentPane.add(scrollPane);
+		//#############################################################
+		textArea = new JTextArea();
 		
+
+		textArea.setBounds(507, 379, 309, 80);
+		contentPane.add(textArea);
+
+
 		//#################################################################################################
 		listaElementos = new JList<Producto>(model);
 		scrollPane.setViewportView(listaElementos);
-		
-		//#################################################################################################
-		JButton botonBuscar = new JButton("Buscar");
-		botonBuscar.setFont(new Font("Segoe UI Black", Font.PLAIN, 11));
-		botonBuscar.setToolTipText("Buscar");
-		
-		
-		botonBuscar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				textoBuscador = txtBuscador.getText();
-				categoriaSeleccionada = (Categoria) comboBox_Categoria.getSelectedItem();
-				subCategoriaSeleccionada = (SubCategoria) comboBox_Subcategoria.getSelectedItem();
-				model.removeAllElements();
-				System.out.println(productos);
-				for (int i = 0; i < productos.size(); i++) {
+		listaElementos.addListSelectionListener(new ListSelectionListener() {
+			
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				productoSeleccionado = listaElementos.getSelectedValue();
+				textArea.setText(null);;
+				textArea.append("- NOMBRE: " + productoSeleccionado.nombre + "\n");
+				textArea.append("- DESCRIPCIÓN: " + productoSeleccionado.descripcion + "\n");
+				textArea.append("- PRECIO: " + productoSeleccionado.precio + "\n");
+				textArea.append("- CATEGORÍA: " + productoSeleccionado.getCategoria().getNombre() + "\n");
+				textArea.append("    SUBCATEGORÍA: " + productoSeleccionado.getSubcategoria().getNombre() + "\n");
 				
-					if (productos.get(i).getNombre().toLowerCase().indexOf(textoBuscador.toLowerCase()) == 0) {
-						if (productos.get(i).getCategoria() == categoriaSeleccionada) {
-							model.addElement(productos.get(i));
-						}
-					}
-
-				}
+				
+//				textArea.append();
+				
 			}
 		});
 		
-		
-		botonBuscar.setBounds(136, 11, 70, 38);
-		panel.add(botonBuscar);
-		
 		//######################################################################
-		JComboBox<Tallas> comboBoxTalla = new JComboBox<Tallas>();
+		comboBoxTalla = new JComboBox<Tallas>();
 		comboBoxTalla.addItem(null);
 		
 		for (Tallas tall : tall.values()) {
@@ -319,7 +324,7 @@ public class TiendaGUI extends JFrame {
 		panel.add(lblTalla);
 		
 		//#####################################################################
-		JComboBox<Marca> comboBoxMarca = new JComboBox<Marca>();
+		comboBoxMarca = new JComboBox<Marca>();
 		comboBoxMarca.addItem(null);
 		for (Marca marca : marcas) {
 			comboBoxMarca.addItem(marca);
@@ -331,5 +336,47 @@ public class TiendaGUI extends JFrame {
 		JLabel lblMarca = new JLabel("Marca");
 		lblMarca.setBounds(10, 296, 46, 14);
 		panel.add(lblMarca);
+		
+		//#################################################################################################
+		JButton botonBuscar = new JButton("Buscar");
+		botonBuscar.setFont(new Font("Segoe UI Black", Font.PLAIN, 11));
+		botonBuscar.setToolTipText("Buscar");
+
+
+		botonBuscar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				textoBuscador = txtBuscador.getText();
+				categoriaSeleccionada = (Categoria) comboBox_Categoria.getSelectedItem();
+				subCategoriaSeleccionada = (SubCategoria) comboBox_Subcategoria.getSelectedItem();
+				marcaSeleccionada = (Marca) comboBoxMarca.getSelectedItem();
+				colorSelecionado = (Colores) comboBox_colores.getSelectedItem();
+				tallaSeleccionada = (Tallas) comboBoxTalla.getSelectedItem();
+
+				model.removeAllElements();
+				System.out.println(productos);
+				for (int i = 0; i < productos.size(); i++) {
+						System.out.println(productos.get(i).getMarca() + "==" + marcaSeleccionada);
+					if (productos.get(i).getNombre().toLowerCase().indexOf(textoBuscador.toLowerCase()) == 0) {
+						if ((productos.get(i).getCategoria() == categoriaSeleccionada || categoriaSeleccionada == null) 
+								&& (productos.get(i).getSubcategoria() == subCategoriaSeleccionada || subCategoriaSeleccionada == null)
+								&& (productos.get(i).getMarca() == marcaSeleccionada|| marcaSeleccionada == null)
+								//&& (productos.get(i).getTallas_colores())
+								)
+						{
+
+							model.addElement(productos.get(i));
+						}
+					}
+
+				}
+			}
+		});
+
+
+		botonBuscar.setBounds(136, 11, 70, 38);
+		panel.add(botonBuscar);
+
+		
+
 	}
 }
