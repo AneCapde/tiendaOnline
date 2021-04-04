@@ -11,7 +11,7 @@ public class Categoria {
 
 	public String nombre;
 	public String descripcion;
-	@Persistent(defaultFetchGroup = "true", mappedBy = "producto", dependentElement = "true")
+	@Persistent(defaultFetchGroup = "true", mappedBy = "categoria", dependentElement = "true")
 	@Join
 	private ArrayList<SubCategoria> subcategorias = new ArrayList<SubCategoria>();
 
