@@ -16,7 +16,6 @@ public class Producto {
 	public int stock;
 	public int precio;
 	public String imagen;
-	private Categoria categoria;
 	private Marca marca;
 	private SubCategoria subcategoria;
 
@@ -37,7 +36,6 @@ public class Producto {
 		this.precio = precio;
 		this.imagen = imagen;
 		this.subcategoria = subcategoria;
-		this.categoria = subcategoria.getCategoria();
 		this.marca = marca;
 	}
 
@@ -83,9 +81,7 @@ public class Producto {
 	public Marca getMarca() {
 		return this.marca;
 	}
-	public Categoria getCategoria() {
-		return this.categoria;
-	}
+	
 
 	public ArrayList<Pedido> getPedidos() {
 		return this.pedidos;
@@ -110,10 +106,6 @@ public class Producto {
 
 	public void setSubcategoria(SubCategoria subcategoria) {
 		this.subcategoria = subcategoria;
-	}
-
-	public void setCategoria(Categoria categoria) {
-		this.categoria = categoria;
 	}
 
 	public void setMarca(Marca marca) {
