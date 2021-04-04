@@ -37,8 +37,6 @@ public class VentanaLogin extends JFrame{
 	private JButton bAceptar;
 	private JButton bCancelar;
 	private JLabel lTexto;
-	//para comprobacion de usuario-bd
-	private HashMap<String, String> hmComprobar;
 	private static JPasswordField passwordField;
 	
 	public VentanaLogin(final JFrame ventanaPadre) {
@@ -122,7 +120,7 @@ public class VentanaLogin extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				dispose();
-				ventanaPadre.setVisible(true);
+				//ventanaPadre.setVisible(true);
 			
 			}
 			});
@@ -155,6 +153,9 @@ public class VentanaLogin extends JFrame{
 	}
 	
 	//Metodo para comprobar que el email y password introducidos coinciden y estan en la BD
+	protected static void comprobarDatos() {
+		
+	}
 		
 //	public static void main(String[] args) {
 //		VentanaLogin v = new VentanaLogin();

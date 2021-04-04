@@ -480,6 +480,7 @@ public class VentanaRegistro extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 				dispose();
+				//ventanaPadre.setVisible(true);
 			}
 		});
 		
