@@ -9,6 +9,7 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -22,6 +23,9 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JSplitPane;
 import javax.swing.JTextField;
+
+import dao.DBManager;
+import models.Cliente;
 
 import main.main;
 import javax.swing.DropMode;
@@ -133,17 +137,16 @@ public class VentanaLogin extends JFrame{
 		
 	}
 	
-	//Metodo para comprobar email
+	//Metodo para comprobar email.
 	protected static boolean validarEmail(String email) {
 
 		boolean valido = false;
-
 		Pattern patronEmail = Pattern
 				.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
                         + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
 
 		Matcher mEmail = patronEmail.matcher(email.toLowerCase());
-		if (mEmail.matches()) {
+		if (mEmail.matches()){
 			valido = true;
 			System.out.println("El email es correcto");
 		}else {
@@ -152,9 +155,25 @@ public class VentanaLogin extends JFrame{
 		return valido;
 	}
 	
-	//Metodo para comprobar que el email y password introducidos coinciden y estan en la BD
-	protected static void comprobarDatos() {
-		
+	//Metodo para comprobar que el email y password introducidos coinciden y estan en la BD. 
+	protected static boolean comprobarDatos(String email, String contraseña) {						
+		ArrayList<Cliente> clientes = DBManager.getInstance().getClientes();
+		boolean existe = false;
+		for (Cliente cliente : clientes) {
+			if (cliente.getEmail().equals(email)) {
+				System.out.println("El email existe");
+				if (cliente.getPassword().equals(contraseña)) {
+					System.out.println("la contraseña concuerda con el email");
+					existe = true;
+					return existe;
+				} else {
+					System.out.println("La contraseña no concuerda con este email");
+				} 	
+			} else {
+				System.out.println("El email no existe");
+			}
+		}
+		return existe;
 	}
 		
 //	public static void main(String[] args) {
