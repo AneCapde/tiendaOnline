@@ -297,7 +297,7 @@ public class TiendaGUI extends JFrame {
 				textArea.append("- NOMBRE: " + productoSeleccionado.nombre + "\n");
 				textArea.append("- DESCRIPCIÓN: " + productoSeleccionado.descripcion + "\n");
 				textArea.append("- PRECIO: " + productoSeleccionado.precio + "\n");
-//				textArea.append("- CATEGORÍA: " + productoSeleccionado.getCategoria().getNombre() + "\n");
+				textArea.append("- CATEGORÍA: " + productoSeleccionado.getSubcategoria().getCategoria().getNombre() + "\n");
 				textArea.append("    SUBCATEGORÍA: " + productoSeleccionado.getSubcategoria().getNombre() + "\n");
 				
 				
@@ -357,11 +357,11 @@ public class TiendaGUI extends JFrame {
 				for (int i = 0; i < productos.size(); i++) {
 						System.out.println(productos.get(i).getMarca() + "==" + marcaSeleccionada);
 					if (productos.get(i).getNombre().toLowerCase().indexOf(textoBuscador.toLowerCase()) == 0) {
-//						if ((productos.get(i).getCategoria() == categoriaSeleccionada || categoriaSeleccionada == null) 
-//								&& (productos.get(i).getSubcategoria() == subCategoriaSeleccionada || subCategoriaSeleccionada == null)
-//								&& (productos.get(i).getMarca() == marcaSeleccionada|| marcaSeleccionada == null)
-//								//&& (productos.get(i).getTallas_colores())
-//								)
+						if ((productos.get(i).getSubcategoria().getCategoria() == categoriaSeleccionada || categoriaSeleccionada == null) 
+								&& (productos.get(i).getSubcategoria() == subCategoriaSeleccionada || subCategoriaSeleccionada == null)
+								&& (productos.get(i).getMarca() == marcaSeleccionada|| marcaSeleccionada == null)
+								//&& (productos.get(i).getTallas_colores())
+								)
 						{
 
 							model.addElement(productos.get(i));
