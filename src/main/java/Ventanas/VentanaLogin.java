@@ -149,12 +149,10 @@ public class VentanaLogin extends JFrame{
 			valido = true;
 			System.out.println("El email es correcto");
 		}else {
-			System.out.println("El email introducido es incorrecto");
+			System.out.println("El email introducido no es correcto");
 		}
 		return valido;
 	}
-	
-	
 	
 	//Metodo para comprobar que el email y password introducidos coinciden y estan en la BD
 		
