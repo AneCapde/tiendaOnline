@@ -10,6 +10,8 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -33,9 +35,9 @@ public class VentanaLogin extends JFrame{
 	private JTextField emailTextField;
 	private JTextField password;
 	private JButton bAceptar;
-	private JLabel lEmail;
-	private JLabel lPassword;
+	private JButton bCancelar;
 	private JLabel lTexto;
+	//para comprobacion de usuario-bd
 	private HashMap<String, String> hmComprobar;
 	private static JPasswordField passwordField;
 	
@@ -67,7 +69,6 @@ public class VentanaLogin extends JFrame{
 		password = new JTextField(50);
 		password.setBackground(Color.WHITE);
 		password.setPreferredSize(new Dimension(50, 35));
-//		VentanaLogin.crearBoxLayout(pCentral, "Password:",password);
 		
 		getContentPane().add(pCentral, BorderLayout.CENTER);
 		pCentral.setLayout(null);
@@ -112,18 +113,54 @@ public class VentanaLogin extends JFrame{
 		
 			});
 	    
+	    bCancelar = new JButton("Cancelar");
+	    bCancelar.setBounds((this.getWidth()/100)*16, (this.getHeight()/18)*8, (this.getWidth()/35)*10, (this.getHeight()/18)*3);
+	    pInferior.add(bCancelar);
+	    
+	    bCancelar.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				ventanaPadre.setVisible(true);
+			
+			}
+			});
+	    
 	    addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent e) {
             	ventanaPadre.setEnabled(true);
             }
-        });
-	    
-	    
+        }); 
 		
 	}
+	
+	//Metodo para comprobar email
+	protected static boolean validarEmail(String email) {
+
+		boolean valido = false;
+
+		Pattern patronEmail = Pattern
+				.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                        + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
+
+		Matcher mEmail = patronEmail.matcher(email.toLowerCase());
+		if (mEmail.matches()) {
+			valido = true;
+			System.out.println("El email es correcto");
+		}else {
+			System.out.println("El email introducido es incorrecto");
+		}
+		return valido;
+	}
+	
+	
+	
+	//Metodo para comprobar que el email y password introducidos coinciden y estan en la BD
 		
 //	public static void main(String[] args) {
 //		VentanaLogin v = new VentanaLogin();
 //		v.setVisible(true);
 //	}
+	
 }
