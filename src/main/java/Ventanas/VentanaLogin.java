@@ -109,7 +109,14 @@ public class VentanaLogin extends JFrame{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+				boolean correcto = comprobarDatos(emailTextField.toString(), password.toString());
+				if (correcto == true) {
+					System.out.println("Credenciales correctas");
+					dispose();
+				} else {
+					System.out.println("Credenciales incorrectas");	
+					dispose();		
+				}
 			}
 		
 			});
@@ -126,7 +133,7 @@ public class VentanaLogin extends JFrame{
 				//ventanaPadre.setVisible(true);
 			
 			}
-			});
+		});
 	    
 	    addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent e) {
