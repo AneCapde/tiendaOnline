@@ -112,10 +112,10 @@ public class VentanaLogin extends JFrame{
 				boolean correcto = comprobarDatos(emailTextField.toString(), password.toString());
 				if (correcto == true) {
 					System.out.println("Credenciales correctas");
+					ventanaPadre.setEnabled(true);
 					dispose();
 				} else {
-					System.out.println("Credenciales incorrectas");	
-					dispose();		
+					System.out.println("Credenciales incorrectas");		
 				}
 			}
 		
