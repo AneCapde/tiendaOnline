@@ -163,7 +163,7 @@
 							</execution>
 						</executions>
 						<configuration>
-							<mainClass>util.PrepararDatos</mainClass>
+							<mainClass>com.example.util.PrepararDatos</mainClass>
 						</configuration>
 					</plugin>
 				</plugins>
