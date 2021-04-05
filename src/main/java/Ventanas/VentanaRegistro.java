@@ -148,7 +148,7 @@ public class VentanaRegistro extends JFrame {
 		boolean valido = false;
 
 		Pattern patronApellido = Pattern
-				.compile("[A-Za-z]*[\s][A-Za-z]*");
+				.compile("[a-zA-z]+([ '-][a-zA-Z]+)*");
 
 		Matcher mApellido = patronApellido.matcher(apellido.toLowerCase());
 		if (mApellido.matches()) {
