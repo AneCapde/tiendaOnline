@@ -14,7 +14,6 @@ import java.awt.event.ActionListener;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JTextField;
-import javax.swing.UIManager;
 
 import dao.DBManager;
 import models.Cliente;
@@ -27,8 +26,6 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 
 public class VentanaRegistro extends JFrame {
 
@@ -44,6 +41,9 @@ public class VentanaRegistro extends JFrame {
 	private JTextField localidad;
 	private JComboBox<String> provincia;
 	JRadioButton[] rdbtnArray = new JRadioButton[3];
+	JRadioButton rdbtnHombre;
+	JRadioButton rdbtnMujer;
+	JRadioButton rdbtnNoBinario;
 	Cliente.Genero[] generos = { Cliente.Genero.HOMBRE, Cliente.Genero.MUJER, Cliente.Genero.NO_BINARIO };
 	
 	String[] provincias = { "A Coruña", "Alava", "Albacete", "Alicante", "Almeria", "Asturias", "Avila", "Badajoz", "Baleares",
@@ -52,7 +52,6 @@ public class VentanaRegistro extends JFrame {
 			"Malaga", "Melilla", "Murcia", "Navarra", "Ourense", "Palencia", "Pontevedra, Salamanca", "Segovia", "Sevilla", "Soria",
 			"Tarragona", "Teruel", "Toledo", "Valencia", "Valladolid", "Vizcaya", "Zamora", "Zaragoza"};
 	
-//	private AutorizacionController controller;
 	private static DBManager instance;
 	
 		public static DBManager getInstance() {
@@ -81,6 +80,98 @@ public class VentanaRegistro extends JFrame {
 		}
 		return valido;
 	}
+	
+	// metodo para validar el correo
+	protected static boolean nombreCorrecto(String nombre) {
+
+		boolean valido = false;
+
+		Pattern patronNombre = Pattern
+				.compile("[a-zA-Z]*\\D{3}");
+
+		Matcher mNombre = patronNombre.matcher(nombre.toLowerCase());
+		if (mNombre.matches()) {
+			valido = true;
+		}
+		return valido;
+	}
+	
+	// metodo para validar el DNI
+	protected static boolean DNICorrecto(String dni) {
+
+		boolean valido = false;
+
+		Pattern patronDNI = Pattern
+				.compile("[0-9]{8}[A-Za-z]{1}");
+
+		Matcher mDNI = patronDNI.matcher(dni.toLowerCase());
+		if (mDNI.matches()) {
+			valido = true;
+		}
+		return valido;
+	}
+	
+	
+	// metodo para validar el Codigo Postal
+	protected static boolean CodPostalCorrecto(String cod_postal) {
+
+		boolean valido = false;
+
+		Pattern patroncod_postal = Pattern
+				.compile("[0-9]{5}");
+
+		Matcher mcod_postal = patroncod_postal.matcher(cod_postal.toLowerCase());
+		if (mcod_postal.matches()) {
+			valido = true;
+		}
+		return valido;
+	}
+	
+	// metodo para validar el Telefono
+	protected static boolean telefonoCorrecto(String telefono) {
+
+		boolean valido = false;
+
+		Pattern patrontelefono = Pattern
+				.compile("[0-9]{9}");
+
+		Matcher mtelefono = patrontelefono.matcher(telefono.toLowerCase());
+		if (mtelefono.matches()) {
+			valido = true;
+		}
+		return valido;
+	}
+
+	// metodo para validar el apellido
+	protected static boolean apellidoCorrecto(String apellido) {
+
+		boolean valido = false;
+
+		Pattern patronApellido = Pattern
+				.compile("[A-Za-z]*[\s][A-Za-z]*");
+
+		Matcher mApellido = patronApellido.matcher(apellido.toLowerCase());
+		if (mApellido.matches()) {
+			valido = true;
+		}
+		return valido;
+	}
+	
+	// metodo para validar la localidad
+		protected static boolean localidadCorrecto(String localidad) {
+
+			boolean valido = false;
+
+			Pattern patronLocalidad = Pattern
+					.compile("[a-zA-Z]*\\D{3}");
+
+			Matcher mLocalidad = patronLocalidad.matcher(localidad.toLowerCase());
+			if (mLocalidad.matches()) {
+				valido = true;
+			}
+			return valido;
+		}
+		
 	
 	// metodo para validar la contraseña
 	protected static String elPasswordCorrecto(String password) {
@@ -139,6 +230,59 @@ public class VentanaRegistro extends JFrame {
 		return(resultado);
 	}
 	
+	private boolean Validar() {
+		boolean valido = false;
+		try {
+			if(elEmailCorrecto(email.getText())) {
+				if(nombreCorrecto(nombre.getText())) {
+					if(apellidoCorrecto(apellidos.getText())) {
+						if(DNICorrecto(dni.getText())) {
+							if(telefonoCorrecto(telefono.getText())) {
+								if(!direccion.getText().isEmpty()) {
+									if(CodPostalCorrecto(cod_postal.getText())) {
+										if(provincia.getSelectedIndex() != 0) {
+											if(localidadCorrecto(localidad.getText())) {
+												if(rdbtnHombre.isSelected() || rdbtnMujer.isSelected() || rdbtnNoBinario.isSelected()) {
+													valido = true;
+												}else {
+													JOptionPane.showMessageDialog(null, "Porfavor selecciona el genero", "Validar Genero", JOptionPane.INFORMATION_MESSAGE);
+												}
+											}else {
+												JOptionPane.showMessageDialog(null, "Solo se admite texto", "Validar Localidad", JOptionPane.INFORMATION_MESSAGE);
+											}
+										}else {
+											JOptionPane.showMessageDialog(null, "Hay que seleccionar una procincia", "Seleccionar Provincia", JOptionPane.INFORMATION_MESSAGE);
+										}
+									}else {
+										JOptionPane.showMessageDialog(null, "Solo se admiten 5 numeros", "Validar Codigo Postal", JOptionPane.INFORMATION_MESSAGE);
+									}
+								}else {
+									JOptionPane.showMessageDialog(null, "No se puede dejar en blanco,hay que añadir la direccion", "Validar Direccion", JOptionPane.INFORMATION_MESSAGE);
+								}
+								
+							}else {
+								JOptionPane.showMessageDialog(null, "Solo se admiten 9 numeros", "Validar Telefono", JOptionPane.INFORMATION_MESSAGE);
+							}
+						}else {
+							JOptionPane.showMessageDialog(null, "Tienen que ser 9 caracteres,8 Numeros y 1 letra ", "Validar DNI", JOptionPane.INFORMATION_MESSAGE);
+						}
+						
+					}else {
+						JOptionPane.showMessageDialog(null, "Tiene que ser dos apellidos, con solo texto", "Validar Apellidos", JOptionPane.INFORMATION_MESSAGE);
+					}
+				}else {
+					JOptionPane.showMessageDialog(null, "Solo se admite texto", "Validar Nombre", JOptionPane.INFORMATION_MESSAGE);
+				}
+			}else {
+				JOptionPane.showMessageDialog(null, "Email incorrecto","Validar Email", JOptionPane.INFORMATION_MESSAGE);
+				email.requestFocus();
+			}
+		}catch(Exception e){
+			JOptionPane.showMessageDialog(this,"Error", "Mensaje de Error", JOptionPane.ERROR_MESSAGE);
+		}
+		return valido;
+	}
+	
 	public VentanaRegistro(final JFrame ventanaPadre) {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("/img/Imagenes_sueltas/registro2.png")));
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -163,19 +307,6 @@ public class VentanaRegistro extends JFrame {
 		getContentPane().add(lblNombre);
 		
 		nombre = new JTextField();
-		nombre.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyTyped(KeyEvent e) {
-				//Declaramos una variable y le asignamos un evento
-				char car = e.getKeyChar();
-				//Condicion que nos permite ingresar datos numericos
-				if((car < 'a' || car > 'z') && (car < 'A' || car > 'Z')
-						&&(car!=(char)KeyEvent.VK_BACK_SPACE)) {
-					e.consume();
-					JOptionPane.showMessageDialog(null, "Solo se admite texto", "Validar texto", JOptionPane.INFORMATION_MESSAGE);
-				}
-			}
-		});
 		nombre.setBounds(93, 150, 106, 23);
 		getContentPane().add(nombre);
 		nombre.setColumns(10);
@@ -185,19 +316,6 @@ public class VentanaRegistro extends JFrame {
 		getContentPane().add(lblApellidos);
 		
 		apellidos = new JTextField();
-		apellidos.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyTyped(KeyEvent e) {
-				//Declaramos una variable y le asignamos un evento
-				char car = e.getKeyChar();
-				//Condicion que nos permite ingresar datos numericos
-				if((car < 'a' || car > 'z') && (car < 'A' || car > 'Z')
-						&&(car==(char)KeyEvent.VK_BACK_SPACE)) {
-					e.consume();
-					JOptionPane.showMessageDialog(null, "Solo se admite texto", "Validar texto", JOptionPane.INFORMATION_MESSAGE);
-				}
-			}
-		});
 		apellidos.setColumns(10);
 		apellidos.setBounds(337, 151, 223, 23);
 		getContentPane().add(apellidos);
@@ -222,14 +340,6 @@ public class VentanaRegistro extends JFrame {
 		getContentPane().add(lbldni);
 		
 		dni = new JTextField();
-		dni.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusLost(FocusEvent e) {
-				if(dni.getText().length() != 9 ) {
-					JOptionPane.showMessageDialog(null, "Tienen que ser 9 caracteres, letra incluida", "Validar DNI", JOptionPane.INFORMATION_MESSAGE);
-				}
-			}
-		});
 		dni.setColumns(10);
 		dni.setBounds(93, 191, 106, 23);
 		getContentPane().add(dni);
@@ -239,27 +349,6 @@ public class VentanaRegistro extends JFrame {
 		getContentPane().add(lbltelefono);
 		
 		telefono = new JTextField();
-		telefono.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusLost(FocusEvent e) {
-				if(telefono.getText().length() != 9 ) {
-					JOptionPane.showMessageDialog(null, "Solo se admiten 9 numeros", "Validar Numeros", JOptionPane.INFORMATION_MESSAGE);
-				}
-			}
-		});
-		telefono.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyTyped(KeyEvent e) {
-				//Declaramos una variable y le asignamos un evento
-				char car = e.getKeyChar();
-				//Condicion que nos permite ingresar datos numericos
-				if((car < '0' || car > '9') 
-						&&(car!=(char)KeyEvent.VK_BACK_SPACE)) {
-					e.consume();
-					JOptionPane.showMessageDialog(null, "Solo se admiten numeros", "Validar Numeros", JOptionPane.INFORMATION_MESSAGE);
-				}
-			}
-		});
 		telefono.setColumns(10);
 		telefono.setBounds(337, 192, 106, 23);
 		getContentPane().add(telefono);
@@ -269,19 +358,8 @@ public class VentanaRegistro extends JFrame {
 		getContentPane().add(lblemail);
 		
 		email = new JTextField();
-		email.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusLost(FocusEvent e) {
-				if(elEmailCorrecto(email.getText())) {
-					
-				}else {
-					JOptionPane.showMessageDialog(null, "Email incorrecto","Validar Email", JOptionPane.INFORMATION_MESSAGE);
-					email.requestFocus();
-				}
-			}
-		});
 		email.setColumns(10);
-		email.setBounds(94, 82, 168, 23);
+		email.setBounds(94, 77, 168, 28);
 		getContentPane().add(email);
 		
 		JLabel lbldireccion = new JLabel("Direccón");
@@ -298,27 +376,6 @@ public class VentanaRegistro extends JFrame {
 		getContentPane().add(lblcod_postal);
 		
 		cod_postal = new JTextField();
-		cod_postal.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyTyped(KeyEvent e) {
-				//Declaramos una variable y le asignamos un evento
-				char car = e.getKeyChar();
-				//Condicion que nos permite ingresar datos numericos
-				if((car < '0' || car > '9') 
-						&&(car!=(char)KeyEvent.VK_BACK_SPACE)) {
-					e.consume();
-					JOptionPane.showMessageDialog(null, "Solo se admiten numeros", "Validar Numeros", JOptionPane.INFORMATION_MESSAGE);
-				}
-			}
-		});
-		cod_postal.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusLost(FocusEvent e) {
-				if(cod_postal.getText().length() != 5 ) {
-					JOptionPane.showMessageDialog(null, "Solo se admiten 5 numeros", "Validar Numeros", JOptionPane.INFORMATION_MESSAGE);
-				}
-			}
-		});
 		cod_postal.setColumns(10);
 		cod_postal.setBounds(482, 240, 78, 23);
 		getContentPane().add(cod_postal);
@@ -328,19 +385,6 @@ public class VentanaRegistro extends JFrame {
 		getContentPane().add(lbllocalidad);
 		
 		localidad = new JTextField();
-		localidad.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyTyped(KeyEvent e) {
-				//Declaramos una variable y le asignamos un evento
-				char car = e.getKeyChar();
-				//Condicion que nos permite ingresar datos numericos
-				if((car < 'a' || car > 'z') && (car < 'A' || car > 'Z')
-						&&(car!=(char)KeyEvent.VK_BACK_SPACE)) {
-					e.consume();
-					JOptionPane.showMessageDialog(null, "Solo se admite texto", "Validar texto", JOptionPane.INFORMATION_MESSAGE);
-				}
-			}
-		});
 		localidad.setColumns(10);
 		localidad.setBounds(376, 287, 124, 23);
 		getContentPane().add(localidad);
@@ -357,23 +401,21 @@ public class VentanaRegistro extends JFrame {
 			provincia.addItem(provincias[i]);
 		}
 		
-		
-		
 		JLabel lblGenero = new JLabel("Genero:");
 		lblGenero.setBounds(64, 340, 86, 14);
 		getContentPane().add(lblGenero);
 
-		JRadioButton rdbtnHombre = new JRadioButton("Hombre");
+		 rdbtnHombre = new JRadioButton("Hombre");
 		rdbtnHombre.setBounds(113, 375, 86, 23);
 		getContentPane().add(rdbtnHombre);
 		rdbtnArray[0] = rdbtnHombre;
 
-		JRadioButton rdbtnMujer = new JRadioButton("Mujer");
+		rdbtnMujer = new JRadioButton("Mujer");
 		rdbtnMujer.setBounds(249, 375, 78, 23);
 		getContentPane().add(rdbtnMujer);
 		rdbtnArray[1] = rdbtnMujer;
 
-		JRadioButton rdbtnNoBinario = new JRadioButton("No Binario");
+		rdbtnNoBinario = new JRadioButton("No Binario");
 		rdbtnNoBinario.setBounds(376, 375, 147, 23);
 		getContentPane().add(rdbtnNoBinario);
 		rdbtnArray[2] = rdbtnNoBinario;
@@ -387,37 +429,43 @@ public class VentanaRegistro extends JFrame {
 		JButton btnAceptar = new JButton("Aceptar");
 		btnAceptar.setBounds(145, 429, 117, 29);
 		getContentPane().add(btnAceptar);
+		
 
 		// Esto se lanza cuando alguien pulsa el boton de Aceptar entonces guarda los
 		// datos en la base de Datos
 		btnAceptar.addActionListener(new ActionListener() {
+			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Thread t = new Thread() {
 					public void run() {
-						String dniUsuario = dni.getText();
-						String usuarioNick = nombre.getText();
-						String apellidosUsuario = apellidos.getText();
-						String correo = email.getText();
-						String password = new String(passwordField.getPassword());
-						Integer telefonoUsuario =  Integer.parseInt(telefono.getText());
-						String direccionUsuario = direccion.getText();
-						Cliente.Genero genero = null;
-						for (int i = 0; i < rdbtnArray.length; i++) {
-							if (rdbtnArray[i].isSelected()) {
-								genero = generos[i];
+						if (Validar()) {
+							String dniUsuario = dni.getText();
+							String usuarioNick = nombre.getText();
+							String apellidosUsuario = apellidos.getText();
+							String correo = email.getText();
+							String password = new String(passwordField.getPassword());
+							Integer telefonoUsuario =  Integer.parseInt(telefono.getText());
+							String direccionUsuario = direccion.getText();
+							Integer cod_postalUsuario = Integer.parseInt(cod_postal.getText());
+							String provinciaSelecionada = (String) provincia.getSelectedItem();
+							String localidadUsuario = localidad.getText();
+							Cliente.Genero genero = null;
+							for (int i = 0; i < rdbtnArray.length; i++) {
+								if (rdbtnArray[i].isSelected()) {
+									genero = generos[i];
+								}
 							}
-						}
-						Integer cod_postalUsuario = Integer.parseInt(cod_postal.getText());
-						String provinciaSelecionada = (String) provincia.getSelectedItem();
+			
+							Cliente cliente = new Cliente(dniUsuario, usuarioNick, apellidosUsuario, correo, password,
+									telefonoUsuario, direccionUsuario, genero, cod_postalUsuario, provinciaSelecionada,
+									localidadUsuario);
+			
+							DBManager.getInstance().store(cliente);
+							dispose();
+							ventanaPadre.setEnabled(true);
+						}				
 
-						String localidadUsuario = localidad.getText();
-
-						Cliente cliente = new Cliente(dniUsuario, usuarioNick,apellidosUsuario,correo, password, telefonoUsuario,direccionUsuario, genero,cod_postalUsuario, provinciaSelecionada, localidadUsuario );
-						
-						DBManager.getInstance().store(cliente);
-//						new VentanaLoggin().setVisible(true);
-						dispose();
 					}
 				};
 				t.start();
@@ -437,7 +485,7 @@ public class VentanaRegistro extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 				dispose();
-				//ventanaPadre.setVisible(true);
+				ventanaPadre.setVisible(true);
 			}
 		});
 		
