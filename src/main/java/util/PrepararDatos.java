@@ -21,6 +21,7 @@ public class PrepararDatos {
 		
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
+		
 		try {
 			tx.begin();
 			
@@ -65,34 +66,37 @@ public class PrepararDatos {
 			SubCategoria subcategoria13 = new SubCategoria("Bolsos","Bolsos de todo tipo y riñoneras",categoria3);
 			pm.makePersistent(subcategoria13);
 			
-			//Creamos las marcas (marcas?Esto hay que cambiarlo)
-			Marca marca1 = new Marca("Marca1","marca1");
+			//Creamos las marcas
+			Marca marca1 = new Marca("Nike","Marca de ropa y zapatos");
 			pm.makePersistent(marca1);
-			Marca marca2 = new Marca("Marca2","marca2");
+			Marca marca2 = new Marca("Converse","Marca de zapatos");
 			pm.makePersistent(marca2);
-			Marca marca3 = new Marca("Marca3","marca3");
+			Marca marca3 = new Marca("Cartier","Marca de joyeria");
 			pm.makePersistent(marca3);
 
-			//Creamos productos (de momento 3 de cada subcategoria)
-//			public String nombre;
-//			public String descripcion;
-//			public int stock;
-//			public int precio;
-//			public String imagen;
-//			private Categoria categoria;
-//			private Marca marca;
-//			private SubCategoria subcategoria;
-//			Producto producto1 = new Producto("Chaqueta Vaquera","Chaqueta vaquera azul",10,45,"TENGO QUE PASAR IMAGEN,");
-//			pm.makePersistent(producto1);
-//			Producto producto2 = new Producto("Chaqueta de cuero");
-//			pm.makePersistent(producto2);
-//			Producto producto3 = new Producto("Abrigo de piel");
-//			pm.makePersistent(producto3);
-//			Producto producto4 = new Producto();
-//			pm.makePersistent(producto4);
+			//Creamos productos (de momento algunos de prueba)
+			//como pasar imagen y hm de colores y tallas como lo metemos?
+
+			Producto producto1 = new Producto("Chaqueta Vaquera","Chaqueta vaquera azul",10,45,"TENGO QUE PASAR IMAGEN",subcategoria1,marca1);
+			pm.makePersistent(producto1);
+			Producto producto2 = new Producto("Chaqueta de cuero","Chaqueta de cuero negra",10,35,"imagen",subcategoria1,marca1);
+			pm.makePersistent(producto2);
+			Producto producto3 = new Producto("Abrigo de piel","Abrigo de piel marron",10,80,"imagen",subcategoria1,marca1);
+			pm.makePersistent(producto3);
+			Producto producto4 = new Producto("Camiseta de tirantes","Camiseta de tirantes azul",5,10,"imagen",subcategoria2,marca1);
+			pm.makePersistent(producto4);
+			//meter mas de productos de ropa
+			Producto producto10 = new Producto("Deportivas","Deportivas blancas planas converse",10,70,"TENGO QUE PASAR IMAGEN",subcategoria8,marca2);
+			pm.makePersistent(producto10);
+			Producto producto11 = new Producto("Botas altas","Botas altas negras con cordones",10,75,"TENGO QUE PASAR IMAGEN",subcategoria10,marca2);
+			pm.makePersistent(producto11);
+			//meter mas productos de zapatos
+			Producto producto15 = new Producto("Pendientes de aro","Pendienets de aro bañados en plata",10,20,"TENGO QUE PASAR IMAGEN",subcategoria12,marca3);
+			pm.makePersistent(producto15);
+			Producto producto16 = new Producto("Bolso","Bolso pequeño marron con tira desplegable",10,90,"TENGO QUE PASAR IMAGEN",subcategoria13,marca3);
+			pm.makePersistent(producto16);
 			
-			
-			
+			//meter pedidos?
 		}finally {
 			if (tx.isActive()) {
 				tx.rollback();
