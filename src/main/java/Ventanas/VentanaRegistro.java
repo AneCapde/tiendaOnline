@@ -352,55 +352,12 @@ public class VentanaRegistro extends JFrame {
 		provincia = new JComboBox<String>();
 		provincia.setBounds(93, 290, 159, 20);
 		getContentPane().add(provincia);
-		provincia.addItem(provincias[0]);
-		provincia.addItem(provincias[1]);
-		provincia.addItem(provincias[2]);
-		provincia.addItem(provincias[3]);
-		provincia.addItem(provincias[4]);
-		provincia.addItem(provincias[5]);
-		provincia.addItem(provincias[6]);
-		provincia.addItem(provincias[7]);
-		provincia.addItem(provincias[8]);
-		provincia.addItem(provincias[9]);
-		provincia.addItem(provincias[10]);
-		provincia.addItem(provincias[11]);
-		provincia.addItem(provincias[12]);
-		provincia.addItem(provincias[13]);
-		provincia.addItem(provincias[14]);
-		provincia.addItem(provincias[15]);
-		provincia.addItem(provincias[16]);
-		provincia.addItem(provincias[17]);
-		provincia.addItem(provincias[18]);
-		provincia.addItem(provincias[19]);
-		provincia.addItem(provincias[20]);
-		provincia.addItem(provincias[21]);
-		provincia.addItem(provincias[22]);
-		provincia.addItem(provincias[23]);
-		provincia.addItem(provincias[24]);
-		provincia.addItem(provincias[25]);
-		provincia.addItem(provincias[26]);
-		provincia.addItem(provincias[27]);
-		provincia.addItem(provincias[28]);
-		provincia.addItem(provincias[29]);
-		provincia.addItem(provincias[30]);
-		provincia.addItem(provincias[31]);
-		provincia.addItem(provincias[32]);
-		provincia.addItem(provincias[33]);
-		provincia.addItem(provincias[34]);
-		provincia.addItem(provincias[35]);
-		provincia.addItem(provincias[36]);
-		provincia.addItem(provincias[37]);
-		provincia.addItem(provincias[38]);
-		provincia.addItem(provincias[39]);
-		provincia.addItem(provincias[40]);
-		provincia.addItem(provincias[41]);
-		provincia.addItem(provincias[42]);
-		provincia.addItem(provincias[43]);
-		provincia.addItem(provincias[44]);
-		provincia.addItem(provincias[45]);
-		provincia.addItem(provincias[46]);
-		provincia.addItem(provincias[47]);
-		provincia.addItem(provincias[48]);
+		
+		for (int i = 0; i < provincias.length; i++) {
+			provincia.addItem(provincias[i]);
+		}
+		
+		
 		
 		JLabel lblGenero = new JLabel("Genero:");
 		lblGenero.setBounds(64, 340, 86, 14);
