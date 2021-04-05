@@ -1,4 +1,4 @@
-package mainCliente;
+package com.example.mainCliente;
 
 import java.util.ArrayList;
 
@@ -16,7 +16,8 @@ public class MainCliente {
 		ArrayList<Producto> listaProductos = DBManager.getInstance().getProductos();
 		ArrayList<Categoria> listaCategoria = DBManager.getInstance().getCategorias();
 		ArrayList<SubCategoria> listaSubcategorias = DBManager.getInstance().getSubcategorias();
-		new TiendaGUI(listaProductos, listaCategoria, listaSubcategorias, listaMarcas);
+		TiendaGUI tienda = new TiendaGUI(listaProductos, listaCategoria, listaSubcategorias, listaMarcas);
+		tienda.setVisible(true);
 	}
 
 }
