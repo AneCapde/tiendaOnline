@@ -27,7 +27,6 @@ import javax.swing.JTextField;
 import dao.DBManager;
 import models.Cliente;
 
-import main.main;
 import javax.swing.DropMode;
 
 public class VentanaLogin extends JFrame{
