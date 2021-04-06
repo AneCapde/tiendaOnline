@@ -295,12 +295,15 @@ public class TiendaGUI extends JFrame {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
 				productoSeleccionado = listaElementos.getSelectedValue();
-				textArea.setText(null);;
-				textArea.append("- NOMBRE: " + productoSeleccionado.nombre + "\n");
-				textArea.append("- DESCRIPCIÓN: " + productoSeleccionado.descripcion + "\n");
-				textArea.append("- PRECIO: " + productoSeleccionado.precio + "\n");
-				textArea.append("- CATEGORÍA: " + productoSeleccionado.getSubcategoria().getCategoria().getNombre() + "\n");
-				textArea.append("    SUBCATEGORÍA: " + productoSeleccionado.getSubcategoria().getNombre() + "\n");
+				textArea.setText(null);
+				if (productoSeleccionado != null) {
+					textArea.append("- NOMBRE: " + productoSeleccionado.nombre + "\n");
+					textArea.append("- DESCRIPCIÓN: " + productoSeleccionado.descripcion + "\n");
+					textArea.append("- PRECIO: " + productoSeleccionado.precio + "\n");
+					textArea.append("- CATEGORÍA: " + productoSeleccionado.getSubcategoria().getCategoria().getNombre() + "\n");
+					textArea.append("    SUBCATEGORÍA: " + productoSeleccionado.getSubcategoria().getNombre() + "\n");
+				}
+				
 				
 				
 //				textArea.append();
@@ -347,6 +350,7 @@ public class TiendaGUI extends JFrame {
 
 		botonBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				listaElementos.clearSelection();
 				textoBuscador = txtBuscador.getText();
 				categoriaSeleccionada = (Categoria) comboBox_Categoria.getSelectedItem();
 				subCategoriaSeleccionada = (SubCategoria) comboBox_Subcategoria.getSelectedItem();
@@ -357,15 +361,21 @@ public class TiendaGUI extends JFrame {
 				model.removeAllElements();
 				System.out.println(productos);
 				for (int i = 0; i < productos.size(); i++) {
-						System.out.println(productos.get(i).getMarca() + "==" + marcaSeleccionada);
+					System.out.println(productos.get(i).getMarca() + "==" + marcaSeleccionada);
 					if (productos.get(i).getNombre().toLowerCase().indexOf(textoBuscador.toLowerCase()) == 0) {
-						if ((productos.get(i).getSubcategoria().getCategoria() == categoriaSeleccionada || categoriaSeleccionada == null) 
-								&& (productos.get(i).getSubcategoria() == subCategoriaSeleccionada || subCategoriaSeleccionada == null)
-								&& (productos.get(i).getMarca() == marcaSeleccionada|| marcaSeleccionada == null)
-								//&& (productos.get(i).getTallas_colores())
+						
+						System.out.println(productos.get(i).getSubcategoria().getCategoria() + " =? " + categoriaSeleccionada + (productos.get(i).getSubcategoria().getCategoria() == categoriaSeleccionada));
+						System.out.println(productos.get(i).getSubcategoria() + " =? " + subCategoriaSeleccionada + (productos.get(i).getSubcategoria() == subCategoriaSeleccionada));
+						System.out.println(productos.get(i).getMarca() + " =? " + marcaSeleccionada + (productos.get(i).getMarca() == marcaSeleccionada));
+						System.out.println(colorSelecionado + " =? " + productos.get(i).getTallas_colores().containsKey(colorSelecionado));
+					System.out.println();
+						if ((categoriaSeleccionada == null || productos.get(i).getSubcategoria().getCategoria().getNombre().equals(categoriaSeleccionada.getNombre())) 
+								&& (subCategoriaSeleccionada == null || productos.get(i).getSubcategoria().getNombre().equals(subCategoriaSeleccionada.getNombre()))
+								&& (marcaSeleccionada == null || productos.get(i).getMarca().getNombre().equals(marcaSeleccionada.getNombre()))
+								&& (colorSelecionado == null || productos.get(i).getTallas_colores().containsKey(colorSelecionado))
+//								&& ()
 								)
 						{
-
 							model.addElement(productos.get(i));
 						}
 					}
