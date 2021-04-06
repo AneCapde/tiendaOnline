@@ -1,5 +1,6 @@
 package com.example.util;
 
+
 import java.util.HashMap;
 
 import javax.jdo.JDOHelper;
@@ -7,7 +8,7 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Transaction;
 
-import dao.DBManager;
+//import dao.DBManager;
 import models.Categoria;
 import models.Cliente;
 import models.Colores;
@@ -102,8 +103,8 @@ public class PrepararDatos {
 			//DBManager.getInstance().store(marca3);
 
 			//Creamos productos (de momento algunos de prueba)
-			//como pasar imagen y hm de colores y tallas como lo metemos?
-			//Para hacer lo del hashmap de colores (no se si se hace asi)
+			
+			//Para hacer lo del hashmap de colores
 			HashMap<Colores, Tallas> colorTalla = new HashMap<>();
 			colorTalla.put(Colores.AZUL, Tallas.M);
 			colorTalla.put(Colores.AZUL, Tallas.L);
@@ -113,25 +114,36 @@ public class PrepararDatos {
 			colorTalla.put(Colores.NEGRO, Tallas.L);
 			colorTalla.put(Colores.NEGRO, Tallas.S);
 			colorTalla.put(Colores.NEGRO, Tallas.XL);
-			Producto producto1 = new Producto("Chaqueta Vaquera","Chaqueta vaquera azul",10,45,"TENGO QUE PASAR IMAGEN",subcategoria1,marca1);
+			Producto producto1 = new Producto("Chaqueta Vaquera","Chaqueta vaquera azul",10,45,"img.Imagenes_sueltas/chaquetaVaquera.png",subcategoria1,marca1);
 			producto1.setTallas_colores(colorTalla);
 			pm.makePersistent(producto1);
-			Producto producto2 = new Producto("Chaqueta de cuero","Chaqueta de cuero negra",10,35,"imagen",subcategoria1,marca1);
+			Producto producto2 = new Producto("Chaqueta de cuero","Chaqueta de cuero negra",10,35,"img.Imagenes_sueltas/chaquetaCuero.png",subcategoria1,marca1);
 			pm.makePersistent(producto2);
 			producto2.setTallas_colores(colorTalla);
-			Producto producto3 = new Producto("Abrigo de piel","Abrigo de piel marron",10,80,"imagen",subcategoria1,marca1);
+			Producto producto3 = new Producto("Abrigo de piel","Abrigo de piel marron",10,80,"img.Imagenes_sueltas/chaquetaPiel.png",subcategoria1,marca1);
 			producto3.setTallas_colores(colorTalla);
 			pm.makePersistent(producto3);
-			Producto producto4 = new Producto("Camiseta de tirantes","Camiseta de tirantes azul",5,10,"imagen",subcategoria2,marca1);
+			Producto producto4 = new Producto("Camiseta de tirantes","Camiseta de tirantes azul",5,10,"img.Imagenes_sueltas/camisetaTirante.png",subcategoria2,marca1);
 			producto4.setTallas_colores(colorTalla);
 			pm.makePersistent(producto4);
-			//meter mas de productos de ropa
-			Producto producto10 = new Producto("Deportivas","Deportivas blancas planas converse",10,70,"TENGO QUE PASAR IMAGEN",subcategoria8,marca2);
+			Producto producto5 = new Producto("Pantalon Vaquero","Pantalon vaquero azul",15,30,"",subcategoria3,marca2);
+			producto5.setTallas_colores(colorTalla);
+			pm.makePersistent(producto5);
+			Producto producto6 = new Producto("Falda de flores","Falda estampado floral",10,25,"",subcategoria4,marca2);
+			producto6.setTallas_colores(colorTalla);
+			pm.makePersistent(producto6);
+			Producto producto7 = new Producto("Vestido negro","Vestido negro de tirantes",10,35,"",subcategoria6,marca2);
+			producto7.setTallas_colores(colorTalla);
+			pm.makePersistent(producto7);
+			Producto producto8 = new Producto("Camisa blanca","Camisa blanca elegante",10,35,"",subcategoria7,marca2);
+			producto8.setTallas_colores(colorTalla);
+			pm.makePersistent(producto8);
+			Producto producto10 = new Producto("Deportivas","Deportivas blancas planas converse",10,70,"img.Imagenes_sueltas/zapatillasDeportivas.png",subcategoria8,marca2);
 			pm.makePersistent(producto10);
-			Producto producto11 = new Producto("Botas altas","Botas altas negras con cordones",10,75,"TENGO QUE PASAR IMAGEN",subcategoria10,marca2);
+			Producto producto11 = new Producto("Botas altas","Botas altas negras con cordones",10,75,"img.Imagenes_sueltas/botasAltas.png",subcategoria10,marca2);
 			pm.makePersistent(producto11);
 			//meter mas productos de zapatos
-			Producto producto15 = new Producto("Pendientes de aro","Pendienets de aro bañados en plata",10,20,"TENGO QUE PASAR IMAGEN",subcategoria12,marca3);
+			Producto producto15 = new Producto("Pendientes de aro","Pendienets de aro bañados en plata",10,20,"img.Imagenes_sueltas/pendientesAro.png",subcategoria12,marca3);
 			pm.makePersistent(producto15);
 			Producto producto16 = new Producto("Bolso","Bolso pequeño marron con tira desplegable",10,90,"TENGO QUE PASAR IMAGEN",subcategoria13,marca3);
 			pm.makePersistent(producto16);
