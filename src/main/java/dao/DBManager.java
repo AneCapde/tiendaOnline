@@ -206,30 +206,38 @@ public class DBManager implements IDBManager{
 	}
     @Override
 	public ArrayList<SubCategoria> getSubcategorias() {
-		ArrayList<SubCategoria> subCategorias = new ArrayList<>();		
+		ArrayList<SubCategoria> subcategorias = new ArrayList<>();		
 		PersistenceManager pm = pmf.getPersistenceManager();
 		pm.getFetchPlan().setMaxFetchDepth(4);
 		Transaction tx = pm.currentTransaction();
 		try {
-			System.out.println("  * Retrieving all the Subcategorias");
+			System.out.println("  * Retrieving all the Categorias");
 
 			tx.begin();
 
 			Extent<SubCategoria> extent = pm.getExtent(SubCategoria.class, true);
-			for (SubCategoria subCategoria : extent) {
-				subCategorias.add(subCategoria);
+			for (SubCategoria subcategoria : extent) {
+				System.out.println(subcategoria);
+				subcategorias.add(subcategoria);
+				System.out.println(subcategorias);
 			}
+			System.out.println(subcategorias);
 			tx.commit();
 		} catch (Exception ex) {
-			System.out.println("  $ Error retrieving all the Subcategorias: " + ex.getMessage());
+			System.out.println("  $ Error retrieving all the Categorias: " + ex.getMessage());
 		} finally {
+			System.out.println(subcategorias);
 			if (tx != null && tx.isActive()) {
 				tx.rollback();
+				System.out.println(subcategorias + "  Roll");
 			}
 			pm.close();
+			System.out.println(subcategorias);
         }
-		return subCategorias;		
+		System.out.println(subcategorias);
+		return subcategorias;			
 	}
+    
     @Override
 	public void updateCliente(Cliente cliente) {
 		PersistenceManager pm = pmf.getPersistenceManager();

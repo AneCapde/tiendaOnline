@@ -82,37 +82,37 @@ public class TiendaGUI extends JFrame {
 
 	
 	
-	public static void main(String[] args) {
-		ArrayList<Producto> productosTest = new ArrayList<Producto>();
-		ArrayList<Categoria> categoriasTest = new ArrayList<Categoria>();
-		ArrayList<SubCategoria> subCategoriasTest = new ArrayList<SubCategoria>();
-		ArrayList<Marca> marcasTest = new ArrayList<Marca>();
-		
-		
-		Categoria c1 = new Categoria("comida", "comiiiida");
-		Categoria c2 = new Categoria("ropa", "ropaaaa");
-		
-		SubCategoria sc1 = new SubCategoria("tuber", "tuberculo", c1);
-		SubCategoria sc2 = new SubCategoria("baquero", "muuuu", c2);
-		
-		Marca ma1 = new Marca("Pats", "ico");
-		Marca ma2 = new Marca("Levis", "sa");
-		
-		Producto pr1 = new Producto("Patata", "descripcion", 1 , 20, "no", sc1, ma1);
-		Producto pr2 = new Producto("pantalon", "descripcion", 0 , 1, "imagen", sc2, ma2);
-		
-		productosTest.add(pr1);
-		productosTest.add(pr2);
-		categoriasTest.add(c1);
-		categoriasTest.add(c2);
-		subCategoriasTest.add(sc1);
-		subCategoriasTest.add(sc2);
-		marcasTest.add(ma1);
-		marcasTest.add(ma2);
-		
-		TiendaGUI test = new TiendaGUI(productosTest, categoriasTest, subCategoriasTest, marcasTest);
-		test.setVisible(true);
-	}
+//	public static void main(String[] args) {
+//		ArrayList<Producto> productosTest = new ArrayList<Producto>();
+//		ArrayList<Categoria> categoriasTest = new ArrayList<Categoria>();
+//		ArrayList<SubCategoria> subCategoriasTest = new ArrayList<SubCategoria>();
+//		ArrayList<Marca> marcasTest = new ArrayList<Marca>();
+//		
+//		
+//		Categoria c1 = new Categoria("comida", "comiiiida");
+//		Categoria c2 = new Categoria("ropa", "ropaaaa");
+//		
+//		SubCategoria sc1 = new SubCategoria("tuber", "tuberculo", c1);
+//		SubCategoria sc2 = new SubCategoria("baquero", "muuuu", c2);
+//		
+//		Marca ma1 = new Marca("Pats", "ico");
+//		Marca ma2 = new Marca("Levis", "sa");
+//		
+//		Producto pr1 = new Producto("Patata", "descripcion", 1 , 20, "no", sc1, ma1);
+//		Producto pr2 = new Producto("pantalon", "descripcion", 0 , 1, "imagen", sc2, ma2);
+//		
+//		productosTest.add(pr1);
+//		productosTest.add(pr2);
+//		categoriasTest.add(c1);
+//		categoriasTest.add(c2);
+//		subCategoriasTest.add(sc1);
+//		subCategoriasTest.add(sc2);
+//		marcasTest.add(ma1);
+//		marcasTest.add(ma2);
+//		
+//		TiendaGUI test = new TiendaGUI(productosTest, categoriasTest, subCategoriasTest, marcasTest);
+//		test.setVisible(true);
+//	}
 	
 	public TiendaGUI(final ArrayList<Producto> productos, ArrayList<Categoria> categorias, final ArrayList<SubCategoria> subCategorias, ArrayList<Marca> marcas) {
 		
@@ -197,7 +197,8 @@ public class TiendaGUI extends JFrame {
 		    	comboBox_Subcategoria.addItem(null);
 		    	categoriaSeleccionada = (Categoria) comboBox_Categoria.getSelectedItem();
 		    	for (int i = 0; i < subCategorias.size(); i++) {
-		
+		    		System.out.println(subCategorias.get(i).getCategoria());
+		    		System.out.println(categoriaSeleccionada);
 					if (categoriaSeleccionada.getNombre() == subCategorias.get(i).getCategoria().getNombre()) {
 						System.out.println("Meto:" + subCategorias.get(i));
 						comboBox_Subcategoria.addItem(subCategorias.get(i));
