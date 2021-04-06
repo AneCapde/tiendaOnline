@@ -197,12 +197,13 @@ public class TiendaGUI extends JFrame {
 		    	comboBox_Subcategoria.addItem(null);
 		    	categoriaSeleccionada = (Categoria) comboBox_Categoria.getSelectedItem();
 		    	for (int i = 0; i < subCategorias.size(); i++) {
-		    		System.out.println(subCategorias.get(i).getCategoria());
-		    		System.out.println(categoriaSeleccionada);
-					if (categoriaSeleccionada.getNombre() == subCategorias.get(i).getCategoria().getNombre()) {
+					System.out.println(categoriaSeleccionada.getNombre());
+					System.out.println(subCategorias.get(i).getCategoria().getNombre());
+					System.out.println(categoriaSeleccionada.getNombre().equals(subCategorias.get(i).getCategoria().getNombre()));
+		
+					if (categoriaSeleccionada.getNombre().equals(subCategorias.get(i).getCategoria().getNombre())) {
 						System.out.println("Meto:" + subCategorias.get(i));
 						comboBox_Subcategoria.addItem(subCategorias.get(i));
-						
 					}
 					
 				}

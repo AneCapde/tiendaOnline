@@ -1,9 +1,6 @@
 package com.example.mainCliente;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Objects;
 
 import Ventanas.TiendaGUI;
 import dao.DBManager;
@@ -16,12 +13,9 @@ public class MainCliente {
 	
 	public static void main(String[] args) {
 		ArrayList<Marca> listaMarcas = DBManager.getInstance().getMarcas();
-//		limpiadorTemporal(listaMarcas);
 		ArrayList<Producto> listaProductos = DBManager.getInstance().getProductos();
 		ArrayList<Categoria> listaCategoria = DBManager.getInstance().getCategorias();
-		System.out.println(listaCategoria);
 		ArrayList<SubCategoria> listaSubcategorias = DBManager.getInstance().getSubcategorias();
-		System.out.println(listaSubcategorias.get(1).toStringDebug() + "Hooooooolaaaaaaa");
 		TiendaGUI tienda = new TiendaGUI(listaProductos, listaCategoria, listaSubcategorias, listaMarcas);
 		tienda.setVisible(true);
 	}

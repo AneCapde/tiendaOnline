@@ -16,7 +16,9 @@ public class Producto {
 	public int stock;
 	public int precio;
 	public String imagen;
+	@Persistent(defaultFetchGroup = "true")
 	private Marca marca;
+	@Persistent(defaultFetchGroup = "true")
 	private SubCategoria subcategoria;
 
 	@Persistent(defaultFetchGroup = "true", mappedBy = "producto", dependentElement = "true")

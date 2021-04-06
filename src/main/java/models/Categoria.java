@@ -1,19 +1,12 @@
 package models;
 
-import java.util.ArrayList;
-
-import javax.jdo.annotations.Join;
 import javax.jdo.annotations.PersistenceCapable;
-import javax.jdo.annotations.Persistent;
 
 @PersistenceCapable(detachable = "true")
 public class Categoria {
 
 	public String nombre;
 	public String descripcion;
-	@Persistent(defaultFetchGroup = "true", mappedBy = "categoria", dependentElement = "true")
-	@Join
-	private ArrayList<SubCategoria> subcategorias = new ArrayList<SubCategoria>();
 
 	
 	public Categoria(String nombre, String descripcion) {
@@ -39,13 +32,6 @@ public class Categoria {
 	}
 	public String toStringDebug() {
 		return "Categoria [nombre=" + nombre + ", descripcion=" + descripcion + "]";
-	}
-	public ArrayList<SubCategoria> getSubCategorias() {
-		return this.subcategorias;
-	}
-
-	public void setSubCategorias(ArrayList<SubCategoria> subcategorias) {
-		this.subcategorias = subcategorias;
 	}
 	@Override
 	public String toString() {

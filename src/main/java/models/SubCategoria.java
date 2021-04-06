@@ -1,11 +1,13 @@
 package models;
 
 import javax.jdo.annotations.PersistenceCapable;
+import javax.jdo.annotations.Persistent;
 @PersistenceCapable(detachable = "true")
 public class SubCategoria {
 	
 	private String nombre;
 	private String descripcion;
+	@Persistent(defaultFetchGroup = "true")
 	private Categoria categoria;
 
 

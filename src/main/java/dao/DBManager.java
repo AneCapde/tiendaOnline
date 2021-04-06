@@ -171,6 +171,7 @@ public class DBManager implements IDBManager{
 		} catch (Exception ex) {
 			System.out.println("  $ Error retrieving all the Categorias: " + ex.getMessage());
 		} finally {
+			System.out.println(categorias + "SON NECESARIOS SINO CASCA");
 			if (tx != null && tx.isActive()) {
 				tx.rollback();
 			}
@@ -211,30 +212,22 @@ public class DBManager implements IDBManager{
 		pm.getFetchPlan().setMaxFetchDepth(4);
 		Transaction tx = pm.currentTransaction();
 		try {
-			System.out.println("  * Retrieving all the Categorias");
+			System.out.println("  * Retrieving all the Subcategoria");
 
 			tx.begin();
-
 			Extent<SubCategoria> extent = pm.getExtent(SubCategoria.class, true);
 			for (SubCategoria subcategoria : extent) {
-				System.out.println(subcategoria);
 				subcategorias.add(subcategoria);
-				System.out.println(subcategorias);
 			}
-			System.out.println(subcategorias);
 			tx.commit();
 		} catch (Exception ex) {
-			System.out.println("  $ Error retrieving all the Categorias: " + ex.getMessage());
+			System.out.println("  $ Error retrieving all the Subcategorias: " + ex.getMessage());
 		} finally {
-			System.out.println(subcategorias);
 			if (tx != null && tx.isActive()) {
 				tx.rollback();
-				System.out.println(subcategorias + "  Roll");
 			}
 			pm.close();
-			System.out.println(subcategorias);
         }
-		System.out.println(subcategorias);
 		return subcategorias;			
 	}
     
