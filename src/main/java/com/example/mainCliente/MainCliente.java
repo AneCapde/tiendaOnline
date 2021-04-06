@@ -21,7 +21,7 @@ public class MainCliente {
 		ArrayList<Categoria> listaCategoria = DBManager.getInstance().getCategorias();
 		System.out.println(listaCategoria);
 		ArrayList<SubCategoria> listaSubcategorias = DBManager.getInstance().getSubcategorias();
-		System.out.println(listaSubcategorias + "Hooooooolaaaaaaa");
+		System.out.println(listaSubcategorias.get(1).toStringDebug() + "Hooooooolaaaaaaa");
 		TiendaGUI tienda = new TiendaGUI(listaProductos, listaCategoria, listaSubcategorias, listaMarcas);
 		tienda.setVisible(true);
 	}

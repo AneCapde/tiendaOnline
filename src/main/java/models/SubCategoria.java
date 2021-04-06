@@ -40,7 +40,7 @@ public class SubCategoria {
 		this.categoria = categoria;
 	}
 	public String toStringDebug() {
-		return "SubCategoria [nombre=" + nombre + ", descripcion="+ descripcion + "]";
+		return "SubCategoria [nombre=" + nombre + ", descripcion="+ descripcion + " dentro de Categorria==" + categoria.getNombre() + "]";
 	}
 	@Override
 	public String toString() {
