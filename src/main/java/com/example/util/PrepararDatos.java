@@ -130,16 +130,16 @@ public class PrepararDatos {
 			Producto producto4 = new Producto("Camiseta de tirantes","Camiseta de tirantes azul",5,10,"img.Imagenes_sueltas/camisetaTirante.png",subcategoria2,marca1);
 			producto4.setTallas_colores(colorTalla);
 			pm.makePersistent(producto4);
-			Producto producto5 = new Producto("Pantalon Vaquero","Pantalon vaquero azul",15,30,"",subcategoria3,marca2);
+			Producto producto5 = new Producto("Pantalon Vaquero","Pantalon vaquero azul",15,30,"img.Imagenes_sueltas/pantalonVaquero.png",subcategoria3,marca2);
 			producto5.setTallas_colores(colorTalla);
 			pm.makePersistent(producto5);
-			Producto producto6 = new Producto("Falda de flores","Falda estampado floral",10,25,"",subcategoria4,marca2);
+			Producto producto6 = new Producto("Falda de flores","Falda estampado floral",10,25,"img.Imagenes_sueltas/faldaFlores.png",subcategoria4,marca2);
 			producto6.setTallas_colores(colorTalla);
 			pm.makePersistent(producto6);
-			Producto producto7 = new Producto("Vestido negro","Vestido negro de tirantes",10,35,"",subcategoria6,marca2);
+			Producto producto7 = new Producto("Vestido negro","Vestido negro de tirantes",10,35,"img.Imagenes_sueltas/vestidoNegro.png",subcategoria6,marca2);
 			producto7.setTallas_colores(colorTalla);
 			pm.makePersistent(producto7);
-			Producto producto8 = new Producto("Camisa blanca","Camisa blanca elegante",10,35,"",subcategoria7,marca2);
+			Producto producto8 = new Producto("Camisa blanca","Camisa blanca elegante",10,35,"img.Imagenes_sueltas/camisaBlanca.png",subcategoria7,marca2);
 			producto8.setTallas_colores(colorTalla);
 			pm.makePersistent(producto8);
 			Producto producto10 = new Producto("Deportivas","Deportivas blancas planas converse",10,70,"img.Imagenes_sueltas/zapatillasDeportivas.png",subcategoria8,marca2);
@@ -149,7 +149,7 @@ public class PrepararDatos {
 			//meter mas productos de zapatos
 			Producto producto15 = new Producto("Pendientes de aro","Pendienets de aro bañados en plata",10,20,"img.Imagenes_sueltas/pendientesAro.png",subcategoria12,marca3);
 			pm.makePersistent(producto15);
-			Producto producto16 = new Producto("Bolso","Bolso pequeño marron con tira desplegable",10,90,"TENGO QUE PASAR IMAGEN",subcategoria13,marca3);
+			Producto producto16 = new Producto("Bolso","Bolso pequeño marron con tira desplegable",10,90,"img.Imagenes_sueltas/bolso.png",subcategoria13,marca3);
 			pm.makePersistent(producto16);
 			tx.commit();
 		} finally {
