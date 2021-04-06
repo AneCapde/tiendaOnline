@@ -2,32 +2,24 @@ package Ventanas;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
-import javax.swing.JSplitPane;
 import javax.swing.JTextField;
 
 import dao.DBManager;
 import models.Cliente;
-
-import javax.swing.DropMode;
 
 public class VentanaLogin extends JFrame{
 
@@ -36,7 +28,7 @@ public class VentanaLogin extends JFrame{
 	private JPanel pSuperior;
 	private JPanel pInferior;
 	private JTextField emailTextField;
-	private JTextField password;
+	private JPasswordField password;
 	private JButton bAceptar;
 	private JButton bCancelar;
 	private JLabel lTexto;
@@ -67,7 +59,7 @@ public class VentanaLogin extends JFrame{
 		lTexto.setFont(new Font("Times New Roman", Font.BOLD, 36));
 		pSuperior.add(lTexto);
 		
-		password = new JTextField(50);
+		password = new JPasswordField(50);
 		password.setBackground(Color.WHITE);
 		password.setPreferredSize(new Dimension(50, 35));
 		
@@ -86,20 +78,15 @@ public class VentanaLogin extends JFrame{
 		pCentral.add(emailTextField);
 		emailTextField.setBackground(Color.WHITE);
 		emailTextField.setPreferredSize(new Dimension(50, 35));
-		//		pCentral.add(password);
-		//		pCentral.add(email);
-				
-//				VentanaLogin.crearBoxLayout(pCentral, "Email:", emailTextField);
-				
-				passwordField = new JPasswordField();
-				passwordField.setBounds(114, 129, 444, 35);
-				pCentral.add(passwordField);
-//				passwordField.setDropMode(DropMode.ON);
-				
-				JLabel lblPassword = new JLabel("Password:");
-				lblPassword.setBounds(22, 132, 82, 23);
-				pCentral.add(lblPassword);
-				lblPassword.setFont(new Font("Segoe UI Black", Font.PLAIN, 16));
+
+		passwordField = new JPasswordField();
+		passwordField.setBounds(114, 129, 444, 35);
+		pCentral.add(passwordField);
+
+		JLabel lblPassword = new JLabel("Password:");
+		lblPassword.setBounds(22, 132, 82, 23);
+		pCentral.add(lblPassword);
+		lblPassword.setFont(new Font("Segoe UI Black", Font.PLAIN, 16));
 		
 		bAceptar = new JButton("Aceptar");
 		bAceptar.setBounds((this.getWidth()/100)*5, (this.getHeight()/18)*8, (this.getWidth()/35)*10, (this.getHeight()/18)*3);
@@ -109,13 +96,16 @@ public class VentanaLogin extends JFrame{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				boolean correcto = comprobarDatos(emailTextField.toString(), password.toString());
+				boolean correcto = comprobarDatos(emailTextField.getText(), new String (passwordField.getPassword()));
 				if (correcto == true) {
 					System.out.println("Credenciales correctas");
 					ventanaPadre.setEnabled(true);
 					dispose();
 				} else {
 					System.out.println("Credenciales incorrectas");		
+					dispose();
+					ventanaPadre.setEnabled(true);
+//					setVisible(true);
 				}
 			}
 		
@@ -163,22 +153,35 @@ public class VentanaLogin extends JFrame{
 	
 	//Metodo para comprobar que el email y password introducidos coinciden y estan en la BD. 
 	protected static boolean comprobarDatos(String email, String contraseña) {						
-		ArrayList<Cliente> clientes = DBManager.getInstance().getClientes();
 		boolean existe = false;
-		for (Cliente cliente : clientes) {
-			if (cliente.getEmail().equals(email)) {
-				System.out.println("El email existe");
-				if (cliente.getPassword().equals(contraseña)) {
-					System.out.println("la contraseña concuerda con el email");
-					existe = true;
-					return existe;
+//		while(!existe) {
+			ArrayList<Cliente> clientes = DBManager.getInstance().getClientes();
+
+			for (Cliente cliente : clientes) {
+				System.out.println(cliente.getEmail());
+				System.out.println(email);
+				if (cliente.getEmail().equals(email)) {
+					System.out.println(cliente.getPassword());
+					String contraseña2 = new String(cliente.getPassword());
+					System.out.println(contraseña);
+					System.out.println("El email existe");
+					if (contraseña2.equals(contraseña)) {
+						System.out.println("la contraseña concuerda con el email");
+						existe = true;
+					} else {
+						JOptionPane.showMessageDialog(null, "La contraseña es incorrecta. Pruebe otra vez",
+								"Validar Contraseña", JOptionPane.INFORMATION_MESSAGE);
+
+					}
 				} else {
-					System.out.println("La contraseña no concuerda con este email");
-				} 	
-			} else {
-				System.out.println("El email no existe");
-			}
+					JOptionPane.showMessageDialog(null, "El email introducido no existe. Pruebe con otro", "Validar Email",
+							JOptionPane.INFORMATION_MESSAGE);
+
+				}
+//			}
 		}
+		
+
 		return existe;
 	}
 		
