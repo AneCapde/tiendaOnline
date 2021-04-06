@@ -40,7 +40,13 @@ public class Categoria {
 	public String toStringDebug() {
 		return "Categoria [nombre=" + nombre + ", descripcion=" + descripcion + "]";
 	}
-	
+	public ArrayList<SubCategoria> getSubCategorias() {
+		return this.subcategorias;
+	}
+
+	public void setSubCategorias(ArrayList<SubCategoria> subcategorias) {
+		this.subcategorias = subcategorias;
+	}
 	@Override
 	public String toString() {
 		return nombre;
