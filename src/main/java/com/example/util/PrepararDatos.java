@@ -9,11 +9,13 @@ import javax.jdo.Transaction;
 
 import dao.DBManager;
 import models.Categoria;
+import models.Cliente;
 import models.Colores;
 import models.Marca;
 import models.Producto;
 import models.SubCategoria;
 import models.Tallas;
+import models.Cliente.Genero;
 
 
 
@@ -27,6 +29,11 @@ public class PrepararDatos {
 		Transaction tx = pm.currentTransaction();
 		try {
 			tx.begin();
+			
+			//Creamos un cliente
+			Cliente cliente1 = new Cliente("12399345K", "Leire", "Fernandez Olabarrieta", "leire@gmail.com", "12345r", 655786943,
+					"luis bilbao libarno", Genero.MUJER, 45678, "Bizkaia", "Leioa");
+			pm.makePersistent(cliente1);
 			
 			//Creamos las categorias
 			Categoria categoria1 = new Categoria("Ropa","Aqui se podra encontrar ropa de diferentes estilos y de todo tipo");
