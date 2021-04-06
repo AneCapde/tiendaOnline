@@ -1,4 +1,4 @@
-package com.example.util;
+package es.deusto.spq.util;
 
 
 import java.util.HashMap;

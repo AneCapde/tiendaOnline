@@ -1,4 +1,4 @@
-package com.example.mainCliente;
+package es.deusto.spq.mainCliente;
 
 import java.util.ArrayList;
 
