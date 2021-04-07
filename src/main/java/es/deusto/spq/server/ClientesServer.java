@@ -35,6 +35,12 @@ public class ClientesServer {
 		}
         return correcto;
 	}
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Cliente> getClientes() {
+		List<Cliente> clientes = DBManager.getInstance().getClientes();
+		return clientes;
+    }
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public void addCliente(Cliente cliente) {
