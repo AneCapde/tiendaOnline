@@ -203,6 +203,11 @@ public class TiendaGUI extends JFrame {
 		botonComprar.setBounds(507, 470, 309, 41);
 		botonComprar.setFont(new Font("Segoe UI Black", Font.PLAIN, 20));
 		contentPane.add(botonComprar);
+		botonComprar.addActionListener (new ActionListener () {
+		    public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
 		
 		//#################################################################################################
 		JButton botonLogin = new JButton("Log in");

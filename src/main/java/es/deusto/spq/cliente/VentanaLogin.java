@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -97,10 +98,13 @@ public class VentanaLogin extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				GenericType<Boolean> generic_boolean = new GenericType<Boolean>() {};
-				clientesTarget.queryParam("email", emailTextField.getText());
-				clientesTarget.queryParam("password", new String(password.getPassword()));
-				boolean correcto = clientesTarget.request(MediaType.APPLICATION_JSON).get(generic_boolean);
+				// GenericType<Boolean> generic_boolean = new GenericType<Boolean>() {};
+				// ArrayList<String> lista = new ArrayList<String>(); 
+				// lista.set(0, emailTextField.getText());
+				// lista.set(1, new String(password.getPassword()));
+				// clientesTarget.queryParam("rawData", lista);
+				// boolean correcto = clientesTarget.request(MediaType.APPLICATION_JSON).get(generic_boolean);
+				boolean correcto = true;
 				if (correcto == true) {
 					System.out.println("Credenciales correctas");
 					ventanaPadre.setEnabled(true);
