@@ -92,19 +92,33 @@ public class VentanaLogin extends JFrame{
 		bAceptar.setBounds((this.getWidth()/100)*5, (this.getHeight()/18)*8, (this.getWidth()/35)*10, (this.getHeight()/18)*3);
 	    pInferior.add(bAceptar);
 	    
+	    
+	    
+	    
+	    
+	    //############ ESTO VA A ESTAR EN UNA VARIABLE EN EL SERVIDOR #################### TODO
+	    ArrayList<Cliente> clientes = DBManager.getInstance().getClientes();
+	    //############ ESTO VA A ESTAR EN UNA VARIABLE EN EL SERVIDOR #################### TODO
+	    
+	    
+	    
+	    
+	    
+	    
 	    bAceptar.addActionListener(new ActionListener() {
-
+	    
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				boolean correcto = comprobarDatos(emailTextField.getText(), new String (passwordField.getPassword()));
+				
+				boolean correcto = comprobarDatos(emailTextField.getText(), new String (passwordField.getPassword()), clientes);
 				if (correcto == true) {
 					System.out.println("Credenciales correctas");
 					ventanaPadre.setEnabled(true);
 					dispose();
 				} else {
 					System.out.println("Credenciales incorrectas");		
-					dispose();
-					ventanaPadre.setEnabled(true);
+//					dispose();
+//					ventanaPadre.setEnabled(true);
 //					setVisible(true);
 				}
 			}
@@ -151,40 +165,39 @@ public class VentanaLogin extends JFrame{
 		return valido;
 	}
 	
+	
+	
+	
+	
+	
+	
 	//Metodo para comprobar que el email y password introducidos coinciden y estan en la BD. 
-	protected static boolean comprobarDatos(String email, String contraseña) {						
-		boolean existe = false;
-//		while(!existe) {
-			ArrayList<Cliente> clientes = DBManager.getInstance().getClientes();
-
-			for (Cliente cliente : clientes) {
-				System.out.println(cliente.getEmail());
-				System.out.println(email);
-				if (cliente.getEmail().equals(email)) {
-					System.out.println(cliente.getPassword());
-					String contraseña2 = new String(cliente.getPassword());
-					System.out.println(contraseña);
-					System.out.println("El email existe");
-					if (contraseña2.equals(contraseña)) {
-						System.out.println("la contraseña concuerda con el email");
-						existe = true;
-					} else {
-						JOptionPane.showMessageDialog(null, "La contraseña es incorrecta. Pruebe otra vez",
-								"Validar Contraseña", JOptionPane.INFORMATION_MESSAGE);
-
-					}
-				} else {
-					JOptionPane.showMessageDialog(null, "El email introducido no existe. Pruebe con otro", "Validar Email",
-							JOptionPane.INFORMATION_MESSAGE);
-
+	//##################### ESTO ESTARÁ EN EL SERVIDOR QUITANDO EL PARAMETRO DE CLIENTES QUE SERÁ UNA VARIABLE EN EL SERVIDOR ############################## TODO
+	protected static boolean comprobarDatos(String email, String contraseña, ArrayList<Cliente> clientes) {						
+		boolean correcto = false;
+		
+		System.out.println(clientes);
+		System.out.println(clientes.get(0).getEmail() + "=" + email);
+		for (Cliente cliente : clientes) {
+			System.out.println(cliente.getEmail() + "=" + email);
+			if (cliente.getEmail().equals(email)) {
+				if(cliente.getPassword().equals(contraseña)) {
+					correcto = true;
 				}
-//			}
+				
+			}
 		}
 		
-
-		return existe;
+		return correcto;
 	}
-		
+	//###########################################################################################################################	
+	
+	
+	
+	
+	
+	
+	
 //	public static void main(String[] args) {
 //		VentanaLogin v = new VentanaLogin();
 //		v.setVisible(true);
