@@ -127,6 +127,7 @@ public class TiendaGUI extends JFrame {
 		//#################################################################################################
 		comboBox_colores = new JComboBox<Colores>();
 		comboBox_colores.addItem(null);
+		comboBox_colores.setEnabled(false);
 		for (Colores col : Colores.values()) {
 			comboBox_colores.addItem(col);
 		}
@@ -284,7 +285,7 @@ public class TiendaGUI extends JFrame {
 		//######################################################################
 		comboBoxTalla = new JComboBox<Tallas>();
 		comboBoxTalla.addItem(null);
-		
+		comboBoxTalla.setEnabled(false);
 		for (Tallas tall : Tallas.values()) {
 			comboBoxTalla.addItem(tall);
 		}
