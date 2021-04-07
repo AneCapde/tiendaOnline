@@ -3,7 +3,6 @@ package models;
 import java.util.Date;
 
 import javax.jdo.annotations.PersistenceCapable;
-import javax.jdo.annotations.Persistent;
 
 @PersistenceCapable(detachable = "true")
 public class Pedido {
@@ -12,13 +11,12 @@ public class Pedido {
 	private String estado;
 	private int importe;
 	private int cantidad;
-	@Persistent(defaultFetchGroup = "true")
 	private Cliente cliente;
-	@Persistent(defaultFetchGroup = "true")
 	private Producto producto;
 	
-	public Pedido(Date fecha, String estado, int importe, int cantidad, Producto producto) {
+	public Pedido(Cliente cliente, Date fecha, String estado, int importe, int cantidad, Producto producto) {
 		super();
+		this.cliente = cliente;
 		this.fecha = fecha;
 		this.estado = estado;
 		this.importe = importe;
@@ -26,6 +24,14 @@ public class Pedido {
 		this.producto = producto;
 	}
 	
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+
 	public Date getFecha() {
 		return this.fecha;
 	}
@@ -50,12 +56,19 @@ public class Pedido {
 	public void setCantidad(int cantidad) {
 		this.cantidad = cantidad;
 	}
-	
+
+	public Producto getProducto() {
+		return producto;
+	}
+
+	public void setProducto(Producto producto) {
+		this.producto = producto;
+	}
+
 	@Override
 	public String toString() {
-		return "Pedido [fecha=" + fecha + ", estado=" + estado + ", importe=" + importe + ", cantidad=" + cantidad  + "]";
+		return "Pedido [fecha=" + fecha + ", estado=" + estado + ", importe=" + importe + ", cantidad=" + cantidad
+				+ ", cliente=" + cliente + ", producto=" + producto + "]";
 	}
-	
-	
 	
 }

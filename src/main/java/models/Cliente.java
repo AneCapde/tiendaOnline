@@ -1,16 +1,11 @@
 package models;
 
-import java.util.ArrayList;
-
-import javax.jdo.annotations.Join;
 import javax.jdo.annotations.PersistenceCapable;
-import javax.jdo.annotations.Persistent;
 
 
 @PersistenceCapable(detachable = "true")
 public class Cliente {
 	
-
 	public enum Genero {
 		MUJER,
 		HOMBRE,
@@ -27,9 +22,6 @@ public class Cliente {
 	private int cod_postal;
 	private String provincia;
 	private String localidad;
-	
-	
-	
 	
 	public Cliente(String DNI, String nombre,String apellidos, String email, String password,
 			int telefono, String direccion, Genero genero, int cod_postal, String provincia, String localidad) {
@@ -142,8 +134,5 @@ public class Cliente {
 				+ genero + ", cod_postal=" + cod_postal + ", provincia=" + provincia + ", localidad=" + localidad
 				+ "]";
 	}
-	
-
-
-	
+		
 }

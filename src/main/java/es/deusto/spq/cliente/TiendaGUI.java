@@ -18,6 +18,7 @@ import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 
 import models.Categoria;
+import models.Cliente;
 import models.Producto;
 import models.SubCategoria;
 import models.Tallas;
@@ -64,6 +65,7 @@ public class TiendaGUI extends JFrame {
 	private Tallas tallaSeleccionada;
 	private Colores colorSelecionado;
 	private Producto productoSeleccionado;
+	private Cliente cliente;
 	
 	public TiendaGUI() {
 		client = ClientBuilder.newClient();
@@ -211,7 +213,9 @@ public class TiendaGUI extends JFrame {
 		botonComprar.addActionListener (new ActionListener () {
 		    public void actionPerformed(ActionEvent e) {
 		    	Date date = new Date();
-		    	Pedido pedido = new Pedido(date,"en proceso" , productoSeleccionado.getPrecio(), 1 , productoSeleccionado);
+		    	System.out.println(productoSeleccionado);
+
+		    	Pedido pedido = new Pedido(cliente, date,"en proceso" , productoSeleccionado.getPrecio(), 1 , productoSeleccionado);
 		    	pedidoTarget.request(MediaType.APPLICATION_JSON).post(Entity.entity(pedido, MediaType.APPLICATION_JSON));
 			}
 		});
