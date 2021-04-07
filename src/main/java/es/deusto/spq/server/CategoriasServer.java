@@ -15,7 +15,7 @@ import javax.ws.rs.core.Response;
 import dao.DBManager;
 import models.Categoria;
 
-@Path("/categoria")
+@Path("/categorias")
 public class CategoriasServer {
 
     @GET

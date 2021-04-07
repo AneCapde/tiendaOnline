@@ -1,4 +1,4 @@
-package Ventanas;
+package es.deusto.spq.cliente;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
