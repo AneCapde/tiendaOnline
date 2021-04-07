@@ -58,21 +58,21 @@ public class PruebaTest {
                 break;
             }
         }
-        System.out.println(existe);
+        // System.out.println(existe);
         if (existe == false) {
-            System.out.println("se esta añadiendo");
+            // System.out.println("se añade cliente");
             clientesTarget.request(MediaType.APPLICATION_JSON).post(Entity.entity(cliente1, MediaType.APPLICATION_JSON));
         } 
 
         // // Comparamos longitud de la lista con la cantidad de clientes que debería tener 
         // En este caso 2 (Leire, previamente introducida en BD y Juan)
         listaClientes2 = clientesTarget.request(MediaType.APPLICATION_JSON).get(genericType_clientes);
-        System.out.println(listaClientes2.size());
+        // System.out.println(listaClientes2.size());
         assertEquals(listaClientes2.size(), 2);
 
         // Comparamos el nombre del ultimo cliente registrado con el cliente que acabamos de introducir
         assertEquals(listaClientes2.get(1).getNombre(), "Juan");
-        System.out.println(listaClientes2.get(1).getNombre());
+        // System.out.println(listaClientes2.get(1).getNombre());
     }
 
 }
