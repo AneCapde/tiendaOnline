@@ -17,12 +17,13 @@ public class Pedido {
 	@Persistent(defaultFetchGroup = "true")
 	private Producto producto;
 	
-	public Pedido(Date fecha, String estado, int importe, int cantidad) {
+	public Pedido(Date fecha, String estado, int importe, int cantidad, Producto producto) {
 		super();
 		this.fecha = fecha;
 		this.estado = estado;
 		this.importe = importe;
 		this.cantidad = cantidad;
+		this.producto = producto;
 	}
 	
 	public Date getFecha() {

@@ -12,6 +12,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
@@ -22,13 +23,16 @@ import models.SubCategoria;
 import models.Tallas;
 import models.Colores;
 import models.Marca;
+import models.Pedido;
 
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
@@ -69,6 +73,7 @@ public class TiendaGUI extends JFrame {
 		final WebTarget categoriasTarget = appTarget.path("/categorias");
 		final WebTarget marcasTarget = appTarget.path("/marcas");
 		final WebTarget subTarget = appTarget.path("/subcategorias");
+		final WebTarget pedidoTarget= appTarget.path("/pedidos");
 
 		final TiendaGUI esto = this;
 		
@@ -205,7 +210,9 @@ public class TiendaGUI extends JFrame {
 		contentPane.add(botonComprar);
 		botonComprar.addActionListener (new ActionListener () {
 		    public void actionPerformed(ActionEvent e) {
-				
+		    	Date date = new Date();
+		    	Pedido pedido = new Pedido(date,"en proceso" , productoSeleccionado.getPrecio(), 1 , productoSeleccionado);
+		    	pedidoTarget.request(MediaType.APPLICATION_JSON).post(Entity.entity(pedido, MediaType.APPLICATION_JSON));
 			}
 		});
 		
@@ -325,12 +332,18 @@ public class TiendaGUI extends JFrame {
 				model.removeAllElements();
 				System.out.println(productos);
 				for (int i = 0; i < productos.size(); i++) {
-						System.out.println(productos.get(i).getMarca() + "==" + marcaSeleccionada);
+					System.out.println(productos.get(i).getMarca() + "==" + marcaSeleccionada);
 					if (productos.get(i).getNombre().toLowerCase().indexOf(textoBuscador.toLowerCase()) == 0) {
-						if ((productos.get(i).getSubcategoria().getCategoria() == categoriaSeleccionada || categoriaSeleccionada == null) 
-								&& (productos.get(i).getSubcategoria() == subCategoriaSeleccionada || subCategoriaSeleccionada == null)
-								&& (productos.get(i).getMarca() == marcaSeleccionada|| marcaSeleccionada == null)
-								//&& (productos.get(i).getTallas_colores())
+						System.out.println(productos.get(i).getSubcategoria().getCategoria() + " =? " + categoriaSeleccionada + (productos.get(i).getSubcategoria().getCategoria() == categoriaSeleccionada));
+						System.out.println(productos.get(i).getSubcategoria() + " =? " + subCategoriaSeleccionada + (productos.get(i).getSubcategoria() == subCategoriaSeleccionada));
+						System.out.println(productos.get(i).getMarca() + " =? " + marcaSeleccionada + (productos.get(i).getMarca() == marcaSeleccionada));
+						System.out.println(colorSelecionado + " =? " + productos.get(i).getTallas_colores().containsKey(colorSelecionado));
+						System.out.println();
+						if ((categoriaSeleccionada == null || productos.get(i).getSubcategoria().getCategoria().getNombre().equals(categoriaSeleccionada.getNombre())) 
+								&& (subCategoriaSeleccionada == null || productos.get(i).getSubcategoria().getNombre().equals(subCategoriaSeleccionada.getNombre()))
+								&& (marcaSeleccionada == null || productos.get(i).getMarca().getNombre().equals(marcaSeleccionada.getNombre()))
+								&& (colorSelecionado == null || productos.get(i).getTallas_colores().containsKey(colorSelecionado))
+								//								&& ()
 								)
 						{
 

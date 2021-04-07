@@ -28,9 +28,6 @@ public class Cliente {
 	private String provincia;
 	private String localidad;
 	
-	@Persistent(defaultFetchGroup = "true", mappedBy = "cliente", dependentElement = "true")
-	@Join
-	private ArrayList<Pedido> pedidos = new ArrayList<Pedido>();
 	
 	
 	
@@ -137,19 +134,6 @@ public class Cliente {
 		this.localidad = localidad;
 	}
 
-	public ArrayList<Pedido> getPedidos() {
-		return this.pedidos;
-	}
-
-	public void setPedidos(ArrayList<Pedido> pedidos) {
-		this.pedidos = pedidos;
-	}
-	
-	public void removePedidos() {
-		for (Pedido r : this.pedidos) {
-			this.pedidos.remove(r);
-		}
-	}
 
 	@Override
 	public String toString() {

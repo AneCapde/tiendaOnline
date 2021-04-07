@@ -21,9 +21,7 @@ public class Producto {
 	@Persistent(defaultFetchGroup = "true")
 	private SubCategoria subcategoria;
 
-	@Persistent(defaultFetchGroup = "true", mappedBy = "producto", dependentElement = "true")
-	@Join
-	private ArrayList<Pedido> pedidos = new ArrayList<Pedido>();
+
 
 	@Persistent(defaultFetchGroup = "true", dependentElement = "true")
 	@Join
@@ -85,19 +83,6 @@ public class Producto {
 	}
 	
 
-	public ArrayList<Pedido> getPedidos() {
-		return this.pedidos;
-	}
-
-	public void setPedidos(ArrayList<Pedido> pedidos) {
-		this.pedidos = pedidos;
-	}
-	
-	public void removePedidos() {
-		for (Pedido r : this.pedidos) {
-			this.pedidos.remove(r);
-		}
-	}
 	public HashMap<Colores, Tallas> getTallas_colores() {
 		return this.tallas_colores;
 	}
