@@ -109,38 +109,50 @@ public class PrepararDatos {
 			//Creamos productos (de momento algunos de prueba)
 			
 			//Para hacer lo del hashmap de colores
-			HashMap<Colores, Tallas> colorTalla = new HashMap<>();
-			colorTalla.put(Colores.AZUL, Tallas.M);
-			colorTalla.put(Colores.AZUL, Tallas.L);
-			colorTalla.put(Colores.AZUL, Tallas.S);
-			colorTalla.put(Colores.AZUL, Tallas.XL);
-			colorTalla.put(Colores.NEGRO, Tallas.M);
-			colorTalla.put(Colores.NEGRO, Tallas.L);
-			colorTalla.put(Colores.NEGRO, Tallas.S);
-			colorTalla.put(Colores.NEGRO, Tallas.XL);
+			//he hecho dos hashmap de diferente talla porque solo cogia la ultima talla que se metia al HM
+			HashMap<Colores, Tallas> colorTallaS = new HashMap<>();
+			colorTallaS.put(Colores.AZUL, Tallas.S);
+			colorTallaS.put(Colores.NEGRO, Tallas.S);
+			colorTallaS.put(Colores.AMARILLO, Tallas.S);
+			colorTallaS.put(Colores.MORADO, Tallas.S);
+			colorTallaS.put(Colores.ROSA, Tallas.S);
+			colorTallaS.put(Colores.CIAN, Tallas.S);
+			colorTallaS.put(Colores.ROJO, Tallas.S);
+			
+//			HashMap<Colores, Tallas> colorTallaXL = new HashMap<>();
+//			colorTallaXL.put(Colores.AZUL, Tallas.XL);
+//			colorTallaXL.put(Colores.NEGRO, Tallas.XL);
+//			colorTallaXL.put(Colores.AMARILLO, Tallas.XL);
+//			colorTallaXL.put(Colores.MORADO, Tallas.XL);
+//			colorTallaXL.put(Colores.ROSA, Tallas.XL);
+//			colorTallaXL.put(Colores.CIAN, Tallas.XL);
+//			colorTallaXL.put(Colores.ROJO, Tallas.XL);
+			//colorTalla.put(Colores.AZUL, Tallas.M);
+			//colorTalla.put(Colores.NEGRO, Tallas.M);
+			
 			Producto producto1 = new Producto("Chaqueta Vaquera","Chaqueta vaquera azul",10,45,"img.Imagenes_sueltas/chaquetaVaquera.png",subcategoria1,marca1);
-			producto1.setTallas_colores(colorTalla);
+			producto1.setTallas_colores(colorTallaS);
 			pm.makePersistent(producto1);
 			Producto producto2 = new Producto("Chaqueta de cuero","Chaqueta de cuero negra",10,35,"img.Imagenes_sueltas/chaquetaCuero.png",subcategoria1,marca1);
 			pm.makePersistent(producto2);
-			producto2.setTallas_colores(colorTalla);
+			producto2.setTallas_colores(colorTallaS);
 			Producto producto3 = new Producto("Abrigo de piel","Abrigo de piel marron",10,80,"img.Imagenes_sueltas/chaquetaPiel.png",subcategoria1,marca1);
-			producto3.setTallas_colores(colorTalla);
+			//producto3.setTallas_colores(colorTallaS);
 			pm.makePersistent(producto3);
 			Producto producto4 = new Producto("Camiseta de tirantes","Camiseta de tirantes azul",5,10,"img.Imagenes_sueltas/camisetaTirante.png",subcategoria2,marca1);
-			producto4.setTallas_colores(colorTalla);
+			//producto4.setTallas_colores(colorTallaS);
 			pm.makePersistent(producto4);
 			Producto producto5 = new Producto("Pantalon Vaquero","Pantalon vaquero azul",15,30,"img.Imagenes_sueltas/pantalonVaquero.png",subcategoria3,marca2);
-			producto5.setTallas_colores(colorTalla);
+			//producto5.setTallas_colores(colorTallaS);
 			pm.makePersistent(producto5);
 			Producto producto6 = new Producto("Falda de flores","Falda estampado floral",10,25,"img.Imagenes_sueltas/faldaFlores.png",subcategoria4,marca2);
-			producto6.setTallas_colores(colorTalla);
+			//producto6.setTallas_colores(colorTallaS);
 			pm.makePersistent(producto6);
 			Producto producto7 = new Producto("Vestido negro","Vestido negro de tirantes",10,35,"img.Imagenes_sueltas/vestidoNegro.png",subcategoria6,marca2);
-			producto7.setTallas_colores(colorTalla);
+			//producto7.setTallas_colores(colorTallaS);
 			pm.makePersistent(producto7);
 			Producto producto8 = new Producto("Camisa blanca","Camisa blanca elegante",10,35,"img.Imagenes_sueltas/camisaBlanca.png",subcategoria7,marca2);
-			producto8.setTallas_colores(colorTalla);
+			//producto8.setTallas_colores(colorTallaS);
 			pm.makePersistent(producto8);
 			Producto producto10 = new Producto("Deportivas","Deportivas blancas planas converse",10,70,"img.Imagenes_sueltas/zapatillasDeportivas.png",subcategoria8,marca2);
 			pm.makePersistent(producto10);
