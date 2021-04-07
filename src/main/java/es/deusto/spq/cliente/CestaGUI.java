@@ -1,14 +1,14 @@
 package es.deusto.spq.cliente;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JList;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.LineBorder;
+
+import models.Producto;
+
 import java.awt.Color;
 import javax.swing.JLabel;
 import java.awt.Font;
@@ -18,6 +18,10 @@ import javax.swing.JTextField;
 
 public class CestaGUI extends JFrame {
 
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField textField;
 
@@ -33,7 +37,7 @@ public class CestaGUI extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JList list = new JList();
+		JList<Producto> list = new JList<>();
 		list.setBorder(new LineBorder(new Color(0, 0, 0)));
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		list.setBounds(10, 27, 236, 387);

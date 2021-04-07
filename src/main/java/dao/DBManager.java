@@ -6,10 +6,14 @@ import javax.jdo.JDOHelper;
 import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Transaction;
+
+import javafx.scene.paint.Color;
+
 import javax.jdo.Extent;
 
 import models.Categoria;
 import models.Cliente;
+import models.Colores;
 import models.Marca;
 import models.Pedido;
 import models.Producto;

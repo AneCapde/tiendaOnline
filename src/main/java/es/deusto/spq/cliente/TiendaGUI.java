@@ -31,8 +31,6 @@ import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.awt.event.ActionEvent;
@@ -49,8 +47,6 @@ public class TiendaGUI extends JFrame {
 	private JPanel contentPane;
 	private JTextField txtBuscador;
 	private DefaultListModel<Producto> model = new DefaultListModel<>();
-	private Colores col;
-	private Tallas tall;
 	private JList<Producto> listaElementos;
 	private JComboBox<Colores> comboBox_colores;
 	private JComboBox<Tallas> comboBoxTalla;
@@ -65,7 +61,7 @@ public class TiendaGUI extends JFrame {
 	private Tallas tallaSeleccionada;
 	private Colores colorSelecionado;
 	private Producto productoSeleccionado;
-	private Cliente cliente;
+	private static Cliente cliente;
 	
 	
 	
@@ -131,7 +127,7 @@ public class TiendaGUI extends JFrame {
 		//#################################################################################################
 		comboBox_colores = new JComboBox<Colores>();
 		comboBox_colores.addItem(null);
-		for (Colores col : col.values()) {
+		for (Colores col : Colores.values()) {
 			comboBox_colores.addItem(col);
 		}
 		comboBox_colores.setBounds(10, 193, 196, 30);
@@ -166,13 +162,8 @@ public class TiendaGUI extends JFrame {
 		    	comboBox_Subcategoria.addItem(null);
 		    	categoriaSeleccionada = (Categoria) comboBox_Categoria.getSelectedItem();
 		    	for (int i = 0; i < subCategorias.size(); i++) {
-		    		if (categoriaSeleccionada != null) {
-		    			System.out.println(categoriaSeleccionada.getNombre());
-						System.out.println(subCategorias.get(i).getCategoria().getNombre());
-						System.out.println(categoriaSeleccionada.getNombre().equals(subCategorias.get(i).getCategoria().getNombre()));
-			
+		    		if (categoriaSeleccionada != null) {			
 						if (categoriaSeleccionada.getNombre().equals(subCategorias.get(i).getCategoria().getNombre())) {
-							System.out.println("Meto:" + subCategorias.get(i));
 							comboBox_Subcategoria.addItem(subCategorias.get(i));
 						}
 					}
@@ -218,8 +209,6 @@ public class TiendaGUI extends JFrame {
 		botonComprar.addActionListener (new ActionListener () {
 		    public void actionPerformed(ActionEvent e) {
 		    	Date date = new Date();
-		    	System.out.println(productoSeleccionado);
-
 		    	Pedido pedido = new Pedido(cliente, date,"en proceso" , productoSeleccionado.getPrecio(), 1 , productoSeleccionado);
 		    	pedidoTarget.request(MediaType.APPLICATION_JSON).post(Entity.entity(pedido, MediaType.APPLICATION_JSON));
 			}
@@ -296,7 +285,7 @@ public class TiendaGUI extends JFrame {
 		comboBoxTalla = new JComboBox<Tallas>();
 		comboBoxTalla.addItem(null);
 		
-		for (Tallas tall : tall.values()) {
+		for (Tallas tall : Tallas.values()) {
 			comboBoxTalla.addItem(tall);
 		}
 
@@ -360,7 +349,7 @@ public class TiendaGUI extends JFrame {
 								   (categoriaSeleccionada == null || productos.get(i).getSubcategoria().getCategoria().getNombre().equals(categoriaSeleccionada.getNombre())) 
 								&& (subCategoriaSeleccionada == null || productos.get(i).getSubcategoria().getNombre().equals(subCategoriaSeleccionada.getNombre()))
 								&& (marcaSeleccionada == null || productos.get(i).getMarca().getNombre().equals(marcaSeleccionada.getNombre()))
-								&& ((colorSelecionado == null || productos.get(i).getTallas_colores().containsKey(colorSelecionado.toString()))  &&  (tallaSeleccionada == null || productos.get(i).getTallas_colores().containsValue(tallaSeleccionada)))
+								&& ((colorSelecionado == null || productos.get(i).getTallas_colores().containsKey(colorSelecionado))  &&  (tallaSeleccionada == null || productos.get(i).getTallas_colores().containsValue(tallaSeleccionada)))
 								)
 								
 						{
@@ -384,4 +373,7 @@ public class TiendaGUI extends JFrame {
         TiendaGUI tiendaGUI = new TiendaGUI();
 		tiendaGUI.setVisible(true);
     }
+	public static void setCliente(Cliente cliente) {
+		TiendaGUI.cliente = cliente;
+	}
 }

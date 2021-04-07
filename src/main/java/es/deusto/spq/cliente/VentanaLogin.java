@@ -15,10 +15,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
 public class VentanaLogin extends JFrame{
 
@@ -100,6 +98,7 @@ public class VentanaLogin extends JFrame{
 			
 				if (correcto.equals("true")) {
 					System.out.println("Credenciales correctas");
+					TiendaGUI.setCliente(null);//deberia recibir desde el server el cliente concreto TODO
 					ventanaPadre.setEnabled(true);
 					dispose();
 				} else {

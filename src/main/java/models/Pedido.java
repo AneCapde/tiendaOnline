@@ -3,6 +3,7 @@ package models;
 import java.util.Date;
 
 import javax.jdo.annotations.PersistenceCapable;
+import javax.jdo.annotations.Persistent;
 
 @PersistenceCapable(detachable = "true")
 public class Pedido {
@@ -11,7 +12,9 @@ public class Pedido {
 	private String estado;
 	private int importe;
 	private int cantidad;
+	@Persistent(defaultFetchGroup = "true")
 	private Cliente cliente;
+	@Persistent(defaultFetchGroup = "true")
 	private Producto producto;
 	
 	public Pedido(Cliente cliente, Date fecha, String estado, int importe, int cantidad, Producto producto) {

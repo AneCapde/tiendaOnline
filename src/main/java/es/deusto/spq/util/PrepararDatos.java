@@ -131,11 +131,11 @@ public class PrepararDatos {
 			//colorTalla.put(Colores.NEGRO, Tallas.M);
 			
 			Producto producto1 = new Producto("Chaqueta Vaquera","Chaqueta vaquera azul",10,45,"img.Imagenes_sueltas/chaquetaVaquera.png",subcategoria1,marca1);
-			producto1.setTallas_colores(colorTallaS);
+			//producto1.setTallas_colores(colorTallaS);
 			pm.makePersistent(producto1);
 			Producto producto2 = new Producto("Chaqueta de cuero","Chaqueta de cuero negra",10,35,"img.Imagenes_sueltas/chaquetaCuero.png",subcategoria1,marca1);
+			//producto2.setTallas_colores(colorTallaS);
 			pm.makePersistent(producto2);
-			producto2.setTallas_colores(colorTallaS);
 			Producto producto3 = new Producto("Abrigo de piel","Abrigo de piel marron",10,80,"img.Imagenes_sueltas/chaquetaPiel.png",subcategoria1,marca1);
 			//producto3.setTallas_colores(colorTallaS);
 			pm.makePersistent(producto3);
