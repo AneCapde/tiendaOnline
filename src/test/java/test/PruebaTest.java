@@ -4,7 +4,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import Ventanas.VentanaRegistro;
+import es.deusto.spq.*;
 import dao.DBManager;
 import models.Cliente;
 import models.Cliente.Genero;
