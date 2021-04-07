@@ -6,7 +6,6 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -16,10 +15,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-
+import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 public class VentanaLogin extends JFrame{
 
@@ -35,8 +34,6 @@ public class VentanaLogin extends JFrame{
 	private static JPasswordField passwordField;
 	
 	public VentanaLogin(final JFrame ventanaPadre, WebTarget appTarget) {
-
-        final WebTarget clientesTarget = appTarget.path("/clientes");
 		
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setResizable(false);
@@ -97,15 +94,11 @@ public class VentanaLogin extends JFrame{
 	    
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
-				// GenericType<Boolean> generic_boolean = new GenericType<Boolean>() {};
-				// ArrayList<String> lista = new ArrayList<String>(); 
-				// lista.set(0, emailTextField.getText());
-				// lista.set(1, new String(password.getPassword()));
-				// clientesTarget.queryParam("rawData", lista);
-				// boolean correcto = clientesTarget.request(MediaType.APPLICATION_JSON).get(generic_boolean);
-				boolean correcto = true;
-				if (correcto == true) {
+
+				final WebTarget clientesTarget = appTarget.path("/clientes").path("/"+emailTextField.getText()).path("/"+ new String(passwordField.getPassword()));
+				String correcto = clientesTarget.request(MediaType.TEXT_PLAIN).get(String.class);
+			
+				if (correcto.equals("true")) {
 					System.out.println("Credenciales correctas");
 					ventanaPadre.setEnabled(true);
 					dispose();

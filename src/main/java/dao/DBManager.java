@@ -171,7 +171,6 @@ public class DBManager implements IDBManager{
 		} catch (Exception ex) {
 			System.out.println("  $ Error retrieving all the Categorias: " + ex.getMessage());
 		} finally {
-			System.out.println(categorias + "SON NECESARIOS SINO CASCA");
 			if (tx != null && tx.isActive()) {
 				tx.rollback();
 			}
