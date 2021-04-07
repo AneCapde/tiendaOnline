@@ -9,6 +9,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -20,10 +21,18 @@ public class ClientesServer {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Cliente> getClientes() {
-		List<Cliente> clientes = DBManager.getInstance().getClientes();
-		return clientes;
-    }
+    protected static boolean comprobarDatos(String email, String contraseña) {	
+        List<Cliente> clientes = DBManager.getInstance().getClientes();					
+		boolean correcto = false;
+		for (Cliente cliente : clientes) {
+			if (cliente.getEmail().equals(email)) {
+				if(cliente.getPassword().equals(contraseña)) {
+					correcto = true;
+                }
+			}
+		}
+		return correcto;
+	}
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public void addCliente(Cliente cliente) {

@@ -14,8 +14,9 @@ import java.awt.event.ActionListener;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JTextField;
-
-import dao.DBManager;
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.MediaType;
 import models.Cliente;
 
 import javax.swing.JComboBox;
@@ -51,19 +52,6 @@ public class VentanaRegistro extends JFrame {
 			"Gerona", "Granada", "Guadalajara", "Guipuzkoa", "Huelva", "Huesca", "Jaen", "La rioja", "Leon", "Lleida", "Lugo", "Madrid",
 			"Malaga", "Melilla", "Murcia", "Navarra", "Ourense", "Palencia", "Pontevedra, Salamanca", "Segovia", "Sevilla", "Soria",
 			"Tarragona", "Teruel", "Toledo", "Valencia", "Valladolid", "Vizcaya", "Zamora", "Zaragoza"};
-	
-	private static DBManager instance;
-	
-		public static DBManager getInstance() {
-			if (instance == null) {
-				try {
-					instance = new DBManager();
-				} catch (Exception ex) {
-					System.err.println("# Error creating EasyBookingRemoteFacade: " + ex);
-				}
-			}	
-			return instance;
-		}
 	
 	// metodo para validar el correo
 	protected static boolean elEmailCorrecto(String email) {
@@ -283,7 +271,10 @@ public class VentanaRegistro extends JFrame {
 		return valido;
 	}
 	
-	public VentanaRegistro(final JFrame ventanaPadre) {
+	public VentanaRegistro(final JFrame ventanaPadre, WebTarget appTarget ) {
+
+		final WebTarget clientesTarget = appTarget.path("/clientes");
+
 		setIconImage(Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("/img/Imagenes_sueltas/registro2.png")));
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setResizable(false);
@@ -461,7 +452,8 @@ public class VentanaRegistro extends JFrame {
 									telefonoUsuario, direccionUsuario, genero, cod_postalUsuario, provinciaSelecionada,
 									localidadUsuario);
 			
-							DBManager.getInstance().store(cliente);
+							clientesTarget.request(MediaType.APPLICATION_JSON).post(Entity.entity(cliente, MediaType.APPLICATION_JSON));
+
 							dispose();
 							ventanaPadre.setEnabled(true);
 						}				

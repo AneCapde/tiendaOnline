@@ -65,7 +65,6 @@ public class TiendaGUI extends JFrame {
 		client = ClientBuilder.newClient();
 
         final WebTarget appTarget = client.target("http://localhost:8080/myapp");
-        final WebTarget clientesTarget = appTarget.path("/clientes");
 		final WebTarget productosTarget = appTarget.path("/productos");
 		final WebTarget categoriasTarget = appTarget.path("/categorias");
 		final WebTarget marcasTarget = appTarget.path("/marcas");
@@ -213,7 +212,7 @@ public class TiendaGUI extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				esto.setEnabled(false);
-				VentanaLogin ventanaLogin = new VentanaLogin(esto);
+				VentanaLogin ventanaLogin = new VentanaLogin(esto, appTarget);
 				ventanaLogin.setVisible(true);
 				contentPane.setEnabled(false);
 				
@@ -230,7 +229,7 @@ public class TiendaGUI extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				esto.setEnabled(false);
-				VentanaRegistro ventanaRegistro = new VentanaRegistro(esto);
+				VentanaRegistro ventanaRegistro = new VentanaRegistro(esto, appTarget);
 				ventanaRegistro.setVisible(true);
 				contentPane.setEnabled(false);
 			}

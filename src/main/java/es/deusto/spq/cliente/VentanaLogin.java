@@ -18,6 +18,11 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.GenericType;
+import javax.ws.rs.core.MediaType;
+
 import dao.DBManager;
 import models.Cliente;
 
@@ -34,7 +39,9 @@ public class VentanaLogin extends JFrame{
 	private JLabel lTexto;
 	private static JPasswordField passwordField;
 	
-	public VentanaLogin(final JFrame ventanaPadre) {
+	public VentanaLogin(final JFrame ventanaPadre, WebTarget appTarget) {
+
+        final WebTarget clientesTarget = appTarget.path("/clientes");
 		
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setResizable(false);
@@ -91,35 +98,21 @@ public class VentanaLogin extends JFrame{
 		bAceptar = new JButton("Aceptar");
 		bAceptar.setBounds((this.getWidth()/100)*5, (this.getHeight()/18)*8, (this.getWidth()/35)*10, (this.getHeight()/18)*3);
 	    pInferior.add(bAceptar);
-	    
-	    
-	    
-	    
-	    
-	    //############ ESTO VA A ESTAR EN UNA VARIABLE EN EL SERVIDOR #################### TODO
-	    ArrayList<Cliente> clientes = DBManager.getInstance().getClientes();
-	    //############ ESTO VA A ESTAR EN UNA VARIABLE EN EL SERVIDOR #################### TODO
-	    
-	    
-	    
-	    
-	    
-	    
 	    bAceptar.addActionListener(new ActionListener() {
 	    
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				boolean correcto = comprobarDatos(emailTextField.getText(), new String (passwordField.getPassword()), clientes);
+				GenericType<Boolean> generic_boolean = new GenericType<Boolean>() {};
+				clientesTarget.queryParam("email", emailTextField.getText());
+				clientesTarget.queryParam("password", new String(password.getPassword()));
+				boolean correcto = clientesTarget.request(MediaType.APPLICATION_JSON).get(generic_boolean);
 				if (correcto == true) {
 					System.out.println("Credenciales correctas");
 					ventanaPadre.setEnabled(true);
 					dispose();
 				} else {
 					System.out.println("Credenciales incorrectas");		
-//					dispose();
-//					ventanaPadre.setEnabled(true);
-//					setVisible(true);
 				}
 			}
 		
@@ -164,43 +157,6 @@ public class VentanaLogin extends JFrame{
 		}
 		return valido;
 	}
-	
-	
-	
-	
-	
-	
-	
-	//Metodo para comprobar que el email y password introducidos coinciden y estan en la BD. 
-	//##################### ESTO ESTARÁ EN EL SERVIDOR QUITANDO EL PARAMETRO DE CLIENTES QUE SERÁ UNA VARIABLE EN EL SERVIDOR ############################## TODO
-	protected static boolean comprobarDatos(String email, String contraseña, ArrayList<Cliente> clientes) {						
-		boolean correcto = false;
-		
-		System.out.println(clientes);
-		System.out.println(clientes.get(0).getEmail() + "=" + email);
-		for (Cliente cliente : clientes) {
-			System.out.println(cliente.getEmail() + "=" + email);
-			if (cliente.getEmail().equals(email)) {
-				if(cliente.getPassword().equals(contraseña)) {
-					correcto = true;
-				}
-				
-			}
-		}
-		
-		return correcto;
-	}
-	//###########################################################################################################################	
-	
-	
-	
-	
-	
-	
-	
-//	public static void main(String[] args) {
-//		VentanaLogin v = new VentanaLogin();
-//		v.setVisible(true);
-//	}
+
 	
 }
