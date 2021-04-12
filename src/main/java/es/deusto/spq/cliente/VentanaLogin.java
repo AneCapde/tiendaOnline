@@ -116,9 +116,8 @@ public class VentanaLogin extends JFrame{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				ventanaPadre.setEnabled(true);
 				dispose();
-				//ventanaPadre.setVisible(true);
-			
 			}
 		});
 	    

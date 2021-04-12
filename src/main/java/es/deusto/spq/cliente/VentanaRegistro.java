@@ -476,8 +476,9 @@ public class VentanaRegistro extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				ventanaPadre.setEnabled(true);
 				dispose();
-				ventanaPadre.setVisible(true);
+				
 			}
 		});
 		
