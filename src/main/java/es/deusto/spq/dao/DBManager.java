@@ -10,6 +10,7 @@ import javax.jdo.Transaction;
 import es.deusto.spq.models.Categoria;
 import es.deusto.spq.models.Cliente;
 import es.deusto.spq.models.Colores;
+import es.deusto.spq.models.ProductosDeseados;
 import es.deusto.spq.models.Marca;
 import es.deusto.spq.models.Pedido;
 import es.deusto.spq.models.Producto;
@@ -60,6 +61,11 @@ public class DBManager implements IDBManager{
 	@Override
 	public void store(Pedido pedido) {
 		DBManager.getInstance().storeObjectInDB(pedido);	
+	}
+	
+	@Override
+	public void store(ProductosDeseados deseados) {
+		DBManager.getInstance().storeObjectInDB(deseados);	
 	}
     @Override
 	public void store(Producto producto) {
@@ -232,6 +238,34 @@ public class DBManager implements IDBManager{
 		return subcategorias;			
 	}
     
+
+	@Override
+	public ArrayList<ProductosDeseados> getProductosDeseados() {
+		ArrayList<ProductosDeseados> productosDeseados = new ArrayList<>();		
+		PersistenceManager pm = pmf.getPersistenceManager();
+		pm.getFetchPlan().setMaxFetchDepth(4);
+		Transaction tx = pm.currentTransaction();
+		try {
+			System.out.println("  * Retrieving all the Pedidos");
+
+			tx.begin();
+
+			Extent<ProductosDeseados> extent = pm.getExtent(ProductosDeseados.class, true);
+			for (ProductosDeseados productosdeseado : extent) {
+				productosDeseados.add(productosdeseado);
+			}
+			tx.commit();
+		} catch (Exception ex) {
+			System.out.println("  $ Error retrieving all the Productos Deseados: " + ex.getMessage());
+		} finally {
+			if (tx != null && tx.isActive()) {
+				tx.rollback();
+			}
+			pm.close();
+        }
+		return productosDeseados;		
+	}
+    
     @Override
 	public void updateCliente(Cliente cliente) {
 		PersistenceManager pm = pmf.getPersistenceManager();
@@ -249,6 +283,7 @@ public class DBManager implements IDBManager{
 			pm.close();
 		}
 	}
+    
     @Override
 	public void updateProducto(Producto producto) {
 		PersistenceManager pm = pmf.getPersistenceManager();
@@ -266,6 +301,7 @@ public class DBManager implements IDBManager{
 			pm.close();
 		}
 	}
+    
     @Override
 	public void updatePedido(Pedido pedido) {
 		PersistenceManager pm = pmf.getPersistenceManager();
@@ -273,6 +309,24 @@ public class DBManager implements IDBManager{
 		try {
 			tx.begin();
 			pm.makePersistent(pedido);
+			tx.commit();
+		} catch (Exception ex) {
+			System.out.println("   $ Error retreiving an extent: " + ex.getMessage());
+		} finally {
+			if (tx != null && tx.isActive()) {
+				tx.rollback();
+			}
+			pm.close();
+		}
+	}
+    
+    @Override
+	public void updateProductsDeseados(ProductosDeseados productosDeseados) {
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		try {
+			tx.begin();
+			pm.makePersistent(productosDeseados);
 			tx.commit();
 		} catch (Exception ex) {
 			System.out.println("   $ Error retreiving an extent: " + ex.getMessage());
