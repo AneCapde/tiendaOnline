@@ -276,7 +276,7 @@ public class VentanaRegistro extends JFrame {
 
 		final WebTarget clientesTarget = appTarget.path("/clientes");
 
-		setIconImage(Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("/img/Imagenes_sueltas/registro2.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("/img/registro2.png")));
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setResizable(false);
 		setSize(600, 530);
