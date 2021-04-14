@@ -12,8 +12,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import dao.DBManager;
-import models.Categoria;
+import es.deusto.spq.dao.DBManager;
+import es.deusto.spq.models.Categoria;
 
 @Path("/categorias")
 public class CategoriasServer {

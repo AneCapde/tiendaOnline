@@ -1,4 +1,4 @@
-package models;
+package es.deusto.spq.models;
 
 import javax.jdo.annotations.PersistenceCapable;
 

@@ -12,8 +12,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import dao.DBManager;
-import models.Producto;
+import es.deusto.spq.dao.DBManager;
+import es.deusto.spq.models.Producto;
 
 @Path("/productos")
 public class ProductosServer {

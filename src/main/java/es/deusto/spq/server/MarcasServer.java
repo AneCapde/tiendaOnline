@@ -12,8 +12,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import dao.DBManager;
-import models.Marca;
+import es.deusto.spq.dao.DBManager;
+import es.deusto.spq.models.Marca;
 
 @Path("/marcas")
 public class MarcasServer {

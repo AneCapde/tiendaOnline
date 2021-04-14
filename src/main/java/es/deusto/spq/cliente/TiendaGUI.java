@@ -17,14 +17,14 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 
-import models.Categoria;
-import models.Cliente;
-import models.Producto;
-import models.SubCategoria;
-import models.Tallas;
-import models.Colores;
-import models.Marca;
-import models.Pedido;
+import es.deusto.spq.models.Categoria;
+import es.deusto.spq.models.Cliente;
+import es.deusto.spq.models.Colores;
+import es.deusto.spq.models.Marca;
+import es.deusto.spq.models.Pedido;
+import es.deusto.spq.models.Producto;
+import es.deusto.spq.models.SubCategoria;
+import es.deusto.spq.models.Tallas;
 
 import javax.swing.JLabel;
 import java.awt.Font;

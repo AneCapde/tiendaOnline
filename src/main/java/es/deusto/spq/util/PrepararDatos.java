@@ -8,15 +8,14 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Transaction;
 
-//import dao.DBManager;
-import models.Categoria;
-import models.Cliente;
-import models.Colores;
-import models.Marca;
-import models.Producto;
-import models.SubCategoria;
-import models.Tallas;
-import models.Cliente.Genero;
+import es.deusto.spq.models.Categoria;
+import es.deusto.spq.models.Cliente;
+import es.deusto.spq.models.Colores;
+import es.deusto.spq.models.Marca;
+import es.deusto.spq.models.Producto;
+import es.deusto.spq.models.SubCategoria;
+import es.deusto.spq.models.Tallas;
+import es.deusto.spq.models.Cliente.Genero;
 
 
 

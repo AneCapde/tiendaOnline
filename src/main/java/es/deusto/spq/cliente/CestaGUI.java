@@ -7,7 +7,7 @@ import javax.swing.JList;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.LineBorder;
 
-import models.Producto;
+import es.deusto.spq.models.Producto;
 
 import java.awt.Color;
 import javax.swing.JLabel;

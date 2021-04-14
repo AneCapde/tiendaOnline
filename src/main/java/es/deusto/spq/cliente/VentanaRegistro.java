@@ -17,7 +17,8 @@ import javax.swing.JTextField;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
-import models.Cliente;
+
+import es.deusto.spq.models.Cliente;
 
 import javax.swing.JComboBox;
 import javax.swing.JPanel;

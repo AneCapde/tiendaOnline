@@ -1,4 +1,4 @@
-package dao;
+package es.deusto.spq.dao;
 
 import java.util.ArrayList;
 
@@ -7,15 +7,15 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Transaction;
 
-import javax.jdo.Extent;
+import es.deusto.spq.models.Categoria;
+import es.deusto.spq.models.Cliente;
+import es.deusto.spq.models.Colores;
+import es.deusto.spq.models.Marca;
+import es.deusto.spq.models.Pedido;
+import es.deusto.spq.models.Producto;
+import es.deusto.spq.models.SubCategoria;
 
-import models.Categoria;
-import models.Cliente;
-import models.Colores;
-import models.Marca;
-import models.Pedido;
-import models.Producto;
-import models.SubCategoria;
+import javax.jdo.Extent;
 
 public class DBManager implements IDBManager{
     private static IDBManager instance;

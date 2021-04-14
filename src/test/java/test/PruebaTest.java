@@ -5,10 +5,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 import es.deusto.spq.*;
+import es.deusto.spq.dao.DBManager;
+import es.deusto.spq.models.Cliente;
+import es.deusto.spq.models.Cliente.Genero;
 import junit.textui.TestRunner;
-import dao.DBManager;
-import models.Cliente;
-import models.Cliente.Genero;
 
 import static org.junit.Assert.assertEquals;
 

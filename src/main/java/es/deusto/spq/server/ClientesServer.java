@@ -12,8 +12,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import dao.DBManager;
-import models.Cliente;
+import es.deusto.spq.dao.DBManager;
+import es.deusto.spq.models.Cliente;
 
 @Path("/clientes")
 public class ClientesServer {

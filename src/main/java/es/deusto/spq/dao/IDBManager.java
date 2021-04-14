@@ -1,13 +1,13 @@
-package dao;
+package es.deusto.spq.dao;
 
 import java.util.ArrayList;
 
-import models.Categoria;
-import models.Cliente;
-import models.Marca;
-import models.Pedido;
-import models.Producto;
-import models.SubCategoria;
+import es.deusto.spq.models.Categoria;
+import es.deusto.spq.models.Cliente;
+import es.deusto.spq.models.Marca;
+import es.deusto.spq.models.Pedido;
+import es.deusto.spq.models.Producto;
+import es.deusto.spq.models.SubCategoria;
 
 public interface IDBManager {
     public void storeObjectInDB(Object object);
