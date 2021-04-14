@@ -4,9 +4,15 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.Panel;
+import java.awt.TextArea;
+import java.awt.Toolkit;
+
 import javax.swing.JList;
 import javax.swing.JComboBox;
 import javax.swing.DefaultListModel;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+
 import java.awt.Color;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -23,11 +29,14 @@ import es.deusto.spq.models.Colores;
 import es.deusto.spq.models.Marca;
 import es.deusto.spq.models.Pedido;
 import es.deusto.spq.models.Producto;
+import es.deusto.spq.models.ProductosDeseados;
 import es.deusto.spq.models.SubCategoria;
 import es.deusto.spq.models.Tallas;
 
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.Image;
+
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -52,6 +61,8 @@ public class TiendaGUI extends JFrame {
 	private JComboBox<Tallas> comboBoxTalla;
 	private JComboBox<Marca> comboBoxMarca;
 	private JTextArea textArea;
+	ImageIcon imagen1, imagen2;
+	Icon icono1, icono2;
 	
 //	private ActionListener actualizador;
 	private Categoria categoriaSeleccionada;
@@ -74,6 +85,7 @@ public class TiendaGUI extends JFrame {
 		final WebTarget marcasTarget = appTarget.path("/marcas");
 		final WebTarget subTarget = appTarget.path("/subcategorias");
 		final WebTarget pedidoTarget= appTarget.path("/pedidos");
+		final WebTarget productosDeseadosTarget= appTarget.path("/productosDeseados");
 
 		final TiendaGUI esto = this;
 		
@@ -84,7 +96,7 @@ public class TiendaGUI extends JFrame {
 		}
 		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 842, 560);
+		setBounds(100, 100, 872, 560);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -92,7 +104,7 @@ public class TiendaGUI extends JFrame {
 		
 		//#################################################################################################
 		Panel panel = new Panel();
-		panel.setBounds(10, 10, 216, 501);
+		panel.setBounds(10, 10, 216, 601);
 		panel.setBackground(Color.WHITE);
 		contentPane.add(panel);
 		panel.setLayout(null);
@@ -105,24 +117,21 @@ public class TiendaGUI extends JFrame {
 		panel.add(txtBuscador);
 		txtBuscador.setColumns(10);
 		
-		
-		
 		//#################################################################################################
 		JButton botonHistorial = new JButton("Historial");
 		botonHistorial.setFont(new Font("Segoe UI Black", Font.PLAIN, 15));
-		botonHistorial.setBounds(10, 385, 194, 47);
+		botonHistorial.setBounds(10, 419, 194, 30);
 		panel.add(botonHistorial);
 		
 		//#################################################################################################
-		JButton btnNewButton_2 = new JButton("Cesta");
-		btnNewButton_2.setFont(new Font("Segoe UI Black", Font.PLAIN, 15));
-		btnNewButton_2.addActionListener(new ActionListener() {
+		JButton btnCesta = new JButton("Cesta");
+		btnCesta.setFont(new Font("Segoe UI Black", Font.PLAIN, 15));
+		btnCesta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnNewButton_2.setBounds(10, 443, 194, 47);
-		panel.add(btnNewButton_2);
-		
+		btnCesta.setBounds(10, 460, 194, 30);
+		panel.add(btnCesta);
 		
 		//#################################################################################################
 		comboBox_colores = new JComboBox<Colores>();
@@ -138,7 +147,6 @@ public class TiendaGUI extends JFrame {
 		JLabel lblColores = new JLabel("Colores");
 		lblColores.setBounds(10, 179, 196, 14);
 		panel.add(lblColores);
-		
 		
 		//#################################################################################################
 		final JComboBox<SubCategoria> comboBox_Subcategoria = new JComboBox<SubCategoria>();
@@ -191,20 +199,14 @@ public class TiendaGUI extends JFrame {
 		panel.add(lblCategora);
 		
 		//#################################################################################################
-		Panel imagePlacehold = new Panel();
-		imagePlacehold.setBounds(507, 40, 309, 315);
-		imagePlacehold.setBackground(Color.WHITE);
-		contentPane.add(imagePlacehold);
-		
-		//#################################################################################################
 		JLabel lblCaracteristicas = new JLabel("Caracteristicas");
-		lblCaracteristicas.setBounds(507, 361, 122, 14);
+		lblCaracteristicas.setBounds(507, 361, 162, 14);
 		lblCaracteristicas.setFont(new Font("Segoe UI Black", Font.PLAIN, 14));
 		contentPane.add(lblCaracteristicas);
 		
 		//#################################################################################################
 		JButton botonComprar = new JButton("COMPRAR");
-		botonComprar.setBounds(507, 470, 309, 41);
+		botonComprar.setBounds(507, 470, 229, 41);
 		botonComprar.setFont(new Font("Segoe UI Black", Font.PLAIN, 20));
 		contentPane.add(botonComprar);
 		botonComprar.addActionListener (new ActionListener () {
@@ -233,7 +235,7 @@ public class TiendaGUI extends JFrame {
 		
 		//#################################################################################################
 		JButton botonSignIn = new JButton("Sign in");
-		botonSignIn.setBounds(679, 10, 122, 23);
+		botonSignIn.setBounds(709, 10, 122, 23);
 		contentPane.add(botonSignIn);
 		botonSignIn.addActionListener(new ActionListener() {
 			
@@ -250,13 +252,17 @@ public class TiendaGUI extends JFrame {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(240, 10, 252, 500);
 		contentPane.add(scrollPane);
+		
+		//#################################################################################################
+		JTextArea imagePlacehold = new JTextArea();
+		imagePlacehold.setBounds(507, 40, 339, 315);
+		imagePlacehold.setBackground(Color.WHITE);
+		contentPane.add(imagePlacehold);
+		
 		//#############################################################
 		textArea = new JTextArea();
-		
-
-		textArea.setBounds(507, 379, 309, 80);
+		textArea.setBounds(507, 379, 339, 80);
 		contentPane.add(textArea);
-
 
 		//#################################################################################################
 		listaElementos = new JList<Producto>(model);
@@ -268,6 +274,7 @@ public class TiendaGUI extends JFrame {
 				productoSeleccionado = listaElementos.getSelectedValue();
 				textArea.setText(null);
 				if (productoSeleccionado != null) {
+					imagePlacehold.append(productoSeleccionado.getImagen() + "\n");
 					textArea.append("- NOMBRE: " + productoSeleccionado.nombre + "\n");
 					textArea.append("- DESCRIPCIÓN: " + productoSeleccionado.descripcion + "\n");
 					textArea.append("- PRECIO: " + productoSeleccionado.precio + "\n");
@@ -275,10 +282,6 @@ public class TiendaGUI extends JFrame {
 					textArea.append("    SUBCATEGORÍA: " + productoSeleccionado.getSubcategoria().getNombre() + "\n");
 					
 				}
-				
-				
-//				textArea.append();
-				
 			}
 		});
 		
@@ -366,6 +369,50 @@ public class TiendaGUI extends JFrame {
 
 		botonBuscar.setBounds(136, 11, 70, 38);
 		panel.add(botonBuscar);
+		
+		JButton botonListaDeseados = new JButton("ListaDeseados");
+		botonListaDeseados.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				esto.setEnabled(false);
+				ListaDeseadosGUI listaDeseados= new ListaDeseadosGUI(esto, appTarget);
+				listaDeseados.setVisible(true);
+				contentPane.setEnabled(false);
+			}
+		});
+		botonListaDeseados.setFont(new Font("Segoe UI Black", Font.PLAIN, 15));
+		botonListaDeseados.setBounds(10, 378, 194, 30);
+		panel.add(botonListaDeseados);
+		
+		JButton btnNODeseado = new JButton();
+		
+		btnNODeseado.setBounds(798, 470, 48, 41);
+		imagen1 = new ImageIcon(getClass().getResource("/img/corazon-blanco.png"));
+		icono1 = new ImageIcon(imagen1.getImage().getScaledInstance(btnNODeseado.getWidth(), btnNODeseado.getHeight(),Image.SCALE_DEFAULT));
+		btnNODeseado.setIcon(icono1);
+		contentPane.add(btnNODeseado);
+		btnNODeseado.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				btnNODeseado.setVisible(false);
+				ProductosDeseados deseados = new ProductosDeseados(cliente, productoSeleccionado);
+		    	productosDeseadosTarget.request(MediaType.APPLICATION_JSON).post(Entity.entity(deseados, MediaType.APPLICATION_JSON));
+		    	JButton btnDeseado = new JButton();
+				
+				btnDeseado.setBounds(798, 470, 48, 41);
+				imagen2 = new ImageIcon(getClass().getResource("/img/corazon-rojo.png"));
+				icono2 = new ImageIcon(imagen2.getImage().getScaledInstance(btnDeseado.getWidth(), btnDeseado.getHeight(),Image.SCALE_DEFAULT));
+				btnDeseado.setIcon(icono2);
+				contentPane.add(btnDeseado);
+				btnDeseado.setVisible(true);
+				btnDeseado.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						btnNODeseado.setVisible(true);
+						ProductosDeseados deseados = new ProductosDeseados(cliente, productoSeleccionado);
+				    	//Mirar como se hace el DELETEproductosDeseadosTarget.delete(deseados);
+					}
+					
+				});
+			}
+		});
 
 		
 
