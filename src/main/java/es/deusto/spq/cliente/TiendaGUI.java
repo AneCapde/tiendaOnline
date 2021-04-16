@@ -382,9 +382,9 @@ public class TiendaGUI extends JFrame {
 		JButton btnNODeseado = new JButton();
 		
 		btnNODeseado.setBounds(798, 470, 48, 41);
-		imagen1 = new ImageIcon(getClass().getResource("/img/corazon-blanco.png"));
-		icono1 = new ImageIcon(imagen1.getImage().getScaledInstance(btnNODeseado.getWidth(), btnNODeseado.getHeight(),Image.SCALE_DEFAULT));
-		btnNODeseado.setIcon(icono1);
+		ImageIcon icono_1 = new ImageIcon(getClass().getResource("/img/corazon-blanco.png"));
+		ImageIcon icono_2 = new ImageIcon(icono_1.getImage().getScaledInstance(btnNODeseado.getWidth(), btnNODeseado.getHeight(),Image.SCALE_DEFAULT));
+		btnNODeseado.setIcon(icono_2);
 		contentPane.add(btnNODeseado);
 		btnNODeseado.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -396,9 +396,9 @@ public class TiendaGUI extends JFrame {
 
 		    	JButton btnDeseado = new JButton();
 				btnDeseado.setBounds(798, 470, 48, 41);
-				imagen2 = new ImageIcon(getClass().getResource("/img/corazon-rojo.png"));
-				icono2 = new ImageIcon(imagen2.getImage().getScaledInstance(btnDeseado.getWidth(), btnDeseado.getHeight(),Image.SCALE_DEFAULT));
-				btnDeseado.setIcon(icono2);
+				ImageIcon icono_1 = new ImageIcon(getClass().getResource("/img/corazon-rojo.png"));
+				ImageIcon icono_2 = new ImageIcon(icono_1.getImage().getScaledInstance(btnDeseado.getWidth(), btnDeseado.getHeight(),Image.SCALE_DEFAULT));
+				btnDeseado.setIcon(icono_2);
 				contentPane.add(btnDeseado);
 				btnDeseado.setVisible(true);
 				btnDeseado.addActionListener(new ActionListener() {
