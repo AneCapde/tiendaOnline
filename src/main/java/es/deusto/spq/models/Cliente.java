@@ -1,6 +1,10 @@
 package es.deusto.spq.models;
 
+import java.util.ArrayList;
+
+import javax.jdo.annotations.Join;
 import javax.jdo.annotations.PersistenceCapable;
+import javax.jdo.annotations.Persistent;
 
 
 @PersistenceCapable(detachable = "true")
@@ -22,6 +26,10 @@ public class Cliente {
 	private int cod_postal;
 	private String provincia;
 	private String localidad;
+
+	@Persistent(defaultFetchGroup = "true", dependentElement = "true")
+	@Join
+	private ArrayList<Producto> productosDeseados = new ArrayList<>();
 	
 	public Cliente(String DNI, String nombre,String apellidos, String email, String password,
 			int telefono, String direccion, Genero genero, int cod_postal, String provincia, String localidad) {
@@ -125,14 +133,19 @@ public class Cliente {
 	public void setLocalidad(String localidad) {
 		this.localidad = localidad;
 	}
+	public ArrayList<Producto> getProductosDeseados() {
+		return this.productosDeseados;
+	}
 
-
-	@Override
-	public String toString() {
-		return "Cliente [DNI=" + DNI + ", nombre=" + nombre + ", apellidos=" + apellidos + ", email=" + email
-				+ ", password=" + password + ", telefono=" + telefono + ", direccion=" + direccion + ", genero="
-				+ genero + ", cod_postal=" + cod_postal + ", provincia=" + provincia + ", localidad=" + localidad
-				+ "]";
+	public void setProductosDeseados(ArrayList<Producto> productosDeseados) {
+		this.productosDeseados = productosDeseados;
+	}
+	public void removeProducto(Producto productosDeseado) {
+		for (Producto p : this.productosDeseados){
+			if (p.equals(productosDeseado)){
+				this.productosDeseados.remove(p);
+			}
+		}
 	}
 		
 }

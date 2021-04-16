@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import es.deusto.spq.models.Categoria;
 import es.deusto.spq.models.Cliente;
-import es.deusto.spq.models.ProductosDeseados;
 import es.deusto.spq.models.Marca;
 import es.deusto.spq.models.Pedido;
 import es.deusto.spq.models.Producto;
@@ -18,17 +17,14 @@ public interface IDBManager {
     public void store(Categoria categoria);
     public void store(SubCategoria subCategoria);
     public void store(Marca marca);
-    public void store(ProductosDeseados deseados);
     public ArrayList<Cliente> getClientes();
     public ArrayList<Pedido> getPedidos();
     public ArrayList<Producto> getProductos();
     public ArrayList<Marca> getMarcas();
     public ArrayList<Categoria> getCategorias();
     public ArrayList<SubCategoria> getSubcategorias();
-    public ArrayList<ProductosDeseados> getProductosDeseados();
     public void updateCliente(Cliente cliente);
     public void updateProducto(Producto producto);
     public void updatePedido(Pedido pedido);
-    public void updateProductsDeseados(ProductosDeseados productosDeseados);
 	
 }

@@ -8,7 +8,7 @@ public class Marca {
 	private String nombre;
 	private String descripcion;
 	
-	public Marca( String nombre, String descripcion) {
+	public Marca(String nombre, String descripcion) {
 		super();
 		this.nombre = nombre;
 		this.descripcion = descripcion;

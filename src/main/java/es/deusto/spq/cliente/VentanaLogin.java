@@ -18,6 +18,8 @@ import javax.swing.JTextField;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 
+import es.deusto.spq.models.Cliente;
+
 public class VentanaLogin extends JFrame{
 
 	private static final long serialVersionUID = 1L;
@@ -94,11 +96,10 @@ public class VentanaLogin extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 
 				final WebTarget clientesTarget = appTarget.path("/clientes").path("/"+emailTextField.getText()).path("/"+ new String(passwordField.getPassword()));
-				String correcto = clientesTarget.request(MediaType.TEXT_PLAIN).get(String.class);
-			
-				if (correcto.equals("true")) {
+				Cliente cliente = clientesTarget.request(MediaType.APPLICATION_JSON).get(Cliente.class);
+				if (!cliente.equals(null)) {
 					System.out.println("Credenciales correctas");
-					TiendaGUI.setCliente(null);//deberia recibir desde el server el cliente concreto TODO
+					TiendaGUI.setCliente(cliente);
 					ventanaPadre.setEnabled(true);
 					dispose();
 				} else {

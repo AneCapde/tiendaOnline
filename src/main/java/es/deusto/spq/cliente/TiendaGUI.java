@@ -4,8 +4,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.Panel;
-import java.awt.TextArea;
-import java.awt.Toolkit;
 
 import javax.swing.JList;
 import javax.swing.JComboBox;
@@ -29,7 +27,6 @@ import es.deusto.spq.models.Colores;
 import es.deusto.spq.models.Marca;
 import es.deusto.spq.models.Pedido;
 import es.deusto.spq.models.Producto;
-import es.deusto.spq.models.ProductosDeseados;
 import es.deusto.spq.models.SubCategoria;
 import es.deusto.spq.models.Tallas;
 
@@ -85,7 +82,6 @@ public class TiendaGUI extends JFrame {
 		final WebTarget marcasTarget = appTarget.path("/marcas");
 		final WebTarget subTarget = appTarget.path("/subcategorias");
 		final WebTarget pedidoTarget= appTarget.path("/pedidos");
-		final WebTarget productosDeseadosTarget= appTarget.path("/productosDeseados");
 
 		final TiendaGUI esto = this;
 		
@@ -212,7 +208,7 @@ public class TiendaGUI extends JFrame {
 		botonComprar.addActionListener (new ActionListener () {
 		    public void actionPerformed(ActionEvent e) {
 		    	Date date = new Date();
-		    	Pedido pedido = new Pedido(cliente, date,"en proceso" , productoSeleccionado.getPrecio(), 1 , productoSeleccionado);
+		    	Pedido pedido = new Pedido(TiendaGUI.getCliente(), date,"en proceso" , productoSeleccionado.getPrecio(), 1 , productoSeleccionado);
 		    	pedidoTarget.request(MediaType.APPLICATION_JSON).post(Entity.entity(pedido, MediaType.APPLICATION_JSON));
 			}
 		});
@@ -393,10 +389,12 @@ public class TiendaGUI extends JFrame {
 		btnNODeseado.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				btnNODeseado.setVisible(false);
-				ProductosDeseados deseados = new ProductosDeseados(cliente, productoSeleccionado);
-		    	productosDeseadosTarget.request(MediaType.APPLICATION_JSON).post(Entity.entity(deseados, MediaType.APPLICATION_JSON));
+				TiendaGUI.getCliente().getProductosDeseados().add(productoSeleccionado);
+				final WebTarget clientesTarget = appTarget.path("/clientes/update");
+				clientesTarget.request(MediaType.APPLICATION_JSON).post(Entity.entity(TiendaGUI.getCliente(), MediaType.APPLICATION_JSON));
+
+
 		    	JButton btnDeseado = new JButton();
-				
 				btnDeseado.setBounds(798, 470, 48, 41);
 				imagen2 = new ImageIcon(getClass().getResource("/img/corazon-rojo.png"));
 				icono2 = new ImageIcon(imagen2.getImage().getScaledInstance(btnDeseado.getWidth(), btnDeseado.getHeight(),Image.SCALE_DEFAULT));
@@ -406,8 +404,10 @@ public class TiendaGUI extends JFrame {
 				btnDeseado.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						btnNODeseado.setVisible(true);
-						ProductosDeseados deseados = new ProductosDeseados(cliente, productoSeleccionado);
-				    	//Mirar como se hace el DELETEproductosDeseadosTarget.delete(deseados);
+						TiendaGUI.getCliente().removeProducto(productoSeleccionado);
+						final WebTarget clientesTarget = appTarget.path("/clientes/update");
+						clientesTarget.request(MediaType.APPLICATION_JSON).post(Entity.entity(TiendaGUI.getCliente(), MediaType.APPLICATION_JSON));
+
 					}
 					
 				});
@@ -423,5 +423,8 @@ public class TiendaGUI extends JFrame {
     }
 	public static void setCliente(Cliente cliente) {
 		TiendaGUI.cliente = cliente;
+	}
+	public static Cliente getCliente() {
+		return TiendaGUI.cliente;
 	}
 }
