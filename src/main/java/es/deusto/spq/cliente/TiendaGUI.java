@@ -70,7 +70,7 @@ public class TiendaGUI extends JFrame {
 	private Colores colorSelecionado;
 	private Producto productoSeleccionado;
 	private static Cliente cliente;
-	
+	private List<Producto> productos;
 	
 	
 	public TiendaGUI() {
@@ -86,7 +86,7 @@ public class TiendaGUI extends JFrame {
 		final TiendaGUI esto = this;
 		
 		GenericType<List<Producto>> genericType_productos = new GenericType<List<Producto>>() {};
-        List<Producto> productos = productosTarget.request(MediaType.APPLICATION_JSON).get(genericType_productos);
+        productos = productosTarget.request(MediaType.APPLICATION_JSON).get(genericType_productos);
 		for (int i = 0; i < productos.size(); i++) {
 			model.addElement(productos.get(i));
 		}
@@ -158,7 +158,7 @@ public class TiendaGUI extends JFrame {
 			comboBox_Categoria.addItem(categoria);
 		}
 		
-		
+		//Cada vez que se cambia una categoría hay que eliminar todas las subactegorias y meter nuevas eb el comboBox
 		GenericType<List<SubCategoria>> genericType_sub = new GenericType<List<SubCategoria>>() {};
         List<SubCategoria> subCategorias = subTarget.request(MediaType.APPLICATION_JSON).get(genericType_sub);
 		comboBox_Categoria.addActionListener (new ActionListener () {
@@ -263,6 +263,7 @@ public class TiendaGUI extends JFrame {
 		//#################################################################################################
 		listaElementos = new JList<Producto>(model);
 		scrollPane.setViewportView(listaElementos);
+		//Coge los elementos de la clase seleccionada y los pone en la Jlist.
 		listaElementos.addListSelectionListener(new ListSelectionListener() {
 			
 			@Override
@@ -320,7 +321,8 @@ public class TiendaGUI extends JFrame {
 		botonBuscar.setFont(new Font("Segoe UI Black", Font.PLAIN, 11));
 		botonBuscar.setToolTipText("Buscar");
 
-
+		//Cada vez que se le da a buscar se mira todos los combobox y el apartado de busqueda y se mira si los elementos en la lista tienen
+		//esa característica
 		botonBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				textoBuscador = txtBuscador.getText();
@@ -415,8 +417,10 @@ public class TiendaGUI extends JFrame {
 		});
 
 		
-
+	
 	}
+	
+
 	public static void main(String[] args) {
         TiendaGUI tiendaGUI = new TiendaGUI();
 		tiendaGUI.setVisible(true);
@@ -427,4 +431,5 @@ public class TiendaGUI extends JFrame {
 	public static Cliente getCliente() {
 		return TiendaGUI.cliente;
 	}
+	
 }
