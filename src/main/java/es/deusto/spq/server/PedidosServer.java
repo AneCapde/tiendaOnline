@@ -13,7 +13,9 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import es.deusto.spq.dao.DBManager;
+import es.deusto.spq.models.Cliente;
 import es.deusto.spq.models.Pedido;
+import es.deusto.spq.models.Producto;
 
 @Path("/pedidos")
 public class PedidosServer {
@@ -27,7 +29,10 @@ public class PedidosServer {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public void addPedido(Pedido pedido) {
-        DBManager.getInstance().store(pedido);
+        Cliente cliente = DBManager.getInstance().getCliente(pedido.getCliente().getDNI());
+        Producto producto = DBManager.getInstance().getProducto(pedido.getProducto().getNombre());
+        Pedido p = new Pedido(cliente, pedido.getFecha(), pedido.getEstado(), pedido.getImporte(), pedido.getCantidad(), producto);
+        DBManager.getInstance().store(p);
     }
     @DELETE
     @Path("/{code}")

@@ -1,10 +1,12 @@
 package es.deusto.spq.dao;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.jdo.JDOHelper;
 import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
+import javax.jdo.Query;
 import javax.jdo.Transaction;
 
 import es.deusto.spq.models.Categoria;
@@ -231,7 +233,81 @@ public class DBManager implements IDBManager{
 		return subcategorias;			
 	}
     
+	@Override
+	public Cliente getCliente(String DNI) {
+		PersistenceManager pm = pmf.getPersistenceManager();
+		pm.getFetchPlan().setMaxFetchDepth(4);
+		Transaction tx = pm.currentTransaction();
+		Cliente cliente = null; 
+		try {
+			System.out.println("  * Querying a Cliente : " + DNI);
+			tx.begin();
 
+			Query<?> query = pm.newQuery("SELECT FROM " + Cliente.class.getName() + " WHERE DNI == '" + DNI + "'");
+			query.setUnique(true);
+			cliente = (Cliente) query.execute();
+			tx.commit();
+		} catch (Exception ex) {
+			System.out.println(" $ Error querying a Cliente: " + ex.getMessage());
+		} finally {
+			if (tx != null && tx.isActive()) {
+				tx.rollback();
+			}
+			pm.close();
+		}
+		return cliente;
+	}
+	@Override
+	public Pedido getPedido(Date fecha) {
+		PersistenceManager pm = pmf.getPersistenceManager();
+		pm.getFetchPlan().setMaxFetchDepth(4);
+		Transaction tx = pm.currentTransaction();
+		Pedido pedido = null; 
+		try {
+			System.out.println("  * Querying a Pedido : " + fecha);
+			tx.begin();
+
+			Query<?> query = pm.newQuery("SELECT FROM " + Pedido.class.getName() + " WHERE fecha == " + fecha + "");
+			query.setUnique(true);
+			pedido = (Pedido) query.execute();
+
+			tx.commit();
+		} catch (Exception ex) {
+			System.out.println(" $ Error querying a Cliente: " + ex.getMessage());
+		} finally {
+			if (tx != null && tx.isActive()) {
+				tx.rollback();
+			}
+			pm.close();
+		}
+		return pedido;
+	}
+
+	@Override
+	public Producto getProducto(String nombre) {
+		PersistenceManager pm = pmf.getPersistenceManager();
+		pm.getFetchPlan().setMaxFetchDepth(4);
+		Transaction tx = pm.currentTransaction();
+		Producto producto = null; 
+		try {
+			System.out.println("  * Querying a Producto : " + nombre);
+			tx.begin();
+
+			Query<?> query = pm.newQuery("SELECT FROM " + Producto.class.getName() + " WHERE nombre == '" + nombre + "'");
+			query.setUnique(true);
+			producto = (Producto) query.execute();
+
+			tx.commit();
+		} catch (Exception ex) {
+			System.out.println(" $ Error querying a Producto: " + ex.getMessage());
+		} finally {
+			if (tx != null && tx.isActive()) {
+				tx.rollback();
+			}
+			pm.close();
+		}
+		return producto;
+	}
     
     @Override
 	public void updateCliente(Cliente cliente) {
@@ -286,5 +362,4 @@ public class DBManager implements IDBManager{
 			pm.close();
 		}
 	}
-    
 }

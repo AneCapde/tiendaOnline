@@ -274,7 +274,7 @@ public class VentanaRegistro extends JFrame {
 	
 	public VentanaRegistro(final JFrame ventanaPadre, WebTarget appTarget ) {
 
-		final WebTarget clientesTarget = appTarget.path("/clientes/save");
+		final WebTarget clientesTarget = appTarget.path("/clientes");
 
 		setIconImage(Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("/img/registro2.png")));
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

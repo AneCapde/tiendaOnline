@@ -392,8 +392,8 @@ public class TiendaGUI extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				btnNODeseado.setVisible(false);
 				TiendaGUI.getCliente().getProductosDeseados().add(productoSeleccionado);
-				final WebTarget clientesTarget = appTarget.path("/clientes/update");
-				clientesTarget.request(MediaType.APPLICATION_JSON).post(Entity.entity(TiendaGUI.getCliente(), MediaType.APPLICATION_JSON));
+				final WebTarget clientesTarget = appTarget.path("/clientes");
+				clientesTarget.request(MediaType.APPLICATION_JSON).put(Entity.entity(TiendaGUI.getCliente(), MediaType.APPLICATION_JSON));
 
 
 		    	JButton btnDeseado = new JButton();
@@ -407,8 +407,8 @@ public class TiendaGUI extends JFrame {
 					public void actionPerformed(ActionEvent arg0) {
 						btnNODeseado.setVisible(true);
 						TiendaGUI.getCliente().removeProducto(productoSeleccionado);
-						final WebTarget clientesTarget = appTarget.path("/clientes/update");
-						clientesTarget.request(MediaType.APPLICATION_JSON).post(Entity.entity(TiendaGUI.getCliente(), MediaType.APPLICATION_JSON));
+						final WebTarget clientesTarget = appTarget.path("/clientes");
+						clientesTarget.request(MediaType.APPLICATION_JSON).put(Entity.entity(TiendaGUI.getCliente(), MediaType.APPLICATION_JSON));
 
 					}
 					

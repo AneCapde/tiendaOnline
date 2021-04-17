@@ -1,6 +1,7 @@
 package es.deusto.spq.dao;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import es.deusto.spq.models.Categoria;
 import es.deusto.spq.models.Cliente;
@@ -23,6 +24,9 @@ public interface IDBManager {
     public ArrayList<Marca> getMarcas();
     public ArrayList<Categoria> getCategorias();
     public ArrayList<SubCategoria> getSubcategorias();
+    public Cliente getCliente(String DNI);
+    public Pedido getPedido(Date fecha);
+    public Producto getProducto(String nombre);
     public void updateCliente(Cliente cliente);
     public void updateProducto(Producto producto);
     public void updatePedido(Pedido pedido);
