@@ -37,6 +37,7 @@ import java.awt.Image;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.awt.event.ActionEvent;
@@ -71,6 +72,7 @@ public class TiendaGUI extends JFrame {
 	private Producto productoSeleccionado;
 	private static Cliente cliente;
 	private List<Producto> productos;
+	private List<Producto> productos_cesta = new ArrayList<Producto>();
 	
 	
 	public TiendaGUI() {
@@ -124,6 +126,9 @@ public class TiendaGUI extends JFrame {
 		btnCesta.setFont(new Font("Segoe UI Black", Font.PLAIN, 15));
 		btnCesta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				CestaGUI cestaGUI = new CestaGUI(productos_cesta, pedidoTarget);
+				cestaGUI.setVisible(true);
+				dispose();
 			}
 		});
 		btnCesta.setBounds(10, 460, 194, 30);
@@ -212,6 +217,20 @@ public class TiendaGUI extends JFrame {
 		    	pedidoTarget.request(MediaType.APPLICATION_JSON).post(Entity.entity(pedido, MediaType.APPLICATION_JSON));
 			}
 		});
+	
+		//#################################################################################################
+		JButton botonAnyadir = new JButton("Añadir A la Cesta");
+		botonAnyadir.setBounds(507, 310, 229, 41);
+		botonAnyadir.setFont(new Font("Segoe UI Black", Font.PLAIN, 20));
+		contentPane.add(botonAnyadir);
+		botonAnyadir.addActionListener (new ActionListener () {
+		    public void actionPerformed(ActionEvent e) {
+				productoSeleccionado =  listaElementos.getSelectedValue();
+				if (!productos_cesta.contains(productoSeleccionado)){
+					productos_cesta.add(productoSeleccionado);
+				}
+			}
+		});
 		
 		//#################################################################################################
 		JButton botonLogin = new JButton("Log in");
@@ -251,7 +270,7 @@ public class TiendaGUI extends JFrame {
 		
 		//#################################################################################################
 		JTextArea imagePlacehold = new JTextArea();
-		imagePlacehold.setBounds(507, 40, 339, 315);
+		imagePlacehold.setBounds(507, 40, 339, 260);
 		imagePlacehold.setBackground(Color.WHITE);
 		contentPane.add(imagePlacehold);
 		
