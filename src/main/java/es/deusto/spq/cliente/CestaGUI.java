@@ -108,7 +108,7 @@ public class CestaGUI extends JFrame {
 		btnOk.addActionListener (new ActionListener () {
 		    public void actionPerformed(ActionEvent e) {
 				Producto producto = list.getSelectedValue();
-				int cantidad = (Integer) spinner.getValue();
+				int cantidad = Integer.valueOf(String.valueOf(Math.round((double) spinner.getValue())));
 				productos_cantidad.put(producto, cantidad);
 				textField.setText(String.valueOf(calcularPrecio()));
 			}
