@@ -17,6 +17,7 @@ import es.deusto.spq.models.Producto;
 import java.awt.Color;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -44,7 +45,8 @@ public class CestaGUI extends JFrame {
 	 */
 	public CestaGUI(List<Producto> productos, final WebTarget appTarget) {
 
-		for (Producto p:productos){
+		final WebTarget pedidoTarget = appTarget.path("/pedidos");
+		for (Producto p:productos) {
 			productos_cantidad.put(p, 1);
 		}
 
@@ -85,9 +87,8 @@ public class CestaGUI extends JFrame {
 					Date date = new Date();
 					int precio_pedido = productos_cantidad.get(p)*p.getPrecio();
 					Pedido pedido = new Pedido(TiendaGUI.getCliente(), date,"en proceso" , precio_pedido, productos_cantidad.get(p), p);
-					appTarget.request(MediaType.APPLICATION_JSON).post(Entity.entity(pedido, MediaType.APPLICATION_JSON));
+					pedidoTarget.request(MediaType.APPLICATION_JSON).post(Entity.entity(pedido, MediaType.APPLICATION_JSON));
 				}
-		    	
 			}
 		});
 		
