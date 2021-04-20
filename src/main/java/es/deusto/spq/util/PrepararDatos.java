@@ -31,8 +31,8 @@ public class PrepararDatos {
 			tx.begin();
 			
 			//Creamos un cliente
-			Cliente cliente1 = new Cliente("12399345K", "Leire", "Fernandez Olabarrieta", "leire@gmail.com", "12345r", 655786943,
-					"luis bilbao libarno", Genero.MUJER, 45678, "Bizkaia", "Leioa");
+			Cliente cliente1 = new Cliente("12399345K", "usuario", "apellido apellido ", "usuario@gmail.com", "12345r", 655786943,
+					"direccion", Genero.MUJER, 45678, "provincia", "localidad");
 			pm.makePersistent(cliente1);
 			
 			//Creamos las categorias
