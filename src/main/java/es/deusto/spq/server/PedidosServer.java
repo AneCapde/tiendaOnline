@@ -31,9 +31,11 @@ public class PedidosServer {
     public void addPedido(Pedido pedido) {
         Cliente cliente = DBManager.getInstance().getCliente(pedido.getCliente().getDNI());
         Producto producto = DBManager.getInstance().getProducto(pedido.getProducto().getNombre());
-        Pedido p = new Pedido(cliente, pedido.getFecha(), pedido.getEstado(), pedido.getImporte(), pedido.getCantidad(), producto);
-        DBManager.getInstance().store(p);
+        pedido.setCliente(cliente);
+        pedido.setProducto(producto);
+        DBManager.getInstance().store(pedido);
     }
+    
     @DELETE
     @Path("/{code}")
     public Response deletePedido(@PathParam("code") int code) {
