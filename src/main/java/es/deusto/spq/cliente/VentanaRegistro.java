@@ -173,13 +173,7 @@ public class VentanaRegistro extends JFrame {
 		int Arroba = 0; // solo la arroba -.-!
 
 		for (int x = 0; x < password.length(); x++) {
-			if ((password.charAt(x) >= 47 && password.charAt(x) <= 58) // numeros
-					|| (password.charAt(x) >= 64 && password.charAt(x) <= 91) // mayusculas
-					|| (password.charAt(x) >= 63 && password.charAt(x) <= 65) // Arroba
-					|| (password.charAt(x) >= 32 && password.charAt(x) <= 44) // signos
-					|| (password.charAt(x) >= 97 && password.charAt(x) <= 122)) { // minusculas
 
-			}
 			if ((password.charAt(x) > 63 && password.charAt(x) < 65)) { // Cuenta laS arrobas
 				Arroba++;
 			}
