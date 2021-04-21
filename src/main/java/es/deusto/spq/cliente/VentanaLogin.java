@@ -108,7 +108,7 @@ public class VentanaLogin extends JFrame{
 					}
 				}
 				catch(NullPointerException nl) {
-					JOptionPane.showMessageDialog(null, "Credenciales incorrectas", "Validar Genero", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Credenciales incorrectas", "Validar Credenciales", JOptionPane.INFORMATION_MESSAGE);
 				}
 			}
 		

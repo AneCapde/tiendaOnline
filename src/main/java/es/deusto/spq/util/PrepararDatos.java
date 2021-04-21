@@ -142,7 +142,7 @@ public class PrepararDatos {
 			Producto producto5 = new Producto("Pantalon Vaquero","Pantalon vaquero azul",15,30,"img/pantalonVaquero.png",subcategoria3,marca2);
 			//producto5.setTallas_colores(colorTallaS);
 			pm.makePersistent(producto5);
-			Producto producto6 = new Producto("Falda de flores","Falda estampado floral",10,25,"img/faldaFlores.png",subcategoria4,marca2);
+			Producto producto6 = new Producto("Falda de flores","Falda estampado floral",10,25,"img/faldaFlores.jpg",subcategoria4,marca2);
 			//producto6.setTallas_colores(colorTallaS);
 			pm.makePersistent(producto6);
 			Producto producto7 = new Producto("Vestido negro","Vestido negro de tirantes",10,35,"img/vestidoNegro.png",subcategoria6,marca2);
