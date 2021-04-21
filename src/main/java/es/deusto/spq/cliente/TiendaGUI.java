@@ -106,6 +106,9 @@ public class TiendaGUI extends JFrame {
 		panel.setBackground(Color.WHITE);
 		contentPane.add(panel);
 		panel.setLayout(null);
+
+		
+
 		
 		//#################################################################################################
 		txtBuscador = new JTextField();
