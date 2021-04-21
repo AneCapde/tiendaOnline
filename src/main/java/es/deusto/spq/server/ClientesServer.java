@@ -3,6 +3,7 @@ package es.deusto.spq.server;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -48,4 +49,16 @@ public class ClientesServer {
         }
         DBManager.getInstance().updateCliente(cliente_per);
     }
+    
+//    @POST
+//    @Path("/{deseado}")
+//    @Consumes(MediaType.APPLICATION_JSON)
+//    public void deleteCliente(@PathParam ("deseado") Cliente cliente) {
+//    	Cliente cliente_per = DBManager.getInstance().getCliente(cliente.getDNI());
+//        for (Producto p : cliente.getProductosDeseados()){
+//            Producto producto_per = DBManager.getInstance().getProducto(p.getNombre());
+//            cliente_per.getProductosDeseados().remove(producto_per);
+//        }
+//        DBManager.getInstance().updateCliente(cliente_per);
+//    }
 }

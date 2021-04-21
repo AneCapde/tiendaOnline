@@ -12,6 +12,7 @@ import java.util.regex.Pattern;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -97,13 +98,17 @@ public class VentanaLogin extends JFrame{
 
 				final WebTarget clientesTarget = appTarget.path("/clientes").path("/"+emailTextField.getText()).path("/"+ new String(passwordField.getPassword()));
 				Cliente cliente = clientesTarget.request(MediaType.APPLICATION_JSON).get(Cliente.class);
-				if (!cliente.equals(null)) {
-					System.out.println("Credenciales correctas");
-					TiendaGUI.setCliente(cliente);
-					ventanaPadre.setEnabled(true);
-					dispose();
-				} else {
-					System.out.println("Credenciales incorrectas");		
+				
+				try {
+					if (!cliente.equals(null)) {
+						System.out.println("Credenciales correctas");
+						TiendaGUI.setCliente(cliente);
+						ventanaPadre.setEnabled(true);
+						dispose();
+					}
+				}
+				catch(NullPointerException nl) {
+					JOptionPane.showMessageDialog(null, "Credenciales incorrectas", "Validar Genero", JOptionPane.INFORMATION_MESSAGE);
 				}
 			}
 		
