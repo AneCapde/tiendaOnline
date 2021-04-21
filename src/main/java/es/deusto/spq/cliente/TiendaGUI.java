@@ -121,6 +121,19 @@ public class TiendaGUI extends JFrame {
 		botonHistorial.setBounds(10, 419, 194, 30);
 		panel.add(botonHistorial);
 		
+		botonHistorial.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				esto.setEnabled(false);
+				HistorialGUI historial= new HistorialGUI(esto, appTarget);
+				historial.setVisible(true);
+				contentPane.setEnabled(false);
+				
+			}
+			
+		});
+		
 		//#################################################################################################
 		JButton btnCesta = new JButton("Cesta");
 		btnCesta.setFont(new Font("Segoe UI Black", Font.PLAIN, 15));

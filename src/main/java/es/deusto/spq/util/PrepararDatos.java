@@ -106,9 +106,7 @@ public class PrepararDatos {
 			//DBManager.getInstance().store(marca3);
 
 			//Creamos productos (de momento algunos de prueba)
-			
-			//Para hacer lo del hashmap de colores
-			//he hecho dos hashmap de diferente talla porque solo cogia la ultima talla que se metia al HM
+		
 			HashMap<Colores, Tallas> colorTallaS = new HashMap<>();
 			colorTallaS.put(Colores.AZUL, Tallas.S);
 			colorTallaS.put(Colores.NEGRO, Tallas.S);
