@@ -2,13 +2,12 @@ package es.deusto.spq.cliente;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.DefaultListModel;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -20,15 +19,15 @@ import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.MediaType;
 
 import es.deusto.spq.models.Producto;
 
 @SuppressWarnings("serial")
 public class ListaDeseadosGUI extends JFrame {
 
-//	private Producto productoSeleccionado;
-//	private static Cliente cliente;
 	private JPanel contentPane;
 	private DefaultListModel<Producto> model = new DefaultListModel<>();
 	private Producto productoSeleccionado;
@@ -53,14 +52,18 @@ public class ListaDeseadosGUI extends JFrame {
 		contentPane.add(scrollPane);
 		
 		JLabel lblCaracteristicas = new JLabel("Caracteristicas");
-		lblCaracteristicas.setBounds(452, 192, 162, 14);
+		lblCaracteristicas.setBounds(464, 322, 162, 14);
 		lblCaracteristicas.setFont(new Font("Segoe UI Black", Font.PLAIN, 14));
 		contentPane.add(lblCaracteristicas);
 		
 		JTextArea textArea = new JTextArea();
-		textArea.setBounds(452, 220, 382, 180);
+		textArea.setBounds(464, 347, 367, 116);
 		contentPane.add(textArea);
 		
+		JTextArea imagePlacehold = new JTextArea();
+		imagePlacehold.setBounds(464, 51, 367, 260);
+		imagePlacehold.setBackground(Color.WHITE);
+		contentPane.add(imagePlacehold);
 		
 		ArrayList<Producto> productos = TiendaGUI.getCliente().getProductosDeseados();
 		for (int i = 0; i < productos.size(); i++) {
@@ -79,7 +82,7 @@ public class ListaDeseadosGUI extends JFrame {
 				productoSeleccionado = listaElementos.getSelectedValue();
 				textArea.setText(null);
 				if (productoSeleccionado != null) {
-					textArea.append(productoSeleccionado.getImagen() + "\n");
+					imagePlacehold.append(productoSeleccionado.getImagen() + "\n");
 					textArea.append("- NOMBRE: " + productoSeleccionado.nombre + "\n");
 					textArea.append("- DESCRIPCIÓN: " + productoSeleccionado.descripcion + "\n");
 					textArea.append("- PRECIO: " + productoSeleccionado.precio + "\n");
@@ -93,7 +96,7 @@ public class ListaDeseadosGUI extends JFrame {
 		JButton btnEliminar = new JButton("ELIMINAR");
 		btnEliminar.setForeground(Color.WHITE);
 		btnEliminar.setBackground(new Color(128, 0, 0));
-		btnEliminar.setBounds(730, 440, 103, 41);
+		btnEliminar.setBounds(733, 487, 98, 23);
 		contentPane.add(btnEliminar);
 		btnEliminar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -101,9 +104,9 @@ public class ListaDeseadosGUI extends JFrame {
 				Producto producto = listaElementos.getSelectedValue();
 				model.removeElement(producto);
 				listaElementos.setModel( model);
-//				TiendaGUI.getCliente().removeProducto(productoSeleccionado); //no se estan borrando los roductos de la base de datos
-//				final WebTarget clientesTarget = appTarget.path("/clientes");
-//				clientesTarget.request(MediaType.APPLICATION_JSON).put(Entity.entity(TiendaGUI.getCliente(), MediaType.APPLICATION_JSON));
+				TiendaGUI.getCliente().removeProducto(productoSeleccionado); //no se estan borrando los roductos de la base de datos
+//				final WebTarget clientesTarget = appTarget.path("/clientes").path("/"+TiendaGUI.getCliente());
+//				clientesTarget.request(MediaType.APPLICATION_JSON).post(Entity.entity(TiendaGUI.getCliente(), MediaType.APPLICATION_JSON));
 			}
 
 		});
@@ -111,14 +114,27 @@ public class ListaDeseadosGUI extends JFrame {
 		JButton btnInicio = new JButton("INICIO");
 		btnInicio.setForeground(Color.BLACK);
 		btnInicio.setBackground(new Color(0, 255, 0));
-		btnInicio.setBounds(498, 28, 116, 36);
+		btnInicio.setBounds(469, 11, 109, 29);
 		contentPane.add(btnInicio);
 		btnInicio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				setVisible(false);
 				TiendaGUI tienda = new TiendaGUI();
 				tienda.setVisible(true);
-				contentPane.setEnabled(false);
+				dispose();
+			}
+		});
+		
+		JButton botonAnyadir = new JButton("Añadir A la Cesta");
+		botonAnyadir.setBounds(605, 11, 212, 29);
+		botonAnyadir.setFont(new Font("Segoe UI Black", Font.PLAIN, 20));
+		contentPane.add(botonAnyadir);
+		botonAnyadir.addActionListener (new ActionListener () {
+		    public void actionPerformed(ActionEvent e) {
+				productoSeleccionado =  listaElementos.getSelectedValue();
+				if (!TiendaGUI.productos_cesta.contains(productoSeleccionado)){
+					TiendaGUI.productos_cesta.add(productoSeleccionado);
+				}
 			}
 		});
 		
