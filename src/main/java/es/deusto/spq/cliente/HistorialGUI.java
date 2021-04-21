@@ -1,9 +1,14 @@
 package es.deusto.spq.cliente;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.DefaultListModel;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -26,6 +31,8 @@ public class HistorialGUI extends JFrame{
 	private DefaultListModel<Producto> model = new DefaultListModel<>();
 	private Pedido pedidoSeleccionado;
 	private JList<Pedido> listaElementos;
+	private JButton botonDevolver;
+	private JPanel pInferior;
 	
 	public HistorialGUI(final JFrame ventanaPadre, WebTarget appTarget) {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -34,6 +41,11 @@ public class HistorialGUI extends JFrame{
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		
+//		pInferior = new JPanel();
+//		pInferior.setEnabled(false);
+//		pInferior.setBackground(Color.LIGHT_GRAY);
+//		getContentPane().add(pInferior,BorderLayout.SOUTH);
 		
 		JLabel lblPedidosDeseados = new JLabel("Historial de Pedidos");
 		lblPedidosDeseados.setFont(new Font("Segoe UI Black", Font.PLAIN, 15));
@@ -52,6 +64,22 @@ public class HistorialGUI extends JFrame{
 		JTextArea textArea = new JTextArea();
 		textArea.setBounds(452, 220, 382, 180);
 		contentPane.add(textArea);
+		
+//		botonDevolver = new JButton("Devolución");
+//		botonDevolver.setBounds((this.getWidth()/100)*5, (this.getHeight()/18)*8, (this.getWidth()/35)*10, (this.getHeight()/18)*3);
+//	    pInferior.add(botonDevolver);
+//	    
+//	    //Boton para realizar la devolucion del producto seleccionado (funcionalidad más adelante)
+//	    botonDevolver.addActionListener(new ActionListener() {
+//
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				// TODO Auto-generated method stub
+//				
+//			}
+//	    	
+//	    });
+		
 		
 //		listaElementos = new JList<Pedido>(model);
 //		listaElementos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
