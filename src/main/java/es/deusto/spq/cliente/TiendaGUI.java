@@ -343,7 +343,6 @@ public class TiendaGUI extends JFrame {
 //									clientesTarget.request(MediaType.APPLICATION_JSON).post(Entity.entity(TiendaGUI.getCliente(), MediaType.APPLICATION_JSON));
 
 								}
-								
 							});
 						}
 					});
