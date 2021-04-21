@@ -104,9 +104,6 @@ public class TiendaGUI extends JFrame {
 		contentPane.add(panel);
 		panel.setLayout(null);
 
-		
-
-		
 		//#################################################################################################
 		txtBuscador = new JTextField();
 		txtBuscador.setToolTipText("Buscar");
@@ -189,19 +186,14 @@ public class TiendaGUI extends JFrame {
 						if (categoriaSeleccionada.getNombre().equals(subCategorias.get(i).getCategoria().getNombre())) {
 							comboBox_Subcategoria.addItem(subCategorias.get(i));
 						}
-					}
-					
-					
+		    		}
 				}
-		    	
 		    }
 		});
-		
 		
 		comboBox_Categoria.setBounds(10, 79, 196, 30);
 		panel.add(comboBox_Categoria);
 		
-				
 		//#################################################################################################
 		JLabel lblSubcategora = new JLabel("Subcategoría");
 		lblSubcategora.setBounds(10, 122, 143, 14);
@@ -223,14 +215,21 @@ public class TiendaGUI extends JFrame {
 		botonComprar.setBounds(507, 470, 229, 41);
 		botonComprar.setFont(new Font("Segoe UI Black", Font.PLAIN, 20));
 		contentPane.add(botonComprar);
-		botonComprar.addActionListener (new ActionListener () {
-		    public void actionPerformed(ActionEvent e) {
-		    	Date date = new Date();
-		    	Pedido pedido = new Pedido(TiendaGUI.getCliente(), date,"en proceso" , productoSeleccionado.getPrecio(), 1 , productoSeleccionado);
-		    	pedidoTarget.request(MediaType.APPLICATION_JSON).post(Entity.entity(pedido, MediaType.APPLICATION_JSON));
-			}
-		});
-	
+		//No se activa al registrar cliente
+//		if(TiendaGUI.getCliente() != null) {
+			botonComprar.setEnabled(true);
+			botonComprar.addActionListener (new ActionListener () {
+			    public void actionPerformed(ActionEvent e) {
+			    	Date date = new Date();
+			    	Pedido pedido = new Pedido(TiendaGUI.getCliente(), date,"en proceso" , productoSeleccionado.getPrecio(), 1 , productoSeleccionado);
+			    	pedidoTarget.request(MediaType.APPLICATION_JSON).post(Entity.entity(pedido, MediaType.APPLICATION_JSON));
+				}
+			});
+		
+//		}else {
+//			botonComprar.setEnabled(false);
+//		}
+		
 		//#################################################################################################
 		JButton botonAnyadir = new JButton("Añadir A la Cesta");
 		botonAnyadir.setBounds(507, 310, 229, 41);
@@ -282,7 +281,7 @@ public class TiendaGUI extends JFrame {
 		contentPane.add(scrollPane);
 		
 		//#################################################################################################
-		JTextArea imagePlacehold = new JTextArea();
+		JPanel imagePlacehold = new JPanel();
 		imagePlacehold.setBounds(507, 40, 339, 260);
 		imagePlacehold.setBackground(Color.WHITE);
 		contentPane.add(imagePlacehold);
@@ -304,6 +303,8 @@ public class TiendaGUI extends JFrame {
 		btnDeseado.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(productoSeleccionado != null) {
+					btnDeseado.setVisible(true);
+					
 					if(incluido) {
 						TiendaGUI.getCliente().removeProducto(productoSeleccionado);
 						ImageIcon icono_1 = new ImageIcon(getClass().getResource("/img/corazon-blanco.png"));
@@ -333,10 +334,17 @@ public class TiendaGUI extends JFrame {
 			
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
+				btnDeseado.setVisible(true);
 				productoSeleccionado = listaElementos.getSelectedValue();
 				textArea.setText(null);
+				System.out.println(productoSeleccionado);
 				if (productoSeleccionado != null) {
-					imagePlacehold.append(productoSeleccionado.getImagen() + "\n");
+					imagePlacehold.removeAll();
+					ImageIcon icono_3 = new ImageIcon(getClass().getResource("/"+ productoSeleccionado.getImagen()));
+					JLabel label = new JLabel(icono_3);
+					imagePlacehold.add(label);
+					imagePlacehold.revalidate();
+					
 					textArea.append("- NOMBRE: " + productoSeleccionado.nombre + "\n");
 					textArea.append("- DESCRIPCIÓN: " + productoSeleccionado.descripcion + "\n");
 					textArea.append("- PRECIO: " + productoSeleccionado.precio + "\n");
@@ -458,7 +466,7 @@ public class TiendaGUI extends JFrame {
 		botonListaDeseados.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				esto.setEnabled(false);
-				ListaDeseadosGUI listaDeseados= new ListaDeseadosGUI(esto, appTarget);
+				ListaDeseadosGUI listaDeseados= new ListaDeseadosGUI(esto, appTarget, esto);
 				listaDeseados.setVisible(true);
 				dispose();
 			}
