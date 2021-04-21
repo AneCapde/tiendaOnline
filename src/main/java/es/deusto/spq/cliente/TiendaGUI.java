@@ -139,9 +139,9 @@ public class TiendaGUI extends JFrame {
 		btnCesta.setFont(new Font("Segoe UI Black", Font.PLAIN, 15));
 		btnCesta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				CestaGUI cestaGUI = new CestaGUI(productos_cesta, appTarget);
+				CestaGUI cestaGUI = new CestaGUI(esto, productos_cesta, appTarget);
 				cestaGUI.setVisible(true);
-				dispose();
+				contentPane.setEnabled(false);
 			}
 		});
 		btnCesta.setBounds(10, 460, 194, 30);

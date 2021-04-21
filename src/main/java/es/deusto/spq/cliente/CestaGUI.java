@@ -43,7 +43,7 @@ public class CestaGUI extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public CestaGUI(List<Producto> productos, final WebTarget appTarget) {
+	public CestaGUI(final JFrame ventanaPadre, List<Producto> productos, final WebTarget appTarget) {
 
 		final WebTarget pedidoTarget = appTarget.path("/pedidos");
 		for (Producto p:productos) {
@@ -73,7 +73,7 @@ public class CestaGUI extends JFrame {
 		contentPane.add(lblCarro);
 		
 		JPanel panel = new JPanel();
-		panel.setBackground(Color.WHITE);
+		panel.setBackground(Color.BLACK);
 		panel.setBounds(269, 27, 309, 339);
 		contentPane.add(panel);
 		
@@ -89,6 +89,8 @@ public class CestaGUI extends JFrame {
 					Pedido pedido = new Pedido(TiendaGUI.getCliente(), date,"en proceso" , precio_pedido, productos_cantidad.get(p), p);
 					pedidoTarget.request(MediaType.APPLICATION_JSON).post(Entity.entity(pedido, MediaType.APPLICATION_JSON));
 				}
+				dispose();
+				ventanaPadre.setEnabled(true);
 			}
 		});
 		
@@ -110,8 +112,15 @@ public class CestaGUI extends JFrame {
 		    public void actionPerformed(ActionEvent e) {
 				Producto producto = list.getSelectedValue();
 				int cantidad = Integer.valueOf(String.valueOf(Math.round((double) spinner.getValue())));
-				productos_cantidad.put(producto, cantidad);
-				textField.setText(String.valueOf(calcularPrecio()));
+				try {
+					if (!producto.equals(null)) {
+						productos_cantidad.put(producto, cantidad);
+						textField.setText(String.valueOf(calcularPrecio()));
+					}
+				}
+				catch(NullPointerException nl) {
+					return;
+				}
 			}
 		});
 
