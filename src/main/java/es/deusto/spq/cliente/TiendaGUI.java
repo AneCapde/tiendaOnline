@@ -46,9 +46,6 @@ import javax.swing.JTextArea;
 
 public class TiendaGUI extends JFrame {
 
-	/**
-	 *
-	 */
 	private static final long serialVersionUID = 1L;
 	private Client client;
 	private JPanel contentPane;
@@ -62,7 +59,6 @@ public class TiendaGUI extends JFrame {
 	ImageIcon imagen1, imagen2;
 	Icon icono1, icono2;
 	
-//	private ActionListener actualizador;
 	private Categoria categoriaSeleccionada;
 	private String textoBuscador;
 	private SubCategoria subCategoriaSeleccionada;
@@ -73,6 +69,7 @@ public class TiendaGUI extends JFrame {
 	private static Cliente cliente;
 	private List<Producto> productos;
 	public static List<Producto> productos_cesta = new ArrayList<Producto>();
+	private boolean incluido;
 	
 	
 	public TiendaGUI() {
@@ -291,22 +288,39 @@ public class TiendaGUI extends JFrame {
 		textArea = new JTextArea();
 		textArea.setBounds(507, 379, 339, 80);
 		contentPane.add(textArea);
-
-		JButton btnNODeseado = new JButton();
-		btnNODeseado.setBounds(798, 470, 48, 41);
-		ImageIcon icono_1 = new ImageIcon(getClass().getResource("/img/corazon-blanco.png"));
-		ImageIcon icono_2 = new ImageIcon(icono_1.getImage().getScaledInstance(btnNODeseado.getWidth(), btnNODeseado.getHeight(),Image.SCALE_DEFAULT));
-		btnNODeseado.setIcon(icono_2);
-		contentPane.add(btnNODeseado);
-		btnNODeseado.setVisible(false);
 		
+		//#############################################################
 		JButton btnDeseado = new JButton();
 		btnDeseado.setBounds(798, 470, 48, 41);
-		ImageIcon icono_3 = new ImageIcon(getClass().getResource("/img/corazon-rojo.png"));
-		ImageIcon icono_4 = new ImageIcon(icono_3.getImage().getScaledInstance(btnDeseado.getWidth(), btnDeseado.getHeight(),Image.SCALE_DEFAULT));
-		btnDeseado.setIcon(icono_4);
+		ImageIcon icono_1 = new ImageIcon(getClass().getResource("/img/corazon-blanco.png"));
+		ImageIcon icono_2 = new ImageIcon(icono_1.getImage().getScaledInstance(btnDeseado.getWidth(), btnDeseado.getHeight(),Image.SCALE_DEFAULT));
+		btnDeseado.setIcon(icono_2);
+		btnDeseado.updateUI();
 		contentPane.add(btnDeseado);
 		btnDeseado.setVisible(false);
+		btnDeseado.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(productoSeleccionado != null) {
+					if(incluido) {
+						TiendaGUI.getCliente().removeProducto(productoSeleccionado);
+						ImageIcon icono_1 = new ImageIcon(getClass().getResource("/img/corazon-blanco.png"));
+						ImageIcon icono_2 = new ImageIcon(icono_1.getImage().getScaledInstance(btnDeseado.getWidth(), btnDeseado.getHeight(),Image.SCALE_DEFAULT));
+						btnDeseado.setIcon(icono_2);
+						btnDeseado.updateUI();
+//						final WebTarget clientesTarget = appTarget.path("/clientes");
+//						clientesTarget.request(MediaType.APPLICATION_JSON).post(Entity.entity(TiendaGUI.getCliente(), MediaType.APPLICATION_JSON));
+					}else {
+						ImageIcon icono_1 = new ImageIcon(getClass().getResource("/img/corazon-rojo.png"));
+						ImageIcon icono_2 = new ImageIcon(icono_1.getImage().getScaledInstance(btnDeseado.getWidth(), btnDeseado.getHeight(),Image.SCALE_DEFAULT));
+						btnDeseado.setIcon(icono_2);
+						btnDeseado.updateUI();
+						TiendaGUI.getCliente().getProductosDeseados().add(productoSeleccionado);
+						final WebTarget clientesTarget = appTarget.path("/clientes");
+						clientesTarget.request(MediaType.APPLICATION_JSON).put(Entity.entity(TiendaGUI.getCliente(), MediaType.APPLICATION_JSON));
+					}	
+				}
+			}
+		});
 		
 		//#################################################################################################
 		listaElementos = new JList<Producto>(model);
@@ -326,26 +340,27 @@ public class TiendaGUI extends JFrame {
 					textArea.append("- CATEGORÍA: " + productoSeleccionado.getSubcategoria().getCategoria().getNombre() + "\n");
 					textArea.append("    SUBCATEGORÍA: " + productoSeleccionado.getSubcategoria().getNombre() + "\n");
 					
-					btnNODeseado.setVisible(true);
-					btnNODeseado.addActionListener(new ActionListener() {
-						public void actionPerformed(ActionEvent arg0) {
-							btnNODeseado.setVisible(false);
-							TiendaGUI.getCliente().getProductosDeseados().add(productoSeleccionado);
-							final WebTarget clientesTarget = appTarget.path("/clientes");
-							clientesTarget.request(MediaType.APPLICATION_JSON).put(Entity.entity(TiendaGUI.getCliente(), MediaType.APPLICATION_JSON));
-							
-							btnDeseado.setVisible(true);
-							btnDeseado.addActionListener(new ActionListener() {
-								public void actionPerformed(ActionEvent arg0) {
-									btnNODeseado.setVisible(true);
-									TiendaGUI.getCliente().removeProducto(productoSeleccionado);
-//									final WebTarget clientesTarget = appTarget.path("/clientes");
-//									clientesTarget.request(MediaType.APPLICATION_JSON).post(Entity.entity(TiendaGUI.getCliente(), MediaType.APPLICATION_JSON));
-
-								}
-							});
+					System.out.println(TiendaGUI.getCliente().getProductosDeseados());
+					for(Producto p:TiendaGUI.getCliente().getProductosDeseados()) {
+						incluido = false;
+						if(p.getNombre().equals(productoSeleccionado.getNombre())) {
+							System.out.println("entro");
+							incluido = true;
+							ImageIcon icono_1 = new ImageIcon(getClass().getResource("/img/corazon-rojo.png"));
+							ImageIcon icono_2 = new ImageIcon(icono_1.getImage().getScaledInstance(btnDeseado.getWidth(), btnDeseado.getHeight(),Image.SCALE_DEFAULT));
+							btnDeseado.setIcon(icono_2);
+							btnDeseado.updateUI();
+							btnDeseado.setVisible(true);	
+						}else {
+							TiendaGUI.getCliente().removeProducto(productoSeleccionado);
+//							final WebTarget clientesTarget = appTarget.path("/clientes");
+//							clientesTarget.request(MediaType.APPLICATION_JSON).post(Entity.entity(TiendaGUI.getCliente(), MediaType.APPLICATION_JSON));
+							ImageIcon icono_1 = new ImageIcon(getClass().getResource("/img/corazon-blanco.png"));
+							ImageIcon icono_2 = new ImageIcon(icono_1.getImage().getScaledInstance(btnDeseado.getWidth(), btnDeseado.getHeight(),Image.SCALE_DEFAULT));
+							btnDeseado.setIcon(icono_2);
+							btnDeseado.updateUI();
 						}
-					});
+					}
 				}
 			}
 		});
