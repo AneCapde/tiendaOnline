@@ -8,40 +8,49 @@ import es.deusto.spq.models.CategoriaTest;
 
 public class CategoriaTest {
 
-	
+	Categoria cat;
 	@Before
 	public void initiali(){
-		Categoria cat = new Categoria("Nombre", "Descripcion");
+		cat = new Categoria("Nombre", "Descripcion");
 	}
 	
 
 	@Test
 	public void testGetNombre() {
-		//fail("Not yet implemented");
+		String resul = cat.getNombre();
+		assertEquals("Nombre", resul);
 	}
 
 	@Test
 	public void testSetNombre() {
-		//fail("Not yet implemented");
+		cat.setNombre("Nombre2");
+		String resul = cat.getNombre();
+		assertEquals("Nombre2", resul);
 	}
 
 	@Test
 	public void testGetDescription() {
-		//fail("Not yet implemented");
+		String resul = cat.getDescripcion();
+		assertEquals("Descripcion", resul);
 	}
 
 	@Test
 	public void testSetDescription() {
-		//fail("Not yet implemented");
+		cat.setDescripcion("Descripcion2");
+		String resul = cat.getDescripcion();
+		assertEquals("Descripcion2", resul);
 	}
 
 	@Test
 	public void testToStringDebug() {
-		//fail("Not yet implemented");
+		String resul = cat.toStringDebug();
+		assertEquals("Categoria [nombre=Nombre, descripcion=Descripcion]", resul);
 	}
 
 	@Test
 	public void testTostring() {
+		String resul = cat.toString();
+		assertEquals("Nombre", resul);
 		//fail("Not yet implemented");
 	}
 
