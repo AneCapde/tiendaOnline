@@ -7,6 +7,8 @@ import javax.swing.JList;
 import javax.swing.ListSelectionModel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.border.LineBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
@@ -25,6 +27,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
@@ -43,7 +46,7 @@ public class CestaGUI extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public CestaGUI(List<Producto> productos, final WebTarget appTarget) {
+	public CestaGUI(final JFrame ventanaPadre, List<Producto> productos, final WebTarget appTarget) {
 
 		final WebTarget pedidoTarget = appTarget.path("/pedidos");
 		for (Producto p:productos) {
@@ -56,6 +59,10 @@ public class CestaGUI extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+
+		JPanel panel = new JPanel();
+		panel.setBounds(269, 27, 309, 339);
+		contentPane.add(panel);
 		
 		for (int i = 0; i < productos.size(); i++) {
 			model.addElement(productos.get(i)); 
@@ -66,16 +73,25 @@ public class CestaGUI extends JFrame {
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		list.setBounds(10, 27, 236, 387);
 		contentPane.add(list);
+		list.addListSelectionListener(new ListSelectionListener() {
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				panel.removeAll();
+				Producto producto = list.getSelectedValue();
+				ImageIcon icono_1 = new ImageIcon(getClass().getResource("/"+ producto.getImagen()));
+				JLabel label = new JLabel(icono_1);
+				panel.add(label);
+				panel.revalidate();
+			}
+		});
+
+		
 		
 		JLabel lblCarro = new JLabel("CARRO");
 		lblCarro.setFont(new Font("Segoe UI Black", Font.PLAIN, 15));
 		lblCarro.setBounds(10, 11, 134, 14);
 		contentPane.add(lblCarro);
-		
-		JPanel panel = new JPanel();
-		panel.setBackground(Color.WHITE);
-		panel.setBounds(269, 27, 309, 339);
-		contentPane.add(panel);
+
 		
 		JButton btnNewButton = new JButton("COMPRAR");
 		btnNewButton.setFont(new Font("Segoe UI Black", Font.PLAIN, 20));
@@ -89,6 +105,8 @@ public class CestaGUI extends JFrame {
 					Pedido pedido = new Pedido(TiendaGUI.getCliente(), date,"en proceso" , precio_pedido, productos_cantidad.get(p), p);
 					pedidoTarget.request(MediaType.APPLICATION_JSON).post(Entity.entity(pedido, MediaType.APPLICATION_JSON));
 				}
+				dispose();
+				ventanaPadre.setEnabled(true);
 			}
 		});
 		
@@ -110,8 +128,15 @@ public class CestaGUI extends JFrame {
 		    public void actionPerformed(ActionEvent e) {
 				Producto producto = list.getSelectedValue();
 				int cantidad = Integer.valueOf(String.valueOf(Math.round((double) spinner.getValue())));
-				productos_cantidad.put(producto, cantidad);
-				textField.setText(String.valueOf(calcularPrecio()));
+				try {
+					if (!producto.equals(null)) {
+						productos_cantidad.put(producto, cantidad);
+						textField.setText(String.valueOf(calcularPrecio()));
+					}
+				}
+				catch(NullPointerException nl) {
+					return;
+				}
 			}
 		});
 
