@@ -109,6 +109,18 @@
                     <mainClass>es.deusto.spq.Main</mainClass>
                 </configuration>
             </plugin>
+            <plugin>
+				<groupId>org.datanucleus</groupId>
+				<artifactId>datanucleus-maven-plugin</artifactId>
+				<version>5.2.1</version>
+				<configuration>
+					<log4jConfiguration>${config.files.dir}/log4j.properties</log4jConfiguration>
+					<verbose>true</verbose>
+					<fork>false</fork>
+					<props>${config.files.dir}/datanucleus.properties</props>
+				</configuration>
+			</plugin>
+			
 			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
