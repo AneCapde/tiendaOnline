@@ -51,6 +51,7 @@ public class TiendaGUI extends JFrame {
 	private JPanel contentPane;
 	private JTextField txtBuscador;
 	private DefaultListModel<Producto> model = new DefaultListModel<>();
+	private DefaultListModel<Pedido> model2 = new DefaultListModel<>();
 	private JList<Producto> listaElementos;
 	private JComboBox<Colores> comboBox_colores;
 	private JComboBox<Tallas> comboBoxTalla;
@@ -68,6 +69,7 @@ public class TiendaGUI extends JFrame {
 	private Producto productoSeleccionado;
 	private static Cliente cliente;
 	private List<Producto> productos;
+	private List<Pedido> pedidos; 
 	public static List<Producto> productos_cesta = new ArrayList<Producto>();
 	private boolean incluido;
 	
@@ -89,6 +91,12 @@ public class TiendaGUI extends JFrame {
 		for (int i = 0; i < productos.size(); i++) {
 			model.addElement(productos.get(i));
 		}
+		
+//		GenericType<List<Pedido>> genericType_pedidos = new GenericType<List<Pedido>>() {};
+//        pedidos = pedidoTarget.request(MediaType.APPLICATION_JSON).get(genericType_pedidos);
+//		for (int i = 0; i < pedidos.size(); i++) {
+//			model2.addElement(pedidos.get(i));
+//		}
 		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 872, 560);
@@ -123,7 +131,7 @@ public class TiendaGUI extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				esto.setEnabled(false);
-				HistorialGUI historial= new HistorialGUI(esto, appTarget);
+				HistorialGUI historial= new HistorialGUI(esto, pedidos, appTarget);
 				historial.setVisible(true);
 				contentPane.setEnabled(false);
 				
