@@ -2,6 +2,7 @@ package es.deusto.spq.cliente;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -61,10 +62,42 @@ public class ListaDeseadosGUI extends JFrame {
 		textArea.setBounds(464, 347, 367, 116);
 		contentPane.add(textArea);
 		
-		JTextArea imagePlacehold = new JTextArea();
+		JPanel imagePlacehold = new JPanel();
 		imagePlacehold.setBounds(464, 51, 367, 260);
 		imagePlacehold.setBackground(Color.WHITE);
 		contentPane.add(imagePlacehold);
+		
+		JButton botonAnyadir = new JButton("Añadir A la Cesta");
+		botonAnyadir.setBounds(605, 11, 212, 29);
+		botonAnyadir.setFont(new Font("Segoe UI Black", Font.PLAIN, 20));
+		contentPane.add(botonAnyadir);
+		botonAnyadir.setVisible(false);
+		botonAnyadir.addActionListener (new ActionListener () {
+		    public void actionPerformed(ActionEvent e) {
+				productoSeleccionado =  listaElementos.getSelectedValue();
+				if (!TiendaGUI.productos_cesta.contains(productoSeleccionado)){
+					TiendaGUI.productos_cesta.add(productoSeleccionado);
+				}
+			}
+		});
+		
+		JButton btnEliminar = new JButton("ELIMINAR");
+		btnEliminar.setForeground(Color.WHITE);
+		btnEliminar.setBackground(new Color(128, 0, 0));
+		btnEliminar.setBounds(733, 487, 98, 23);
+		contentPane.add(btnEliminar);
+		btnEliminar.setVisible(false);
+		btnEliminar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				//Se borra de la lista, falta que se borre de la base de datos
+				Producto producto = listaElementos.getSelectedValue();
+				model.removeElement(producto);
+				listaElementos.setModel(model);
+				tienda.getCliente().removeProducto(productoSeleccionado); //no se estan borrando los roductos de la base de datos
+//				final WebTarget clientesTarget = appTarget.path("/clientes").path("/"+TiendaGUI.getCliente());
+//				clientesTarget.request(MediaType.APPLICATION_JSON).post(Entity.entity(TiendaGUI.getCliente(), MediaType.APPLICATION_JSON));
+			}
+		});
 		
 		System.out.println(tienda.getCliente().getProductosDeseados());
 		ArrayList<Producto> productos = tienda.getCliente().getProductosDeseados();
@@ -81,12 +114,15 @@ public class ListaDeseadosGUI extends JFrame {
 			
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
+				botonAnyadir.setVisible(true);
+				btnEliminar.setVisible(true);
 				productoSeleccionado = listaElementos.getSelectedValue();
 				textArea.setText(null);
 				if (productoSeleccionado != null) {
 					imagePlacehold.removeAll();
 					ImageIcon icono_3 = new ImageIcon(getClass().getResource("/"+ productoSeleccionado.getImagen()));
-					JLabel label = new JLabel(icono_3);
+					ImageIcon icono_4 = new ImageIcon(icono_3.getImage().getScaledInstance(imagePlacehold.getWidth(), imagePlacehold.getHeight(),Image.SCALE_DEFAULT));
+					JLabel label = new JLabel(icono_4);
 					imagePlacehold.add(label);
 					imagePlacehold.revalidate();
 					
@@ -98,24 +134,6 @@ public class ListaDeseadosGUI extends JFrame {
 					
 				}
 			}
-		});
-		
-		JButton btnEliminar = new JButton("ELIMINAR");
-		btnEliminar.setForeground(Color.WHITE);
-		btnEliminar.setBackground(new Color(128, 0, 0));
-		btnEliminar.setBounds(733, 487, 98, 23);
-		contentPane.add(btnEliminar);
-		btnEliminar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				//Se borra de la lista, falta que se borre de la base de datos
-				Producto producto = listaElementos.getSelectedValue();
-				model.removeElement(producto);
-				listaElementos.setModel(model);
-				tienda.getCliente().removeProducto(productoSeleccionado); //no se estan borrando los roductos de la base de datos
-//				final WebTarget clientesTarget = appTarget.path("/clientes").path("/"+TiendaGUI.getCliente());
-//				clientesTarget.request(MediaType.APPLICATION_JSON).post(Entity.entity(TiendaGUI.getCliente(), MediaType.APPLICATION_JSON));
-			}
-
 		});
 
 		JButton btnInicio = new JButton("INICIO");
@@ -131,20 +149,6 @@ public class ListaDeseadosGUI extends JFrame {
 				dispose();
 			}
 		});
-		
-		JButton botonAnyadir = new JButton("Añadir A la Cesta");
-		botonAnyadir.setBounds(605, 11, 212, 29);
-		botonAnyadir.setFont(new Font("Segoe UI Black", Font.PLAIN, 20));
-		contentPane.add(botonAnyadir);
-		botonAnyadir.addActionListener (new ActionListener () {
-		    public void actionPerformed(ActionEvent e) {
-				productoSeleccionado =  listaElementos.getSelectedValue();
-				if (!TiendaGUI.productos_cesta.contains(productoSeleccionado)){
-					TiendaGUI.productos_cesta.add(productoSeleccionado);
-				}
-			}
-		});
-		
 		
 	}
 }

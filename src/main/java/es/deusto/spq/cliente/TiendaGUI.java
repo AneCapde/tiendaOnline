@@ -211,30 +211,11 @@ public class TiendaGUI extends JFrame {
 		contentPane.add(lblCaracteristicas);
 		
 		//#################################################################################################
-		JButton botonComprar = new JButton("COMPRAR");
-		botonComprar.setBounds(507, 470, 229, 41);
-		botonComprar.setFont(new Font("Segoe UI Black", Font.PLAIN, 20));
-		contentPane.add(botonComprar);
-		//No se activa al registrar cliente
-//		if(TiendaGUI.getCliente() != null) {
-			botonComprar.setEnabled(true);
-			botonComprar.addActionListener (new ActionListener () {
-			    public void actionPerformed(ActionEvent e) {
-			    	Date date = new Date();
-			    	Pedido pedido = new Pedido(TiendaGUI.getCliente(), date,"en proceso" , productoSeleccionado.getPrecio(), 1 , productoSeleccionado);
-			    	pedidoTarget.request(MediaType.APPLICATION_JSON).post(Entity.entity(pedido, MediaType.APPLICATION_JSON));
-				}
-			});
-		
-//		}else {
-//			botonComprar.setEnabled(false);
-//		}
-		
-		//#################################################################################################
 		JButton botonAnyadir = new JButton("Añadir A la Cesta");
 		botonAnyadir.setBounds(507, 310, 229, 41);
 		botonAnyadir.setFont(new Font("Segoe UI Black", Font.PLAIN, 20));
 		contentPane.add(botonAnyadir);
+		botonAnyadir.setVisible(false);
 		botonAnyadir.addActionListener (new ActionListener () {
 		    public void actionPerformed(ActionEvent e) {
 				productoSeleccionado =  listaElementos.getSelectedValue();
@@ -276,6 +257,23 @@ public class TiendaGUI extends JFrame {
 		});
 		
 		//#################################################################################################
+		JButton botonComprar = new JButton("COMPRAR");
+		botonComprar.setBounds(507, 470, 229, 41);
+		botonComprar.setFont(new Font("Segoe UI Black", Font.PLAIN, 20));
+		contentPane.add(botonComprar);
+		botonComprar.setVisible(false);
+		botonComprar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Date date = new Date();
+				Pedido pedido = new Pedido(TiendaGUI.getCliente(), date, "en proceso", productoSeleccionado.getPrecio(),
+						1, productoSeleccionado);
+				pedidoTarget.request(MediaType.APPLICATION_JSON)
+						.post(Entity.entity(pedido, MediaType.APPLICATION_JSON));
+			}
+		});
+		
+		
+		//#################################################################################################
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(240, 10, 252, 500);
 		contentPane.add(scrollPane);
@@ -306,7 +304,12 @@ public class TiendaGUI extends JFrame {
 					btnDeseado.setVisible(true);
 					
 					if(incluido) {
+//						Revisar NO FUNCIONA
+						
+						Producto producto = listaElementos.getSelectedValue();
+						model.removeElement(producto);
 						TiendaGUI.getCliente().removeProducto(productoSeleccionado);
+						
 						ImageIcon icono_1 = new ImageIcon(getClass().getResource("/img/corazon-blanco.png"));
 						ImageIcon icono_2 = new ImageIcon(icono_1.getImage().getScaledInstance(btnDeseado.getWidth(), btnDeseado.getHeight(),Image.SCALE_DEFAULT));
 						btnDeseado.setIcon(icono_2);
@@ -335,13 +338,16 @@ public class TiendaGUI extends JFrame {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
 				btnDeseado.setVisible(true);
+				botonComprar.setVisible(true);
+				botonAnyadir.setVisible(false);
 				productoSeleccionado = listaElementos.getSelectedValue();
 				textArea.setText(null);
 				System.out.println(productoSeleccionado);
 				if (productoSeleccionado != null) {
 					imagePlacehold.removeAll();
 					ImageIcon icono_3 = new ImageIcon(getClass().getResource("/"+ productoSeleccionado.getImagen()));
-					JLabel label = new JLabel(icono_3);
+					ImageIcon icono_4 = new ImageIcon(icono_3.getImage().getScaledInstance(imagePlacehold.getWidth(), imagePlacehold.getHeight(),Image.SCALE_DEFAULT));
+					JLabel label = new JLabel(icono_4);
 					imagePlacehold.add(label);
 					imagePlacehold.revalidate();
 					
@@ -351,7 +357,7 @@ public class TiendaGUI extends JFrame {
 					textArea.append("- CATEGORÍA: " + productoSeleccionado.getSubcategoria().getCategoria().getNombre() + "\n");
 					textArea.append("    SUBCATEGORÍA: " + productoSeleccionado.getSubcategoria().getNombre() + "\n");
 					
-					System.out.println(TiendaGUI.getCliente().getProductosDeseados());
+//					System.out.println(TiendaGUI.getCliente().getProductosDeseados());
 					for(Producto p:TiendaGUI.getCliente().getProductosDeseados()) {
 						incluido = false;
 						if(p.getNombre().equals(productoSeleccionado.getNombre())) {
