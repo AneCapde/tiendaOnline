@@ -365,10 +365,9 @@ public class TiendaGUI extends JFrame {
 					textArea.append("- CATEGORÍA: " + productoSeleccionado.getSubcategoria().getCategoria().getNombre() + "\n");
 					textArea.append("    SUBCATEGORÍA: " + productoSeleccionado.getSubcategoria().getNombre() + "\n");
 					
-<<<<<<< HEAD
 //					System.out.println(TiendaGUI.getCliente().getProductosDeseados());
-=======
->>>>>>> branch 'master' of https://github.com/AneCapde/tiendaOnline.git
+
+
 					for(Producto p:TiendaGUI.getCliente().getProductosDeseados()) {
 						incluido = false;
 						if(p.getNombre().equals(productoSeleccionado.getNombre())) {
