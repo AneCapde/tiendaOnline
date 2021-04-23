@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -33,7 +34,7 @@ public class ListaDeseadosGUI extends JFrame {
 	private Producto productoSeleccionado;
 	private JList<Producto> listaElementos;
 
-	public ListaDeseadosGUI(final JFrame ventanaPadre, WebTarget appTarget) {
+	public ListaDeseadosGUI(final JFrame ventanaPadre, WebTarget appTarget, TiendaGUI tienda) {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 872, 560);
 		contentPane = new JPanel();
@@ -65,12 +66,13 @@ public class ListaDeseadosGUI extends JFrame {
 		imagePlacehold.setBackground(Color.WHITE);
 		contentPane.add(imagePlacehold);
 		
-		ArrayList<Producto> productos = TiendaGUI.getCliente().getProductosDeseados();
+		System.out.println(tienda.getCliente().getProductosDeseados());
+		ArrayList<Producto> productos = tienda.getCliente().getProductosDeseados();
 		for (int i = 0; i < productos.size(); i++) {
 			model.addElement(productos.get(i));
 		}
 		
-		
+		System.out.println(tienda.getCliente().getProductosDeseados());
 		listaElementos = new JList<Producto>(model);
 		listaElementos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPane.setViewportView(listaElementos);
@@ -82,7 +84,12 @@ public class ListaDeseadosGUI extends JFrame {
 				productoSeleccionado = listaElementos.getSelectedValue();
 				textArea.setText(null);
 				if (productoSeleccionado != null) {
-					imagePlacehold.append(productoSeleccionado.getImagen() + "\n");
+					imagePlacehold.removeAll();
+					ImageIcon icono_3 = new ImageIcon(getClass().getResource("/"+ productoSeleccionado.getImagen()));
+					JLabel label = new JLabel(icono_3);
+					imagePlacehold.add(label);
+					imagePlacehold.revalidate();
+					
 					textArea.append("- NOMBRE: " + productoSeleccionado.nombre + "\n");
 					textArea.append("- DESCRIPCIÓN: " + productoSeleccionado.descripcion + "\n");
 					textArea.append("- PRECIO: " + productoSeleccionado.precio + "\n");
@@ -103,8 +110,8 @@ public class ListaDeseadosGUI extends JFrame {
 				//Se borra de la lista, falta que se borre de la base de datos
 				Producto producto = listaElementos.getSelectedValue();
 				model.removeElement(producto);
-				listaElementos.setModel( model);
-				TiendaGUI.getCliente().removeProducto(productoSeleccionado); //no se estan borrando los roductos de la base de datos
+				listaElementos.setModel(model);
+				tienda.getCliente().removeProducto(productoSeleccionado); //no se estan borrando los roductos de la base de datos
 //				final WebTarget clientesTarget = appTarget.path("/clientes").path("/"+TiendaGUI.getCliente());
 //				clientesTarget.request(MediaType.APPLICATION_JSON).post(Entity.entity(TiendaGUI.getCliente(), MediaType.APPLICATION_JSON));
 			}
