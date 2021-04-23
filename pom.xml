@@ -119,11 +119,6 @@
 					<fork>false</fork>
 					<props>${config.files.dir}/datanucleus.properties</props>
 				</configuration>
-				<executions>
-					<execution>
-						<phase>compile</phase>
-					</execution>
-				</executions>
 			</plugin>
 			
 			<plugin>
