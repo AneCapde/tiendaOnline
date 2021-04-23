@@ -6,15 +6,19 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.ws.rs.client.WebTarget;
+
+import es.deusto.spq.models.Producto;
 
 public class VentanaPagoVisa extends JFrame{
     
@@ -32,9 +36,10 @@ public class VentanaPagoVisa extends JFrame{
 	private JButton bCancelar;
     private JButton bCrearCuenta; //AÑADIMOS POSIBILIDAD DE METER NUEVA CUENTA DE PAYPAL?
 
-    public VentanaPagoVisa(final JFrame ventanaPadre, WebTarget appTarget) {
+    public VentanaPagoVisa(final JFrame ventanaPadre, List<Producto> productos, WebTarget appTarget) {
         
-        // final WebTarget pagosTarget = appTarget.path("/pagos");
+        // final WebTarget pedidoTarget = appTarget.path("/pedidos");
+
 
         // this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		// setResizable(false);
@@ -113,7 +118,7 @@ public class VentanaPagoVisa extends JFrame{
 	    
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+				JOptionPane.showMessageDialog(null, "Pago completado. Compra realizada", "Se te redirigirá al inicio", JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
     }
