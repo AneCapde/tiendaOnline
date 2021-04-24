@@ -6,7 +6,6 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -18,11 +17,10 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 
 import es.deusto.spq.models.Cliente;
-import es.deusto.spq.models.Producto;
+
 
 public class VentanaLogin extends JFrame{
 
@@ -38,8 +36,6 @@ public class VentanaLogin extends JFrame{
 	private static JPasswordField passwordField;
 	
 	public VentanaLogin(final JFrame ventanaPadre, WebTarget appTarget) {
-		
-		final WebTarget productosTarget = appTarget.path("/productos");
 		
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setResizable(false);
@@ -109,12 +105,8 @@ public class VentanaLogin extends JFrame{
 						System.out.println("Credenciales correctas");
 						TiendaGUI.setCliente(cliente);
 						ventanaPadre.setEnabled(true);
+						TiendaGUI.setButtons();
 						dispose();
-						GenericType<List<Producto>> genericType_productos = new GenericType<List<Producto>>() {};
-				        TiendaGUI.productos = productosTarget.request(MediaType.APPLICATION_JSON).get(genericType_productos);
-						for (int i = 0; i < TiendaGUI.productos.size(); i++) {
-							TiendaGUI.model.addElement(TiendaGUI.productos.get(i));
-						}
 					}
 				}
 				catch(NullPointerException nl) {

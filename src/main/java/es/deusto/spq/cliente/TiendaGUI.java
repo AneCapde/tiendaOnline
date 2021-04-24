@@ -51,7 +51,7 @@ public class TiendaGUI extends JFrame {
 	private Client client;
 	private JPanel contentPane;
 	private JTextField txtBuscador;
-	public static DefaultListModel<Producto> model = new DefaultListModel<>();
+	private DefaultListModel<Producto> model = new DefaultListModel<>();
 	private DefaultListModel<Pedido> model2 = new DefaultListModel<>();
 	private JList<Producto> listaElementos;
 	private JComboBox<Colores> comboBox_colores;
@@ -69,11 +69,14 @@ public class TiendaGUI extends JFrame {
 	private Colores colorSelecionado;
 	private Producto productoSeleccionado;
 	private static Cliente cliente;
-	public static List<Producto> productos;
+	private List<Producto> productos;
 	private List<Pedido> pedidos; 
+	private static List<Producto> productos_deseados = new ArrayList<Producto>();
 	public static List<Producto> productos_cesta = new ArrayList<Producto>();
-	private boolean incluido;
 	private static JButton botonLogin;
+    private static JButton btnDeseado;
+	private static JButton botonComprar;
+	private static JButton botonAnyadir;
 
 	public TiendaGUI() {
 		client = ClientBuilder.newClient();
@@ -84,14 +87,15 @@ public class TiendaGUI extends JFrame {
 		final WebTarget subTarget = appTarget.path("/subcategorias");
 		final WebTarget pedidoTarget= appTarget.path("/pedidos");
 		// final WebTarget pagoTarget= appTarget.path("/pagos");
+		final WebTarget productosTarget = appTarget.path("/productos");
 
 		final TiendaGUI esto = this;
 		
-//		GenericType<List<Pedido>> genericType_pedidos = new GenericType<List<Pedido>>() {};
-//        pedidos = pedidoTarget.request(MediaType.APPLICATION_JSON).get(genericType_pedidos);
-//		for (int i = 0; i < pedidos.size(); i++) {
-//			model2.addElement(pedidos.get(i));
-//		}
+		GenericType<List<Producto>> genericType_productos = new GenericType<List<Producto>>() {};
+        productos = productosTarget.request(MediaType.APPLICATION_JSON).get(genericType_productos);
+		for (int i = 0; i < productos.size(); i++) {
+			model.addElement(productos.get(i));
+		}
 		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 872, 560);
@@ -127,6 +131,7 @@ public class TiendaGUI extends JFrame {
 				try {
 					if (!TiendaGUI.getCliente().equals(null)) {
 						esto.setEnabled(false);
+						updateUserList(appTarget);
 						HistorialGUI historial= new HistorialGUI(esto, pedidos, appTarget);
 						historial.setVisible(true);
 						contentPane.setEnabled(false);
@@ -151,6 +156,7 @@ public class TiendaGUI extends JFrame {
 				try {
 					if (!TiendaGUI.getCliente().equals(null)) {
 						esto.setEnabled(false);
+						updateUserList(appTarget);
 						CestaGUI cestaGUI = new CestaGUI(esto, productos_cesta, appTarget);
 						cestaGUI.setVisible(true);
 						contentPane.setEnabled(false);
@@ -232,7 +238,7 @@ public class TiendaGUI extends JFrame {
 		contentPane.add(lblCaracteristicas);
 		
 		//#################################################################################################
-		JButton botonAnyadir = new JButton("Añadir A la Cesta");
+		botonAnyadir = new JButton("Añadir A la Cesta");
 		botonAnyadir.setBounds(507, 310, 229, 41);
 		botonAnyadir.setFont(new Font("Segoe UI Black", Font.PLAIN, 20));
 		contentPane.add(botonAnyadir);
@@ -281,7 +287,7 @@ public class TiendaGUI extends JFrame {
 		});
 		
 		//#################################################################################################
-		JButton botonComprar = new JButton("COMPRAR");
+		botonComprar = new JButton("COMPRAR");
 		botonComprar.setBounds(507, 470, 229, 41);
 		botonComprar.setFont(new Font("Segoe UI Black", Font.PLAIN, 20));
 		contentPane.add(botonComprar);
@@ -313,7 +319,7 @@ public class TiendaGUI extends JFrame {
 		contentPane.add(textArea);
 		
 		//#############################################################
-		JButton btnDeseado = new JButton();
+		btnDeseado = new JButton();
 		btnDeseado.setBounds(798, 470, 48, 41);
 		ImageIcon icono_1 = new ImageIcon(getClass().getResource("/img/corazon-blanco.png"));
 		ImageIcon icono_2 = new ImageIcon(icono_1.getImage().getScaledInstance(btnDeseado.getWidth(), btnDeseado.getHeight(),Image.SCALE_DEFAULT));
@@ -322,37 +328,37 @@ public class TiendaGUI extends JFrame {
 		contentPane.add(btnDeseado);
 		btnDeseado.setVisible(false);
 		btnDeseado.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(ActionEvent arg0){
+				try{
 				if(productoSeleccionado != null) {
 					btnDeseado.setVisible(true);
-					
-					if(incluido) {
-//						Revisar NO FUNCIONA
-						
-//						Producto producto = listaElementos.getSelectedValue();
-//						System.out.println("Elemento a borrar: " + producto);
-//						System.out.println("Lista de elementos antes de borrar" + TiendaGUI.getCliente().getProductosDeseados());
-//						ListaDeseadosGUI.model.removeElement(producto);
-////						ListaDeseadosGUI.listaElementos.setModel(ListaDeseadosGUI.model);
-//						System.out.println("Elemeto borrado:" + ListaDeseadosGUI.model);
-//						TiendaGUI.getCliente().removeProducto(productoSeleccionado);
-						
-						ImageIcon icono_1 = new ImageIcon(getClass().getResource("/img/corazon-blanco.png"));
-						ImageIcon icono_2 = new ImageIcon(icono_1.getImage().getScaledInstance(btnDeseado.getWidth(), btnDeseado.getHeight(),Image.SCALE_DEFAULT));
-						btnDeseado.setIcon(icono_2);
-						btnDeseado.updateUI();
-//						final WebTarget clientesTarget = appTarget.path("/clientes");
-//						clientesTarget.request(MediaType.APPLICATION_JSON).post(Entity.entity(TiendaGUI.getCliente(), MediaType.APPLICATION_JSON));
-					}else {
+					boolean incluido = false;
+					Producto producto = null;
+					for (Producto p : productos_deseados){
+						if (p.getNombre().equals(productoSeleccionado.getNombre())){
+							incluido = true;
+							producto = p;
+							ImageIcon icono_1 = new ImageIcon(getClass().getResource("/img/corazon-blanco.png"));
+							ImageIcon icono_2 = new ImageIcon(icono_1.getImage().getScaledInstance(btnDeseado.getWidth(), btnDeseado.getHeight(),Image.SCALE_DEFAULT));
+							btnDeseado.setIcon(icono_2);
+							btnDeseado.updateUI();
+						}
+					}
+					productos_deseados.remove(producto);
+					if (!incluido){
+						productos_deseados.add(productoSeleccionado);
 						ImageIcon icono_1 = new ImageIcon(getClass().getResource("/img/corazon-rojo.png"));
 						ImageIcon icono_2 = new ImageIcon(icono_1.getImage().getScaledInstance(btnDeseado.getWidth(), btnDeseado.getHeight(),Image.SCALE_DEFAULT));
 						btnDeseado.setIcon(icono_2);
 						btnDeseado.updateUI();
-						TiendaGUI.getCliente().getProductosDeseados().add(productoSeleccionado);
-						final WebTarget clientesTarget = appTarget.path("/clientes");
-						clientesTarget.request(MediaType.APPLICATION_JSON).put(Entity.entity(TiendaGUI.getCliente(), MediaType.APPLICATION_JSON));
-					}	
+					}
+
 				}
+				}catch(NullPointerException nl4){
+					return;
+				}
+
+
 			}
 		});
 		
@@ -364,49 +370,76 @@ public class TiendaGUI extends JFrame {
 			
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
-				btnDeseado.setVisible(true);
-				botonComprar.setVisible(true);
-				botonAnyadir.setVisible(true);
-				productoSeleccionado = listaElementos.getSelectedValue();
-				textArea.setText(null);
-				System.out.println(productoSeleccionado);
-				if (productoSeleccionado != null) {
-					imagePlacehold.removeAll();
-					ImageIcon icono_3 = new ImageIcon(getClass().getResource("/"+ productoSeleccionado.getImagen()));
-					ImageIcon icono_4 = new ImageIcon(icono_3.getImage().getScaledInstance(imagePlacehold.getWidth(), imagePlacehold.getHeight(),Image.SCALE_DEFAULT));
-					JLabel label = new JLabel(icono_4);
-					imagePlacehold.add(label);
-					imagePlacehold.revalidate();
-					
-					textArea.append("- NOMBRE: " + productoSeleccionado.nombre + "\n");
-					textArea.append("- DESCRIPCIÓN: " + productoSeleccionado.descripcion + "\n");
-					textArea.append("- PRECIO: " + productoSeleccionado.precio + "\n");
-					textArea.append("- CATEGORÍA: " + productoSeleccionado.getSubcategoria().getCategoria().getNombre() + "\n");
-					textArea.append("    SUBCATEGORÍA: " + productoSeleccionado.getSubcategoria().getNombre() + "\n");
-					
-					System.out.println(TiendaGUI.getCliente().getProductosDeseados());
-
-					for(Producto p:TiendaGUI.getCliente().getProductosDeseados()) {
-						incluido = false;
-						if(p.getNombre().equals(productoSeleccionado.getNombre())) {
-							System.out.println("entro");
-							incluido = true;
-							ImageIcon icono_1 = new ImageIcon(getClass().getResource("/img/corazon-rojo.png"));
-							ImageIcon icono_2 = new ImageIcon(icono_1.getImage().getScaledInstance(btnDeseado.getWidth(), btnDeseado.getHeight(),Image.SCALE_DEFAULT));
-							btnDeseado.setIcon(icono_2);
-							btnDeseado.updateUI();
-							btnDeseado.setVisible(true);	
-						}else {
-							incluido = false;
-							ImageIcon icono_1 = new ImageIcon(getClass().getResource("/img/corazon-blanco.png"));
-							ImageIcon icono_2 = new ImageIcon(icono_1.getImage().getScaledInstance(btnDeseado.getWidth(), btnDeseado.getHeight(),Image.SCALE_DEFAULT));
-							btnDeseado.setIcon(icono_2);
-							btnDeseado.updateUI();
+				try {
+					if (!TiendaGUI.getCliente().equals(null)) {
+						btnDeseado.setVisible(true);
+						botonComprar.setVisible(true);
+						botonAnyadir.setVisible(true);
+						productoSeleccionado = listaElementos.getSelectedValue();
+						boolean incluido = false;
+						for (Producto p : productos_deseados){
+							try{
+							if (p.getNombre().equals(productoSeleccionado.getNombre())){
+								incluido = true;
+								ImageIcon icono_1 = new ImageIcon(getClass().getResource("/img/corazon-rojo.png"));
+ 								ImageIcon icono_2 = new ImageIcon(icono_1.getImage().getScaledInstance(btnDeseado.getWidth(), btnDeseado.getHeight(),Image.SCALE_DEFAULT));
+ 								btnDeseado.setIcon(icono_2);
+								btnDeseado.updateUI();
+							}
+							}catch(NullPointerException nl3){
+								return;
+							}
 						}
+						if (!incluido){
+							ImageIcon icono_1 = new ImageIcon(getClass().getResource("/img/corazon-blanco.png"));
+	 						ImageIcon icono_2 = new ImageIcon(icono_1.getImage().getScaledInstance(btnDeseado.getWidth(), btnDeseado.getHeight(),Image.SCALE_DEFAULT));
+	 						btnDeseado.setIcon(icono_2);
+	 						btnDeseado.updateUI();
+						}
+						textArea.setText(null);
+						if (productoSeleccionado != null) {
+							imagePlacehold.removeAll();
+							ImageIcon icono_3 = new ImageIcon(getClass().getResource("/"+ productoSeleccionado.getImagen()));
+							ImageIcon icono_4 = new ImageIcon(icono_3.getImage().getScaledInstance(imagePlacehold.getWidth(), imagePlacehold.getHeight(),Image.SCALE_DEFAULT));
+							JLabel label = new JLabel(icono_4);
+							imagePlacehold.add(label);
+							imagePlacehold.revalidate();
+					
+								textArea.append("- NOMBRE: " + productoSeleccionado.nombre + "\n");
+								textArea.append("- DESCRIPCIÓN: " + productoSeleccionado.descripcion + "\n");
+								textArea.append("- PRECIO: " + productoSeleccionado.precio + "\n");
+								textArea.append("- CATEGORÍA: " + productoSeleccionado.getSubcategoria().getCategoria().getNombre() + "\n");
+								textArea.append("    SUBCATEGORÍA: " + productoSeleccionado.getSubcategoria().getNombre() + "\n");
+							}
 					}
 				}
-			}
-		});
+				catch(NullPointerException nl) {
+					imagePlacehold.removeAll();
+                    productoSeleccionado = listaElementos.getSelectedValue();
+                    
+                    try {
+                        if (!productoSeleccionado.equals(null)){
+                            textArea.setText(null);
+                            ImageIcon icono_3 = new ImageIcon(getClass().getResource("/"+ productoSeleccionado.getImagen()));
+                            ImageIcon icono_4 = new ImageIcon(icono_3.getImage().getScaledInstance(imagePlacehold.getWidth(), imagePlacehold.getHeight(),Image.SCALE_DEFAULT));
+                            JLabel label = new JLabel(icono_4);
+                            imagePlacehold.add(label);
+                            imagePlacehold.revalidate();
+                            
+                            textArea.append("- NOMBRE: " + productoSeleccionado.nombre + "\n");
+                            textArea.append("- DESCRIPCIÓN: " + productoSeleccionado.descripcion + "\n");
+                            textArea.append("- PRECIO: " + productoSeleccionado.precio + "\n");
+                            textArea.append("- CATEGORÍA: " + productoSeleccionado.getSubcategoria().getCategoria().getNombre() + "\n");
+                            textArea.append("    SUBCATEGORÍA: " + productoSeleccionado.getSubcategoria().getNombre() + "\n");
+                        }
+
+                    }
+                    catch(NullPointerException nl1) {
+                        return;
+                    }
+				}
+		}
+	});
 		
 		//######################################################################
 		comboBoxTalla = new JComboBox<Tallas>();
@@ -500,6 +533,7 @@ public class TiendaGUI extends JFrame {
 				try {
 					if (!TiendaGUI.getCliente().equals(null)) {
 						esto.setEnabled(false);
+						updateUserList(appTarget);
 						ListaDeseadosGUI listaDeseados= new ListaDeseadosGUI(esto, appTarget, esto);
 						listaDeseados.setVisible(true);
 						dispose();
@@ -519,19 +553,39 @@ public class TiendaGUI extends JFrame {
 		panel.add(botonListaDeseados);
 	
 	}
-	
-
+	public static void updateUserList(final WebTarget appTarget){
+		TiendaGUI.getCliente().setProductosDeseados((ArrayList<Producto>) productos_deseados);
+		final WebTarget clientesTarget = appTarget.path("/clientes/update");
+		clientesTarget.request(MediaType.APPLICATION_JSON).post(Entity.entity(TiendaGUI.getCliente(), MediaType.APPLICATION_JSON));
+	}
+	public static void updateUser(final WebTarget appTarget){
+		final WebTarget clientesTarget = appTarget.path("/clientes").path("/"+TiendaGUI.getCliente().getEmail()).path("/"+ TiendaGUI.getCliente().getPassword());
+		Cliente cliente = clientesTarget.request(MediaType.APPLICATION_JSON).get(Cliente.class);
+		TiendaGUI.setCliente(cliente);
+	}
 	public static void main(String[] args) {
         TiendaGUI tiendaGUI = new TiendaGUI();
 		tiendaGUI.setVisible(true);
     }
 	public static void setCliente(Cliente cliente) {
 		TiendaGUI.cliente = cliente;
+		cargarLista();
 		botonLogin.setText("Log out");
 		botonLogin.updateUI();
+	}
+	private static void cargarLista() {
+		productos_deseados.removeAll(productos_deseados);
+		for (Producto p :TiendaGUI.getCliente().getProductosDeseados()){
+			productos_deseados.add(p);
+		}
 	}
 	public static Cliente getCliente() {
 		return TiendaGUI.cliente;
 	}
-	
+
+    public static void setButtons() {
+        btnDeseado.setVisible(true);
+		botonComprar.setVisible(true);
+		botonAnyadir.setVisible(true);
+    }
 }

@@ -27,7 +27,7 @@ public class Cliente {
 	private String provincia;
 	private String localidad;
 
-	@Persistent(defaultFetchGroup = "true", dependentElement = "true")
+	@Persistent(defaultFetchGroup = "true")
 	@Join
 	private ArrayList<Producto> productosDeseados = new ArrayList<>();
 	

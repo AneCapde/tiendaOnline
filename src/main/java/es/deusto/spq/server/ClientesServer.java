@@ -1,12 +1,11 @@
 package es.deusto.spq.server;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
@@ -33,32 +32,22 @@ public class ClientesServer {
         return null;
 	}
 
-//    @POST
-//    @Consumes(MediaType.APPLICATION_JSON)
-//    public void addCliente(Cliente cliente) {
-//        DBManager.getInstance().store(cliente);
-//    }
-    
-    @PUT
+    @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public void updateCliente(Cliente cliente) {
-        Cliente cliente_per = DBManager.getInstance().getCliente(cliente.getDNI());
-        for (Producto p : cliente.getProductosDeseados()){
-            Producto producto_per = DBManager.getInstance().getProducto(p.getNombre());
-            cliente_per.getProductosDeseados().add(producto_per);
-        }
-        DBManager.getInstance().updateCliente(cliente_per);
+    public void addCliente(Cliente cliente) {
+        DBManager.getInstance().store(cliente);
     }
     
     @POST
-    @Path("/{deseado}")
+    @Path("/update")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void deleteCliente( Cliente cliente) {
-    	Cliente cliente_per = DBManager.getInstance().getCliente(cliente.getDNI());
-        for (Producto p : cliente.getProductosDeseados()){
-            Producto producto_per = DBManager.getInstance().getProducto(p.getNombre());
-            cliente_per.getProductosDeseados().remove(producto_per);
+    public void updateCliente(Cliente cliente) {
+        Cliente cliente_per = DBManager.getInstance().getCliente(cliente.getDNI());
+        cliente_per.setProductosDeseados(new ArrayList<>());
+        for (int i = 0; i < cliente.getProductosDeseados().size(); i++){
+            Producto producto_per = DBManager.getInstance().getProducto(cliente.getProductosDeseados().get(i).getNombre());
+            cliente_per.getProductosDeseados().add(producto_per);
         }
-        DBManager.getInstance().deleteCliente(cliente_per);
+        DBManager.getInstance().store(cliente_per);
     }
 }

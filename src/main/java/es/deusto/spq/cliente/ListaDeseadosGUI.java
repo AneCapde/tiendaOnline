@@ -6,6 +6,7 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
@@ -29,12 +30,19 @@ import es.deusto.spq.models.Producto;
 @SuppressWarnings("serial")
 public class ListaDeseadosGUI extends JFrame {
 
+	private List<Producto> productos_deseados = new ArrayList<>();
 	private JPanel contentPane;
 	public static DefaultListModel<Producto> model = new DefaultListModel<>();
 	private Producto productoSeleccionado;
 	public static JList<Producto> listaElementos;
 
 	public ListaDeseadosGUI(final JFrame ventanaPadre, WebTarget appTarget, TiendaGUI tienda) {
+		productos_deseados.removeAll(productos_deseados);
+		model.removeAllElements();
+
+		for (Producto p : TiendaGUI.getCliente().getProductosDeseados()){
+			productos_deseados.add(p);
+		}
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 872, 560);
 		contentPane = new JPanel();
@@ -74,9 +82,9 @@ public class ListaDeseadosGUI extends JFrame {
 		botonAnyadir.addActionListener (new ActionListener () {
 		    public void actionPerformed(ActionEvent e) {
 				productoSeleccionado =  listaElementos.getSelectedValue();
-				if (!TiendaGUI.productos_cesta.contains(productoSeleccionado)){
-					TiendaGUI.productos_cesta.add(productoSeleccionado);
-				}
+				// if (!TiendaGUI.productos_cesta.contains(productoSeleccionado)){
+				// 	TiendaGUI.productos_cesta.add(productoSeleccionado);
+				// }
 			}
 		});
 		
@@ -88,23 +96,23 @@ public class ListaDeseadosGUI extends JFrame {
 		btnEliminar.setVisible(false);
 		btnEliminar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Producto producto = listaElementos.getSelectedValue();
-				model.removeElement(producto);
+				Producto p1 = listaElementos.getSelectedValue();
+				model.removeElement(p1);
 				listaElementos.setModel(model);
-				TiendaGUI.getCliente().removeProducto(productoSeleccionado); 
-				//no se estan borrando los roductos de la base de datos
-				final WebTarget clientesTarget = appTarget.path("/clientes").path("/"+TiendaGUI.getCliente());
-				clientesTarget.request(MediaType.APPLICATION_JSON).post(Entity.entity(TiendaGUI.getCliente(), MediaType.APPLICATION_JSON));
+				Producto producto = null;
+				for (Producto p : productos_deseados){
+					if (p1.getNombre().equals(p.getNombre())) {
+						producto = p;
+					}
+				}
+				productos_deseados.remove(producto);
 			}
 		});
 		
-		System.out.println(TiendaGUI.getCliente().getProductosDeseados());
-		ArrayList<Producto> productos = TiendaGUI.getCliente().getProductosDeseados();
-		for (int i = 0; i < productos.size(); i++) {
-			model.addElement(productos.get(i));
+		for (int i = 0; i < productos_deseados.size(); i++) {
+			model.addElement(productos_deseados.get(i));
 		}
 		
-		System.out.println(TiendaGUI.getCliente().getProductosDeseados());
 		listaElementos = new JList<Producto>(model);
 		listaElementos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPane.setViewportView(listaElementos);
@@ -143,6 +151,7 @@ public class ListaDeseadosGUI extends JFrame {
 		btnInicio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				setVisible(false);
+				updateClient(appTarget);
 				TiendaGUI tienda = new TiendaGUI();
 				tienda.setVisible(true);
 				TiendaGUI.setCliente(TiendaGUI.getCliente());
@@ -150,5 +159,11 @@ public class ListaDeseadosGUI extends JFrame {
 			}
 		});
 		
+	}
+	public void updateClient(final WebTarget appTarget){
+		System.out.println(productos_deseados);
+		TiendaGUI.getCliente().setProductosDeseados((ArrayList<Producto>) productos_deseados);
+		final WebTarget clientesTarget = appTarget.path("/clientes/update");
+		clientesTarget.request(MediaType.APPLICATION_JSON).post(Entity.entity(TiendaGUI.getCliente(), MediaType.APPLICATION_JSON));
 	}
 }

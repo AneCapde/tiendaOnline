@@ -2,12 +2,10 @@ package es.deusto.spq.dao;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 
 import es.deusto.spq.models.Categoria;
 import es.deusto.spq.models.Cliente;
 import es.deusto.spq.models.Marca;
-import es.deusto.spq.models.Pago;
 import es.deusto.spq.models.Pedido;
 import es.deusto.spq.models.Producto;
 import es.deusto.spq.models.SubCategoria;
