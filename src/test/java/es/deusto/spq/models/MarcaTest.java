@@ -8,6 +8,8 @@ import org.junit.Test;
 public class MarcaTest {
 	
 	Marca mar;
+	
+	
 	@Before
 	public void initiali(){
 		mar = new Marca("Nombre", "Descripcion");
