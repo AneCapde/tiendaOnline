@@ -84,6 +84,7 @@ public class TiendaGUI extends JFrame {
 		final WebTarget marcasTarget = appTarget.path("/marcas");
 		final WebTarget subTarget = appTarget.path("/subcategorias");
 		final WebTarget pedidoTarget= appTarget.path("/pedidos");
+		// final WebTarget pagoTarget= appTarget.path("/pagos");
 
 		final TiendaGUI esto = this;
 		

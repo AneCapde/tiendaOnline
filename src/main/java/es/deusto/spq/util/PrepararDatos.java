@@ -16,6 +16,7 @@ import es.deusto.spq.models.Producto;
 import es.deusto.spq.models.SubCategoria;
 import es.deusto.spq.models.Tallas;
 import es.deusto.spq.models.Cliente.Genero;
+import es.deusto.spq.models.Pago;
 
 
 
@@ -35,6 +36,14 @@ public class PrepararDatos {
 					"direccion", Genero.MUJER, 45678, "provincia", "localidad");
 			pm.makePersistent(cliente1);
 			
+			//Creamos sus credenciales de pago
+			HashMap<String,String> paypal = new HashMap<String,String>();
+			paypal.put("usuario@gmail.com", "1234");
+			HashMap<String,String> visa = new HashMap<String,String>();
+			visa.put("4444333322221111", "1234");
+			Pago pago = new Pago(cliente1.getDNI(), visa, paypal);
+			// pm.makePersistent(pago);
+
 			//Creamos las categorias
 			Categoria categoria1 = new Categoria("Ropa","Aqui se podra encontrar ropa de diferentes estilos y de todo tipo");
 			//DBManager.getInstance().store(categoria1);
