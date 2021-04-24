@@ -73,6 +73,7 @@ public class TiendaGUI extends JFrame {
 	private List<Pedido> pedidos; 
 	public static List<Producto> productos_cesta = new ArrayList<Producto>();
 	private boolean incluido;
+	private static JButton botonLogin;
 	
 	
 	public TiendaGUI() {
@@ -248,17 +249,25 @@ public class TiendaGUI extends JFrame {
 		});
 		
 		//#################################################################################################
-		JButton botonLogin = new JButton("Log in");
+		botonLogin = new JButton("Log in");
 		botonLogin.setBounds(518, 10, 122, 23);
 		contentPane.add(botonLogin);
 		botonLogin.addActionListener(new ActionListener() {
 			
 			@Override
-			public void actionPerformed(ActionEvent e) {
-				esto.setEnabled(false);
-				VentanaLogin ventanaLogin = new VentanaLogin(esto, appTarget);
-				ventanaLogin.setVisible(true);
-				contentPane.setEnabled(false);	
+			public void actionPerformed(ActionEvent ae) {
+				if (cliente == null) {
+					esto.setEnabled(false);
+					VentanaLogin ventanaLogin = new VentanaLogin(esto, appTarget);
+					ventanaLogin.setVisible(true);
+					contentPane.setEnabled(false);
+				}else{
+					cliente = null;
+					botonLogin.setText("Log in");
+					botonLogin.setVisible(false);
+					botonLogin.setVisible(true);
+				}
+				
 			}
 		});
 		
@@ -524,6 +533,8 @@ public class TiendaGUI extends JFrame {
     }
 	public static void setCliente(Cliente cliente) {
 		TiendaGUI.cliente = cliente;
+		botonLogin.setText("Log out");
+		botonLogin.updateUI();
 	}
 	public static Cliente getCliente() {
 		return TiendaGUI.cliente;
