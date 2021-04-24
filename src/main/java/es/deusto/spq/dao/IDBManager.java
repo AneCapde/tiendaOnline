@@ -30,5 +30,6 @@ public interface IDBManager {
     public void updateCliente(Cliente cliente);
     public void updateProducto(Producto producto);
     public void updatePedido(Pedido pedido);
+    public void deleteCliente(Cliente cliente);
 	
 }

@@ -33,11 +33,11 @@ public class ClientesServer {
         return null;
 	}
 
-    @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    public void addCliente(Cliente cliente) {
-        DBManager.getInstance().store(cliente);
-    }
+//    @POST
+//    @Consumes(MediaType.APPLICATION_JSON)
+//    public void addCliente(Cliente cliente) {
+//        DBManager.getInstance().store(cliente);
+//    }
     
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
@@ -50,15 +50,15 @@ public class ClientesServer {
         DBManager.getInstance().updateCliente(cliente_per);
     }
     
-//    @POST
-//    @Path("/{deseado}")
-//    @Consumes(MediaType.APPLICATION_JSON)
-//    public void deleteCliente(@PathParam ("deseado") Cliente cliente) {
-//    	Cliente cliente_per = DBManager.getInstance().getCliente(cliente.getDNI());
-//        for (Producto p : cliente.getProductosDeseados()){
-//            Producto producto_per = DBManager.getInstance().getProducto(p.getNombre());
-//            cliente_per.getProductosDeseados().remove(producto_per);
-//        }
-//        DBManager.getInstance().updateCliente(cliente_per);
-//    }
+    @POST
+    @Path("/{deseado}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void deleteCliente( Cliente cliente) {
+    	Cliente cliente_per = DBManager.getInstance().getCliente(cliente.getDNI());
+        for (Producto p : cliente.getProductosDeseados()){
+            Producto producto_per = DBManager.getInstance().getProducto(p.getNombre());
+            cliente_per.getProductosDeseados().remove(producto_per);
+        }
+        DBManager.getInstance().deleteCliente(cliente_per);
+    }
 }
