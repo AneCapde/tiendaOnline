@@ -73,13 +73,12 @@ public class TiendaGUI extends JFrame {
 	private List<Pedido> pedidos; 
 	public static List<Producto> productos_cesta = new ArrayList<Producto>();
 	private boolean incluido;
-	
+
 	
 	public TiendaGUI() {
 		client = ClientBuilder.newClient();
 
         final WebTarget appTarget = client.target("http://localhost:8080/myapp");
-		final WebTarget productosTarget = appTarget.path("/productos");
 		final WebTarget categoriasTarget = appTarget.path("/categorias");
 		final WebTarget marcasTarget = appTarget.path("/marcas");
 		final WebTarget subTarget = appTarget.path("/subcategorias");
@@ -257,7 +256,7 @@ public class TiendaGUI extends JFrame {
 				esto.setEnabled(false);
 				VentanaLogin ventanaLogin = new VentanaLogin(esto, appTarget);
 				ventanaLogin.setVisible(true);
-				contentPane.setEnabled(false);	
+				contentPane.setEnabled(false);
 			}
 		});
 		
@@ -497,7 +496,7 @@ public class TiendaGUI extends JFrame {
 					if (!TiendaGUI.getCliente().equals(null)) {
 						esto.setEnabled(false);
 						ListaDeseadosGUI listaDeseados= new ListaDeseadosGUI(esto, appTarget, esto);
-						listaDeseados.setVisible(true);
+						listaDeseados.setEnabled(true);
 						dispose();
 					}else {
 						botonListaDeseados.setEnabled(false);
