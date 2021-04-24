@@ -6,6 +6,7 @@ import javax.swing.border.EmptyBorder;
 import java.awt.Panel;
 
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JComboBox;
 import javax.swing.DefaultListModel;
 import javax.swing.Icon;
@@ -50,7 +51,7 @@ public class TiendaGUI extends JFrame {
 	private Client client;
 	private JPanel contentPane;
 	private JTextField txtBuscador;
-	private DefaultListModel<Producto> model = new DefaultListModel<>();
+	public static DefaultListModel<Producto> model = new DefaultListModel<>();
 	private DefaultListModel<Pedido> model2 = new DefaultListModel<>();
 	private JList<Producto> listaElementos;
 	private JComboBox<Colores> comboBox_colores;
@@ -68,7 +69,7 @@ public class TiendaGUI extends JFrame {
 	private Colores colorSelecionado;
 	private Producto productoSeleccionado;
 	private static Cliente cliente;
-	private List<Producto> productos;
+	public static List<Producto> productos;
 	private List<Pedido> pedidos; 
 	public static List<Producto> productos_cesta = new ArrayList<Producto>();
 	private boolean incluido;
@@ -85,12 +86,6 @@ public class TiendaGUI extends JFrame {
 		final WebTarget pedidoTarget= appTarget.path("/pedidos");
 
 		final TiendaGUI esto = this;
-		
-		GenericType<List<Producto>> genericType_productos = new GenericType<List<Producto>>() {};
-        productos = productosTarget.request(MediaType.APPLICATION_JSON).get(genericType_productos);
-		for (int i = 0; i < productos.size(); i++) {
-			model.addElement(productos.get(i));
-		}
 		
 //		GenericType<List<Pedido>> genericType_pedidos = new GenericType<List<Pedido>>() {};
 //        pedidos = pedidoTarget.request(MediaType.APPLICATION_JSON).get(genericType_pedidos);
@@ -127,30 +122,48 @@ public class TiendaGUI extends JFrame {
 		panel.add(botonHistorial);
 		
 		botonHistorial.addActionListener(new ActionListener() {
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				esto.setEnabled(false);
-				HistorialGUI historial= new HistorialGUI(esto, pedidos, appTarget);
-				historial.setVisible(true);
-				contentPane.setEnabled(false);
-				
-			}
-			
+				try {
+					if (!TiendaGUI.getCliente().equals(null)) {
+						esto.setEnabled(false);
+						HistorialGUI historial= new HistorialGUI(esto, pedidos, appTarget);
+						historial.setVisible(true);
+						contentPane.setEnabled(false);
+						dispose();
+					}else {
+						botonHistorial.setEnabled(false);
+					}
+				}
+				catch(NullPointerException nl) {
+					JOptionPane.showMessageDialog(null, "Ningun Usuario a Iniciado Sesion", "Validar Credenciales", JOptionPane.INFORMATION_MESSAGE);
+				}
+			}			
 		});
 		
 		//#################################################################################################
 		JButton btnCesta = new JButton("Cesta");
 		btnCesta.setFont(new Font("Segoe UI Black", Font.PLAIN, 15));
-		btnCesta.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				CestaGUI cestaGUI = new CestaGUI(esto, productos_cesta, appTarget);
-				cestaGUI.setVisible(true);
-				contentPane.setEnabled(false);
-			}
-		});
 		btnCesta.setBounds(10, 460, 194, 30);
 		panel.add(btnCesta);
+		btnCesta.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					if (!TiendaGUI.getCliente().equals(null)) {
+						esto.setEnabled(false);
+						CestaGUI cestaGUI = new CestaGUI(esto, productos_cesta, appTarget);
+						cestaGUI.setVisible(true);
+						contentPane.setEnabled(false);
+						dispose();
+					}else {
+						btnCesta.setEnabled(false);
+					}
+				}
+				catch(NullPointerException nl) {
+					JOptionPane.showMessageDialog(null, "Ningun Usuario a Iniciado Sesion", "Validar Credenciales", JOptionPane.INFORMATION_MESSAGE);
+				}	
+			}
+		});
 		
 		//#################################################################################################
 		comboBox_colores = new JComboBox<Colores>();
@@ -236,6 +249,7 @@ public class TiendaGUI extends JFrame {
 		//#################################################################################################
 		JButton botonLogin = new JButton("Log in");
 		botonLogin.setBounds(518, 10, 122, 23);
+		contentPane.add(botonLogin);
 		botonLogin.addActionListener(new ActionListener() {
 			
 			@Override
@@ -243,11 +257,9 @@ public class TiendaGUI extends JFrame {
 				esto.setEnabled(false);
 				VentanaLogin ventanaLogin = new VentanaLogin(esto, appTarget);
 				ventanaLogin.setVisible(true);
-				contentPane.setEnabled(false);
-				
+				contentPane.setEnabled(false);	
 			}
 		});
-		contentPane.add(botonLogin);
 		
 		//#################################################################################################
 		JButton botonSignIn = new JButton("Sign in");
@@ -279,7 +291,6 @@ public class TiendaGUI extends JFrame {
 						.post(Entity.entity(pedido, MediaType.APPLICATION_JSON));
 			}
 		});
-		
 		
 		//#################################################################################################
 		JScrollPane scrollPane = new JScrollPane();
@@ -314,9 +325,13 @@ public class TiendaGUI extends JFrame {
 					if(incluido) {
 //						Revisar NO FUNCIONA
 						
-						Producto producto = listaElementos.getSelectedValue();
-						model.removeElement(producto);
-						TiendaGUI.getCliente().removeProducto(productoSeleccionado);
+//						Producto producto = listaElementos.getSelectedValue();
+//						System.out.println("Elemento a borrar: " + producto);
+//						System.out.println("Lista de elementos antes de borrar" + TiendaGUI.getCliente().getProductosDeseados());
+//						ListaDeseadosGUI.model.removeElement(producto);
+////						ListaDeseadosGUI.listaElementos.setModel(ListaDeseadosGUI.model);
+//						System.out.println("Elemeto borrado:" + ListaDeseadosGUI.model);
+//						TiendaGUI.getCliente().removeProducto(productoSeleccionado);
 						
 						ImageIcon icono_1 = new ImageIcon(getClass().getResource("/img/corazon-blanco.png"));
 						ImageIcon icono_2 = new ImageIcon(icono_1.getImage().getScaledInstance(btnDeseado.getWidth(), btnDeseado.getHeight(),Image.SCALE_DEFAULT));
@@ -347,7 +362,7 @@ public class TiendaGUI extends JFrame {
 			public void valueChanged(ListSelectionEvent e) {
 				btnDeseado.setVisible(true);
 				botonComprar.setVisible(true);
-				botonAnyadir.setVisible(false);
+				botonAnyadir.setVisible(true);
 				productoSeleccionado = listaElementos.getSelectedValue();
 				textArea.setText(null);
 				System.out.println(productoSeleccionado);
@@ -365,8 +380,7 @@ public class TiendaGUI extends JFrame {
 					textArea.append("- CATEGORÍA: " + productoSeleccionado.getSubcategoria().getCategoria().getNombre() + "\n");
 					textArea.append("    SUBCATEGORÍA: " + productoSeleccionado.getSubcategoria().getNombre() + "\n");
 					
-//					System.out.println(TiendaGUI.getCliente().getProductosDeseados());
-
+					System.out.println(TiendaGUI.getCliente().getProductosDeseados());
 
 					for(Producto p:TiendaGUI.getCliente().getProductosDeseados()) {
 						incluido = false;
@@ -379,9 +393,7 @@ public class TiendaGUI extends JFrame {
 							btnDeseado.updateUI();
 							btnDeseado.setVisible(true);	
 						}else {
-							TiendaGUI.getCliente().removeProducto(productoSeleccionado);
-//							final WebTarget clientesTarget = appTarget.path("/clientes");
-//							clientesTarget.request(MediaType.APPLICATION_JSON).post(Entity.entity(TiendaGUI.getCliente(), MediaType.APPLICATION_JSON));
+							incluido = false;
 							ImageIcon icono_1 = new ImageIcon(getClass().getResource("/img/corazon-blanco.png"));
 							ImageIcon icono_2 = new ImageIcon(icono_1.getImage().getScaledInstance(btnDeseado.getWidth(), btnDeseado.getHeight(),Image.SCALE_DEFAULT));
 							btnDeseado.setIcon(icono_2);
@@ -481,12 +493,23 @@ public class TiendaGUI extends JFrame {
 		JButton botonListaDeseados = new JButton("ListaDeseados");
 		botonListaDeseados.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				esto.setEnabled(false);
-				ListaDeseadosGUI listaDeseados= new ListaDeseadosGUI(esto, appTarget, esto);
-				listaDeseados.setVisible(true);
-				dispose();
+				try {
+					if (!TiendaGUI.getCliente().equals(null)) {
+						esto.setEnabled(false);
+						ListaDeseadosGUI listaDeseados= new ListaDeseadosGUI(esto, appTarget, esto);
+						listaDeseados.setVisible(true);
+						dispose();
+					}else {
+						botonListaDeseados.setEnabled(false);
+					}
+				}
+				catch(NullPointerException nl) {
+					JOptionPane.showMessageDialog(null, "Ningun Usuario a Iniciado Sesion", "Validar Credenciales", JOptionPane.INFORMATION_MESSAGE);
+				}
+				
 			}
 		});
+		
 		botonListaDeseados.setFont(new Font("Segoe UI Black", Font.PLAIN, 15));
 		botonListaDeseados.setBounds(10, 378, 194, 30);
 		panel.add(botonListaDeseados);

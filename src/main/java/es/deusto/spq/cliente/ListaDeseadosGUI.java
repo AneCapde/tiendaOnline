@@ -6,7 +6,6 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
@@ -31,9 +30,9 @@ import es.deusto.spq.models.Producto;
 public class ListaDeseadosGUI extends JFrame {
 
 	private JPanel contentPane;
-	private DefaultListModel<Producto> model = new DefaultListModel<>();
+	public static DefaultListModel<Producto> model = new DefaultListModel<>();
 	private Producto productoSeleccionado;
-	private JList<Producto> listaElementos;
+	public static JList<Producto> listaElementos;
 
 	public ListaDeseadosGUI(final JFrame ventanaPadre, WebTarget appTarget, TiendaGUI tienda) {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -89,23 +88,23 @@ public class ListaDeseadosGUI extends JFrame {
 		btnEliminar.setVisible(false);
 		btnEliminar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				//Se borra de la lista, falta que se borre de la base de datos
 				Producto producto = listaElementos.getSelectedValue();
 				model.removeElement(producto);
 				listaElementos.setModel(model);
-				tienda.getCliente().removeProducto(productoSeleccionado); //no se estan borrando los roductos de la base de datos
-//				final WebTarget clientesTarget = appTarget.path("/clientes").path("/"+TiendaGUI.getCliente());
-//				clientesTarget.request(MediaType.APPLICATION_JSON).post(Entity.entity(TiendaGUI.getCliente(), MediaType.APPLICATION_JSON));
+				TiendaGUI.getCliente().removeProducto(productoSeleccionado); 
+				//no se estan borrando los roductos de la base de datos
+				final WebTarget clientesTarget = appTarget.path("/clientes").path("/"+TiendaGUI.getCliente());
+				clientesTarget.request(MediaType.APPLICATION_JSON).post(Entity.entity(TiendaGUI.getCliente(), MediaType.APPLICATION_JSON));
 			}
 		});
 		
-		System.out.println(tienda.getCliente().getProductosDeseados());
-		ArrayList<Producto> productos = tienda.getCliente().getProductosDeseados();
+		System.out.println(TiendaGUI.getCliente().getProductosDeseados());
+		ArrayList<Producto> productos = TiendaGUI.getCliente().getProductosDeseados();
 		for (int i = 0; i < productos.size(); i++) {
 			model.addElement(productos.get(i));
 		}
 		
-		System.out.println(tienda.getCliente().getProductosDeseados());
+		System.out.println(TiendaGUI.getCliente().getProductosDeseados());
 		listaElementos = new JList<Producto>(model);
 		listaElementos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPane.setViewportView(listaElementos);

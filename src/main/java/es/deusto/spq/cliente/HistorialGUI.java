@@ -98,7 +98,19 @@ public class HistorialGUI extends JFrame{
 //		});
 		
 		
-		
+	    JButton btnInicio = new JButton("INICIO");
+		btnInicio.setForeground(Color.BLACK);
+		btnInicio.setBackground(new Color(0, 255, 0));
+		btnInicio.setBounds(469, 11, 109, 29);
+		contentPane.add(btnInicio);
+		btnInicio.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				setVisible(false);
+				TiendaGUI tienda = new TiendaGUI();
+				tienda.setVisible(true);
+				dispose();
+			}
+		});
 		
 	}
 
