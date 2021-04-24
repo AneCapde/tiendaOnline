@@ -260,9 +260,7 @@ public class TiendaGUI extends JFrame {
 					contentPane.setEnabled(false);
 				}else{
 					cliente = null;
-					botonLogin.setText("Log in");
-					botonLogin.setVisible(false);
-					botonLogin.setVisible(true);
+					dispose();
 				}
 			}
 		});
@@ -503,7 +501,7 @@ public class TiendaGUI extends JFrame {
 					if (!TiendaGUI.getCliente().equals(null)) {
 						esto.setEnabled(false);
 						ListaDeseadosGUI listaDeseados= new ListaDeseadosGUI(esto, appTarget, esto);
-						listaDeseados.setEnabled(true);
+						listaDeseados.setVisible(true);
 						dispose();
 					}else {
 						botonListaDeseados.setEnabled(false);

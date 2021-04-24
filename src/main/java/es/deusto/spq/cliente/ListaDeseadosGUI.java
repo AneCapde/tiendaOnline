@@ -145,6 +145,7 @@ public class ListaDeseadosGUI extends JFrame {
 				setVisible(false);
 				TiendaGUI tienda = new TiendaGUI();
 				tienda.setVisible(true);
+				TiendaGUI.setCliente(TiendaGUI.getCliente());
 				dispose();
 			}
 		});
