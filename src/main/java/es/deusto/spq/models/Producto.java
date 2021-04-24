@@ -143,6 +143,6 @@ public class Producto {
 //		this.tallas = tallas;
 //	}
 	
-	
+	//
 	
 }
