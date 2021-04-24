@@ -1,5 +1,6 @@
 package es.deusto.spq.server;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -22,10 +23,22 @@ public class PedidosServer {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Pedido> getPedidos() {
-		List<Pedido> pedidos = DBManager.getInstance().getPedidos();
-		return pedidos;
+    public List<Pedido> getPedidos(Cliente cliente) {
+    	List<Pedido> pedidos = DBManager.getInstance().getPedidos();
+    	return pedidos;
+//    	List<Pedido> allPedidos = DBManager.getInstance().getPedidos();
+//    	for (Pedido pedido : allPedidos) {
+//			Cliente clientePedido = DBManager.getInstance().getCliente(pedido.getCliente().getDNI());
+//			if(cliente.equals(clientePedido)) {
+//	    		List<Pedido> pedidos = DBManager.getInstance().getPedidos(clientePedido);
+//	    		return pedidos;
+//	    	}
+//			
+//		}
+//    	
+		
     }
+    
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public void addPedido(Pedido pedido) {

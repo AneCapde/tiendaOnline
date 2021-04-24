@@ -15,8 +15,9 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
-
+import javax.swing.border.LineBorder;
 import javax.ws.rs.client.WebTarget;
 
 import es.deusto.spq.models.Pedido;
@@ -26,7 +27,7 @@ import es.deusto.spq.models.Producto;
 public class HistorialGUI extends JFrame{
 	
 	private JPanel contentPane;
-	private DefaultListModel<Producto> model = new DefaultListModel<>();
+	private DefaultListModel<Pedido> model = new DefaultListModel<>();
 	private Pedido pedidoSeleccionado;
 	private JList<Pedido> listaElementos;
 	private JButton botonDevolver;
@@ -59,20 +60,16 @@ public class HistorialGUI extends JFrame{
 		textArea.setEditable(false);
 		contentPane.add(textArea);
 		
-		botonDevolver = new JButton("Devolución");
-		botonDevolver.setBounds((this.getWidth()/100)*5, (this.getHeight()/18)*8, (this.getWidth()/35)*10, (this.getHeight()/18)*3);
-	    contentPane.add(botonDevolver);
-	    
-	    //Boton para realizar la devolucion del producto seleccionado (funcionalidad más adelante)
-	    botonDevolver.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-	    	
-	    });
+		for (int i = 0; i < pedidos.size(); i++) {
+			model.addElement(pedidos.get(i)); 
+		}
+		
+		JList<Pedido> list = new JList<>(model);
+		list.setBorder(new LineBorder(new Color(0, 0, 0)));
+		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		list.setBounds(10, 27, 236, 387);
+		contentPane.add(list);
+		
 		
 		//Para que salgan la informacion (caracteristicas) de cada pedido
 //		listaElementos = new JList<Pedido>(model);
@@ -97,6 +94,22 @@ public class HistorialGUI extends JFrame{
 //			}
 //		});
 		
+		botonDevolver = new JButton("Devolución");
+		botonDevolver.setForeground(Color.BLACK);
+		botonDevolver.setBackground(new Color(0, 255, 0));
+		botonDevolver.setBounds(750, 11, 109, 29);
+	    contentPane.add(botonDevolver);
+	    
+	    //Boton para realizar la devolucion del producto seleccionado (funcionalidad más adelante)
+	    botonDevolver.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+	    	
+	    });
 		
 	    JButton btnInicio = new JButton("INICIO");
 		btnInicio.setForeground(Color.BLACK);
