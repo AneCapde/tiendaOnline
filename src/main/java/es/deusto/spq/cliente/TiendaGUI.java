@@ -70,7 +70,7 @@ public class TiendaGUI extends JFrame {
 	private Producto productoSeleccionado;
 	private static Cliente cliente;
 	private List<Producto> productos;
-	private List<Pedido> pedidos; 
+	private List<Pedido> pedidos = new ArrayList<>(); 
 	private static List<Producto> productos_deseados = new ArrayList<Producto>();
 	public static List<Producto> productos_cesta = new ArrayList<Producto>();
 	private static JButton botonLogin;
@@ -135,13 +135,14 @@ public class TiendaGUI extends JFrame {
 						HistorialGUI historial= new HistorialGUI(esto, pedidos, appTarget);
 						historial.setVisible(true);
 						contentPane.setEnabled(false);
+						System.out.println("holaa");
 						dispose();
 					}else {
 						botonHistorial.setEnabled(false);
 					}
 				}
 				catch(NullPointerException nl) {
-					JOptionPane.showMessageDialog(null, "Ningun Usuario a Iniciado Sesion", "Validar Credenciales", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Ningun Usuario ha Iniciado Sesion", "Validar Credenciales", JOptionPane.INFORMATION_MESSAGE);
 				}
 			}			
 		});
@@ -166,7 +167,7 @@ public class TiendaGUI extends JFrame {
 					}
 				}
 				catch(NullPointerException nl) {
-					JOptionPane.showMessageDialog(null, "Ningun Usuario a Iniciado Sesion", "Validar Credenciales", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Ningun Usuario ha Iniciado Sesion", "Validar Credenciales", JOptionPane.INFORMATION_MESSAGE);
 				}	
 			}
 		});
@@ -542,7 +543,7 @@ public class TiendaGUI extends JFrame {
 					}
 				}
 				catch(NullPointerException nl) {
-					JOptionPane.showMessageDialog(null, "Ningun Usuario a Iniciado Sesion", "Validar Credenciales", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Ningun Usuario ha Iniciado Sesion", "Validar Credenciales", JOptionPane.INFORMATION_MESSAGE);
 				}
 				
 			}
