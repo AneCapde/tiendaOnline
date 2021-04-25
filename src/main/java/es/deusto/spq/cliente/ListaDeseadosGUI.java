@@ -82,9 +82,9 @@ public class ListaDeseadosGUI extends JFrame {
 		botonAnyadir.addActionListener (new ActionListener () {
 		    public void actionPerformed(ActionEvent e) {
 				productoSeleccionado =  listaElementos.getSelectedValue();
-				// if (!TiendaGUI.productos_cesta.contains(productoSeleccionado)){
-				// 	TiendaGUI.productos_cesta.add(productoSeleccionado);
-				// }
+				 if (!TiendaGUI.productos_cesta.contains(productoSeleccionado)){
+				 	TiendaGUI.productos_cesta.add(productoSeleccionado);
+				 }
 			}
 		});
 		

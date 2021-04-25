@@ -558,32 +558,38 @@ public class TiendaGUI extends JFrame {
 		panel.add(botonListaDeseados);
 	
 	}
+	
 	public static void updateUserList(final WebTarget appTarget){
 		TiendaGUI.getCliente().setProductosDeseados((ArrayList<Producto>) productos_deseados);
 		final WebTarget clientesTarget = appTarget.path("/clientes/update");
 		clientesTarget.request(MediaType.APPLICATION_JSON).post(Entity.entity(TiendaGUI.getCliente(), MediaType.APPLICATION_JSON));
 	}
+	
 	public static void updateUser(final WebTarget appTarget){
 		final WebTarget clientesTarget = appTarget.path("/clientes").path("/"+TiendaGUI.getCliente().getEmail()).path("/"+ TiendaGUI.getCliente().getPassword());
 		Cliente cliente = clientesTarget.request(MediaType.APPLICATION_JSON).get(Cliente.class);
 		TiendaGUI.setCliente(cliente);
 	}
+	
 	public static void main(String[] args) {
         TiendaGUI tiendaGUI = new TiendaGUI();
 		tiendaGUI.setVisible(true);
     }
+	
 	public static void setCliente(Cliente cliente) {
 		TiendaGUI.cliente = cliente;
 		cargarLista();
 		botonLogin.setText("Log out");
 		botonLogin.updateUI();
 	}
+	
 	private static void cargarLista() {
 		productos_deseados.removeAll(productos_deseados);
 		for (Producto p :TiendaGUI.getCliente().getProductosDeseados()){
 			productos_deseados.add(p);
 		}
 	}
+	
 	public static Cliente getCliente() {
 		return TiendaGUI.cliente;
 	}
