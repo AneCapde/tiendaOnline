@@ -24,18 +24,18 @@ public class PedidosServer {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<Pedido> getPedidos(Cliente cliente) {
-    	List<Pedido> pedidos = DBManager.getInstance().getPedidos();
-    	return pedidos;
-//    	List<Pedido> allPedidos = DBManager.getInstance().getPedidos();
-//    	for (Pedido pedido : allPedidos) {
-//			Cliente clientePedido = DBManager.getInstance().getCliente(pedido.getCliente().getDNI());
-//			if(cliente.equals(clientePedido)) {
-//	    		List<Pedido> pedidos = DBManager.getInstance().getPedidos(clientePedido);
-//	    		return pedidos;
-//	    	}
-//			
-//		}
-//    	
+    	List<Pedido> allPedidos = DBManager.getInstance().getPedidos();
+    	ArrayList<Pedido> pedidosCliente = new ArrayList<>();
+    	for (Pedido pedido : allPedidos) {
+			Cliente clientePedido = DBManager.getInstance().getCliente(pedido.getCliente().getDNI());
+			if(cliente.equals(clientePedido)) {
+				pedidosCliente.add(pedido);
+	    		
+	    	}
+			
+		}
+    	return pedidosCliente;
+    	
 		
     }
     
