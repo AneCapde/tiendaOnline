@@ -296,8 +296,12 @@ public class TiendaGUI extends JFrame {
 		botonComprar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Date date = new Date();
+				productoSeleccionado = listaElementos.getSelectedValue();
+				List<Producto> productoPedido = new ArrayList<>();
 				Pedido pedido = new Pedido(TiendaGUI.getCliente(), date, "en proceso", productoSeleccionado.getPrecio(),
-						1, productoSeleccionado);
+						1);
+				productoPedido.add(productoSeleccionado);
+				pedido.setProducto((ArrayList<Producto>) productoPedido);
 				pedidoTarget.request(MediaType.APPLICATION_JSON)
 						.post(Entity.entity(pedido, MediaType.APPLICATION_JSON));
 			}

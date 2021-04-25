@@ -1,7 +1,9 @@
 package es.deusto.spq.models;
 
+import java.util.ArrayList;
 import java.util.Date;
 
+import javax.jdo.annotations.Join;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 
@@ -14,17 +16,18 @@ public class Pedido {
 	private int cantidad;
 	@Persistent(defaultFetchGroup = "true")
 	private Cliente cliente;
-	@Persistent(defaultFetchGroup = "true")
-	private Producto producto;
 	
-	public Pedido(Cliente cliente, Date fecha, String estado, int importe, int cantidad, Producto producto) {
+	@Persistent(defaultFetchGroup = "true")
+	@Join
+	private ArrayList<Producto> productoPedido = new ArrayList<>();
+	
+	public Pedido(Cliente cliente, Date fecha, String estado, int importe, int cantidad) {
 		super();
 		this.cliente = cliente;
 		this.fecha = fecha;
 		this.estado = estado;
 		this.importe = importe;
 		this.cantidad = cantidad;
-		this.producto = producto;
 	}
 	
 	public Cliente getCliente() {
@@ -60,18 +63,18 @@ public class Pedido {
 		this.cantidad = cantidad;
 	}
 
-	public Producto getProducto() {
-		return producto;
+	public ArrayList<Producto> getProducto() {
+		return productoPedido;
 	}
 
-	public void setProducto(Producto producto) {
-		this.producto = producto;
+	public void setProducto(ArrayList<Producto> productoPedido) {
+		this.productoPedido = productoPedido;
 	}
 
 	@Override
 	public String toString() {
 		return "Pedido [fecha=" + fecha + ", estado=" + estado + ", importe=" + importe + ", cantidad=" + cantidad
-				+ ", cliente=" + cliente + ", producto=" + producto + "]";
+				+ ", cliente=" + cliente + ", producto=" + productoPedido + "]";
 	}
 	
 }

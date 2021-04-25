@@ -74,12 +74,17 @@ public class CestaGUI extends JFrame {
 		btnNewButton.setVisible(false);
 		btnNewButton.addActionListener (new ActionListener () {
 		    public void actionPerformed(ActionEvent e) {
+				List<Producto> productosPedidos = new ArrayList<>();
+				int precio_pedido = 0;
 				for(Producto p : productos_cantidad.keySet()){
-					Date date = new Date();
-					int precio_pedido = productos_cantidad.get(p)*p.getPrecio();
-					Pedido pedido = new Pedido(TiendaGUI.getCliente(), date,"en proceso" , precio_pedido, productos_cantidad.get(p), p);
-					pedidoTarget.request(MediaType.APPLICATION_JSON).post(Entity.entity(pedido, MediaType.APPLICATION_JSON));
+					precio_pedido = productos_cantidad.get(p)*p.getPrecio();
+					productosPedidos.add(p);
 				}
+				Date date = new Date();
+				Pedido pedido = new Pedido(TiendaGUI.getCliente(), date,"en proceso" , precio_pedido, 0);
+				pedido.setProducto((ArrayList<Producto>) productosPedidos);	
+				pedidoTarget.request(MediaType.APPLICATION_JSON).post(Entity.entity(pedido, MediaType.APPLICATION_JSON));
+				
 				dispose();
 				ventanaPadre.setEnabled(true);
 			}

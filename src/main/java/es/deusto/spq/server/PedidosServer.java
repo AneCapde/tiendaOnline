@@ -43,9 +43,13 @@ public class PedidosServer {
     @Consumes(MediaType.APPLICATION_JSON)
     public void addPedido(Pedido pedido) {
         Cliente cliente = DBManager.getInstance().getCliente(pedido.getCliente().getDNI());
-        Producto producto = DBManager.getInstance().getProducto(pedido.getProducto().getNombre());
+        List<Producto> productoPedido = new ArrayList<>();
+        for (Producto p: pedido.getProducto()){
+            Producto producto = DBManager.getInstance().getProducto(p.getNombre());
+            productoPedido.add(producto);
+        }
         pedido.setCliente(cliente);
-        pedido.setProducto(producto);
+        pedido.setProducto((ArrayList<Producto>) productoPedido);
         DBManager.getInstance().store(pedido);
     }
     
