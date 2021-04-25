@@ -147,5 +147,16 @@ public class Cliente {
 			}
 		}
 	}
-		
+
+
+	public String toStringDebug() {
+		return "Cliente [DNI=" + DNI + ", nombre=" + nombre + ", apellidos=" + apellidos + ", email=" + email
+				+ ", password=" + password + ", telefono=" + telefono + ", direccion=" + direccion + ", genero="
+				+ genero + ", cod_postal=" + cod_postal + ", provincia=" + provincia + ", localidad=" + localidad
+				+ ", productosDeseados=" + productosDeseados + "]";
+	}
+	@Override
+	public String toString() {
+		return nombre;
+	}
 }

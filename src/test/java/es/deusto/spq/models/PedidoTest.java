@@ -2,6 +2,7 @@ package es.deusto.spq.models;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import javax.print.attribute.standard.PDLOverrideSupported;
@@ -16,6 +17,7 @@ public class PedidoTest {
 	Pedido ped;
 	Cliente cli;
 	Producto pro;
+	ArrayList<Producto> arr = new ArrayList<Producto>();
 	
 	@Before
 	public void testPedido() {
@@ -24,6 +26,7 @@ public class PedidoTest {
 		SubCategoria subca = new SubCategoria("nombreSub", "descSub", cat);
 		Marca marc = new Marca("nombreMarc", "descMarc");
 		pro = new Producto("producto", "descripcion", 2, 2, "img", subca, marc);
+		arr.add(pro);
 		ped = new Pedido(cli, new Date(1619342158), "estado",22 ,2);
 	}
 
@@ -94,27 +97,23 @@ public class PedidoTest {
 	}
 
 	@Test
-	public void testGetProducto() {
-		//Producto resul = ped.getProducto();
-		//assertEquals(pro, resul);
-	}
-
-	@Test
-	public void testSetProducto() {
+	public void testSetGetProducto() {
 		cli = new Cliente("12345F", "NomCliente", "ApCliente", "email", "pass", 9999999,"Direccion", Genero.HOMBRE, 234455, "provincia", "localidad");
 		Categoria cat = new Categoria("nombreCat", "descCat");
 		SubCategoria subca = new SubCategoria("nombreSub", "descSub", cat);
 		Marca marc = new Marca("nombreMarc", "descMarc");
 		Producto pron = new Producto("producto2", "descripcion2", 2, 2, "img", subca, marc);
-		//ped.setProducto(pron);
-		//Producto resul = ped.getProducto();
-		//assertEquals(pron, resul);
+		ArrayList<Producto> productos = new ArrayList<Producto>();
+		productos.add(pron);
+		ped.setProducto(productos);
+		ArrayList<Producto> resul = ped.getProducto();
+		assertEquals(productos, resul);
 	}
 
 	@Test
 	public void testToString() {
-//		String resul = ped.toString();
-//		assertEquals("Pedido [fecha=Mon Jan 19 18:49:02 CET 1970, estado=estado, importe=22, cantidad=2, cliente=es.deusto.spq.models.Cliente@5fcfe4b2, producto=producto]", resul);	
+		String resul = ped.toString();
+		assertEquals("Pedido [fecha=Mon Jan 19 18:49:02 CET 1970, estado=estado, importe=22, cantidad=2, cliente=NomCliente, producto=[]]", resul);	
 	}
 
 }
