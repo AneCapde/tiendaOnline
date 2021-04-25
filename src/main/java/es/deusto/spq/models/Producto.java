@@ -1,5 +1,6 @@
 package es.deusto.spq.models;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.jdo.annotations.Join;
@@ -19,8 +20,8 @@ public class Producto {
 	private Marca marca;
 	@Persistent(defaultFetchGroup = "true")
 	private SubCategoria subcategoria;
-//	private ArrayList<Colores> colores;
-//	private ArrayList<Tallas> tallas; 
+	private ArrayList<Colores> colores;
+	private ArrayList<Tallas> tallas; 
 	
 
 	@Persistent(defaultFetchGroup = "true", dependentElement = "true")
@@ -39,18 +40,18 @@ public class Producto {
 		this.marca = marca;
 	}
 	
-//	public Producto( String nombre, String descripcion, int stock, int precio, String imagen, SubCategoria subcategoria, Marca marca, ArrayList<Colores> colores, ArrayList<Tallas> tallas) {
-//		super();
-//		this.nombre = nombre;
-//		this.descripcion = descripcion;
-//		this.stock = stock;
-//		this.precio = precio;
-//		this.imagen = imagen;
-//		this.subcategoria = subcategoria;
-//		this.marca = marca;
-//		this.setColores(colores);
-//		this.setTallas(tallas); 
-//	}
+	public Producto( String nombre, String descripcion, int stock, int precio, String imagen, SubCategoria subcategoria, Marca marca, ArrayList<Colores> colores, ArrayList<Tallas> tallas) {
+		super();
+		this.nombre = nombre;
+		this.descripcion = descripcion;
+		this.stock = stock;
+		this.precio = precio;
+		this.imagen = imagen;
+		this.subcategoria = subcategoria;
+		this.marca = marca;
+		this.setColores(colores);
+		this.setTallas(tallas); 
+	}
 
 	public String getNombre() {
 		return nombre;
@@ -126,22 +127,22 @@ public class Producto {
 		return nombre;
 	}
 
-//	public ArrayList<Colores> getColores() {
-//		return colores;
-//	}
-//
-//	public void setColores(ArrayList<Colores> colores) {
-//		this.colores = colores;
-//	}
-//
-//	public ArrayList<Tallas> getTallas() {
-//		return tallas;
-//	}
-//
-//	public void setTallas(ArrayList<Tallas> tallas) {
-//		this.tallas = tallas;
-//	}
+	public ArrayList<Colores> getColores() {
+		return colores;
+	}
+
+	public void setColores(ArrayList<Colores> colores) {
+		this.colores = colores;
+	}
+
+	public ArrayList<Tallas> getTallas() {
+		return tallas;
+	}
+
+	public void setTallas(ArrayList<Tallas> tallas) {
+		this.tallas = tallas;
+	}
 	
-	//
+	
 	
 }

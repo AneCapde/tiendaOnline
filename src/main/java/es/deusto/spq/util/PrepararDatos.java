@@ -131,16 +131,16 @@ public class PrepararDatos {
 			//colorTalla.put(Colores.AZUL, Tallas.M);
 			//colorTalla.put(Colores.NEGRO, Tallas.M);
 			
-			Producto producto1 = new Producto("Chaqueta Vaquera","Chaqueta vaquera azul",10,45,"img/chaquetaVaquera.png",subcategoria1,marca1);
-			//Producto producto1 = new Producto("Chaqueta Vaquera","Chaqueta vaquera azul",10,45,"img/chaquetaVaquera.png",subcategoria1,marca1,colores,tallas);
+			//Producto producto1 = new Producto("Chaqueta Vaquera","Chaqueta vaquera azul",10,45,"img/chaquetaVaquera.png",subcategoria1,marca1);
+			Producto producto1 = new Producto("Chaqueta Vaquera","Chaqueta vaquera azul",10,45,"img/chaquetaVaquera.png",subcategoria1,marca1,colores,tallas);
 			//producto1.setTallas_colores(colorTallaS);
 			pm.makePersistent(producto1);
-			Producto producto2 = new Producto("Chaqueta de cuero","Chaqueta de cuero negra",10,35,"img/chaquetaCuero.png",subcategoria1,marca1);
-			//Producto producto2 = new Producto("Chaqueta de cuero","Chaqueta de cuero negra",10,35,"img/chaquetaCuero.png",subcategoria1,marca1,colores,tallas);
+			//Producto producto2 = new Producto("Chaqueta de cuero","Chaqueta de cuero negra",10,35,"img/chaquetaCuero.png",subcategoria1,marca1);
+			Producto producto2 = new Producto("Chaqueta de cuero","Chaqueta de cuero negra",10,35,"img/chaquetaCuero.png",subcategoria1,marca1,colores,tallas);
 			//producto2.setTallas_colores(colorTallaS);
 			pm.makePersistent(producto2);
-			Producto producto3 = new Producto("Abrigo de piel","Abrigo de piel marron",10,80,"img/chaquetaPiel.png",subcategoria1,marca1);
-			//Producto producto3 = new Producto("Abrigo de piel","Abrigo de piel marron",10,80,"img/chaquetaPiel.png",subcategoria1,marca1,colores,tallas);
+			//Producto producto3 = new Producto("Abrigo de piel","Abrigo de piel marron",10,80,"img/chaquetaPiel.png",subcategoria1,marca1);
+			Producto producto3 = new Producto("Abrigo de piel","Abrigo de piel marron",10,80,"img/chaquetaPiel.png",subcategoria1,marca1,colores,tallas);
 			//producto3.setTallas_colores(colorTallaS);
 			pm.makePersistent(producto3);
 			Producto producto4 = new Producto("Camiseta de tirantes","Camiseta de tirantes azul",5,10,"img/camisetaTirante.png",subcategoria2,marca1);
