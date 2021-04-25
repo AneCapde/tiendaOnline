@@ -24,7 +24,7 @@ public class PedidoTest {
 		SubCategoria subca = new SubCategoria("nombreSub", "descSub", cat);
 		Marca marc = new Marca("nombreMarc", "descMarc");
 		pro = new Producto("producto", "descripcion", 2, 2, "img", subca, marc);
-		ped = new Pedido(cli, new Date(1619342158), "estado",22 ,2, pro);
+		ped = new Pedido(cli, new Date(1619342158), "estado",22 ,2);
 	}
 
 	@Test
@@ -95,8 +95,8 @@ public class PedidoTest {
 
 	@Test
 	public void testGetProducto() {
-		Producto resul = ped.getProducto();
-		assertEquals(pro, resul);
+		//Producto resul = ped.getProducto();
+		//assertEquals(pro, resul);
 	}
 
 	@Test
@@ -106,9 +106,9 @@ public class PedidoTest {
 		SubCategoria subca = new SubCategoria("nombreSub", "descSub", cat);
 		Marca marc = new Marca("nombreMarc", "descMarc");
 		Producto pron = new Producto("producto2", "descripcion2", 2, 2, "img", subca, marc);
-		ped.setProducto(pron);
-		Producto resul = ped.getProducto();
-		assertEquals(pron, resul);
+		//ped.setProducto(pron);
+		//Producto resul = ped.getProducto();
+		//assertEquals(pron, resul);
 	}
 
 	@Test
