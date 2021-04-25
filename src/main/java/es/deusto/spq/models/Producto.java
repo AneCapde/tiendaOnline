@@ -20,13 +20,12 @@ public class Producto {
 	private Marca marca;
 	@Persistent(defaultFetchGroup = "true")
 	private SubCategoria subcategoria;
-	private ArrayList<Colores> colores;
-	private ArrayList<Tallas> tallas; 
-	
-
 	@Persistent(defaultFetchGroup = "true", dependentElement = "true")
 	@Join
-	private HashMap<Colores, Tallas> tallas_colores = new HashMap<Colores, Tallas>();
+	private ArrayList<Colores> colores;
+	@Persistent(defaultFetchGroup = "true", dependentElement = "true")
+	@Join
+	private ArrayList<Tallas> tallas; 
 
 	
 	public Producto( String nombre, String descripcion, int stock, int precio, String imagen, SubCategoria subcategoria, Marca marca) {
@@ -96,11 +95,6 @@ public class Producto {
 		return this.marca;
 	}
 	
-
-	public HashMap<Colores, Tallas> getTallas_colores() {
-		return this.tallas_colores;
-	}
-	
 	public SubCategoria getSubcategoria() {
 		return subcategoria;
 	}
@@ -111,10 +105,6 @@ public class Producto {
 
 	public void setMarca(Marca marca) {
 		this.marca = marca;
-	}
-
-	public void setTallas_colores(HashMap<Colores, Tallas> tallas_colores) {
-		this.tallas_colores = tallas_colores;
 	}
 
 	public String toStringDebug() {
