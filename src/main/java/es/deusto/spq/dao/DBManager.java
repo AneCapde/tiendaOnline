@@ -2,6 +2,7 @@ package es.deusto.spq.dao;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 import javax.jdo.JDOHelper;
 import javax.jdo.PersistenceManager;
@@ -12,6 +13,7 @@ import javax.jdo.Transaction;
 import es.deusto.spq.models.Categoria;
 import es.deusto.spq.models.Cliente;
 import es.deusto.spq.models.Marca;
+import es.deusto.spq.models.Pago;
 import es.deusto.spq.models.Pedido;
 import es.deusto.spq.models.Producto;
 import es.deusto.spq.models.SubCategoria;
@@ -78,10 +80,10 @@ public class DBManager implements IDBManager{
 	public void store(Marca marca) {
 		DBManager.getInstance().storeObjectInDB(marca);	
 	}
-	// @Override
-	// public void store(Pago pago) {
-	// 	DBManager.getInstance().storeObjectInDB(pago);	
-	// }
+	 @Override
+	 public void store(Pago pago) {
+	 	DBManager.getInstance().storeObjectInDB(pago);	
+	 }
 
     @Override
 	public ArrayList<Cliente> getClientes() {
@@ -314,61 +316,61 @@ public class DBManager implements IDBManager{
 		return producto;
 	}
 
-	// @Override
-	// public HashMap<String, String> getPaypal(String DNI) {
-	// 	PersistenceManager pm = pmf.getPersistenceManager();
-	// 	pm.getFetchPlan().setMaxFetchDepth(4);
-	// 	Transaction tx = pm.currentTransaction();
-	// 	Pago pago = null; 
-	// 	HashMap<String, String> paypal = null;
-	// 	try {
-	// 		System.out.println("  * Querying Paypal account : " + DNI);
-	// 		tx.begin();
+	 @Override
+	 public HashMap<String, String> getPaypal(Cliente cliente) {
+	 	PersistenceManager pm = pmf.getPersistenceManager();
+	 	pm.getFetchPlan().setMaxFetchDepth(4);
+	 	Transaction tx = pm.currentTransaction();
+	 	Pago pago = null; 
+	 	HashMap<String, String> paypal = null;
+	 	try {
+	 		System.out.println("  * Querying Paypal account : " + cliente.getDNI());
+	 		tx.begin();
 
-	// 		Query<?> query = pm.newQuery("SELECT FROM " + Pago.class.getName() + " WHERE DNI == '" + DNI + "'");
-	// 		query.setUnique(true);
-	// 		pago = (Pago) query.execute();
-	// 		paypal = pago.getCredencialesPaypal();
+	 		Query<?> query = pm.newQuery("SELECT FROM " + Pago.class.getName() + " WHERE DNI == '" + cliente.getDNI() + "'");
+	 		query.setUnique(true);
+	 		pago = (Pago) query.execute();
+	 		paypal = pago.getCredencialesPaypal();
 
-	// 		tx.commit();
-	// 	} catch (Exception ex) {
-	// 		System.out.println(" $ Error querying paypal account: " + ex.getMessage());
-	// 	} finally {
-	// 		if (tx != null && tx.isActive()) {
-	// 			tx.rollback();
-	// 		}
-	// 		pm.close();
-	// 	}
-	// 	return paypal;
-	// }
+	 		tx.commit();
+	 	} catch (Exception ex) {
+	 		System.out.println(" $ Error querying paypal account: " + ex.getMessage());
+	 	} finally {
+	 		if (tx != null && tx.isActive()) {
+	 			tx.rollback();
+	 		}
+	 		pm.close();
+	 	}
+	 	return paypal;
+	 }
 
-	// @Override
-	// public HashMap<String, String> getVisa(String DNI) {
-	// 	PersistenceManager pm = pmf.getPersistenceManager();
-	// 	pm.getFetchPlan().setMaxFetchDepth(4);
-	// 	Transaction tx = pm.currentTransaction();
-	// 	Pago pago = null; 
-	// 	HashMap<String, String> visa = null;
-	// 	try {
-	// 		System.out.println("  * Querying Visa account : " + DNI);
-	// 		tx.begin();
+	 @Override
+	 public HashMap<String, String> getVisa(Cliente cliente) {
+	 	PersistenceManager pm = pmf.getPersistenceManager();
+	 	pm.getFetchPlan().setMaxFetchDepth(4);
+	 	Transaction tx = pm.currentTransaction();
+	 	Pago pago = null; 
+	 	HashMap<String, String> visa = null;
+	 	try {
+	 		System.out.println("  * Querying Visa account : " + cliente.getDNI());
+	 		tx.begin();
 
-	// 		Query<?> query = pm.newQuery("SELECT FROM " + Pago.class.getName() + " WHERE DNI == '" + DNI + "'");
-	// 		query.setUnique(true);
-	// 		pago = (Pago) query.execute();
-	// 		visa = pago.getCredencialesVisa();
+	 		Query<?> query = pm.newQuery("SELECT FROM " + Pago.class.getName() + " WHERE DNI == '" + cliente.getDNI() + "'");
+	 		query.setUnique(true);
+	 		pago = (Pago) query.execute();
+	 		visa = pago.getCredencialesVisa();
 
-	// 		tx.commit();
-	// 	} catch (Exception ex) {
-	// 		System.out.println(" $ Error querying Visa account: " + ex.getMessage());
-	// 	} finally {
-	// 		if (tx != null && tx.isActive()) {
-	// 			tx.rollback();
-	// 		}
-	// 		pm.close();
-	// 	}
-	// 	return visa;
-	// }
+	 		tx.commit();
+	 	} catch (Exception ex) {
+	 		System.out.println(" $ Error querying Visa account: " + ex.getMessage());
+	 	} finally {
+	 		if (tx != null && tx.isActive()) {
+	 			tx.rollback();
+	 		}
+	 		pm.close();
+	 	}
+	 	return visa;
+	 }
     
     @Override
 	public void updateCliente(Cliente cliente) {
@@ -424,23 +426,23 @@ public class DBManager implements IDBManager{
 		}
 	}
 
-	// @Override
-	// public void updatePago(Pago pago) {
-	// 	PersistenceManager pm = pmf.getPersistenceManager();
-	// 	Transaction tx = pm.currentTransaction();
-	// 	try {
-	// 		tx.begin();
-	// 		pm.makePersistent(pago);
-	// 		tx.commit();
-	// 	} catch (Exception ex) {
-	// 		System.out.println("   $ Error retreiving an extent: " + ex.getMessage());
-	// 	} finally {
-	// 		if (tx != null && tx.isActive()) {
-	// 			tx.rollback();
-	// 		}
-	// 		pm.close();
-	// 	}
-	// }
+	 @Override
+	 public void updatePago(Pago pago) {
+	 	PersistenceManager pm = pmf.getPersistenceManager();
+	 	Transaction tx = pm.currentTransaction();
+	 	try {
+	 		tx.begin();
+	 		pm.makePersistent(pago);
+	 		tx.commit();
+	 	} catch (Exception ex) {
+	 		System.out.println("   $ Error retreiving an extent: " + ex.getMessage());
+	 	} finally {
+	 		if (tx != null && tx.isActive()) {
+	 			tx.rollback();
+	 		}
+	 		pm.close();
+	 	}
+	 }
     
     @Override
 	public void deleteCliente(Cliente cliente) {
