@@ -137,7 +137,6 @@ public class TiendaGUI extends JFrame {
 						HistorialGUI historial= new HistorialGUI(esto, pedidos, appTarget);
 						historial.setVisible(true);
 						contentPane.setEnabled(false);
-						System.out.println("holaa");
 						dispose();
 					}else {
 						botonHistorial.setEnabled(false);
@@ -304,6 +303,7 @@ public class TiendaGUI extends JFrame {
 						1);
 				productoPedido.add(productoSeleccionado);
 				pedido.setProducto((ArrayList<Producto>) productoPedido);
+				pedidos.add(pedido);
 				esto.setEnabled(false);
 				esto.setVisible(false);
 				VentanaMetodoPago vmp = new VentanaMetodoPago(esto, pedido, appTarget);
@@ -313,7 +313,7 @@ public class TiendaGUI extends JFrame {
 
 				// pedidoTarget.request(MediaType.APPLICATION_JSON)
 				// 		.post(Entity.entity(pedido, MediaType.APPLICATION_JSON));
-				//pedidos.add(pedido);
+				
 			}
 		});
 		

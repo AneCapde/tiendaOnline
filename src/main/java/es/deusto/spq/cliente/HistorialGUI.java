@@ -32,7 +32,7 @@ public class HistorialGUI extends JFrame{
 	
 	private JPanel contentPane;
 	private DefaultListModel<Pedido> model = new DefaultListModel<>();
-//	private Pedido pedidoSeleccionado;
+	private Pedido pedidoSeleccionado;
 //	private JList<Pedido> listaElementos;
 	private JButton botonDevolver;
 	
@@ -69,54 +69,37 @@ public class HistorialGUI extends JFrame{
 		}
 		
 		JList<Pedido> list = new JList<>(model);
-		list.setBorder(new LineBorder(new Color(0, 0, 0)));
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		list.setBounds(10, 27, 236, 387);
-		contentPane.add(list);
-		list.addListSelectionListener(new ListSelectionListener() {
-
-			@Override
-			public void valueChanged(ListSelectionEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-		});
-		
+		scrollPane.setViewportView(list);
 		
 		//Para que salgan la informacion (caracteristicas) de cada pedido
-//		listaElementos = new JList<Pedido>(model);
-//		listaElementos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-//		scrollPane.setViewportView(listaElementos);
-//		listaElementos.addListSelectionListener(new ListSelectionListener() {
-//			
-//			
-//			@Override
-//			public void valueChanged(ListSelectionEvent e) {
-//				productoSeleccionado = listaElementos.getSelectedValue();
-//				textArea.setText(null);
-//				if (productoSeleccionado != null) {
-//					textArea.append(productoSeleccionado.getImagen() + "\n");
-//					textArea.append("- NOMBRE: " + productoSeleccionado.nombre + "\n");
-//					textArea.append("- DESCRIPCIÓN: " + productoSeleccionado.descripcion + "\n");
-//					textArea.append("- PRECIO: " + productoSeleccionado.precio + "\n");
-//					textArea.append("- CATEGORÍA: " + productoSeleccionado.getSubcategoria().getCategoria().getNombre() + "\n");
-//					textArea.append("    SUBCATEGORÍA: " + productoSeleccionado.getSubcategoria().getNombre() + "\n");
-//					
-//				}
-//			}
-//		});
+
+		list.addListSelectionListener(new ListSelectionListener() {
 		
-//		SpinnerNumberModel model1 = new SpinnerNumberModel(1.0, 1.0, 20.0, 1.0);
-//		JSpinner spinner = new JSpinner(model1);
-//		spinner.setFont(new Font("Tahoma", Font.PLAIN, 15));
-//		spinner.setBounds(361, 377, 40, 29);
-//		contentPane.add(spinner);
+			
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				pedidoSeleccionado = list.getSelectedValue();
+				textArea.setText(null);
+				if (pedidoSeleccionado != null) {
+					//un pedido puede tener mas de un producto coger la imagen de todos los productos
+					//textArea.append(pedidoSeleccionado.getProducto().getImage() + "\n");
+					textArea.append("- CLIENTE: " + pedidoSeleccionado.getCliente().DNI + "\n");
+					textArea.append("- DESCRIPCIÓN: " + pedidoSeleccionado.getFecha() + "\n");
+					textArea.append("- PRODUCTO: " + pedidoSeleccionado.getProducto() + "\n");
+					textArea.append("- ESTADO: " + pedidoSeleccionado.getEstado() + "\n");
+					textArea.append(" -IMPORTE: " + pedidoSeleccionado.getImporte() + "\n");
+					textArea.append(" -CANTIDAD: " + pedidoSeleccionado.getCantidad() + "\n");
+					
+					
+				}
+			}
+		});
 		
-		botonDevolver = new JButton("Devolución");
+		botonDevolver = new JButton("DEVOLUCIÓN");
 		botonDevolver.setForeground(Color.BLACK);
 		botonDevolver.setBackground(new Color(0, 255, 0));
-		botonDevolver.setBounds(750, 11, 109, 29);
+		botonDevolver.setBounds(650, 11, 109, 29);
 	    contentPane.add(botonDevolver);
 	    
 	    //Boton para realizar la devolucion del producto seleccionado (funcionalidad más adelante)
@@ -124,10 +107,11 @@ public class HistorialGUI extends JFrame{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				
+//				pedidoSeleccionado = list.getSelectedValue();
+//				if (pedidoSeleccionado != null) {
+//				
+//			}	 
 			}
-	    	
 	    });
 		
 	    JButton btnInicio = new JButton("INICIO");

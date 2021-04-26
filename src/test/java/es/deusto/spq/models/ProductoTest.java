@@ -6,32 +6,45 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class ProductoTest {
-//
+	
+	Producto pro;
+	
+	//Tenemos dos constructores de productos
 //	@Before
 //	public void initiali() {
+//		Categoria cat = new Categoria("","");
+//		SubCategoria sub = new SubCategoria("","",cat);
+//		Marca mar = new Marca("","");
+//		pro = new Producto("producto","descripcion",5,5,"",sub,mar);
 //		
 //	}
 //
 //	@Test
 //	public void testGetNombre() {
-//		fail("Not yet implemented");
+//		String resul = pro.getNombre();
+//		assertEquals("producto", resul);
 //	}
 //
 //	@Test
 //	public void testSetNombre() {
-//		fail("Not yet implemented");
+//		pro.setNombre("producto2");
+//		String resul = pro.getNombre();
+//		assertEquals("producto2", resul);
 //	}
 //
 //	@Test
 //	public void testGetDescripcion() {
-//		fail("Not yet implemented");
+//		String resul = pro.getDescripcion();
+//		assertEquals("descripcion", resul);
 //	}
 //
 //	@Test
 //	public void testSetDescripcion() {
-//		fail("Not yet implemented");
+//		pro.setDescripcion("descripcion2");
+//		String resul = pro.getDescripcion();
+//		assertEquals("descripcion2", resul);
 //	}
-//
+
 //	@Test
 //	public void testGetStock() {
 //		fail("Not yet implemented");
