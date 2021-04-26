@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -16,8 +17,13 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.GenericType;
+import javax.ws.rs.core.MediaType;
 
+import es.deusto.spq.models.Pago;
+import es.deusto.spq.models.Pedido;
 import es.deusto.spq.models.Producto;
 
 public class VentanaPagoVisa extends JFrame{
@@ -26,32 +32,28 @@ public class VentanaPagoVisa extends JFrame{
     private JPanel pSuperior;
     private JPanel pInferior;
     private JTextField numTarjetaField;
-    private JTextField fechaCadField;
+    // private JTextField fechaCadField;
 	private JPasswordField CVCField;
     private JLabel mumTarjeta;
-    private JLabel fechaCad;
+    // private JLabel fechaCad;
     private JLabel CVC;
     private JLabel lTexto;
     private JButton bAceptar;
-	private JButton bCancelar;
-    private JButton bCrearCuenta; //AÑADIMOS POSIBILIDAD DE METER NUEVA CUENTA DE PAYPAL?
+	private JButton bCredenciales; //Aceptar creación de nuevas credenciales
+    private JButton bCrearCuenta;
+	private String numVisa = null;
+	private String cvcVisa = null;
 
-    public VentanaPagoVisa(final JFrame ventanaPadre, List<Producto> productos, WebTarget appTarget) {
-        
-        // final WebTarget pedidoTarget = appTarget.path("/pedidos");
+    public VentanaPagoVisa(final JFrame ventanaPadre, Pedido pedido, WebTarget appTarget) {
+        //REFERENCIA A LAS CREDENCIALES, NO A LOS PAGOS
+        final WebTarget pagoTarget = appTarget.path("/pagos");
+		//UN PEDIDO SE CREARÁ SOLO CUANDO SE HAYA COMPROBADO SU PAGO
+		final WebTarget pedidoTarget = appTarget.path("/pedidos");
 
+		GenericType<List<Pago>> genericType_pago = new GenericType<List<Pago>>() {};
+		List<Pago> credenciales = pagoTarget.request(MediaType.APPLICATION_JSON).get(genericType_pago);
 
-        // this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		// setResizable(false);
-		// setSize(599, 336);
-		// setLocation(400, 150);
-		// setTitle("Pago con PayPal");
-     
-    } 
-
-	public VentanaPagoVisa() {
-   
-        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setResizable(false);
 	    setSize(499, 336);
 	    setLocation(400, 150);
@@ -83,17 +85,9 @@ public class VentanaPagoVisa extends JFrame{
 		mumTarjeta.setFont(new Font("Segoe UI Black", Font.BOLD, 16));
 		mumTarjeta.setPreferredSize(new Dimension(150, 20));
 		
-		fechaCad = new JLabel("Validez('mm/aa'):");
-        fechaCad.setToolTipText("");
-		fechaCad.setBounds(22, 117, 250, 23);
-		pCentral.add(fechaCad);
-		fechaCad.setForeground(Color.BLACK);
-		fechaCad.setFont(new Font("Segoe UI Black", Font.BOLD, 16));
-		fechaCad.setPreferredSize(new Dimension(150, 20));
-		
 		CVC = new JLabel("CVC:");
         CVC.setToolTipText("");
-		CVC.setBounds(330, 117, 120, 23);
+		CVC.setBounds(170, 117, 120, 23);
 		pCentral.add(CVC);
 		CVC.setForeground(Color.BLACK);
 		CVC.setFont(new Font("Segoe UI Black", Font.BOLD, 16));
@@ -103,24 +97,82 @@ public class VentanaPagoVisa extends JFrame{
 		numTarjetaField.setBounds(220, 38, 200, 35);
 		pCentral.add(numTarjetaField);
 
-        fechaCadField = new JTextField();
-		fechaCadField.setBounds(190, 115, 80, 35);
-		pCentral.add(fechaCadField);
-
-        CVCField = new JPasswordField();
-		CVCField.setBounds(380, 115, 80, 35);
+		CVCField = new JPasswordField();
+		CVCField.setBounds(220, 115, 80, 35);
 		pCentral.add(CVCField);
 
-        bAceptar = new JButton("Aceptar");
-		bAceptar.setBounds((this.getWidth()/100)*5, (this.getHeight()/18)*8, (this.getWidth()/35)*10, (this.getHeight()/18)*3);
-	    pInferior.add(bAceptar);
-	    bAceptar.addActionListener(new ActionListener() {
-	    
+		bAceptar = new JButton("Aceptar");
+		bAceptar.setBounds((this.getWidth()/100)*5 + 70, (this.getHeight()/18)*8, (this.getWidth()/35)*10, (this.getHeight()/18)*3);
+		pInferior.add(bAceptar);
+		bAceptar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null, "Pago completado. Compra realizada", "Se te redirigirá al inicio", JOptionPane.INFORMATION_MESSAGE);
+				for (Pago pago : credenciales) {
+					if (pago.getCliente().getDNI().equals(TiendaGUI.getCliente().getDNI()) && pago.getCredencialesVisa().isEmpty() == false) {
+						//EL CLIENTE TIENE VISA ASOCIADA
+						numTarjetaField.setText(pago.getNumVisa(pago.getCredencialesVisa()));
+						numVisa = pago.getNumVisa(pago.getCredencialesVisa());
+						cvcVisa = pago.getCredencialesVisa().values().toString();
+					}
+				}
+				if (numVisa.equals(numTarjetaField.toString()) && cvcVisa.equals(CVCField.toString())) {
+					
+					pedidoTarget.request(MediaType.APPLICATION_JSON).post(Entity.entity(pedido, MediaType.APPLICATION_JSON));
+					JOptionPane.showMessageDialog(null, "Pago completado. Compra realizada", "Se te redirigirá al inicio", JOptionPane.INFORMATION_MESSAGE);
+					
+					ventanaPadre.setEnabled(true);
+					TiendaGUI.setButtons();
+					dispose();
+				} else {
+					JOptionPane.showMessageDialog(null, "Error. Credenciales incorrectas", "Vuelve a intentarlo", JOptionPane.INFORMATION_MESSAGE);
+
+				}
 			}
 		});
+
+		bCredenciales = new JButton("Crear");
+		bCredenciales.setBounds((this.getWidth()/100)*5 + 70, (this.getHeight()/18)*8, (this.getWidth()/35)*10, (this.getHeight()/18)*3);
+		pInferior.add(bCredenciales);
+		bCredenciales.setVisible(false);
+		bCredenciales.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (numTarjetaField.toString().isEmpty() == false && CVCField.toString().isEmpty() == false) {
+					
+					HashMap<String,String> cv = new HashMap<String,String>();
+					cv.put(numTarjetaField.toString(), CVCField.toString());
+					credenciales.get(0).setCredencialesVisa(cv);
+					//UPDATE BD
+					pagoTarget.request(MediaType.APPLICATION_JSON).post(Entity.entity(credenciales.get(0), MediaType.APPLICATION_JSON));
+
+					//Boton aceptar
+					bCredenciales.setEnabled(false);
+					bCredenciales.setVisible(false);
+					bAceptar.setEnabled(true);
+					bAceptar.setVisible(true);
+
+					numTarjetaField.setText(credenciales.get(0).getNumVisa(credenciales.get(0).getCredencialesVisa()));
+					revalidate();
+					JOptionPane.showMessageDialog(null, "Credenciales actualizadas", "Completado con éxito", JOptionPane.INFORMATION_MESSAGE);
+				} else {
+					JOptionPane.showMessageDialog(null, "Rellena todos los campos", "Incompleto", JOptionPane.INFORMATION_MESSAGE);
+				}
+			}
+		});
+
+		bCrearCuenta = new JButton("Cambiar cuenta");
+		bCrearCuenta.setBounds((this.getWidth()/100)*5 - 100, (this.getHeight()/18)*8, (this.getWidth()/35)*10, (this.getHeight()/18)*3);
+		pInferior.add(bCrearCuenta);
+		bCrearCuenta.addActionListener(new ActionListener() {
+			@Override
+				public void actionPerformed(ActionEvent e) {
+					
+					bAceptar.setEnabled(false);
+					bAceptar.setVisible(false);
+					bCredenciales.setEnabled(true);
+					bCredenciales.setVisible(true);
+				}
+			});	
     }
 
     public static void main(String[] args) {

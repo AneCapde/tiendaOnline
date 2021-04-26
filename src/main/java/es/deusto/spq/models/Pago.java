@@ -38,4 +38,20 @@ public class Pago {
 	public void setCredencialesPaypal(HashMap<String, String> credencialesPaypal) {
 		this.credencialesPaypal = credencialesPaypal;
 	}
+
+	public String getNumVisa(HashMap<String,String> credencialesVisa) {
+		String num = null;
+		for (String cv : credencialesVisa.keySet()) {
+			num = cv;
+		}
+		return num;
+	}
+
+	public String getEmailPaypal(HashMap<String,String> credencialesPaypal) {
+		String email = null;
+		for (String cp : credencialesPaypal.keySet()) {
+			email = cp;
+		}
+		return email;
+	}
 }

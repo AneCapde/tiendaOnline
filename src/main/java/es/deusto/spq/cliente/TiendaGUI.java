@@ -88,7 +88,7 @@ public class TiendaGUI extends JFrame {
 		final WebTarget marcasTarget = appTarget.path("/marcas");
 		final WebTarget subTarget = appTarget.path("/subcategorias");
 		final WebTarget pedidoTarget= appTarget.path("/pedidos");
-		// final WebTarget pagoTarget= appTarget.path("/pagos");
+		final WebTarget pagoTarget= appTarget.path("/pagos");
 		final WebTarget productosTarget = appTarget.path("/productos");
 
 		final TiendaGUI esto = this;
@@ -304,8 +304,15 @@ public class TiendaGUI extends JFrame {
 						1);
 				productoPedido.add(productoSeleccionado);
 				pedido.setProducto((ArrayList<Producto>) productoPedido);
-				pedidoTarget.request(MediaType.APPLICATION_JSON)
-						.post(Entity.entity(pedido, MediaType.APPLICATION_JSON));
+				esto.setEnabled(false);
+				esto.setVisible(false);
+				VentanaMetodoPago vmp = new VentanaMetodoPago(esto, pedido, appTarget);
+
+				vmp.setVisible(true);
+				esto.setEnabled(false);
+
+				// pedidoTarget.request(MediaType.APPLICATION_JSON)
+				// 		.post(Entity.entity(pedido, MediaType.APPLICATION_JSON));
 				//pedidos.add(pedido);
 			}
 		});

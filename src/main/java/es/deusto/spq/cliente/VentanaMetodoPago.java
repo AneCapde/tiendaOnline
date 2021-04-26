@@ -1,24 +1,19 @@
 package es.deusto.spq.cliente;
 
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
 import javax.ws.rs.client.WebTarget;
 
-import es.deusto.spq.models.Producto;
+import es.deusto.spq.models.Pedido;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
 import java.awt.Image;
 
 public class VentanaMetodoPago extends JFrame{
@@ -29,18 +24,14 @@ public class VentanaMetodoPago extends JFrame{
     private JButton visa;
     private JLabel lTexto;
     private ImageIcon iIconPaypal, iIconVisa;
-    private Icon iPaypal, iVisa;
+    // private Icon iPaypal, iVisa;
 
 	// LA VENTANA PADRE DEBE SER LA TiendaGUI   +   SE RECIBE EL PEDIDO, QUE SOLO SE COMPLETARÁ AL COMPLETAR EL PAGO
-    public VentanaMetodoPago(final JFrame ventanaPadre, List<Producto> productos, WebTarget appTarget) {
+    public VentanaMetodoPago(final JFrame ventanaPadre, Pedido pedido, WebTarget appTarget) {
         
-        // final WebTarget pedidoTarget = appTarget.path("/pedidos");
-
+        // final WebTarget metodoTarget = appTarget.path("/metodos");
+		final VentanaMetodoPago esto = this;
      
-    } 
-
-    public VentanaMetodoPago() {
-
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setResizable(false);
 	    setSize(480, 300);
@@ -60,7 +51,7 @@ public class VentanaMetodoPago extends JFrame{
 		lTexto.setFont(new Font("Times New Roman", Font.BOLD, 30));
 		pSuperior.add(lTexto);
 
-        JButton paypal = new JButton();
+        paypal = new JButton();
 		paypal.setBounds(40, 40, 170, 100);
 		ImageIcon icono_1 = new ImageIcon(getClass().getResource("/img/paypal.png"));
 		iIconPaypal = new ImageIcon(icono_1.getImage().getScaledInstance(paypal.getWidth(), paypal.getHeight(),Image.SCALE_FAST));
@@ -70,16 +61,17 @@ public class VentanaMetodoPago extends JFrame{
 
         paypal.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-                setEnabled(false);
-				// VentanaPagoPayPal historial= new VentanaPagoPayPal(this, productos, appTarget);
-                VentanaPagoPayPal vPaypal= new VentanaPagoPayPal();
-				vPaypal.setVisible(true);
-				setEnabled(false);
-				
+				esto.setEnabled(false);
+				esto.setVisible(true);
+				ventanaPadre.setEnabled(true);
+				ventanaPadre.setVisible(true);
+                // VentanaPagoPayPal vPaypal= new VentanaPagoPayPal(ventanaPadre, pedido, appTarget);
+				// vPaypal.setVisible(true);
+				// dispose();				
 			}
 		});
 
-        JButton visa = new JButton();
+        visa = new JButton();
 		visa.setBounds(260, 40, 170, 100);
 		ImageIcon icono_2 = new ImageIcon(getClass().getResource("/img/visa.png"));
 		iIconVisa = new ImageIcon(icono_2.getImage().getScaledInstance(visa.getWidth(), visa.getHeight(),Image.SCALE_FAST));
@@ -89,23 +81,25 @@ public class VentanaMetodoPago extends JFrame{
 
         visa.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				setEnabled(false);
-				// VentanaPagoVisa historial= new VentanaPagoVisa(this, productos, appTarget);
-                VentanaPagoVisa vVisa= new VentanaPagoVisa();
-				vVisa.setVisible(true);
-				setEnabled(false);
+				esto.setEnabled(false);
+				esto.setVisible(true);
+				ventanaPadre.setEnabled(true);
+				ventanaPadre.setVisible(true);
+                // VentanaPagoVisa vVisa= new VentanaPagoVisa(esto, pedido, appTarget);
+				// vVisa.setVisible(true);
+				// dispose();				
 			}
 		});
-    }
-    public static void main(String[] args) {
-        //		BD.initData();
-                // try { // Cambiamos el look and feel (se tiene que hacer antes de crear la GUI
-                // 	UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
-                // } catch (Exception e) {
-                // } // Si Nimbus no está disponible, se usa el l&f por defecto
-                VentanaMetodoPago v = new VentanaMetodoPago();
-                v.setVisible(true);
-            }
+	}
+    // public static void main(String[] args) {
+    //     //		BD.initData();
+    //             // try { // Cambiamos el look and feel (se tiene que hacer antes de crear la GUI
+    //             // 	UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+    //             // } catch (Exception e) {
+    //             // } // Si Nimbus no está disponible, se usa el l&f por defecto
+    //             VentanaMetodoPago v = new VentanaMetodoPago();
+    //             v.setVisible(true);
+    //         }
 }
 
     

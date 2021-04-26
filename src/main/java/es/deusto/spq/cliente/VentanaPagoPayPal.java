@@ -7,6 +7,7 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -18,7 +19,11 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.GenericType;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.client.Entity;
 
+import es.deusto.spq.models.Pago;
 import es.deusto.spq.models.Pedido;
 import es.deusto.spq.models.Producto;
 
@@ -33,24 +38,21 @@ public class VentanaPagoPayPal extends JFrame {
     private JLabel password;
     private JLabel lTexto;
     private JButton bAceptar;
-	private JButton bCancelar;
-    private JButton bCrearCuenta; //AÑADIMOS POSIBILIDAD DE METER NUEVA CUENTA DE PAYPAL?
+	private JButton bCredenciales; //Aceptar creación de nuevas credenciales
+    private JButton bCrearCuenta;
+	private String numVisa = null;
+	private String cvcVisa = null;
 
 	// LA VENTANA PADRE DEBE SER LA TiendaGUI   +   SE RECIBE EL PEDIDO, QUE SOLO SE COMPLETARÁ AL COMPLETAR EL PAGO
-    public VentanaPagoPayPal(final JFrame ventanaPadre, List<Producto> productos, WebTarget appTarget) {
+    public VentanaPagoPayPal(final JFrame ventanaPadre, Pedido pedido, WebTarget appTarget) {
         
-        // final WebTarget pedidoTarget = appTarget.path("/pedidos");
+        //REFERENCIA A LAS CREDENCIALES, NO A LOS PAGOS
+        final WebTarget pagoTarget = appTarget.path("/pagos");
+		//UN PEDIDO SE CREARÁ SOLO CUANDO SE HAYA COMPROBADO SU PAGO
+		final WebTarget pedidoTarget = appTarget.path("/pedidos");
 
-
-        // this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		// setResizable(false);
-		// setSize(599, 336);
-		// setLocation(400, 150);
-		// setTitle("Pago con PayPal");
-     
-    } 
-
-	public VentanaPagoPayPal() {
+		GenericType<List<Pago>> genericType_pago = new GenericType<List<Pago>>() {};
+		List<Pago> credenciales = pagoTarget.request(MediaType.APPLICATION_JSON).get(genericType_pago);
    
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -103,33 +105,78 @@ public class VentanaPagoPayPal extends JFrame {
 		passwordField.setBounds(170, 115, 250, 35);
 		pCentral.add(passwordField);
 
-        bAceptar = new JButton("COMPRAR");
-		bAceptar.setBounds((this.getWidth()/100)*5, (this.getHeight()/18)*8, (this.getWidth()/35)*10, (this.getHeight()/18)*3);
-	    pInferior.add(bAceptar);
-	    bAceptar.addActionListener(new ActionListener() {
-	    
+		bAceptar = new JButton("Aceptar");
+		bAceptar.setBounds((this.getWidth()/100)*5 + 70, (this.getHeight()/18)*8, (this.getWidth()/35)*10, (this.getHeight()/18)*3);
+		pInferior.add(bAceptar);
+		bAceptar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
-				//COMPROBAR SI DATOS SON CORRECTOS
-
-					//DATOS CORRECTOS
+				for (Pago pago : credenciales) {
+					if (pago.getCliente().getDNI().equals(TiendaGUI.getCliente().getDNI()) && pago.getCredencialesVisa().isEmpty() == false) {
+						//EL CLIENTE TIENE VISA ASOCIADA
+						accountField.setText(pago.getNumVisa(pago.getCredencialesVisa()));
+						numVisa = pago.getNumVisa(pago.getCredencialesVisa());
+						cvcVisa = pago.getCredencialesVisa().values().toString();
+					}
+				}
+				if (numVisa.equals(accountField.toString()) && cvcVisa.equals(passwordField.toString())) {
+					
+					pedidoTarget.request(MediaType.APPLICATION_JSON).post(Entity.entity(pedido, MediaType.APPLICATION_JSON));
 					JOptionPane.showMessageDialog(null, "Pago completado. Compra realizada", "Se te redirigirá al inicio", JOptionPane.INFORMATION_MESSAGE);
+					
+					ventanaPadre.setEnabled(true);
+					TiendaGUI.setButtons();
+					dispose();
+				} else {
+					JOptionPane.showMessageDialog(null, "Error. Credenciales incorrectas", "Vuelve a intentarlo", JOptionPane.INFORMATION_MESSAGE);
 
-					// for(Producto p : productos.keySet()){
-					// 	Date date = new Date();
-					// 	int precio_pedido = productos.get(p)*p.getPrecio();
-					// 	Pedido pedido = new Pedido(TiendaGUI.getCliente(), date,"en proceso" , precio_pedido, productos.get(p), p);
-					// 	pedidoTarget.request(MediaType.APPLICATION_JSON).post(Entity.entity(pedido, MediaType.APPLICATION_JSON));
-					// }
-					// dispose();
-					// ventanaPadre.setEnabled(true);
-
-					//DATOS INCORRECTOS
-					JOptionPane.showMessageDialog(null, "Credenciales incorrectas", "Error al pagar", JOptionPane.INFORMATION_MESSAGE);
-
+				}
 			}
 		});
+
+		bCredenciales = new JButton("Crear");
+		bCredenciales.setBounds((this.getWidth()/100)*5 + 70, (this.getHeight()/18)*8, (this.getWidth()/35)*10, (this.getHeight()/18)*3);
+		pInferior.add(bCredenciales);
+		bCredenciales.setVisible(false);
+		bCredenciales.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (accountField.toString().isEmpty() == false && passwordField.toString().isEmpty() == false) {
+					
+					HashMap<String,String> cv = new HashMap<String,String>();
+					cv.put(accountField.toString(), passwordField.toString());
+					credenciales.get(0).setCredencialesVisa(cv);
+					//UPDATE BD
+					pagoTarget.request(MediaType.APPLICATION_JSON).post(Entity.entity(credenciales.get(0), MediaType.APPLICATION_JSON));
+
+					//Boton aceptar
+					bCredenciales.setEnabled(false);
+					bCredenciales.setVisible(false);
+					bAceptar.setEnabled(true);
+					bAceptar.setVisible(true);
+
+					accountField.setText(credenciales.get(0).getNumVisa(credenciales.get(0).getCredencialesVisa()));
+					revalidate();
+					JOptionPane.showMessageDialog(null, "Credenciales actualizadas", "Completado con éxito", JOptionPane.INFORMATION_MESSAGE);
+				} else {
+					JOptionPane.showMessageDialog(null, "Rellena todos los campos", "Incompleto", JOptionPane.INFORMATION_MESSAGE);
+				}
+			}
+		});
+
+		bCrearCuenta = new JButton("Cambiar cuenta");
+		bCrearCuenta.setBounds((this.getWidth()/100)*5 - 100, (this.getHeight()/18)*8, (this.getWidth()/35)*10, (this.getHeight()/18)*3);
+		pInferior.add(bCrearCuenta);
+		bCrearCuenta.addActionListener(new ActionListener() {
+			@Override
+				public void actionPerformed(ActionEvent e) {
+					
+					bAceptar.setEnabled(false);
+					bAceptar.setVisible(false);
+					bCredenciales.setEnabled(true);
+					bCredenciales.setVisible(true);
+				}
+			});	
     }
 
     public static void main(String[] args) {
