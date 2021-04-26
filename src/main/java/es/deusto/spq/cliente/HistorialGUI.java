@@ -14,10 +14,14 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSpinner;
 import javax.swing.JTextArea;
 import javax.swing.ListSelectionModel;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.ws.rs.client.WebTarget;
 
 import es.deusto.spq.models.Pedido;
@@ -28,8 +32,8 @@ public class HistorialGUI extends JFrame{
 	
 	private JPanel contentPane;
 	private DefaultListModel<Pedido> model = new DefaultListModel<>();
-	private Pedido pedidoSeleccionado;
-	private JList<Pedido> listaElementos;
+//	private Pedido pedidoSeleccionado;
+//	private JList<Pedido> listaElementos;
 	private JButton botonDevolver;
 	
 	
@@ -69,6 +73,15 @@ public class HistorialGUI extends JFrame{
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		list.setBounds(10, 27, 236, 387);
 		contentPane.add(list);
+		list.addListSelectionListener(new ListSelectionListener() {
+
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
 		
 		
 		//Para que salgan la informacion (caracteristicas) de cada pedido
@@ -93,6 +106,12 @@ public class HistorialGUI extends JFrame{
 //				}
 //			}
 //		});
+		
+//		SpinnerNumberModel model1 = new SpinnerNumberModel(1.0, 1.0, 20.0, 1.0);
+//		JSpinner spinner = new JSpinner(model1);
+//		spinner.setFont(new Font("Tahoma", Font.PLAIN, 15));
+//		spinner.setBounds(361, 377, 40, 29);
+//		contentPane.add(spinner);
 		
 		botonDevolver = new JButton("Devolución");
 		botonDevolver.setForeground(Color.BLACK);
