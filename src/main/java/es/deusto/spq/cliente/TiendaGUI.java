@@ -304,6 +304,7 @@ public class TiendaGUI extends JFrame {
 				pedido.setProducto((ArrayList<Producto>) productoPedido);
 				pedidoTarget.request(MediaType.APPLICATION_JSON)
 						.post(Entity.entity(pedido, MediaType.APPLICATION_JSON));
+				//pedidos.add(pedido);
 			}
 		});
 		
