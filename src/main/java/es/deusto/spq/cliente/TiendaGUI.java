@@ -22,6 +22,7 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 
+import es.deusto.spq.acciones.TiendaAcciones;
 import es.deusto.spq.models.Categoria;
 import es.deusto.spq.models.Cliente;
 import es.deusto.spq.models.Colores;
@@ -46,7 +47,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 public class TiendaGUI extends JFrame {
-
+	
+	private TiendaAcciones acciones = new TiendaAcciones();
 	private static final long serialVersionUID = 1L;
 	private Client client;
 	private JPanel contentPane;
@@ -488,42 +490,51 @@ public class TiendaGUI extends JFrame {
 		//esa característica
 		botonBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				textoBuscador = txtBuscador.getText();
-				categoriaSeleccionada = (Categoria) comboBox_Categoria.getSelectedItem();
-				subCategoriaSeleccionada = (SubCategoria) comboBox_Subcategoria.getSelectedItem();
-				marcaSeleccionada = (Marca) comboBoxMarca.getSelectedItem();
-				colorSelecionado = (Colores) comboBox_colores.getSelectedItem();
-				tallaSeleccionada = (Tallas) comboBoxTalla.getSelectedItem();
-
 				model.removeAllElements();
-				System.out.println(productos);
-				for (int i = 0; i < productos.size(); i++) {
-					System.out.println(productos.get(i).getMarca() + "==" + marcaSeleccionada);
-					if (productos.get(i).getNombre().toLowerCase().indexOf(textoBuscador.toLowerCase()) == 0) {
-						
-						System.out.println(productos.get(i).getSubcategoria().getCategoria() + " =? " + categoriaSeleccionada + (productos.get(i).getSubcategoria().getCategoria() == categoriaSeleccionada));
-						System.out.println(productos.get(i).getSubcategoria() + " =? " + subCategoriaSeleccionada + (productos.get(i).getSubcategoria() == subCategoriaSeleccionada));
-						System.out.println(productos.get(i).getMarca() + " =? " + marcaSeleccionada + (productos.get(i).getMarca() == marcaSeleccionada));
-						//System.out.println(productos.get(i).getTallas_colores());
-						//System.out.println(productos.get(i).getTallas_colores().containsValue(tallaSeleccionada));
-						//System.out.println(( colorSelecionado == null || productos.get(i).getTallas_colores().containsKey(colorSelecionado.toString() ) && (tallaSeleccionada == null || productos.get(i).getTallas_colores().containsValue(tallaSeleccionada) ) ));
-						//System.out.println(colorSelecionado + " =? " + productos.get(i).getTallas_colores().get(colorSelecionado.toString()) + productos.get(i).getTallas_colores().containsKey(colorSelecionado.toString()));
-						System.out.println();
-						
-						if 		(
-								   (categoriaSeleccionada == null || productos.get(i).getSubcategoria().getCategoria().getNombre().equals(categoriaSeleccionada.getNombre())) 
-								&& (subCategoriaSeleccionada == null || productos.get(i).getSubcategoria().getNombre().equals(subCategoriaSeleccionada.getNombre()))
-								&& (marcaSeleccionada == null || productos.get(i).getMarca().getNombre().equals(marcaSeleccionada.getNombre()))
-								//&& ((colorSelecionado == null || productos.get(i).getTallas_colores().containsKey(colorSelecionado))  &&  (tallaSeleccionada == null || productos.get(i).getTallas_colores().containsValue(tallaSeleccionada)))
-								)
-								
-						{
-
-							model.addElement(productos.get(i));
-						}
-					}
-
+				ArrayList<Producto> modelTemp = acciones.buscar(txtBuscador.getText(), (Categoria) comboBox_Categoria.getSelectedItem(), (SubCategoria) comboBox_Subcategoria.getSelectedItem(),
+														(Marca) comboBoxMarca.getSelectedItem(), (Colores) comboBox_colores.getSelectedItem(), (Tallas) comboBoxTalla.getSelectedItem(),
+															productos);
+				
+				for (int i = 0; i < modelTemp.size(); i++) {
+					model.addElement(modelTemp.get(i));
 				}
+				
+//				textoBuscador = txtBuscador.getText();
+//				categoriaSeleccionada = (Categoria) comboBox_Categoria.getSelectedItem();
+//				subCategoriaSeleccionada = (SubCategoria) comboBox_Subcategoria.getSelectedItem();
+//				marcaSeleccionada = (Marca) comboBoxMarca.getSelectedItem();
+//				colorSelecionado = (Colores) comboBox_colores.getSelectedItem();
+//				tallaSeleccionada = (Tallas) comboBoxTalla.getSelectedItem();
+//
+//				model.removeAllElements();
+//				System.out.println(productos);
+//				for (int i = 0; i < productos.size(); i++) {
+//					System.out.println(productos.get(i).getMarca() + "==" + marcaSeleccionada);
+//					if (productos.get(i).getNombre().toLowerCase().indexOf(textoBuscador.toLowerCase()) == 0) {
+//						
+//						System.out.println(productos.get(i).getSubcategoria().getCategoria() + " =? " + categoriaSeleccionada + (productos.get(i).getSubcategoria().getCategoria() == categoriaSeleccionada));
+//						System.out.println(productos.get(i).getSubcategoria() + " =? " + subCategoriaSeleccionada + (productos.get(i).getSubcategoria() == subCategoriaSeleccionada));
+//						System.out.println(productos.get(i).getMarca() + " =? " + marcaSeleccionada + (productos.get(i).getMarca() == marcaSeleccionada));
+//						//System.out.println(productos.get(i).getTallas_colores());
+//						//System.out.println(productos.get(i).getTallas_colores().containsValue(tallaSeleccionada));
+//						//System.out.println(( colorSelecionado == null || productos.get(i).getTallas_colores().containsKey(colorSelecionado.toString() ) && (tallaSeleccionada == null || productos.get(i).getTallas_colores().containsValue(tallaSeleccionada) ) ));
+//						//System.out.println(colorSelecionado + " =? " + productos.get(i).getTallas_colores().get(colorSelecionado.toString()) + productos.get(i).getTallas_colores().containsKey(colorSelecionado.toString()));
+//						System.out.println();
+//						
+//						if 		(
+//								   (categoriaSeleccionada == null || productos.get(i).getSubcategoria().getCategoria().getNombre().equals(categoriaSeleccionada.getNombre())) 
+//								&& (subCategoriaSeleccionada == null || productos.get(i).getSubcategoria().getNombre().equals(subCategoriaSeleccionada.getNombre()))
+//								&& (marcaSeleccionada == null || productos.get(i).getMarca().getNombre().equals(marcaSeleccionada.getNombre()))
+//								//&& ((colorSelecionado == null || productos.get(i).getTallas_colores().containsKey(colorSelecionado))  &&  (tallaSeleccionada == null || productos.get(i).getTallas_colores().containsValue(tallaSeleccionada)))
+//								)
+//								
+//						{
+//
+//							model.addElement(productos.get(i));
+//						}
+//					}
+//
+//				}
 			}
 		});
 
