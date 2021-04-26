@@ -25,12 +25,12 @@ public class TiendaAcciones {
 		ArrayList<Producto> model = new ArrayList<Producto>();
 		System.out.println(productos);
 		for (int i = 0; i < productos.size(); i++) {
-			System.out.println(productos.get(i).getMarca() + "==" + marcaSeleccionada);
+//			System.out.println(productos.get(i).getMarca() + "==" + marcaSeleccionada);
 			if (productos.get(i).getNombre().toLowerCase().indexOf(textoBuscador.toLowerCase()) == 0) {
 
 				if 		(
-						   (categoriaSeleccionada == null || productos.get(i).getSubcategoria().getCategoria().toString().equals(categoriaSeleccionada.toString()) ) 
-						&& (subCategoriaSeleccionada == null || productos.get(i).getSubcategoria().getNombre().equals(subCategoriaSeleccionada.getNombre()))
+						(subCategoriaSeleccionada == null || productos.get(i).getSubcategoria().getNombre().equals(subCategoriaSeleccionada.getNombre()))    
+						&& (categoriaSeleccionada == null || productos.get(i).getSubcategoria().getCategoria().toString().equals(categoriaSeleccionada.toString()) )
 						&& (marcaSeleccionada == null || productos.get(i).getMarca().getNombre().equals(marcaSeleccionada.getNombre()))
 						//&& ((colorSelecionado == null || productos.get(i).getTallas_colores().containsKey(colorSelecionado))  &&  (tallaSeleccionada == null || productos.get(i).getTallas_colores().containsValue(tallaSeleccionada)))
 						)
