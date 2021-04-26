@@ -105,7 +105,6 @@ public class VentanaLogin extends JFrame{
 						System.out.println("Credenciales correctas");
 						TiendaGUI.setCliente(cliente);
 						ventanaPadre.setEnabled(true);
-						TiendaGUI.setButtons();
 						dispose();
 					}
 				}
