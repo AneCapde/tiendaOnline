@@ -377,9 +377,7 @@ public class TiendaGUI extends JFrame {
 			public void valueChanged(ListSelectionEvent e) {
 				try {
 					if (!TiendaGUI.getCliente().equals(null)) {
-						btnDeseado.setVisible(true);
-						botonComprar.setVisible(true);
-						botonAnyadir.setVisible(true);
+						setButtons();
 						productoSeleccionado = listaElementos.getSelectedValue();
 						boolean incluido = false;
 						for (Producto p : productos_deseados){
@@ -539,7 +537,7 @@ public class TiendaGUI extends JFrame {
 					if (!TiendaGUI.getCliente().equals(null)) {
 						esto.setEnabled(false);
 						updateUserList(appTarget);
-						ListaDeseadosGUI listaDeseados= new ListaDeseadosGUI(esto, appTarget, esto);
+						ListaDeseadosGUI listaDeseados= new ListaDeseadosGUI(esto, appTarget);
 						listaDeseados.setVisible(true);
 						dispose();
 					}else {

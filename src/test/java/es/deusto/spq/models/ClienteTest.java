@@ -8,16 +8,15 @@ import org.junit.Before;
 import org.junit.Test;
 
 import es.deusto.spq.models.Cliente.Genero;
-import es.deusto.spq.server.ProductosServer;
 
 public class ClienteTest {
 	Cliente cli;
-	ArrayList<Producto> prod;
+	ArrayList<Producto> prod, prod2;
 	
 	
 	@Before
 	public void initiali(){
-		cli = new Cliente("12345F", "NomCliente", "ApCliente", "email", "pass", 9999999,"Direccion", Genero.HOMBRE, 234455, "provincia", "localidad");
+		cli = new Cliente("12345F", "NomCliente", "ApCliente", "Email", "pass", 9999999,"Direccion", Genero.HOMBRE, 234455, "provincia", "localidad");
 		Categoria cat = new Categoria("nombreCat", "descCat");
 		SubCategoria subca = new SubCategoria("nombreSub", "descSub", cat);
 		Marca marc = new Marca("nombreMarc", "descMarc");
@@ -69,7 +68,7 @@ public class ClienteTest {
 	@Test
 	public void testGetEmail() {
 		String resul = cli.getEmail();
-		assertEquals("email", resul);
+		assertEquals("Email", resul);
 	}
 
 	@Test
@@ -176,10 +175,33 @@ public class ClienteTest {
 		assertEquals(prod, res);
 		
 	}
+	
+	@Test 
+	public void textSetProductosDeseados() {
+		Categoria cat = new Categoria("nombreCat2", "descCat2");
+		SubCategoria subca = new SubCategoria("nombreSub2", "descSub2", cat);
+		Marca marc = new Marca("nombreMarc2", "descMarc2");
+		Producto pro = new Producto("producto2", "descripcion2", 2, 2, "img2", subca, marc);
+		prod2 = new ArrayList<Producto>();
+		prod2.add(pro);
+		cli.setProductosDeseados(prod2);
+		ArrayList<Producto> res = cli.getProductosDeseados();
+		assertEquals(prod2, res);
+	}
+
+	
+	@Test
+	public void testToStringDebug() {
+		String resul = cli.toStringDebug();
+		assertEquals("Cliente [DNI=12345F, nombre=NomCliente, apellidos=ApCliente, email=Email, password=pass, telefono=9999999, direccion=Direccion, genero=Genero.HOMBRE,"
+				+ "cod_postal=234455, provincia=provincia, localidad=localidad]", resul);
+	}
 
 	@Test
-	public void testRemoveProducto() {
-		
+	public void testToString() {
+		String result = cli.toString();
+		String espec = "NomCliente";
+		assertEquals(espec, result);
 	}
 
 }
