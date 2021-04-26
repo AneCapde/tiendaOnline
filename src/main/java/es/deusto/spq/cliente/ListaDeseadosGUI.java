@@ -36,7 +36,7 @@ public class ListaDeseadosGUI extends JFrame {
 	private Producto productoSeleccionado;
 	public static JList<Producto> listaElementos;
 
-	public ListaDeseadosGUI(final JFrame ventanaPadre, WebTarget appTarget, TiendaGUI tienda) {
+	public ListaDeseadosGUI(final JFrame ventanaPadre, WebTarget appTarget) {
 		productos_deseados.removeAll(productos_deseados);
 		model.removeAllElements();
 

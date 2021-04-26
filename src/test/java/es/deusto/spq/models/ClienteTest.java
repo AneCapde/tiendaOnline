@@ -193,8 +193,7 @@ public class ClienteTest {
 	@Test
 	public void testToStringDebug() {
 		String resul = cli.toStringDebug();
-		assertEquals("Cliente [DNI=12345F, nombre=NomCliente, apellidos=ApCliente, email=Email, password=pass, telefono=9999999, direccion=Direccion, genero=Genero.HOMBRE,"
-				+ "cod_postal=234455, provincia=provincia, localidad=localidad]", resul);
+		assertEquals("Cliente [DNI=12345F, nombre=NomCliente, apellidos=ApCliente, email=Email, password=pass, telefono=9999999, direccion=Direccion, genero=HOMBRE, cod_postal=234455, provincia=provincia, localidad=localidad]", resul);
 	}
 
 	@Test
