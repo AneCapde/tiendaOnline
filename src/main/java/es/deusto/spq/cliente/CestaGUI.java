@@ -33,7 +33,7 @@ import javax.swing.JButton;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 
-public class CestaGUI extends JFrame {
+public class CestaGUI extends JFrame implements ICesta {
 
 	/**
 	 *
@@ -42,16 +42,20 @@ public class CestaGUI extends JFrame {
 	private JPanel contentPane;
 	private JTextField textField;
 	private DefaultListModel<Producto> model = new DefaultListModel<>();
-	private HashMap<Producto,Integer> productos_cantidad = new HashMap<>();
+	private List<Producto> productos = new ArrayList<>();
+	private HashMap<Producto, Integer> productos_cantidad = new HashMap<Producto, Integer>();
+	final WebTarget pedidoTarget;
 
 	/**
 	 * Create the frame.
 	 */
 	public CestaGUI(final JFrame ventanaPadre, List<Producto> productos, final WebTarget appTarget) {
 
-		final WebTarget pedidoTarget = appTarget.path("/pedidos");
-		for (Producto p:productos) {
-			productos_cantidad.put(p, 1);
+		pedidoTarget = appTarget.path("/pedidos");
+		for (Producto p : productos){
+			this.productos.add(p);
+			model.addElement(p);
+			getProductosCantidad().put(p, 1);
 		}
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -73,18 +77,9 @@ public class CestaGUI extends JFrame {
 		contentPane.add(btnNewButton);
 		btnNewButton.setVisible(false);
 		btnNewButton.addActionListener (new ActionListener () {
+			@Override
 		    public void actionPerformed(ActionEvent e) {
-				List<Producto> productosPedidos = new ArrayList<>();
-				int precio_pedido = 0;
-				for(Producto p : productos_cantidad.keySet()){
-					precio_pedido = productos_cantidad.get(p)*p.getPrecio();
-					productosPedidos.add(p);
-				}
-				Date date = new Date();
-				Pedido pedido = new Pedido(TiendaGUI.getCliente(), date,"en proceso" , precio_pedido, 0);
-				pedido.setProducto((ArrayList<Producto>) productosPedidos);	
-				pedidoTarget.request(MediaType.APPLICATION_JSON).post(Entity.entity(pedido, MediaType.APPLICATION_JSON));
-				
+				createPedido();
 				dispose();
 				ventanaPadre.setEnabled(true);
 			}
@@ -94,9 +89,6 @@ public class CestaGUI extends JFrame {
 		panel.setBounds(269, 27, 309, 339);
 		contentPane.add(panel);
 		
-		for (int i = 0; i < productos.size(); i++) {
-			model.addElement(productos.get(i)); 
-		}
 	
 		JList<Producto> list = new JList<>(model);
 		list.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -140,8 +132,8 @@ public class CestaGUI extends JFrame {
 				int cantidad = Integer.valueOf(String.valueOf(Math.round((double) spinner.getValue())));
 				try {
 					if (!producto.equals(null)) {
-						productos_cantidad.put(producto, cantidad);
 						textField.setText(String.valueOf(calcularPrecio()));
+						getProductosCantidad().put(producto, cantidad);
 					}
 				}
 				catch(NullPointerException nl) {
@@ -156,9 +148,10 @@ public class CestaGUI extends JFrame {
 		btnEliminar.setBounds(486, 377, 90, 29);
 		contentPane.add(btnEliminar);
 		btnEliminar.addActionListener (new ActionListener () {
+			@Override
 		    public void actionPerformed(ActionEvent e) {
 				Producto producto = list.getSelectedValue();
-				productos_cantidad.remove(producto);
+				getProductos().remove(producto);
 				model.removeElement(producto);
 				panel.removeAll();
 				list.setModel( model);
@@ -180,11 +173,36 @@ public class CestaGUI extends JFrame {
 		
 	}
 
-	private int calcularPrecio(){
+	@Override
+	public int calcularPrecio() {
 		int precioTotal = 0;
 		for (Producto p : productos_cantidad.keySet()){
 			precioTotal += p.getPrecio()*productos_cantidad.get(p);
 		}
 		return precioTotal;
+	}
+
+	@Override
+	public void createPedido() {
+		productos.removeAll(productos);
+		int precio_pedido = 0;
+		for(Producto p : productos_cantidad.keySet()){
+			precio_pedido = productos_cantidad.get(p)*p.getPrecio();
+			productos.add(p);
+		}
+		Date date = new Date();
+		Pedido pedido = new Pedido(TiendaGUI.getCliente(), date,"en proceso" , precio_pedido, 0);
+	    pedido.setProducto((ArrayList<Producto>) productos);	
+		pedidoTarget.request(MediaType.APPLICATION_JSON).post(Entity.entity(pedido, MediaType.APPLICATION_JSON));
+	}
+
+	@Override
+	public List<Producto> getProductos(){
+        return this.productos;
+    }
+
+	@Override
+	public HashMap<Producto, Integer> getProductosCantidad() {
+		return this.productos_cantidad;
 	}
 }
