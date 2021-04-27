@@ -18,11 +18,13 @@ public class TiendaAccionesTest {
 	TiendaAcciones acciones;
 	SubCategoria subCat;
 	SubCategoria subCat2;
+	SubCategoria subCat3;
 	Marca marc1;
 	Marca marc2;
 	Producto prod;
 	Producto prod2;
 	ArrayList<Producto> arr = new ArrayList<Producto>();
+	ArrayList<SubCategoria> subcats = new ArrayList<SubCategoria>();
 	@Before
 	public void inicializar() {
 		acciones = new TiendaAcciones();
@@ -30,11 +32,14 @@ public class TiendaAccionesTest {
 		cat2 = new Categoria("NombreCat2", "DescripcionCat");
 		subCat = new SubCategoria("NombreSub", "DescripcionSub", cat);
 		subCat2 = new SubCategoria("NombreSub2", "DescripcionSub", cat2);
+		subCat3 = new SubCategoria("NombreSub3", "DescripcionSub", cat2);
 		marc1 = new Marca("Nombre", "Descripcion");
 		marc2 = new Marca("Nombre2", "Descripcion");
 		prod = new Producto("producto", "descripcion", 2, 2, "img", subCat, marc1);
 		prod2 = new Producto("2producto", "descripcion", 2, 2, "img", subCat2, marc2);
-		
+		subcats.add(subCat);
+		subcats.add(subCat2);
+		subcats.add(subCat3);
 		arr.add(prod);
 		arr.add(prod2);
 //		fail("Not yet implemented");
@@ -68,6 +73,20 @@ public class TiendaAccionesTest {
 		ArrayList<Producto> res = acciones.buscar("2prod", null, null, null, null, null, arr);
 		ArrayList<Producto> exp = new ArrayList<Producto>();
 		exp.add(prod2);
+		assertEquals(exp, res);
+	}
+	@Test
+	public void rellenarSubcategoriasTest() {
+		ArrayList<SubCategoria> res = acciones.rellenarSubcategorias(cat2, subcats);
+		ArrayList<SubCategoria> exp = new ArrayList<SubCategoria>();
+		exp.add(subCat2);
+		exp.add(subCat3);
+		assertEquals(exp, res);
+	}
+	@Test
+	public void rellenarSubcategoriasTestVacio() {
+		ArrayList<SubCategoria> res = acciones.rellenarSubcategorias(null, subcats);
+		ArrayList<SubCategoria> exp = new ArrayList<SubCategoria>();
 		assertEquals(exp, res);
 	}
 

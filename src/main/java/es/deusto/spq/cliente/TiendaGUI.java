@@ -209,14 +209,20 @@ public class TiendaGUI extends JFrame {
 		    public void actionPerformed(ActionEvent e) {
 		    	comboBox_Subcategoria.removeAllItems();
 		    	comboBox_Subcategoria.addItem(null);
-		    	categoriaSeleccionada = (Categoria) comboBox_Categoria.getSelectedItem();
-		    	for (int i = 0; i < subCategorias.size(); i++) {
-		    		if (categoriaSeleccionada != null) {			
-						if (categoriaSeleccionada.getNombre().equals(subCategorias.get(i).getCategoria().getNombre())) {
-							comboBox_Subcategoria.addItem(subCategorias.get(i));
-						}
-		    		}
-				}
+		    	ArrayList<SubCategoria> arSub= new ArrayList<SubCategoria>();
+		    	arSub = acciones.rellenarSubcategorias((Categoria) comboBox_Categoria.getSelectedItem(), subCategorias);
+		    	for (int i = 0; i < arSub.size(); i++) {
+		    		comboBox_Subcategoria.addItem(arSub.get(i));
+		    	}
+		    	
+//		    	categoriaSeleccionada = (Categoria) comboBox_Categoria.getSelectedItem();
+//		    	for (int i = 0; i < subCategorias.size(); i++) {
+//		    		if (categoriaSeleccionada != null) {			
+//						if (categoriaSeleccionada.getNombre().equals(subCategorias.get(i).getCategoria().getNombre())) {
+//							comboBox_Subcategoria.addItem(subCategorias.get(i));
+//						}
+//		    		}
+//				}
 		    }
 		});
 		

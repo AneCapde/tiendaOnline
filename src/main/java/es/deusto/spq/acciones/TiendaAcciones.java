@@ -44,7 +44,16 @@ public class TiendaAcciones {
 		}
 		return model;
 	}
-
 	
-
+	public ArrayList<SubCategoria> rellenarSubcategorias(Categoria categoriaSeleccionada, List<SubCategoria> subCategorias){
+    	ArrayList<SubCategoria> futuroComboBox_Subcategoria = new ArrayList<SubCategoria>();
+		for (int i = 0; i < subCategorias.size(); i++) {
+    		if (categoriaSeleccionada != null) {			
+				if (categoriaSeleccionada.getNombre().equals(subCategorias.get(i).getCategoria().getNombre())) {
+					futuroComboBox_Subcategoria.add(subCategorias.get(i));
+				}
+    		}
+		}
+		return futuroComboBox_Subcategoria;
+	}
 }
