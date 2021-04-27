@@ -32,8 +32,8 @@ public class HistorialGUI extends JFrame{
 	
 	private JPanel contentPane;
 	private DefaultListModel<Pedido> model = new DefaultListModel<>();
+	private DefaultListModel<Producto> model2 = new DefaultListModel<>();
 	private Pedido pedidoSeleccionado;
-//	private JList<Pedido> listaElementos;
 	private JButton botonDevolver;
 	
 	
@@ -68,6 +68,7 @@ public class HistorialGUI extends JFrame{
 			model.addElement(pedidos.get(i)); 
 		}
 		
+		//JList pra los pedidos
 		JList<Pedido> list = new JList<>(model);
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPane.setViewportView(list);
@@ -96,6 +97,17 @@ public class HistorialGUI extends JFrame{
 			}
 		});
 		
+//		//JList para los productos que hay dentro de un determinado pedido
+//		for (int i = 0; i < pedidos.size(); i++) {
+//			model2.addElement(pedidos.get(i)); 
+//		}
+//		
+//		//JList para los productos
+//		
+//		JList<Pedido> list = new JList<>(model);
+//		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+//		scrollPane.setViewportView(list);
+//		
 		botonDevolver = new JButton("DEVOLUCIÓN");
 		botonDevolver.setForeground(Color.BLACK);
 		botonDevolver.setBackground(new Color(0, 255, 0));
