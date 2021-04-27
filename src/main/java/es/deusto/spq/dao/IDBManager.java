@@ -16,7 +16,7 @@ public interface IDBManager {
     public void storeObjectInDB(Object object);
 	public void store(Cliente cliente);
 	public void store(Producto producto);
-    public void store(Pedido aeropuerto);
+    public void store(Pedido pedido);
     public void store(Categoria categoria);
     public void store(SubCategoria subCategoria);
     public void store(Marca marca);
@@ -37,4 +37,5 @@ public interface IDBManager {
     public void updatePedido(Pedido pedido);
     public void updatePago(Pago pago);
     public void deleteCliente(Cliente cliente);
+    public void deleteObjectFromDB(Object object);
 }

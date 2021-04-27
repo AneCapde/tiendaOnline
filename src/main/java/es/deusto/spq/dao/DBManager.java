@@ -466,4 +466,26 @@ public class DBManager implements IDBManager{
 			}
 		}
 	}
+
+	public void deleteObjectFromDB(Object object) {
+		PersistenceManager pm = pmf.getPersistenceManager();
+		pm.getFetchPlan().setMaxFetchDepth(4);
+		Transaction tx = pm.currentTransaction();
+
+		try {
+			tx.begin();
+			System.out.println(" * Delete an object: " + object);
+			
+			pm.deletePersistent(object);
+			
+			tx.commit();
+		} catch (Exception ex) {
+			System.out.println(" $ Error deleting an object: " + ex.getMessage());
+		} finally {
+			if (tx != null && tx.isActive()) {
+				tx.rollback();
+			}
+			pm.close();
+		}
+	}
 }
