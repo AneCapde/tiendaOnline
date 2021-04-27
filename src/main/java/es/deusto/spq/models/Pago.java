@@ -2,6 +2,7 @@ package es.deusto.spq.models;
 
 import java.util.HashMap;
 
+import javax.jdo.annotations.Join;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 
@@ -9,18 +10,22 @@ import javax.jdo.annotations.Persistent;
 public class Pago {
     
 	@Persistent(defaultFetchGroup = "true")
-	private Cliente cliente;
+	private String DNI;
+	@Persistent(defaultFetchGroup = "true")
+	@Join
     private HashMap<String,String> credencialesVisa = new HashMap<String,String>();
+	@Persistent(defaultFetchGroup = "true")
+	@Join
     private HashMap<String,String> credencialesPaypal = new HashMap<String,String>();
 
-    public Pago(Cliente cliente, HashMap<String,String> credencialesVisa, HashMap<String,String> credencialesPaypal) {
-        this.cliente = cliente;
+    public Pago(String DNI, HashMap<String,String> credencialesVisa, HashMap<String,String> credencialesPaypal) {
+        this.DNI = DNI;
         this.credencialesVisa = credencialesVisa;
         this.credencialesPaypal = credencialesPaypal;
     }
 
-    public Cliente getCliente() {
-		return this.cliente;
+    public String getDNI() {
+		return this.DNI;
 	}
 
 	public HashMap<String, String> getCredencialesVisa() {

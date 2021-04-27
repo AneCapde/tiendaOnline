@@ -25,13 +25,13 @@ public class PagoTest {
         credencialesVisa.put("4444333322221111", "232");             
         credencialesPaypal = new HashMap<String,String>();
         credencialesPaypal.put("usuario@gmail.com", "123r");
-        pago = new Pago(cliente, credencialesVisa, credencialesPaypal);
+        pago = new Pago(cliente.DNI, credencialesVisa, credencialesPaypal);
     }
 
     @Test
-	public void testGetCliente() {
-		Cliente c = pago.getCliente();
-		assertEquals(cliente, c);
+	public void testGetDNI() {
+		String dni = pago.getDNI();
+		assertEquals("12399345K", dni);
 	}
 
     @Test

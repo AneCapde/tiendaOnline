@@ -29,7 +29,7 @@ public class VentanaMetodoPago extends JFrame{
 	// LA VENTANA PADRE DEBE SER LA TiendaGUI   +   SE RECIBE EL PEDIDO, QUE SOLO SE COMPLETARÁ AL COMPLETAR EL PAGO
     public VentanaMetodoPago(final JFrame ventanaPadre, Pedido pedido, WebTarget appTarget) {
         
-        // final WebTarget metodoTarget = appTarget.path("/metodos");
+        final WebTarget metodoTarget = appTarget.path("/metodos");
 		final VentanaMetodoPago esto = this;
      
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -65,9 +65,9 @@ public class VentanaMetodoPago extends JFrame{
 				esto.setVisible(true);
 				ventanaPadre.setEnabled(true);
 				ventanaPadre.setVisible(true);
-                // VentanaPagoPayPal vPaypal= new VentanaPagoPayPal(ventanaPadre, pedido, appTarget);
-				// vPaypal.setVisible(true);
-				// dispose();				
+                VentanaPagoPayPal vPaypal= new VentanaPagoPayPal(ventanaPadre, pedido, appTarget);
+				vPaypal.setVisible(true);
+				dispose();				
 			}
 		});
 
@@ -85,21 +85,12 @@ public class VentanaMetodoPago extends JFrame{
 				esto.setVisible(true);
 				ventanaPadre.setEnabled(true);
 				ventanaPadre.setVisible(true);
-                // VentanaPagoVisa vVisa= new VentanaPagoVisa(esto, pedido, appTarget);
-				// vVisa.setVisible(true);
-				// dispose();				
+                VentanaPagoVisa vVisa= new VentanaPagoVisa(esto, pedido, appTarget);
+				vVisa.setVisible(true);
+				dispose();				
 			}
 		});
 	}
-    // public static void main(String[] args) {
-    //     //		BD.initData();
-    //             // try { // Cambiamos el look and feel (se tiene que hacer antes de crear la GUI
-    //             // 	UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
-    //             // } catch (Exception e) {
-    //             // } // Si Nimbus no está disponible, se usa el l&f por defecto
-    //             VentanaMetodoPago v = new VentanaMetodoPago();
-    //             v.setVisible(true);
-    //         }
 }
 
     

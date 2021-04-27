@@ -6,6 +6,13 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.InvalidPropertiesFormatException;
+import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -36,6 +43,29 @@ public class VentanaLogin extends JFrame{
 	private static JPasswordField passwordField;
 	
 	public VentanaLogin(final JFrame ventanaPadre, WebTarget appTarget) {
+
+		this.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowOpened(WindowEvent e) {
+				Properties properties = new Properties();
+				try {
+					String name = "propiedades.xml";
+					properties.loadFromXML(new FileInputStream(name));
+				} catch (InvalidPropertiesFormatException e1) {
+					e1.printStackTrace();
+				} catch (FileNotFoundException e1) {
+					e1.printStackTrace();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+				String user = properties.getProperty("Usuario");
+				String pass = properties.getProperty("Contraseña");
+				emailTextField.setText(user);
+				passwordField.setText(pass);
+				
+				super.windowOpened(e);
+			}
+		});
 		
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setResizable(false);

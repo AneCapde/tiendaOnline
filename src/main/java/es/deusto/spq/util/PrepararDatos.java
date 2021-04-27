@@ -41,7 +41,7 @@ public class PrepararDatos {
 			paypal.put("usuario@gmail.com", "1234");
 			HashMap<String,String> visa = new HashMap<String,String>();
 			visa.put("4444333322221111", "1234");
-			Pago pago1 = new Pago(cliente1, visa, paypal);
+			Pago pago1 = new Pago(cliente1.getDNI(), visa, paypal);
 			pm.makePersistent(pago1);
 
 			//Creamos las categorias

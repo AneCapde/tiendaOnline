@@ -9,7 +9,10 @@ import java.awt.event.ActionListener;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
+import javax.jdo.annotations.Key;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -21,6 +24,9 @@ import javax.swing.UIManager;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
+
+import org.glassfish.jersey.internal.util.collection.Value;
+
 import javax.ws.rs.client.Entity;
 
 import es.deusto.spq.models.Pago;
@@ -40,20 +46,22 @@ public class VentanaPagoPayPal extends JFrame {
     private JButton bAceptar;
 	private JButton bCredenciales; //Aceptar creación de nuevas credenciales
     private JButton bCrearCuenta;
-	private String numVisa = null;
-	private String cvcVisa = null;
 
 	// LA VENTANA PADRE DEBE SER LA TiendaGUI   +   SE RECIBE EL PEDIDO, QUE SOLO SE COMPLETARÁ AL COMPLETAR EL PAGO
     public VentanaPagoPayPal(final JFrame ventanaPadre, Pedido pedido, WebTarget appTarget) {
         
         //REFERENCIA A LAS CREDENCIALES, NO A LOS PAGOS
-        final WebTarget pagoTarget = appTarget.path("/pagos");
+        final WebTarget pagoTarget = appTarget.path("/pagos/paypal/").path(TiendaGUI.getCliente().getDNI());
 		//UN PEDIDO SE CREARÁ SOLO CUANDO SE HAYA COMPROBADO SU PAGO
 		final WebTarget pedidoTarget = appTarget.path("/pedidos");
 
-		GenericType<List<Pago>> genericType_pago = new GenericType<List<Pago>>() {};
-		List<Pago> credenciales = pagoTarget.request(MediaType.APPLICATION_JSON).get(genericType_pago);
+		// GenericType<List<Pago>> genericType_pago = new GenericType<List<Pago>>() {};
+		// List<Pago> credenciales = pagoTarget.request(MediaType.APPLICATION_JSON).get(genericType_pago);
    
+		GenericType<HashMap<String,String>> genericType_pago = new GenericType<HashMap<String,String>>() {};
+		HashMap<String,String> credenciales = pagoTarget.request(MediaType.APPLICATION_JSON).get(genericType_pago);
+   
+		System.out.println(credenciales);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setResizable(false);
 	    setSize(499, 336);
@@ -94,13 +102,6 @@ public class VentanaPagoPayPal extends JFrame {
 		password.setFont(new Font("Segoe UI Black", Font.BOLD, 16));
 		password.setPreferredSize(new Dimension(150, 27));
 		
-		//SI EL CLIENTE TIENE PAYPAL REGISTRADO, SE MUESTRA EMAIL AUTOMATICAMENTE
-        accountField = new JTextField();
-		accountField.setBounds(170, 38, 250, 35);
-		pCentral.add(accountField);
-
-		//SI EL CLIENTE NO TIENE REGISTRADO, SE CREA BOTON PARA REGISTRAR Y COMPRAR
-
         passwordField = new JPasswordField();
 		passwordField.setBounds(170, 115, 250, 35);
 		pCentral.add(passwordField);
@@ -108,31 +109,44 @@ public class VentanaPagoPayPal extends JFrame {
 		bAceptar = new JButton("Aceptar");
 		bAceptar.setBounds((this.getWidth()/100)*5 + 70, (this.getHeight()/18)*8, (this.getWidth()/35)*10, (this.getHeight()/18)*3);
 		pInferior.add(bAceptar);
+		bAceptar.setVisible(false);
 		bAceptar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				for (Pago pago : credenciales) {
-					if (pago.getCliente().getDNI().equals(TiendaGUI.getCliente().getDNI()) && pago.getCredencialesVisa().isEmpty() == false) {
-						//EL CLIENTE TIENE VISA ASOCIADA
-						accountField.setText(pago.getNumVisa(pago.getCredencialesVisa()));
-						numVisa = pago.getNumVisa(pago.getCredencialesVisa());
-						cvcVisa = pago.getCredencialesVisa().values().toString();
-					}
-				}
-				if (numVisa.equals(accountField.toString()) && cvcVisa.equals(passwordField.toString())) {
-					
-					pedidoTarget.request(MediaType.APPLICATION_JSON).post(Entity.entity(pedido, MediaType.APPLICATION_JSON));
-					JOptionPane.showMessageDialog(null, "Pago completado. Compra realizada", "Se te redirigirá al inicio", JOptionPane.INFORMATION_MESSAGE);
-					
-					ventanaPadre.setEnabled(true);
-					TiendaGUI.setButtons();
-					dispose();
-				} else {
-					JOptionPane.showMessageDialog(null, "Error. Credenciales incorrectas", "Vuelve a intentarlo", JOptionPane.INFORMATION_MESSAGE);
 
+				for(Entry<String, String> c1: credenciales.entrySet()) {
+					String email = c1.getKey();
+					String password = c1.getValue();
+					System.out.println(email + " " + password);
+					String pass = new String(passwordField.getPassword());
+					System.out.println(accountField.getText() + " " + pass);
+					if (email.equals(accountField.getText()) && password.equals(pass)) {
+					
+						pedidoTarget.request(MediaType.APPLICATION_JSON).post(Entity.entity(pedido, MediaType.APPLICATION_JSON));
+						JOptionPane.showMessageDialog(null, "Pago completado. Compra realizada", "Se te redirigirá al inicio", JOptionPane.INFORMATION_MESSAGE);
+						
+						ventanaPadre.setEnabled(true);
+						TiendaGUI.setButtons();
+						dispose();
+					} else {
+						JOptionPane.showMessageDialog(null, "Error. Credenciales incorrectas", "Vuelve a intentarlo", JOptionPane.INFORMATION_MESSAGE);
+	
+					}
 				}
 			}
 		});
+
+		//SI EL CLIENTE TIENE PAYPAL REGISTRADO, SE MUESTRA EMAIL AUTOMATICAMENTE
+		accountField = new JTextField();
+		accountField.setBounds(170, 38, 250, 35);
+		pCentral.add(accountField);
+		if (TiendaGUI.getCliente().getDNI().equals(pedido.getCliente().getDNI())) {
+			for(Entry<String, String> c: credenciales.entrySet()) {
+				String email = c.getKey();
+				accountField.setText(email);
+				bAceptar.setVisible(true);
+			}
+		}
 
 		bCredenciales = new JButton("Crear");
 		bCredenciales.setBounds((this.getWidth()/100)*5 + 70, (this.getHeight()/18)*8, (this.getWidth()/35)*10, (this.getHeight()/18)*3);
@@ -143,11 +157,13 @@ public class VentanaPagoPayPal extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if (accountField.toString().isEmpty() == false && passwordField.toString().isEmpty() == false) {
 					
-					HashMap<String,String> cv = new HashMap<String,String>();
-					cv.put(accountField.toString(), passwordField.toString());
-					credenciales.get(0).setCredencialesVisa(cv);
+					String pass = new String(passwordField.getPassword());
+					credenciales.clear();
+					credenciales.put(accountField.getText(), pass);
+					// credenciales.get(0).setCredencialesPaypal(cv);
 					//UPDATE BD
-					pagoTarget.request(MediaType.APPLICATION_JSON).post(Entity.entity(credenciales.get(0), MediaType.APPLICATION_JSON));
+					Pago pago = new Pago(TiendaGUI.getCliente().getDNI(), null,credenciales);
+					pagoTarget.request(MediaType.APPLICATION_JSON).post(Entity.entity(pago, MediaType.APPLICATION_JSON));
 
 					//Boton aceptar
 					bCredenciales.setEnabled(false);
@@ -155,7 +171,7 @@ public class VentanaPagoPayPal extends JFrame {
 					bAceptar.setEnabled(true);
 					bAceptar.setVisible(true);
 
-					accountField.setText(credenciales.get(0).getNumVisa(credenciales.get(0).getCredencialesVisa()));
+					// accountField.setText(credenciales.get(0).getEmailPaypal(credenciales.get(0).getCredencialesPaypal()));
 					revalidate();
 					JOptionPane.showMessageDialog(null, "Credenciales actualizadas", "Completado con éxito", JOptionPane.INFORMATION_MESSAGE);
 				} else {
@@ -178,14 +194,4 @@ public class VentanaPagoPayPal extends JFrame {
 				}
 			});	
     }
-
-    public static void main(String[] args) {
-//		BD.initData();
-		// try { // Cambiamos el look and feel (se tiene que hacer antes de crear la GUI
-		// 	UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
-		// } catch (Exception e) {
-		// } // Si Nimbus no está disponible, se usa el l&f por defecto
-		VentanaPagoPayPal v = new VentanaPagoPayPal();
-		v.setVisible(true);
-	}
 }

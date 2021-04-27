@@ -46,7 +46,7 @@ public class VentanaPagoVisa extends JFrame{
 
     public VentanaPagoVisa(final JFrame ventanaPadre, Pedido pedido, WebTarget appTarget) {
         //REFERENCIA A LAS CREDENCIALES, NO A LOS PAGOS
-        final WebTarget pagoTarget = appTarget.path("/pagos");
+        final WebTarget pagoTarget = appTarget.path("/pagos/visa/").path(TiendaGUI.getCliente().getDNI());
 		//UN PEDIDO SE CREARÁ SOLO CUANDO SE HAYA COMPROBADO SU PAGO
 		final WebTarget pedidoTarget = appTarget.path("/pedidos");
 
@@ -108,7 +108,7 @@ public class VentanaPagoVisa extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				for (Pago pago : credenciales) {
-					if (pago.getCliente().getDNI().equals(TiendaGUI.getCliente().getDNI()) && pago.getCredencialesVisa().isEmpty() == false) {
+					if (pago.getDNI().equals(TiendaGUI.getCliente().getDNI()) && pago.getCredencialesVisa().isEmpty() == false) {
 						//EL CLIENTE TIENE VISA ASOCIADA
 						numTarjetaField.setText(pago.getNumVisa(pago.getCredencialesVisa()));
 						numVisa = pago.getNumVisa(pago.getCredencialesVisa());
@@ -174,14 +174,4 @@ public class VentanaPagoVisa extends JFrame{
 				}
 			});	
     }
-
-    public static void main(String[] args) {
-//		BD.initData();
-		// try { // Cambiamos el look and feel (se tiene que hacer antes de crear la GUI
-		// 	UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
-		// } catch (Exception e) {
-		// } // Si Nimbus no está disponible, se usa el l&f por defecto
-		VentanaPagoVisa v = new VentanaPagoVisa();
-		v.setVisible(true);
-	}
 }
