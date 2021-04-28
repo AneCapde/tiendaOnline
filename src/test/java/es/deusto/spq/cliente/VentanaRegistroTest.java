@@ -184,7 +184,42 @@ public class VentanaRegistroTest {
 		String result = (String) method.invoke(vent, "!@A1aaaaaaaaaaaaaaaaaaaaaaaaaa");
 		assertEquals("Muy Buena", result);	
 	}
-
 	
+	@Test
+	public void testValidarDatos()throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+		vent.datosValidar("em@gmail.com", "nom", "apel", "12333333a", "123456789", "dir", "12435", "Albacete", "loc");
+		Method method = VentanaRegistro.class.getDeclaredMethod("Validar");
+		method.setAccessible(true);
+		Boolean result = (Boolean) method.invoke(vent);
+		assertEquals(true, result);	
+	}
+	
+//	@Test
+//	public void testValidarDatosEmailMal()throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+//		vent.datosValidar("em", "nom", "apel", "12333333a", "123456789", "dir", "12435", "Albacete", "loc");
+//		Method method = VentanaRegistro.class.getDeclaredMethod("Validar");
+//		method.setAccessible(true);
+//		Boolean result = (Boolean) method.invoke(vent);
+//		assertEquals(false, result);	
+//	}
+//	
+//	@Test
+//	public void testValidarDatosDniMal()throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+//		vent.datosValidar("em@gmail.com", "nom", "apel", "12333a333", "123456789", "dir", "12435", "Albacete", "loc");
+//		Method method = VentanaRegistro.class.getDeclaredMethod("Validar");
+//		method.setAccessible(true);
+//		Boolean result = (Boolean) method.invoke(vent);
+//		assertEquals(false, result);	
+//	}
+//	
+//	@Test
+//	public void testValidarDatosTelefonoMal()throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+//		vent.datosValidar("em@gmail.com", "nom", "apel", "12333333a", "12345", "dir", "12435", "Albacete", "loc");
+//		Method method = VentanaRegistro.class.getDeclaredMethod("Validar");
+//		method.setAccessible(true);
+//		Boolean result = (Boolean) method.invoke(vent);
+//		assertEquals(false, result);	
+//	}
+//	
 
 }

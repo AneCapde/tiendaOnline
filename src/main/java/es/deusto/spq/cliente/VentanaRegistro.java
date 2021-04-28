@@ -267,19 +267,6 @@ public class VentanaRegistro extends JFrame {
 	}
 	
 
-//	private void datosValidar(String email, String nombre, String apellidos, String dni, String telefono, String dir, String cod_post, String provincia,
-//			String localidad) {
-//		email.set
-//		nombre.setText(nombre);
-//		apellidos.setText(apellido);
-//		dni.setText(dni);
-//		telefono.setText(telefono);
-//		dir.setText(dir);
-//		cod_post.setText(cod_post);
-//		
-//		
-//	}
-//	
 	public VentanaRegistro(final JFrame ventanaPadre, WebTarget appTarget ) {
 
 		final WebTarget clientesTarget = appTarget.path("/clientes");
@@ -498,6 +485,24 @@ public class VentanaRegistro extends JFrame {
 		});
 
 	}
+	
+
+	public void datosValidar(String em, String nom, String apel, String dn, String tel, String dir, String cod, String prov,
+			String loc) {
+		email.setText(em);
+		nombre.setText(nom);
+		apellidos.setText(apel);
+		dni.setText(dn);
+		telefono.setText(tel);
+		direccion.setText(dir);
+		cod_postal.setText(cod);
+		localidad.setText(loc);
+		provincia.setSelectedItem(prov);
+		rdbtnHombre.setSelected(true);
+		
+			
+	}
+	
 	
 //	public static void main(String[] args) {
 ////		BD.initData();
