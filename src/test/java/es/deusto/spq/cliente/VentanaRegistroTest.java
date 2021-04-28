@@ -140,7 +140,7 @@ public class VentanaRegistroTest {
 	public void comprobarPassIncorrectaNoEspecial() throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		Method method = VentanaRegistro.class.getDeclaredMethod("elPasswordCorrecto", String.class);
 		method.setAccessible(true);
-		String result = (String) method.invoke(vent, "@1Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+		String result = (String) method.invoke(vent, "@1A|aaAaaaaaaaaaaaaaaaaaaaaaaaaaa");
 		assertEquals("no tiene caracteres especiales como ( ! # $ % & ' ( ) + - )", result);	
 	}
 	
