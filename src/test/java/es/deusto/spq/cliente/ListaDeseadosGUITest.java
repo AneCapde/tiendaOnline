@@ -32,8 +32,7 @@ public class ListaDeseadosGUITest {
 	ListaDeseadosGUI listaDeseadosGUI;
 	WebTarget web = Mockito.mock(WebTarget.class);
 	@Mock
-	TiendaGUI tiendaGUI;
-//	= Mockito.mock(TiendaGUI.class);
+	TiendaGUI tiendaGUI = Mockito.mock(TiendaGUI.class);
 
 	List<Producto> productos = new ArrayList<Producto>();
 

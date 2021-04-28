@@ -188,6 +188,7 @@ public class ListaDeseadosGUI extends JFrame implements IListaDeseados{
 		return this.productos_deseados;
 	}
 	
+	@Override
 	public void setProductosDeseados(List<Producto> productos_deseados) {
 		this.productos_deseados = productos_deseados;
 	}

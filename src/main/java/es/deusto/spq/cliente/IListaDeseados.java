@@ -13,4 +13,5 @@ public interface IListaDeseados {
 	public void eliminar();
 	public void anyadir();
 	public List<Producto> getProductosDeseados();
+	public void setProductosDeseados(List<Producto> productos_deseados);
 }
