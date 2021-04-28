@@ -50,8 +50,10 @@ public class CestaGUI extends JFrame implements ICesta {
 	 * Create the frame.
 	 */
 	public CestaGUI(final JFrame ventanaPadre, List<Producto> productos, final WebTarget appTarget) {
-
+		
+		final CestaGUI esto = this;
 		pedidoTarget = appTarget.path("/pedidos");
+		
 		for (Producto p : productos){
 			this.productos.add(p);
 			model.addElement(p);
@@ -79,9 +81,16 @@ public class CestaGUI extends JFrame implements ICesta {
 		btnNewButton.addActionListener (new ActionListener () {
 			@Override
 		    public void actionPerformed(ActionEvent e) {
-				createPedido();
-				dispose();
-				ventanaPadre.setEnabled(true);
+				Date date = new Date();
+				Pedido pedido = new Pedido(TiendaGUI.getCliente(), date, "en proceso", calcularPrecio(), productos.size());
+
+				pedido.setProducto((ArrayList<Producto>) productos);
+				
+				esto.setEnabled(false);
+				esto.setVisible(false);
+				VentanaMetodoPago vmp = new VentanaMetodoPago(esto, pedido, appTarget);
+				vmp.setVisible(true);
+				esto.setEnabled(false);
 			}
 		});
 

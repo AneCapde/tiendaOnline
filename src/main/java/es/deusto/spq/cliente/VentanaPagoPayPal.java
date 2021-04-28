@@ -121,24 +121,10 @@ public class VentanaPagoPayPal extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				for(Entry<String, String> c1: credencialespaypal.entrySet()) {
-					String email = c1.getKey();
-					String password = c1.getValue();
-					System.out.println(email + " " + password);
-					String pass = new String(passwordField.getPassword());
-					System.out.println(accountField.getText() + " " + pass);
-					if (email.equals(accountField.getText()) && password.equals(pass)) {
-					
-						pedidoTarget.request(MediaType.APPLICATION_JSON).post(Entity.entity(pedido, MediaType.APPLICATION_JSON));
-						JOptionPane.showMessageDialog(null, "Pago completado. Compra realizada", "Se te redirigirá al inicio", JOptionPane.INFORMATION_MESSAGE);
-						
-						ventanaPadre.setEnabled(true);
-						TiendaGUI.setButtons();
-						dispose();
-					} else {
-						JOptionPane.showMessageDialog(null, "Error. Credenciales incorrectas", "Vuelve a intentarlo", JOptionPane.INFORMATION_MESSAGE);
-	
-					}
+				if (crearPedido(pedido, credencialespaypal, pedidoTarget)) {
+					ventanaPadre.setEnabled(true);
+					TiendaGUI.setButtons();
+					dispose();
 				}
 			}
 		});
@@ -150,32 +136,7 @@ public class VentanaPagoPayPal extends JFrame {
 		bCredenciales.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String pass = new String(passwordField.getPassword());
-				if (accountField.getText().isEmpty() == false && pass.isEmpty() == false) {
-					
-					credencialespaypal.clear();
-					credencialespaypal.put(accountField.getText(), pass);
-
-					// ESTAN BIEN ESTOS DATOS, QUEREMOS ACTUALIZAR CON ELLOS EL CLIENTE EN BD
-					System.out.println(credencialespago.getDNI() + "  " + credencialesvisa + "  " + credencialespaypal);
-
-					//PASAMOS A SERVER EL objeto pago con datos actualizados
-					credencialespago.setDNI(TiendaGUI.getCliente().getDNI());
-					credencialespago.setCredencialesPaypal(credencialespaypal);
-					credencialespago.setCredencialesVisa(credencialesvisa);
-					updateTarget.request(MediaType.APPLICATION_JSON).post(Entity.entity(credencialespago, MediaType.APPLICATION_JSON));
-
-					//Boton aceptar
-					bCredenciales.setEnabled(false);
-					bCredenciales.setVisible(false);
-					bAceptar.setEnabled(true);
-					bAceptar.setVisible(true);
-
-					revalidate();
-					JOptionPane.showMessageDialog(null, "Credenciales actualizadas", "Completado con éxito", JOptionPane.INFORMATION_MESSAGE);
-				} else {
-					JOptionPane.showMessageDialog(null, "Rellena todos los campos", "Incompleto", JOptionPane.INFORMATION_MESSAGE);
-				}
+				updatePaypal(credencialespaypal, credencialesvisa, credencialespago, updateTarget);
 			}
 		});
 
@@ -183,14 +144,7 @@ public class VentanaPagoPayPal extends JFrame {
 		accountField = new JTextField();
 		accountField.setBounds(170, 38, 250, 35);
 		pCentral.add(accountField);
-		if (TiendaGUI.getCliente().getDNI().equals(pedido.getCliente().getDNI())) {
-			for(Entry<String, String> c: credencialespaypal.entrySet()) {
-				String email = c.getKey();
-				accountField.setText(email);
-				bAceptar.setVisible(true);
-				bCredenciales.setVisible(false);
-			}
-		}
+		autoFill(pedido, credencialespaypal);
 
 		bCrearCuenta = new JButton("Cambiar cuenta");
 		bCrearCuenta.setBounds((this.getWidth()/100)*5 - 100, (this.getHeight()/18)*8, (this.getWidth()/35)*10, (this.getHeight()/18)*3);
@@ -206,4 +160,66 @@ public class VentanaPagoPayPal extends JFrame {
 			}
 		});	
     }
+
+
+	public void autoFill(Pedido pedido, HashMap<String, String> credencialespaypal) {
+		if (TiendaGUI.getCliente().getDNI().equals(pedido.getCliente().getDNI())) {
+			for(Entry<String, String> c: credencialespaypal.entrySet()) {
+				String email = c.getKey();
+				accountField.setText(email);
+				bAceptar.setVisible(true);
+				bCredenciales.setVisible(false);
+			}
+		}
+	}
+
+
+	public boolean crearPedido(Pedido pedido, HashMap<String, String> credencialespaypal, final WebTarget pedidoTarget) {
+		boolean b = false;
+
+		for(Entry<String, String> c1: credencialespaypal.entrySet()) {
+			String email = c1.getKey();
+			String password = c1.getValue();
+			System.out.println(email + " " + password);
+			String pass = new String(passwordField.getPassword());
+			System.out.println(accountField.getText() + " " + pass);
+			if (email.equals(accountField.getText()) && password.equals(pass)) {
+			
+				pedidoTarget.request(MediaType.APPLICATION_JSON).post(Entity.entity(pedido, MediaType.APPLICATION_JSON));
+				JOptionPane.showMessageDialog(null, "Pago completado. Compra realizada", "Se te redirigirá al inicio", JOptionPane.INFORMATION_MESSAGE);
+				b = true;
+			} else {
+				JOptionPane.showMessageDialog(null, "Error. Credenciales incorrectas", "Vuelve a intentarlo", JOptionPane.INFORMATION_MESSAGE);
+
+			}
+		}
+		return b;
+	}
+	
+	public void updatePaypal(HashMap<String, String> credencialespaypal, HashMap<String, String> credencialesvisa,
+	Pago credencialespago, final WebTarget updateTarget) {
+		String pass = new String(passwordField.getPassword());
+		if (accountField.getText().isEmpty() == false && pass.isEmpty() == false) {
+			
+			credencialespaypal.clear();
+			credencialespaypal.put(accountField.getText(), pass);
+
+			//PASAMOS A SERVER EL objeto pago con datos actualizados
+			credencialespago.setDNI(TiendaGUI.getCliente().getDNI());
+			credencialespago.setCredencialesPaypal(credencialespaypal);
+			credencialespago.setCredencialesVisa(credencialesvisa);
+			updateTarget.request(MediaType.APPLICATION_JSON).post(Entity.entity(credencialespago, MediaType.APPLICATION_JSON));
+
+			//Boton aceptar
+			bCredenciales.setEnabled(false);
+			bCredenciales.setVisible(false);
+			bAceptar.setEnabled(true);
+			bAceptar.setVisible(true);
+
+			revalidate();
+			JOptionPane.showMessageDialog(null, "Credenciales actualizadas", "Completado con éxito", JOptionPane.INFORMATION_MESSAGE);
+		} else {
+			JOptionPane.showMessageDialog(null, "Rellena todos los campos", "Incompleto", JOptionPane.INFORMATION_MESSAGE);
+		}
+	}
 }

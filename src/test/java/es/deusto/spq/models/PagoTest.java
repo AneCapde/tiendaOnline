@@ -35,6 +35,13 @@ public class PagoTest {
 	}
 
     @Test
+    public void testSetDNI() {
+        String dni = new String("12233454F");
+        pago.setDNI(dni);
+        assertEquals("12233454F", pago.getDNI());
+    }
+
+    @Test
     public void testGetCredencialesVisa() {
         HashMap<String,String> cv = pago.getCredencialesVisa();
         assertEquals(credencialesVisa, cv);
