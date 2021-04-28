@@ -19,7 +19,7 @@ import es.deusto.spq.models.Cliente.Genero;
 
 public class DBManagerTest {
     
-	
+	@Ignore
 	@Test
 	public void testStoreObjectInDB(){
         Cliente cliente = new Cliente("12132", "usuario", "usuario", "usuario", "usuario", 1213124, "usuario", Genero.MUJER, 48920, "usuario", "usuario");
@@ -28,6 +28,7 @@ public class DBManagerTest {
 		DBManager.getInstance().deleteObjectFromDB(cliente);
 	}
 
+	@Ignore
 	@Test
 	public void testStore() {
 		Categoria cat = new Categoria("categoria", "categoria");
@@ -76,6 +77,7 @@ public class DBManagerTest {
 
 	}
 
+	@Ignore
 	@Test
 	public void testUpdate() {
 		Producto p1 = new Producto("producto1", "producto1", 1, 1, "producto1", null, null);
