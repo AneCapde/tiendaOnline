@@ -3,11 +3,14 @@ package es.deusto.spq.cliente;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -34,7 +37,9 @@ public class HistorialGUI extends JFrame{
 	private DefaultListModel<Pedido> model = new DefaultListModel<>();
 	private DefaultListModel<Producto> model2 = new DefaultListModel<>();
 	private Pedido pedidoSeleccionado;
+	private Producto productoSeleccionado;
 	private JButton botonDevolver;
+	private ArrayList<Producto> productos = new ArrayList<>();
 	
 	
 	public HistorialGUI(final JFrame ventanaPadre, List<Pedido> pedidos, WebTarget appTarget) {
@@ -54,6 +59,15 @@ public class HistorialGUI extends JFrame{
 		scrollPane.setBounds(20, 37, 400, 457);
 		contentPane.add(scrollPane);
 		
+//		JScrollPane scrollPane2 = new JScrollPane();
+//		scrollPane2.setBounds(500, 37, 400, 457);
+//		contentPane.add(scrollPane2);
+//
+//		JPanel imagePlacehold = new JPanel();
+//		imagePlacehold.setBounds(464, 51, 367, 260);
+//		imagePlacehold.setBackground(Color.WHITE);
+//		contentPane.add(imagePlacehold);
+		
 		JLabel lblCaracteristicas = new JLabel("Caracteristicas");
 		lblCaracteristicas.setBounds(452, 192, 162, 14);
 		lblCaracteristicas.setFont(new Font("Segoe UI Black", Font.PLAIN, 14));
@@ -68,7 +82,7 @@ public class HistorialGUI extends JFrame{
 			model.addElement(pedidos.get(i)); 
 		}
 		
-		//JList pra los pedidos
+		//JList para los pedidos
 		JList<Pedido> list = new JList<>(model);
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPane.setViewportView(list);
@@ -97,17 +111,46 @@ public class HistorialGUI extends JFrame{
 			}
 		});
 		
-//		//JList para los productos que hay dentro de un determinado pedido
-//		for (int i = 0; i < pedidos.size(); i++) {
-//			model2.addElement(pedidos.get(i)); 
+		//Obtenemos los productos que hay dentro de un pedido para mostrar el articulo junto con la foto
+//		for (Pedido pedido : pedidos) {
+//			productos = pedido.getProducto();
 //		}
 //		
-//		//JList para los productos
+//		//JList para los productos que hay dentro de un determinado pedido
+//		for (int i = 0; i < productos.size(); i++) {
+//			model2.addElement(productos.get(i)); 
+//		}
 //		
-//		JList<Pedido> list = new JList<>(model);
-//		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-//		scrollPane.setViewportView(list);
-//		
+		//JList para los productos
+		
+//		JList<Producto> list2 = new JList<>(model2);
+//		list2.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+//		scrollPane2.setViewportView(list2);
+//		list2.addListSelectionListener(new ListSelectionListener() {
+//			
+//			@Override
+//			public void valueChanged(ListSelectionEvent e) {
+//				productoSeleccionado = list2.getSelectedValue();
+//				textArea.setText(null);
+//				if (productoSeleccionado != null) {
+//					imagePlacehold.removeAll();
+//					ImageIcon icono_3 = new ImageIcon(getClass().getResource("/"+ productoSeleccionado.getImagen()));
+//					ImageIcon icono_4 = new ImageIcon(icono_3.getImage().getScaledInstance(imagePlacehold.getWidth(), imagePlacehold.getHeight(),Image.SCALE_DEFAULT));
+//					JLabel label = new JLabel(icono_4);
+//					imagePlacehold.add(label);
+//					imagePlacehold.revalidate();
+//					
+//					textArea.append("- NOMBRE: " + productoSeleccionado.nombre + "\n");
+//					textArea.append("- DESCRIPCIÓN: " + productoSeleccionado.descripcion + "\n");
+//					textArea.append("- PRECIO: " + productoSeleccionado.precio + "\n");
+//					textArea.append("- CATEGORÍA: " + productoSeleccionado.getSubcategoria().getCategoria().getNombre() + "\n");
+//					textArea.append("    SUBCATEGORÍA: " + productoSeleccionado.getSubcategoria().getNombre() + "\n");
+//					
+//				}
+//			}
+//		});
+
+		
 		botonDevolver = new JButton("DEVOLUCIÓN");
 		botonDevolver.setForeground(Color.BLACK);
 		botonDevolver.setBackground(new Color(0, 255, 0));

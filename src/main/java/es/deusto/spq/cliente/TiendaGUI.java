@@ -99,6 +99,12 @@ public class TiendaGUI extends JFrame {
 			model.addElement(productos.get(i));
 		}
 		
+//		GenericType<List<Pedido>> genericType_pedidos = new GenericType<List<Pedido>>() {};
+//        pedidos = pedidoTarget.request(MediaType.APPLICATION_JSON).get(genericType_pedidos);
+//		for (int i = 0; i < pedidos.size(); i++) {
+//			model2.addElement(pedidos.get(i));
+//		}
+		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 872, 560);
 		contentPane = new JPanel();
@@ -309,7 +315,7 @@ public class TiendaGUI extends JFrame {
 						1);
 				productoPedido.add(productoSeleccionado);
 				pedido.setProducto((ArrayList<Producto>) productoPedido);
-				pedidos.add(pedido);
+				
 				esto.setEnabled(false);
 				esto.setVisible(false);
 				VentanaMetodoPago vmp = new VentanaMetodoPago(esto, pedido, appTarget);
@@ -317,8 +323,9 @@ public class TiendaGUI extends JFrame {
 				vmp.setVisible(true);
 				esto.setEnabled(false);
 
-				// pedidoTarget.request(MediaType.APPLICATION_JSON)
-				// 		.post(Entity.entity(pedido, MediaType.APPLICATION_JSON));
+//				 pedidoTarget.request(MediaType.APPLICATION_JSON)
+//				 		.post(Entity.entity(pedido, MediaType.APPLICATION_JSON));
+				 pedidos.add(pedido);
 				
 			}
 		});
