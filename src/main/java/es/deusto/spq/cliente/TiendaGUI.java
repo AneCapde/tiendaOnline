@@ -59,6 +59,15 @@ public class TiendaGUI extends JFrame {
 	private JComboBox<Colores> comboBox_colores;
 	private JComboBox<Tallas> comboBoxTalla;
 	private JComboBox<Marca> comboBoxMarca;
+	private JComboBox<Categoria> comboBox_Categoria;
+	private JComboBox<SubCategoria> comboBox_Subcategoria;
+	private List<SubCategoria> subCategorias;
+	private static JButton botonListaDeseados;
+	private static JButton botonHistorial;
+	
+	private TiendaGUI esto;
+	private WebTarget appTarget;
+	
 	private JTextArea textArea;
 	ImageIcon imagen1, imagen2;
 	Icon icono1, icono2;
@@ -83,7 +92,7 @@ public class TiendaGUI extends JFrame {
 	public TiendaGUI() {
 		client = ClientBuilder.newClient();
 
-        final WebTarget appTarget = client.target("http://localhost:8080/myapp");
+        appTarget = client.target("http://localhost:8080/myapp");
 		final WebTarget categoriasTarget = appTarget.path("/categorias");
 		final WebTarget marcasTarget = appTarget.path("/marcas");
 		final WebTarget subTarget = appTarget.path("/subcategorias");
@@ -91,7 +100,7 @@ public class TiendaGUI extends JFrame {
 		final WebTarget pagoTarget= appTarget.path("/pagos");
 		final WebTarget productosTarget = appTarget.path("/productos");
 
-		final TiendaGUI esto = this;
+		esto = this;
 		
 		GenericType<List<Producto>> genericType_productos = new GenericType<List<Producto>>() {};
         productos = productosTarget.request(MediaType.APPLICATION_JSON).get(genericType_productos);
@@ -128,29 +137,31 @@ public class TiendaGUI extends JFrame {
 		txtBuscador.setColumns(10);
 		
 		//#################################################################################################
-		JButton botonHistorial = new JButton("Historial");
+		botonHistorial = new JButton("Historial");
 		botonHistorial.setFont(new Font("Segoe UI Black", Font.PLAIN, 15));
 		botonHistorial.setBounds(10, 419, 194, 30);
 		panel.add(botonHistorial);
+		botonHistorial.setEnabled(false);
 		
 		botonHistorial.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				try {
-					if (!TiendaGUI.getCliente().equals(null)) {
-						esto.setEnabled(false);
-						updateUserList(appTarget);
-						HistorialGUI historial= new HistorialGUI(esto, pedidos, appTarget);
-						historial.setVisible(true);
-						contentPane.setEnabled(false);
-						dispose();
-					}else {
-						botonHistorial.setEnabled(false);
-					}
-				}
-				catch(NullPointerException nl) {
-					JOptionPane.showMessageDialog(null, "Ningun Usuario ha Iniciado Sesion", "Validar Credenciales", JOptionPane.INFORMATION_MESSAGE);
-				}
+				botonHistorial();
+//				try {
+//					if (!TiendaGUI.getCliente().equals(null)) {
+//						esto.setEnabled(false);
+//						updateUserList(appTarget);
+//						HistorialGUI historial= new HistorialGUI(esto, pedidos, appTarget);
+//						historial.setVisible(true);
+//						contentPane.setEnabled(false);
+//						dispose();
+//					}else {
+//						botonHistorial.setEnabled(false);
+//					}
+//				}
+//				catch(NullPointerException nl) {
+//					JOptionPane.showMessageDialog(null, "Ningun Usuario ha Iniciado Sesion", "Validar Credenciales", JOptionPane.INFORMATION_MESSAGE);
+//				}
 			}			
 		});
 		
@@ -195,40 +206,26 @@ public class TiendaGUI extends JFrame {
 		panel.add(lblColores);
 		
 		//#################################################################################################
-		final JComboBox<SubCategoria> comboBox_Subcategoria = new JComboBox<SubCategoria>();
+		comboBox_Subcategoria = new JComboBox<SubCategoria>();
 		comboBox_Subcategoria.setBounds(10, 138, 196, 30);
 		panel.add(comboBox_Subcategoria);
 		
 		//#################################################################################################
-		final JComboBox<Categoria> comboBox_Categoria = new JComboBox<Categoria>();
+		comboBox_Categoria = new JComboBox<Categoria>();
 		comboBox_Categoria.addItem(null);
 		GenericType<List<Categoria>> genericType_categoria = new GenericType<List<Categoria>>() {};
         List<Categoria> categorias = categoriasTarget.request(MediaType.APPLICATION_JSON).get(genericType_categoria);
 		for (Categoria categoria : categorias) {
+			System.out.println(categoria);
 			comboBox_Categoria.addItem(categoria);
 		}
 		
 		//Cada vez que se cambia una categoría hay que eliminar todas las subactegorias y meter nuevas eb el comboBox
 		GenericType<List<SubCategoria>> genericType_sub = new GenericType<List<SubCategoria>>() {};
-        List<SubCategoria> subCategorias = subTarget.request(MediaType.APPLICATION_JSON).get(genericType_sub);
+        subCategorias = subTarget.request(MediaType.APPLICATION_JSON).get(genericType_sub);
 		comboBox_Categoria.addActionListener (new ActionListener () {
 		    public void actionPerformed(ActionEvent e) {
-		    	comboBox_Subcategoria.removeAllItems();
-		    	comboBox_Subcategoria.addItem(null);
-		    	ArrayList<SubCategoria> arSub= new ArrayList<SubCategoria>();
-		    	arSub = acciones.rellenarSubcategorias((Categoria) comboBox_Categoria.getSelectedItem(), subCategorias);
-		    	for (int i = 0; i < arSub.size(); i++) {
-		    		comboBox_Subcategoria.addItem(arSub.get(i));
-		    	}
-		    	
-//		    	categoriaSeleccionada = (Categoria) comboBox_Categoria.getSelectedItem();
-//		    	for (int i = 0; i < subCategorias.size(); i++) {
-//		    		if (categoriaSeleccionada != null) {			
-//						if (categoriaSeleccionada.getNombre().equals(subCategorias.get(i).getCategoria().getNombre())) {
-//							comboBox_Subcategoria.addItem(subCategorias.get(i));
-//						}
-//		    		}
-//				}
+		    	rellenarSubcat();
 		    }
 		});
 		
@@ -511,50 +508,7 @@ public class TiendaGUI extends JFrame {
 		botonBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				model.removeAllElements();
-				ArrayList<Producto> modelTemp = acciones.buscar(txtBuscador.getText(), (Categoria) comboBox_Categoria.getSelectedItem(), (SubCategoria) comboBox_Subcategoria.getSelectedItem(),
-														(Marca) comboBoxMarca.getSelectedItem(), (Colores) comboBox_colores.getSelectedItem(), (Tallas) comboBoxTalla.getSelectedItem(),
-															productos);
-				
-				for (int i = 0; i < modelTemp.size(); i++) {
-					model.addElement(modelTemp.get(i));
-				}
-				
-//				textoBuscador = txtBuscador.getText();
-//				categoriaSeleccionada = (Categoria) comboBox_Categoria.getSelectedItem();
-//				subCategoriaSeleccionada = (SubCategoria) comboBox_Subcategoria.getSelectedItem();
-//				marcaSeleccionada = (Marca) comboBoxMarca.getSelectedItem();
-//				colorSelecionado = (Colores) comboBox_colores.getSelectedItem();
-//				tallaSeleccionada = (Tallas) comboBoxTalla.getSelectedItem();
-//
-//				model.removeAllElements();
-//				System.out.println(productos);
-//				for (int i = 0; i < productos.size(); i++) {
-//					System.out.println(productos.get(i).getMarca() + "==" + marcaSeleccionada);
-//					if (productos.get(i).getNombre().toLowerCase().indexOf(textoBuscador.toLowerCase()) == 0) {
-//						
-//						System.out.println(productos.get(i).getSubcategoria().getCategoria() + " =? " + categoriaSeleccionada + (productos.get(i).getSubcategoria().getCategoria() == categoriaSeleccionada));
-//						System.out.println(productos.get(i).getSubcategoria() + " =? " + subCategoriaSeleccionada + (productos.get(i).getSubcategoria() == subCategoriaSeleccionada));
-//						System.out.println(productos.get(i).getMarca() + " =? " + marcaSeleccionada + (productos.get(i).getMarca() == marcaSeleccionada));
-//						//System.out.println(productos.get(i).getTallas_colores());
-//						//System.out.println(productos.get(i).getTallas_colores().containsValue(tallaSeleccionada));
-//						//System.out.println(( colorSelecionado == null || productos.get(i).getTallas_colores().containsKey(colorSelecionado.toString() ) && (tallaSeleccionada == null || productos.get(i).getTallas_colores().containsValue(tallaSeleccionada) ) ));
-//						//System.out.println(colorSelecionado + " =? " + productos.get(i).getTallas_colores().get(colorSelecionado.toString()) + productos.get(i).getTallas_colores().containsKey(colorSelecionado.toString()));
-//						System.out.println();
-//						
-//						if 		(
-//								   (categoriaSeleccionada == null || productos.get(i).getSubcategoria().getCategoria().getNombre().equals(categoriaSeleccionada.getNombre())) 
-//								&& (subCategoriaSeleccionada == null || productos.get(i).getSubcategoria().getNombre().equals(subCategoriaSeleccionada.getNombre()))
-//								&& (marcaSeleccionada == null || productos.get(i).getMarca().getNombre().equals(marcaSeleccionada.getNombre()))
-//								//&& ((colorSelecionado == null || productos.get(i).getTallas_colores().containsKey(colorSelecionado))  &&  (tallaSeleccionada == null || productos.get(i).getTallas_colores().containsValue(tallaSeleccionada)))
-//								)
-//								
-//						{
-//
-//							model.addElement(productos.get(i));
-//						}
-//					}
-//
-//				}
+				buscar();
 			}
 		});
 
@@ -562,23 +516,12 @@ public class TiendaGUI extends JFrame {
 		botonBuscar.setBounds(136, 11, 70, 38);
 		panel.add(botonBuscar);
 		
-		JButton botonListaDeseados = new JButton("ListaDeseados");
+		botonListaDeseados = new JButton("ListaDeseados");
+		botonListaDeseados.setEnabled(false);
 		botonListaDeseados.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				try {
-					if (!TiendaGUI.getCliente().equals(null)) {
-						esto.setEnabled(false);
-						updateUserList(appTarget);
-						ListaDeseadosGUI listaDeseados= new ListaDeseadosGUI(esto, appTarget);
-						listaDeseados.setVisible(true);
-						dispose();
-					}else {
-						botonListaDeseados.setEnabled(false);
-					}
-				}
-				catch(NullPointerException nl) {
-					JOptionPane.showMessageDialog(null, "Ningun Usuario ha Iniciado Sesion", "Validar Credenciales", JOptionPane.INFORMATION_MESSAGE);
-				}
+				botonListaDeseados();
+				
 				
 			}
 		});
@@ -611,6 +554,8 @@ public class TiendaGUI extends JFrame {
 		cargarLista();
 		botonLogin.setText("Log out");
 		botonLogin.updateUI();
+		botonListaDeseados.setEnabled(true);
+		botonHistorial.setEnabled(true);
 	}
 	
 	private static void cargarLista() {
@@ -629,4 +574,76 @@ public class TiendaGUI extends JFrame {
 		botonComprar.setVisible(true);
 		botonAnyadir.setVisible(true);
     }
+    
+    public void buscar() {
+
+    	textoBuscador = txtBuscador.getText();
+    	categoriaSeleccionada = (Categoria) comboBox_Categoria.getSelectedItem();
+    	subCategoriaSeleccionada = (SubCategoria) comboBox_Subcategoria.getSelectedItem();
+    	marcaSeleccionada = (Marca) comboBoxMarca.getSelectedItem();
+    	colorSelecionado = (Colores) comboBox_colores.getSelectedItem();
+    	tallaSeleccionada = (Tallas) comboBoxTalla.getSelectedItem();
+
+    	model.removeAllElements();
+    	System.out.println(productos);
+    	for (int i = 0; i < productos.size(); i++) {
+    		System.out.println(productos.get(i).getMarca() + "==" + marcaSeleccionada);
+    		if (productos.get(i).getNombre().toLowerCase().indexOf(textoBuscador.toLowerCase()) == 0) {
+
+    			System.out.println(productos.get(i).getSubcategoria().getCategoria() + " =? " + categoriaSeleccionada + (productos.get(i).getSubcategoria().getCategoria() == categoriaSeleccionada));
+    			System.out.println(productos.get(i).getSubcategoria() + " =? " + subCategoriaSeleccionada + (productos.get(i).getSubcategoria() == subCategoriaSeleccionada));
+    			System.out.println(productos.get(i).getMarca() + " =? " + marcaSeleccionada + (productos.get(i).getMarca() == marcaSeleccionada));
+    			System.out.println();
+
+    			if 		(
+    					(categoriaSeleccionada == null || productos.get(i).getSubcategoria().getCategoria().getNombre().equals(categoriaSeleccionada.getNombre())) 
+    					&& (subCategoriaSeleccionada == null || productos.get(i).getSubcategoria().getNombre().equals(subCategoriaSeleccionada.getNombre()))
+    					&& (marcaSeleccionada == null || productos.get(i).getMarca().getNombre().equals(marcaSeleccionada.getNombre()))
+    					//&& ((colorSelecionado == null || productos.get(i).getTallas_colores().containsKey(colorSelecionado))  &&  (tallaSeleccionada == null || productos.get(i).getTallas_colores().containsValue(tallaSeleccionada)))
+    					)
+
+    			{
+
+    				model.addElement(productos.get(i));
+    			}
+    		}
+
+    	}
+
+    }
+    
+    public void rellenarSubcat() {
+    	comboBox_Subcategoria.removeAllItems();
+    	comboBox_Subcategoria.addItem(null);		    	
+    	categoriaSeleccionada = (Categoria) comboBox_Categoria.getSelectedItem();
+    	for (int i = 0; i < subCategorias.size(); i++) {
+    		if (categoriaSeleccionada != null) {			
+    			if (categoriaSeleccionada.getNombre().equals(subCategorias.get(i).getCategoria().getNombre())) {
+    				comboBox_Subcategoria.addItem(subCategorias.get(i));
+    			}
+    		}
+    	}
+    }
+    
+    public void botonListaDeseados() {
+    	System.out.println(cliente);
+    	esto.setEnabled(false);
+    	updateUserList(appTarget);
+    	ListaDeseadosGUI listaDeseados= new ListaDeseadosGUI(esto, appTarget);
+    	listaDeseados.setVisible(true);
+    	dispose();
+
+    }
+    
+    public void botonHistorial() {
+
+    	esto.setEnabled(false);
+    	updateUserList(appTarget);
+    	HistorialGUI historial= new HistorialGUI(esto, pedidos, appTarget);
+    	historial.setVisible(true);
+    	contentPane.setEnabled(false);
+    	dispose();
+
+    }
+
 }
