@@ -81,13 +81,25 @@ public class ListaDeseadosGUITest {
 	@Ignore
 	@Test 
 	public void eliminar() {
-		
+		Producto producto = null;
+		for (Producto p : productos){
+			if (p1.getNombre().equals(p.getNombre())) {
+				producto = p;
+			}
+		}
+		 listaDeseadosGUI.getProductosDeseados().remove(producto);
+		 assertEquals(productos, null);
 	}
 	
 	@Ignore
 	@Test
 	public void anyadir() {
+
+		if (!productos.contains(p1)) {
+			productos.add(p1);
+		}
 		
+		assertEquals(productos.get(0), p1);
 	}
 	
 	

@@ -25,11 +25,10 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 
-import es.deusto.spq.models.Cliente;
 import es.deusto.spq.models.Producto;
 
 @SuppressWarnings("serial")
-public class ListaDeseadosGUI extends JFrame implements IListaDeseados{
+public class ListaDeseadosGUI extends JFrame {
 
 	private List<Producto> productos_deseados = new ArrayList<>();
 	public static JPanel contentPane, imagePlacehold;
@@ -153,7 +152,7 @@ public class ListaDeseadosGUI extends JFrame implements IListaDeseados{
 		
 	}
 	
-	@Override
+
 	public void updateClient(final WebTarget appTarget){
 		System.out.println(productos_deseados);
 		TiendaGUI.getCliente().setProductosDeseados((ArrayList<Producto>) productos_deseados);
@@ -161,7 +160,7 @@ public class ListaDeseadosGUI extends JFrame implements IListaDeseados{
 		clientesTarget.request(MediaType.APPLICATION_JSON).post(Entity.entity(TiendaGUI.getCliente(), MediaType.APPLICATION_JSON));
 	}
 	
-	@Override
+	
 	public void eliminar() {
 		Producto p1 = listaElementos.getSelectedValue();
 		model.removeElement(p1);
@@ -175,7 +174,7 @@ public class ListaDeseadosGUI extends JFrame implements IListaDeseados{
 		getProductosDeseados().remove(producto);
 	}
 	
-	@Override
+	
 	public void anyadir() {
 		productoSeleccionado = listaElementos.getSelectedValue();
 		 if (!TiendaGUI.productos_cesta.contains(productoSeleccionado)){
@@ -183,12 +182,12 @@ public class ListaDeseadosGUI extends JFrame implements IListaDeseados{
 		 }
 	}
 	
-	@Override
+	
 	public List<Producto> getProductosDeseados() {
 		return this.productos_deseados;
 	}
 	
-	@Override
+	
 	public void setProductosDeseados(List<Producto> productos_deseados) {
 		this.productos_deseados = productos_deseados;
 	}
