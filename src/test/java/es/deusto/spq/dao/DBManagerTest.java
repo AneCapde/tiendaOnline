@@ -5,7 +5,6 @@ import static org.junit.Assert.assertEquals;
 import java.util.Date;
 import java.util.HashMap;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import es.deusto.spq.models.Categoria;
@@ -69,6 +68,8 @@ public class DBManagerTest {
 		
 		
 		DBManager.getInstance().store(pago1);
+		System.out.println();
+		assertEquals(pago1.getDNI().toString(), DBManager.getInstance().getPago(cliente).getDNI().toString());
 		assertEquals(pago1.getCredencialesPaypal().toString(), DBManager.getInstance().getPaypal(cliente).toString());
 		assertEquals(pago1.getCredencialesVisa().toString(), DBManager.getInstance().getVisa(cliente).toString());
 		DBManager.getInstance().deleteObjectFromDB(pago1);

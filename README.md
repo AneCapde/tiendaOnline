@@ -4,11 +4,11 @@ Proyecto Tienda Online
 Configuración
 ------------- 
 
-**Construcción y prueba**
+**Test Unitarios**
 
 Se puede construir el proyecto y lanzar las pruebas unitarias con el comando
 
-	mvn test
+	mvn test -PunitTest
 
 **Base de datos**
 
@@ -35,7 +35,18 @@ Las clases de datos deben ser procesadas antes de generar las tablas con el coma
 Para la creación de las tablas se debe ejecutar el comando de maven
 
     mvn datanucleus:schema-create
+    
+**Test de Integracion**
 
+Se pueden lanzar las pruebas de Integracion con el comando
+
+    mvn test -PpreformingTest    
+    
+**Test de Rendimiento**
+
+Se pueden lanzar las pruebas de Rendimiento con el comando
+
+    mvn test -PunitTest    
 
 **Datos de prueba**
 
