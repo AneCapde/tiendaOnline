@@ -44,6 +44,8 @@ public class HistorialGUI extends JFrame{
 	private JButton botonDevolver;
 	private ArrayList<Producto> productos = new ArrayList<>();
 	private List<Pedido> pedidos = new ArrayList<>();
+	private JTextArea textArea;
+	private JList<Pedido> list;
 	
 	
 	
@@ -53,11 +55,6 @@ public class HistorialGUI extends JFrame{
 		GenericType<List<Pedido>> genericType_pedido = new GenericType<List<Pedido>>() {};
 		pedidos = pedidoTarget.request(MediaType.APPLICATION_JSON).get(genericType_pedido);
 		
-		
-//		for (Pedido p : pedidos){
-//			pedidos.add(p);
-//		}
-//		
 		System.out.println(pedidos + "kfjwofjiwqjgiwqjgpi");
 		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -90,7 +87,7 @@ public class HistorialGUI extends JFrame{
 		lblCaracteristicas.setFont(new Font("Segoe UI Black", Font.PLAIN, 14));
 		contentPane.add(lblCaracteristicas);
 		
-		JTextArea textArea = new JTextArea();
+		textArea = new JTextArea();
 		textArea.setBounds(452, 220, 382, 180);
 		textArea.setEditable(false);
 		contentPane.add(textArea);
@@ -100,7 +97,7 @@ public class HistorialGUI extends JFrame{
 		}
 		
 		//JList para los pedidos
-		JList<Pedido> list = new JList<>(model);
+		list = new JList<>(model);
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPane.setViewportView(list);
 		
@@ -111,21 +108,11 @@ public class HistorialGUI extends JFrame{
 			
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
-				pedidoSeleccionado = list.getSelectedValue();
-				textArea.setText(null);
-				if (pedidoSeleccionado != null) {
-					//un pedido puede tener mas de un producto coger la imagen de todos los productos
-					//textArea.append(pedidoSeleccionado.getProducto().getImage() + "\n");
-					textArea.append("- CLIENTE: " + pedidoSeleccionado.getCliente().DNI + "\n");
-					textArea.append("- DESCRIPCIÓN: " + pedidoSeleccionado.getFecha() + "\n");
-					textArea.append("- PRODUCTO: " + pedidoSeleccionado.getProducto() + "\n");
-					textArea.append("- ESTADO: " + pedidoSeleccionado.getEstado() + "\n");
-					textArea.append(" -IMPORTE: " + pedidoSeleccionado.getImporte() + "\n");
-					textArea.append(" -CANTIDAD: " + pedidoSeleccionado.getCantidad() + "\n");
-					
-					
-				}
+				cargarLista();
+				
 			}
+
+			
 		});
 		
 		//Obtenemos los productos que hay dentro de un pedido para mostrar el articulo junto con la foto
@@ -193,13 +180,41 @@ public class HistorialGUI extends JFrame{
 		contentPane.add(btnInicio);
 		btnInicio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				setVisible(false);
-				TiendaGUI tienda = new TiendaGUI();
-				tienda.setVisible(true);
-				TiendaGUI.setCliente(TiendaGUI.getCliente());
-				dispose();
+				botonInicio();
+				
 			}
+
+			
 		});
+		
+		
+		
+	}
+	
+	private void botonInicio() {
+		setVisible(false);
+		TiendaGUI tienda = new TiendaGUI();
+		tienda.setVisible(true);
+		TiendaGUI.setCliente(TiendaGUI.getCliente());
+		dispose();
+		
+	}
+	
+	private void cargarLista() {
+		pedidoSeleccionado = list.getSelectedValue();
+		textArea.setText(null);
+		if (pedidoSeleccionado != null) {
+			//un pedido puede tener mas de un producto coger la imagen de todos los productos
+			//textArea.append(pedidoSeleccionado.getProducto().getImage() + "\n");
+			textArea.append("- CLIENTE: " + pedidoSeleccionado.getCliente().DNI + "\n");
+			textArea.append("- DESCRIPCIÓN: " + pedidoSeleccionado.getFecha() + "\n");
+			textArea.append("- PRODUCTO: " + pedidoSeleccionado.getProducto() + "\n");
+			textArea.append("- ESTADO: " + pedidoSeleccionado.getEstado() + "\n");
+			textArea.append(" -IMPORTE: " + pedidoSeleccionado.getImporte() + "\n");
+			textArea.append(" -CANTIDAD: " + pedidoSeleccionado.getCantidad() + "\n");
+			
+			
+		}
 		
 	}
 
