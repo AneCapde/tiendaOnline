@@ -40,13 +40,13 @@ Para la creación de las tablas se debe ejecutar el comando de maven
 
 Se pueden lanzar las pruebas de Integracion con el comando
 
-    mvn test -PpreformingTest    
+	mvn test -PintegrationTest
     
 **Test de Rendimiento**
 
 Se pueden lanzar las pruebas de Rendimiento con el comando
 
-    mvn test -PunitTest    
+    mvn test -PpreformingTest   
 
 **Datos de prueba**
 
