@@ -274,13 +274,16 @@ public class DBManager implements IDBManager{
 			System.out.println("  * Querying a Pedido : " + fecha);
 			tx.begin();
 
-			Query<?> query = pm.newQuery("SELECT FROM " + Pedido.class.getName() + " WHERE fecha == " + fecha + "");
-			query.setUnique(true);
-			pedido = (Pedido) query.execute();
+			Extent<Pedido> extent = pm.getExtent(Pedido.class, true);
+            for (Pedido p : extent) {
+                if (p.getFecha().equals(fecha)){
+                    pedido = p;
+                }
+            }
 
 			tx.commit();
 		} catch (Exception ex) {
-			System.out.println(" $ Error querying a Cliente: " + ex.getMessage());
+			System.out.println(" $ Error querying Pedido: " + ex.getMessage());
 		} finally {
 			if (tx != null && tx.isActive()) {
 				tx.rollback();
