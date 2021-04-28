@@ -88,7 +88,7 @@ public class CestaGUI extends JFrame implements ICesta {
 				
 				esto.setEnabled(false);
 				esto.setVisible(false);
-				VentanaMetodoPago vmp = new VentanaMetodoPago(esto, pedido, appTarget);
+				VentanaMetodoPago vmp = new VentanaMetodoPago(ventanaPadre, pedido, appTarget);
 				vmp.setVisible(true);
 				esto.setEnabled(false);
 			}
