@@ -266,6 +266,20 @@ public class VentanaRegistro extends JFrame {
 		return valido;
 	}
 	
+
+//	private void datosValidar(String email, String nombre, String apellidos, String dni, String telefono, String dir, String cod_post, String provincia,
+//			String localidad) {
+//		email.set
+//		nombre.setText(nombre);
+//		apellidos.setText(apellido);
+//		dni.setText(dni);
+//		telefono.setText(telefono);
+//		dir.setText(dir);
+//		cod_post.setText(cod_post);
+//		
+//		
+//	}
+//	
 	public VentanaRegistro(final JFrame ventanaPadre, WebTarget appTarget ) {
 
 		final WebTarget clientesTarget = appTarget.path("/clientes");

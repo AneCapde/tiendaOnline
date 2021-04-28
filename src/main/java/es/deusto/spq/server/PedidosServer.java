@@ -22,13 +22,17 @@ import es.deusto.spq.models.Producto;
 public class PedidosServer {
 
     @GET
+    @Path("{dni}")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Pedido> getPedidos(Cliente cliente) {
+    public List<Pedido> getPedidos(@PathParam("dni") String Dni) {
     	List<Pedido> allPedidos = DBManager.getInstance().getPedidos();
     	ArrayList<Pedido> pedidosCliente = new ArrayList<>();
+    	Cliente client = DBManager.getInstance().getCliente(Dni);
+    	String dni1 = client.getDNI();
     	for (Pedido pedido : allPedidos) {
 			Cliente clientePedido = DBManager.getInstance().getCliente(pedido.getCliente().getDNI());
-			if(cliente.equals(clientePedido)) {
+			String dni2 = clientePedido.getDNI();
+			if(dni1.equals(dni2)) {
 				pedidosCliente.add(pedido);
 	    		
 	    	}

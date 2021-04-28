@@ -322,7 +322,7 @@ public class TiendaGUI extends JFrame {
 
 //				 pedidoTarget.request(MediaType.APPLICATION_JSON)
 //				 		.post(Entity.entity(pedido, MediaType.APPLICATION_JSON));
-				 pedidos.add(pedido);
+				 //pedidos.add(pedido);
 				
 			}
 		});
@@ -639,7 +639,8 @@ public class TiendaGUI extends JFrame {
 
     	esto.setEnabled(false);
     	updateUserList(appTarget);
-    	HistorialGUI historial= new HistorialGUI(esto, pedidos, appTarget);
+    	//HistorialGUI historial= new HistorialGUI(esto, pedidos, appTarget);
+    	HistorialGUI historial= new HistorialGUI(esto, appTarget);
     	historial.setVisible(true);
     	contentPane.setEnabled(false);
     	dispose();

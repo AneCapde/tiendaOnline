@@ -1,6 +1,7 @@
 package es.deusto.spq.cliente;
 
 import java.awt.BorderLayout;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
@@ -26,6 +27,8 @@ import javax.swing.border.LineBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.GenericType;
+import javax.ws.rs.core.MediaType;
 
 import es.deusto.spq.models.Pedido;
 import es.deusto.spq.models.Producto;
@@ -40,9 +43,23 @@ public class HistorialGUI extends JFrame{
 	private Producto productoSeleccionado;
 	private JButton botonDevolver;
 	private ArrayList<Producto> productos = new ArrayList<>();
+	private List<Pedido> pedidos = new ArrayList<>();
 	
 	
-	public HistorialGUI(final JFrame ventanaPadre, List<Pedido> pedidos, WebTarget appTarget) {
+	
+	public HistorialGUI(final JFrame ventanaPadre, WebTarget appTarget) {
+		
+		final WebTarget pedidoTarget = appTarget.path("/pedidos/").path(TiendaGUI.getCliente().getDNI());
+		GenericType<List<Pedido>> genericType_pedido = new GenericType<List<Pedido>>() {};
+		pedidos = pedidoTarget.request(MediaType.APPLICATION_JSON).get(genericType_pedido);
+		
+		
+//		for (Pedido p : pedidos){
+//			pedidos.add(p);
+//		}
+//		
+		System.out.println(pedidos + "kfjwofjiwqjgiwqjgpi");
+		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 872, 560);
 		contentPane = new JPanel();
