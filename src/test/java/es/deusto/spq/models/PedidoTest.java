@@ -38,8 +38,7 @@ public class PedidoTest {
 
 	@Test
 	public void testSetCliente() {
-		
-		
+		ped.setCliente(cli);
 		Cliente resul = ped.getCliente();
 		assertEquals(cli, resul);
 	}
