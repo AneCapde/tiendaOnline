@@ -25,7 +25,11 @@ public class Pago {
     }
 
     public String getDNI() {
-		return this.DNI;
+		return DNI;
+	}
+
+	public void setDNI(String DNI) {
+		this.DNI = DNI;
 	}
 
 	public HashMap<String, String> getCredencialesVisa() {

@@ -319,61 +319,87 @@ public class DBManager implements IDBManager{
 		return producto;
 	}
 
-	 @Override
-	 public HashMap<String, String> getPaypal(Cliente cliente) {
-	 	PersistenceManager pm = pmf.getPersistenceManager();
-	 	pm.getFetchPlan().setMaxFetchDepth(4);
-	 	Transaction tx = pm.currentTransaction();
-	 	Pago pago = null; 
-	 	HashMap<String, String> paypal = null;
-	 	try {
-	 		System.out.println("  * Querying Paypal account : " + cliente.getDNI());
-	 		tx.begin();
+	@Override
+	public HashMap<String, String> getPaypal(Cliente cliente) {
+	PersistenceManager pm = pmf.getPersistenceManager();
+	pm.getFetchPlan().setMaxFetchDepth(4);
+	Transaction tx = pm.currentTransaction();
+	Pago pago = null; 
+	HashMap<String, String> paypal = null;
+	try {
+		System.out.println("  * Querying Paypal account : " + cliente.getDNI());
+		tx.begin();
 
-	 		Query<?> query = pm.newQuery("SELECT FROM " + Pago.class.getName() + " WHERE DNI == '" + cliente.getDNI() + "'");
-	 		query.setUnique(true);
-	 		pago = (Pago) query.execute();
-	 		paypal = pago.getCredencialesPaypal();
+		Query<?> query = pm.newQuery("SELECT FROM " + Pago.class.getName() + " WHERE DNI == '" + cliente.getDNI() + "'");
+		query.setUnique(true);
+		pago = (Pago) query.execute();
+		paypal = pago.getCredencialesPaypal();
 
-	 		tx.commit();
-	 	} catch (Exception ex) {
-	 		System.out.println(" $ Error querying paypal account: " + ex.getMessage());
-	 	} finally {
-	 		if (tx != null && tx.isActive()) {
-	 			tx.rollback();
-	 		}
-	 		pm.close();
-	 	}
-	 	return paypal;
-	 }
+		tx.commit();
+	} catch (Exception ex) {
+		System.out.println(" $ Error querying paypal account: " + ex.getMessage());
+	} finally {
+		if (tx != null && tx.isActive()) {
+			tx.rollback();
+		}
+		pm.close();
+	}
+	return paypal;
+	}
 
-	 @Override
-	 public HashMap<String, String> getVisa(Cliente cliente) {
-	 	PersistenceManager pm = pmf.getPersistenceManager();
-	 	pm.getFetchPlan().setMaxFetchDepth(4);
-	 	Transaction tx = pm.currentTransaction();
-	 	Pago pago = null; 
-	 	HashMap<String, String> visa = null;
-	 	try {
-	 		System.out.println("  * Querying Visa account : " + cliente.getDNI());
-	 		tx.begin();
+	@Override
+	public HashMap<String, String> getVisa(Cliente cliente) {
+	PersistenceManager pm = pmf.getPersistenceManager();
+	pm.getFetchPlan().setMaxFetchDepth(4);
+	Transaction tx = pm.currentTransaction();
+	Pago pago = null; 
+	HashMap<String, String> visa = null;
+	try {
+		System.out.println("  * Querying Visa account : " + cliente.getDNI());
+		tx.begin();
 
-	 		Query<?> query = pm.newQuery("SELECT FROM " + Pago.class.getName() + " WHERE DNI == '" + cliente.getDNI() + "'");
-	 		query.setUnique(true);
-	 		pago = (Pago) query.execute();
-	 		visa = pago.getCredencialesVisa();
+		Query<?> query = pm.newQuery("SELECT FROM " + Pago.class.getName() + " WHERE DNI == '" + cliente.getDNI() + "'");
+		query.setUnique(true);
+		pago = (Pago) query.execute();
+		visa = pago.getCredencialesVisa();
 
-	 		tx.commit();
-	 	} catch (Exception ex) {
-	 		System.out.println(" $ Error querying Visa account: " + ex.getMessage());
-	 	} finally {
-	 		if (tx != null && tx.isActive()) {
-	 			tx.rollback();
-	 		}
-	 		pm.close();
-	 	}
-	 	return visa;
-	 }
+		tx.commit();
+	} catch (Exception ex) {
+		System.out.println(" $ Error querying Visa account: " + ex.getMessage());
+	} finally {
+		if (tx != null && tx.isActive()) {
+			tx.rollback();
+		}
+		pm.close();
+	}
+	return visa;
+	}
+
+	@Override
+	public Pago getPago(Cliente cliente) {
+	PersistenceManager pm = pmf.getPersistenceManager();
+	pm.getFetchPlan().setMaxFetchDepth(4);
+	Transaction tx = pm.currentTransaction();
+	Pago pago = null; 
+	try {
+		System.out.println("  * Querying Pago : " + cliente.getDNI());
+		tx.begin();
+
+		Query<?> query = pm.newQuery("SELECT FROM " + Pago.class.getName() + " WHERE DNI == '" + cliente.getDNI() + "'");
+		query.setUnique(true);
+		pago = (Pago) query.execute();
+
+		tx.commit();
+	} catch (Exception ex) {
+		System.out.println(" $ Error querying pago: " + ex.getMessage());
+	} finally {
+		if (tx != null && tx.isActive()) {
+			tx.rollback();
+		}
+		pm.close();
+	}
+	return pago;
+	}
     
     @Override
 	public void updateCliente(Cliente cliente) {

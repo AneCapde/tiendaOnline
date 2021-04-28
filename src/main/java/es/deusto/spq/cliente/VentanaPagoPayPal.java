@@ -51,17 +51,24 @@ public class VentanaPagoPayPal extends JFrame {
     public VentanaPagoPayPal(final JFrame ventanaPadre, Pedido pedido, WebTarget appTarget) {
         
         //REFERENCIA A LAS CREDENCIALES, NO A LOS PAGOS
-        final WebTarget pagoTarget = appTarget.path("/pagos/paypal/").path(TiendaGUI.getCliente().getDNI());
+        final WebTarget paypalTarget = appTarget.path("/pagos/paypal/").path(TiendaGUI.getCliente().getDNI());
+		GenericType<HashMap<String,String>> genericType_paypal = new GenericType<HashMap<String,String>>() {};
+		HashMap<String,String> credencialespaypal = paypalTarget.request(MediaType.APPLICATION_JSON).get(genericType_paypal);
+
+		final WebTarget visaTarget = appTarget.path("/pagos/visa/").path(TiendaGUI.getCliente().getDNI());
+		GenericType<HashMap<String,String>> genericType_visa = new GenericType<HashMap<String,String>>() {};
+		HashMap<String,String> credencialesvisa = visaTarget.request(MediaType.APPLICATION_JSON).get(genericType_visa);
+
+		final WebTarget pagoTarget = appTarget.path("/pagos/pago/").path(TiendaGUI.getCliente().getDNI());
+		GenericType<Pago> genericType_pago = new GenericType<Pago>() {};
+		Pago credencialespago = pagoTarget.request(MediaType.APPLICATION_JSON).get(genericType_pago);
+
 		//UN PEDIDO SE CREARÁ SOLO CUANDO SE HAYA COMPROBADO SU PAGO
 		final WebTarget pedidoTarget = appTarget.path("/pedidos");
+		final WebTarget updateTarget = appTarget.path("/pagos/update");
 
-		// GenericType<List<Pago>> genericType_pago = new GenericType<List<Pago>>() {};
-		// List<Pago> credenciales = pagoTarget.request(MediaType.APPLICATION_JSON).get(genericType_pago);
    
-		GenericType<HashMap<String,String>> genericType_pago = new GenericType<HashMap<String,String>>() {};
-		HashMap<String,String> credenciales = pagoTarget.request(MediaType.APPLICATION_JSON).get(genericType_pago);
-   
-		System.out.println(credenciales);
+		System.out.println(credencialespaypal);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setResizable(false);
 	    setSize(499, 336);
@@ -114,7 +121,7 @@ public class VentanaPagoPayPal extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				for(Entry<String, String> c1: credenciales.entrySet()) {
+				for(Entry<String, String> c1: credencialespaypal.entrySet()) {
 					String email = c1.getKey();
 					String password = c1.getValue();
 					System.out.println(email + " " + password);
@@ -136,34 +143,27 @@ public class VentanaPagoPayPal extends JFrame {
 			}
 		});
 
-		//SI EL CLIENTE TIENE PAYPAL REGISTRADO, SE MUESTRA EMAIL AUTOMATICAMENTE
-		accountField = new JTextField();
-		accountField.setBounds(170, 38, 250, 35);
-		pCentral.add(accountField);
-		if (TiendaGUI.getCliente().getDNI().equals(pedido.getCliente().getDNI())) {
-			for(Entry<String, String> c: credenciales.entrySet()) {
-				String email = c.getKey();
-				accountField.setText(email);
-				bAceptar.setVisible(true);
-			}
-		}
-
 		bCredenciales = new JButton("Crear");
 		bCredenciales.setBounds((this.getWidth()/100)*5 + 70, (this.getHeight()/18)*8, (this.getWidth()/35)*10, (this.getHeight()/18)*3);
 		pInferior.add(bCredenciales);
-		bCredenciales.setVisible(false);
+		bCredenciales.setVisible(true);
 		bCredenciales.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (accountField.toString().isEmpty() == false && passwordField.toString().isEmpty() == false) {
+				String pass = new String(passwordField.getPassword());
+				if (accountField.getText().isEmpty() == false && pass.isEmpty() == false) {
 					
-					String pass = new String(passwordField.getPassword());
-					credenciales.clear();
-					credenciales.put(accountField.getText(), pass);
-					// credenciales.get(0).setCredencialesPaypal(cv);
-					//UPDATE BD
-					Pago pago = new Pago(TiendaGUI.getCliente().getDNI(), null,credenciales);
-					pagoTarget.request(MediaType.APPLICATION_JSON).post(Entity.entity(pago, MediaType.APPLICATION_JSON));
+					credencialespaypal.clear();
+					credencialespaypal.put(accountField.getText(), pass);
+
+					// ESTAN BIEN ESTOS DATOS, QUEREMOS ACTUALIZAR CON ELLOS EL CLIENTE EN BD
+					System.out.println(credencialespago.getDNI() + "  " + credencialesvisa + "  " + credencialespaypal);
+
+					//PASAMOS A SERVER EL objeto pago con datos actualizados
+					credencialespago.setDNI(TiendaGUI.getCliente().getDNI());
+					credencialespago.setCredencialesPaypal(credencialespaypal);
+					credencialespago.setCredencialesVisa(credencialesvisa);
+					updateTarget.request(MediaType.APPLICATION_JSON).post(Entity.entity(credencialespago, MediaType.APPLICATION_JSON));
 
 					//Boton aceptar
 					bCredenciales.setEnabled(false);
@@ -171,7 +171,6 @@ public class VentanaPagoPayPal extends JFrame {
 					bAceptar.setEnabled(true);
 					bAceptar.setVisible(true);
 
-					// accountField.setText(credenciales.get(0).getEmailPaypal(credenciales.get(0).getCredencialesPaypal()));
 					revalidate();
 					JOptionPane.showMessageDialog(null, "Credenciales actualizadas", "Completado con éxito", JOptionPane.INFORMATION_MESSAGE);
 				} else {
@@ -180,18 +179,31 @@ public class VentanaPagoPayPal extends JFrame {
 			}
 		});
 
+		//SI EL CLIENTE TIENE PAYPAL REGISTRADO, SE MUESTRA EMAIL AUTOMATICAMENTE
+		accountField = new JTextField();
+		accountField.setBounds(170, 38, 250, 35);
+		pCentral.add(accountField);
+		if (TiendaGUI.getCliente().getDNI().equals(pedido.getCliente().getDNI())) {
+			for(Entry<String, String> c: credencialespaypal.entrySet()) {
+				String email = c.getKey();
+				accountField.setText(email);
+				bAceptar.setVisible(true);
+				bCredenciales.setVisible(false);
+			}
+		}
+
 		bCrearCuenta = new JButton("Cambiar cuenta");
 		bCrearCuenta.setBounds((this.getWidth()/100)*5 - 100, (this.getHeight()/18)*8, (this.getWidth()/35)*10, (this.getHeight()/18)*3);
 		pInferior.add(bCrearCuenta);
 		bCrearCuenta.addActionListener(new ActionListener() {
 			@Override
-				public void actionPerformed(ActionEvent e) {
-					
-					bAceptar.setEnabled(false);
-					bAceptar.setVisible(false);
-					bCredenciales.setEnabled(true);
-					bCredenciales.setVisible(true);
-				}
-			});	
+			public void actionPerformed(ActionEvent e) {
+				
+				bAceptar.setEnabled(false);
+				bAceptar.setVisible(false);
+				bCredenciales.setEnabled(true);
+				bCredenciales.setVisible(true);
+			}
+		});	
     }
 }

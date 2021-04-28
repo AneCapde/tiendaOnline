@@ -34,16 +34,51 @@ public class PagosServer {
         HashMap<String, String> credencialesVisa = DBManager.getInstance().getVisa(cliente);
 	    return credencialesVisa;
 	}
-    @POST
-    @Path("/paypal")
-    @Consumes(MediaType.APPLICATION_JSON)
-    public void updatePaypal(Pago pago) {
-        DBManager.getInstance().updatePago(pago);
+    @GET
+    @Path("/pago/{DNI}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Pago pago(@PathParam("DNI") String dni) {
+        Cliente cliente = DBManager.getInstance().getCliente(dni);
+        Pago pago = DBManager.getInstance().getPago(cliente);
+	    return pago;
 	}
     @POST
-    @Path("/visa")
+    @Path("/update")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void updateVisa(Pago pago) {
-        DBManager.getInstance().updatePago(pago);
+    public void updatePago(Pago pago) {
+        Cliente c = DBManager.getInstance().getCliente(pago.getDNI());
+        Pago p = DBManager.getInstance().getPago(c);
+
+        p.setCredencialesVisa(pago.getCredencialesVisa());
+        p.setCredencialesPaypal(pago.getCredencialesPaypal());
+        System.out.println(p.getDNI() + " " + p.getCredencialesPaypal() + " " + p.getCredencialesVisa());
+
+        //SE AÑADE UN OBJETO NUEVO
+        DBManager.getInstance().store(p);
 	}
+    // @POST
+    // @Path("/update/paypal")
+    // @Consumes(MediaType.APPLICATION_JSON)
+    // public void updatePaypal(Pago pago) {
+    //     System.out.println(pago.getDNI() + " " + pago.getCredencialesPaypal() + " " + pago.getCredencialesVisa());
+
+    //     pago.setCredencialesVisa(DBManager.getInstance().getVisa(DBManager.getInstance().getCliente(pago.getDNI())));
+    //     System.out.println(pago.getDNI() + " " + pago.getCredencialesPaypal() + " " + pago.getCredencialesVisa());
+
+    //     //SE AÑADE UN OBJETO NUEVO
+    //     // DBManager.getInstance().store(pago);
+    //     DBManager.getInstance().updatePago(pago);
+    //     // DBManager.getInstance().store(pago);
+	// }
+    // @POST
+    // @Path("/update/visa")
+    // @Consumes(MediaType.APPLICATION_JSON)
+    // public void updateVisa(Pago pago) {
+    //     pago.setCredencialesPaypal(DBManager.getInstance().getPaypal(DBManager.getInstance().getCliente(pago.getDNI())));
+    //     System.out.println(pago.getDNI() + " " + pago.getCredencialesPaypal() + " " + pago.getCredencialesVisa());
+    //     //SE AÑADE UN OBJETO NUEVO
+    //     // DBManager.getInstance().store(pago);
+    //     DBManager.getInstance().updatePago(pago);
+    //     // DBManager.getInstance().store(pago);
+	// }
 }
