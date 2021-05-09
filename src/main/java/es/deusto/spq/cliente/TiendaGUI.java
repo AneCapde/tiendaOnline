@@ -79,7 +79,7 @@ public class TiendaGUI extends JFrame {
 	private Tallas tallaSeleccionada;
 	private Colores colorSelecionado;
 	private Producto productoSeleccionado;
-	private static Cliente cliente;
+	static Cliente cliente;
 	private List<Producto> productos;
 	private List<Pedido> pedidos = new ArrayList<>(); 
 	private static List<Producto> productos_deseados = new ArrayList<Producto>();
@@ -631,6 +631,7 @@ public class TiendaGUI extends JFrame {
     	updateUserList(appTarget);
     	ListaDeseadosGUI listaDeseados= new ListaDeseadosGUI(esto, appTarget);
     	listaDeseados.setVisible(true);
+    	ListaDeseadosGUI.setCliente(cliente);
     	dispose();
 
     }

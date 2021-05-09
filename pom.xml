@@ -48,6 +48,13 @@
 			<version>3.9.0</version>
 			<scope>test</scope>
 		</dependency>
+		
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-inline</artifactId>
+			<version>3.8.0</version>
+			<scope>test</scope>
+		</dependency>
 
 		<dependency>
 			<groupId>org.databene</groupId>
@@ -121,8 +128,8 @@
 				<version>5.2.1</version>
 				<configuration>
 					<log4jConfiguration>${config.files.dir}/log4j.properties</log4jConfiguration>
-					<verbose>true</verbose>
-					<fork>false</fork>
+					<verbose>true</verbose>	<!-- para mostrar conflictos entre las dependencias -->
+					<fork>false</fork> <!-- porque windows tenia un limite de carcateres en la linea de comandos -->
 					<props>${config.files.dir}/datanucleus.properties</props>
 				</configuration>
 			</plugin>
@@ -133,15 +140,15 @@
 				<version>0.8.2</version>
 				<executions>
 					<execution>
-						<goals>
-							<goal>prepare-agent</goal>
+						<goals> <!-- el inicio de todos los objetivos -->
+							<goal>prepare-agent</goal> <!--el objetivo de ejecucion concreto -->
 						</goals>
 					</execution>
 					<execution>
 						<id>report</id>
 						<phase>test</phase>
 						<goals>
-							<goal>report</goal>
+							<goal>report</goal><!--el objetivo de ejecucion concreto que saca el reporte de ejecucion de rojos y verdes -->
 						</goals>
 					</execution>
 				</executions>

@@ -25,28 +25,27 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 
+import es.deusto.spq.models.Cliente;
 import es.deusto.spq.models.Producto;
 
 @SuppressWarnings("serial")
 public class ListaDeseadosGUI extends JFrame {
 
-	private List<Producto> productos_deseados = new ArrayList<>();
+	private static ArrayList<Producto> productos_deseados = new ArrayList<>();
 	public static JPanel contentPane, imagePlacehold;
 	public static JTextArea textArea;
 	public static DefaultListModel<Producto> model = new DefaultListModel<>();
 	public static Producto productoSeleccionado;
 	public static JList<Producto> listaElementos;
 	public static JButton botonAnyadir, btnEliminar;
+	static Cliente cliente;
 	final WebTarget clientesTarget;
 
 	public ListaDeseadosGUI(final JFrame ventanaPadre, final WebTarget appTarget) {
 		clientesTarget = appTarget.path("/clientes/update");
-		productos_deseados.removeAll(productos_deseados);
-		model.removeAllElements();
+		
 
-		for (Producto p : TiendaGUI.getCliente().getProductosDeseados()){
-			getProductosDeseados().add(p);
-		}
+		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 872, 560);
 		contentPane = new JPanel();
@@ -101,9 +100,7 @@ public class ListaDeseadosGUI extends JFrame {
 			}
 		});
 		
-		for (int i = 0; i < productos_deseados.size(); i++) {
-			model.addElement(productos_deseados.get(i));
-		}
+
 		
 		listaElementos = new JList<Producto>(model);
 		listaElementos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -159,9 +156,8 @@ public class ListaDeseadosGUI extends JFrame {
 		
 		clientesTarget.request(MediaType.APPLICATION_JSON).post(Entity.entity(TiendaGUI.getCliente(), MediaType.APPLICATION_JSON));
 	}
-	
-	
-	public void eliminar() {
+		
+	public ArrayList<Producto> eliminar() {
 		Producto p1 = listaElementos.getSelectedValue();
 		model.removeElement(p1);
 		listaElementos.setModel(ListaDeseadosGUI.model);
@@ -172,23 +168,41 @@ public class ListaDeseadosGUI extends JFrame {
 			}
 		}
 		getProductosDeseados().remove(producto);
+		return productos_deseados;
 	}
 	
-	
-	public void anyadir() {
+	public ArrayList<Producto> anyadir() {
 		productoSeleccionado = listaElementos.getSelectedValue();
 		 if (!TiendaGUI.productos_cesta.contains(productoSeleccionado)){
 		 	TiendaGUI.productos_cesta.add(productoSeleccionado);
 		 }
+		return productos_deseados;
+	}
+	
+	public static Cliente setCliente(Cliente cliente) {
+		ListaDeseadosGUI.cliente = cliente;
+		anyadirProductosDeseados();
+		return cliente;
+	}
+	
+	public static ArrayList<Producto> anyadirProductosDeseados() {
+		productos_deseados.removeAll(productos_deseados);
+		model.removeAllElements();
+		for (Producto p : TiendaGUI.getCliente().getProductosDeseados()){
+			getProductosDeseados().add(p);
+		}
+		for (int i = 0; i < productos_deseados.size(); i++) {
+			model.addElement(productos_deseados.get(i));
+		}
+		return productos_deseados;
+	}
+	
+	public static ArrayList<Producto> getProductosDeseados() {
+		return productos_deseados;
 	}
 	
 	
-	public List<Producto> getProductosDeseados() {
-		return this.productos_deseados;
-	}
-	
-	
-	public void setProductosDeseados(List<Producto> productos_deseados) {
-		this.productos_deseados = productos_deseados;
+	public void setProductosDeseados(ArrayList<Producto> productos_deseados) {
+		ListaDeseadosGUI.productos_deseados = productos_deseados;
 	}
 }
