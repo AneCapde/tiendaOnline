@@ -225,7 +225,7 @@ public class VentanaRegistro extends JFrame {
 									if(CodPostalCorrecto(cod_postal.getText())) {
 										if(provincia.getSelectedIndex() != 0) {
 											if(localidadCorrecto(localidad.getText())) {
-												if(rdbtnHombre.isSelected() || rdbtnMujer.isSelected() || rdbtnNoBinario.isSelected()) {
+												if(rdbtnHombre.isSelected() | rdbtnMujer.isSelected() | rdbtnNoBinario.isSelected()) {
 													valido = true;
 												}else {
 													JOptionPane.showMessageDialog(null, "Porfavor selecciona el genero", "Validar Genero", JOptionPane.INFORMATION_MESSAGE);
@@ -487,6 +487,22 @@ public class VentanaRegistro extends JFrame {
 	}
 	
 
+	public void datosValidar2(String em, String nom, String apel, String dn, String tel, String dir, String cod, String prov,
+			String loc) {
+		email.setText(em);
+		nombre.setText(nom);
+		apellidos.setText(apel);
+		dni.setText(dn);
+		telefono.setText(tel);
+		direccion.setText(dir);
+		cod_postal.setText(cod);
+		localidad.setText(loc);
+		provincia.setSelectedItem(prov);
+		rdbtnHombre.setSelected(false);	
+		rdbtnMujer.setSelected(false);	
+		rdbtnNoBinario.setSelected(false);	
+	}
+	
 	public void datosValidar(String em, String nom, String apel, String dn, String tel, String dir, String cod, String prov,
 			String loc) {
 		email.setText(em);
@@ -498,11 +514,8 @@ public class VentanaRegistro extends JFrame {
 		cod_postal.setText(cod);
 		localidad.setText(loc);
 		provincia.setSelectedItem(prov);
-		rdbtnHombre.setSelected(true);
-		
-			
+		rdbtnHombre.setSelected(true);	
 	}
-	
 	
 //	public static void main(String[] args) {
 ////		BD.initData();

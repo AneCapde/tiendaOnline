@@ -4,16 +4,13 @@ import static org.junit.Assert.*;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.EmptyStackException;
 
 import javax.swing.JFrame;
 import javax.ws.rs.client.WebTarget;
 
 import org.junit.Test;
 import org.mockito.Mockito;
-
-import es.deusto.spq.cliente.VentanaRegistro;
-
-
 
 public class VentanaRegistroTest {
 	WebTarget web = Mockito.mock(WebTarget.class);
@@ -194,32 +191,108 @@ public class VentanaRegistroTest {
 		assertEquals(true, result);	
 	}
 	
-//	@Test
-//	public void testValidarDatosEmailMal()throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-//		vent.datosValidar("em", "nom", "apel", "12333333a", "123456789", "dir", "12435", "Albacete", "loc");
-//		Method method = VentanaRegistro.class.getDeclaredMethod("Validar");
-//		method.setAccessible(true);
-//		Boolean result = (Boolean) method.invoke(vent);
-//		assertEquals(false, result);	
-//	}
-//	
-//	@Test
-//	public void testValidarDatosDniMal()throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-//		vent.datosValidar("em@gmail.com", "nom", "apel", "12333a333", "123456789", "dir", "12435", "Albacete", "loc");
-//		Method method = VentanaRegistro.class.getDeclaredMethod("Validar");
-//		method.setAccessible(true);
-//		Boolean result = (Boolean) method.invoke(vent);
-//		assertEquals(false, result);	
-//	}
-//	
-//	@Test
-//	public void testValidarDatosTelefonoMal()throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-//		vent.datosValidar("em@gmail.com", "nom", "apel", "12333333a", "12345", "dir", "12435", "Albacete", "loc");
-//		Method method = VentanaRegistro.class.getDeclaredMethod("Validar");
-//		method.setAccessible(true);
-//		Boolean result = (Boolean) method.invoke(vent);
-//		assertEquals(false, result);	
-//	}
-//	
+	@Test
+	public void testValidarDatosEmailMal()throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+		vent.datosValidar("em", "nom", "apel", "12333333a", "123456789", "dir", "12435", "Albacete", "loc");
+		Method method = VentanaRegistro.class.getDeclaredMethod("Validar");
+		method.setAccessible(true);
+		Boolean result = (Boolean) method.invoke(vent);
+		assertEquals(false, result);	
+	}
+	
+	@Test
+	public void testValidarDatosDniMal()throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+		vent.datosValidar("em@gmail.com", "nom", "apel", "12333a333", "123456789", "dir", "12435", "Albacete", "loc");
+		Method method = VentanaRegistro.class.getDeclaredMethod("Validar");
+		method.setAccessible(true);
+		Boolean result = (Boolean) method.invoke(vent);
+		assertEquals(false, result);	
+	}
+	
+	@Test
+	public void testValidarDatosDirecionMal()throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+		vent.datosValidar("em@gmail.com", "nom", "apel", "12333333a", "123456789", "", "12435", "Albacete", "loc");
+		Method method = VentanaRegistro.class.getDeclaredMethod("Validar");
+		method.setAccessible(true);
+		Boolean result = (Boolean) method.invoke(vent);
+		assertEquals(false, result);	
+	}
+	
+	@Test
+	public void testValidarDatosTelefonoMal()throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+		vent.datosValidar("em@gmail.com", "nom", "apel", "12333333a", "12345", "dir", "12435", "Albacete", "loc");
+		Method method = VentanaRegistro.class.getDeclaredMethod("Validar");
+		method.setAccessible(true);
+		Boolean result = (Boolean) method.invoke(vent);
+		assertEquals(false, result);	
+	}
+	
+	@Test
+	public void testValidarDatosLocalidadMal()throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+		vent.datosValidar("em@gmail.com", "nom", "apel", "12333333a", "123456789", "dir", "12435", "Albacete", "");
+		Method method = VentanaRegistro.class.getDeclaredMethod("Validar");
+		method.setAccessible(true);
+		Boolean result = (Boolean) method.invoke(vent);
+		assertEquals(false, result);	
+	}
+	
+	@Test
+	public void testValidarDatosNombreMal()throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+		vent.datosValidar("em@gmail.com", "", "apel", "12333333a", "123456789", "dir", "12435", "Albacete", "loc");
+		Method method = VentanaRegistro.class.getDeclaredMethod("Validar");
+		method.setAccessible(true);
+		Boolean result = (Boolean) method.invoke(vent);
+		assertEquals(false, result);	
+	}
+	
+	@Test
+	public void testValidarDatosProvinciaMal()throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+		vent.datosValidar("em@gmail.com", "nom", "apel", "12333333a", "123456789", "dir", "12435", "", "loc");
+		Method method = VentanaRegistro.class.getDeclaredMethod("Validar");
+		method.setAccessible(true);
+		Boolean result = (Boolean) method.invoke(vent);
+		assertEquals(false, result);	
+	}
+	
+	@Test
+	public void testValidarDatosCodPostalMal()throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+		vent.datosValidar("em@gmail.com", "nom", "apel", "12333333a", "123456789", "dir", "1243a5", "Albacete", "loc");
+		Method method = VentanaRegistro.class.getDeclaredMethod("Validar");
+		method.setAccessible(true);
+		Boolean result = (Boolean) method.invoke(vent);
+		assertEquals(false, result);	
+	}
+	
+	@Test
+	public void testValidarDatosApellidosMal()throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+		vent.datosValidar("em@gmail.com", "nom", "apel1", "12333333a", "123456789", "dir", "12435", "Albacete", "loc");
+		Method method = VentanaRegistro.class.getDeclaredMethod("Validar");
+		method.setAccessible(true);
+		Boolean result = (Boolean) method.invoke(vent);
+		assertEquals(false, result);	
+	}
+	
+	@Test
+	public void testValidarDatosGeneroMal()throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+		vent.datosValidar2("em@gmail.com", "nom", "apel", "12333333a", "123456789", "dir", "12435", "Albacete", "loc");
+		Method method = VentanaRegistro.class.getDeclaredMethod("Validar");
+		method.setAccessible(true);
+		Boolean result = (Boolean) method.invoke(vent);
+		assertEquals(false, result);	
+	}
+	
+	//no salta el catch
+	@Test
+	public void testValidarDatosCatch()throws EmptyStackException, NoSuchMethodException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+		vent.datosValidar2("em@gmail.com", "nom", "apel1", "12333333a", "123456789", "dir", "12435", "Albacete", "loc");
+		Method method = VentanaRegistro.class.getDeclaredMethod("Validar");
+		method.setAccessible(true);
+		Boolean result = (Boolean) method.invoke(vent);
+		
+		assertEquals(false, result);	
+	}
+	
+	
+	
 
 }
