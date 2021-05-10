@@ -13,8 +13,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.InvalidPropertiesFormatException;
 import java.util.Properties;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -28,7 +26,6 @@ import javax.ws.rs.core.MediaType;
 
 import es.deusto.spq.models.Cliente;
 
-
 public class VentanaLogin extends JFrame{
 
 	private static final long serialVersionUID = 1L;
@@ -41,6 +38,8 @@ public class VentanaLogin extends JFrame{
 	private JButton bCancelar;
 	private JLabel lTexto;
 	private static JPasswordField passwordField;
+	TiendaGUI ventanaPadre;
+	WebTarget appTarget;
 	
 	public VentanaLogin(final JFrame ventanaPadre, WebTarget appTarget) {
 
@@ -122,28 +121,12 @@ public class VentanaLogin extends JFrame{
 		bAceptar = new JButton("Aceptar");
 		bAceptar.setBounds((this.getWidth()/100)*5, (this.getHeight()/18)*8, (this.getWidth()/35)*10, (this.getHeight()/18)*3);
 	    pInferior.add(bAceptar);
-	    bAceptar.addActionListener(new ActionListener() {
-	    
+		bAceptar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
-				final WebTarget clientesTarget = appTarget.path("/clientes").path("/"+emailTextField.getText()).path("/"+ new String(passwordField.getPassword()));
-				Cliente cliente = clientesTarget.request(MediaType.APPLICATION_JSON).get(Cliente.class);
-				
-				try {
-					if (!cliente.equals(null)) {
-						System.out.println("Credenciales correctas");
-						TiendaGUI.setCliente(cliente);
-						ventanaPadre.setEnabled(true);
-						dispose();
-					}
-				}
-				catch(NullPointerException nl) {
-					JOptionPane.showMessageDialog(null, "Credenciales incorrectas", "Validar Credenciales", JOptionPane.INFORMATION_MESSAGE);
-				}
+				Aceptar();
 			}
-		
-			});
+		});
 	    
 	    bCancelar = new JButton("Cancelar");
 	    bCancelar.setBounds((this.getWidth()/100)*16, (this.getHeight()/18)*8, (this.getWidth()/35)*10, (this.getHeight()/18)*3);
@@ -163,26 +146,22 @@ public class VentanaLogin extends JFrame{
             	ventanaPadre.setEnabled(true);
             }
         }); 
+	}
+	
+	public void Aceptar() {
+		final WebTarget clientesTarget = appTarget.path("/clientes").path("/"+emailTextField.getText()).path("/"+ new String(passwordField.getPassword()));
+		Cliente cliente = clientesTarget.request(MediaType.APPLICATION_JSON).get(Cliente.class);
 		
-	}
-	
-	//Metodo para comprobar email.
-	protected static boolean validarEmail(String email) {
-
-		boolean valido = false;
-		Pattern patronEmail = Pattern
-				.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
-                        + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
-
-		Matcher mEmail = patronEmail.matcher(email.toLowerCase());
-		if (mEmail.matches()){
-			valido = true;
-			System.out.println("El email es correcto");
-		}else {
-			System.out.println("El email introducido no es correcto");
+		try {
+			if (!cliente.equals(null)) {
+				System.out.println("Credenciales correctas");
+				TiendaGUI.setCliente(cliente);
+				ventanaPadre.setEnabled(true);
+				dispose();
+			}
 		}
-		return valido;
+		catch(NullPointerException nl) {
+			JOptionPane.showMessageDialog(null, "Credenciales incorrectas", "Validar Credenciales", JOptionPane.INFORMATION_MESSAGE);
+		}
 	}
-
-	
 }
