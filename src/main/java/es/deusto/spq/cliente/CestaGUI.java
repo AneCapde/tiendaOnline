@@ -42,22 +42,25 @@ public class CestaGUI extends JFrame implements ICesta {
 	private JPanel contentPane;
 	private JTextField textField;
 	private DefaultListModel<Producto> model = new DefaultListModel<>();
-	private List<Producto> productos = new ArrayList<>();
-	private HashMap<Producto, Integer> productos_cantidad = new HashMap<Producto, Integer>();
+	static ArrayList<Producto> productos2 = new ArrayList<>();
+	static HashMap<Producto, Integer> productos_cantidad = new HashMap<Producto, Integer>();
 	final WebTarget pedidoTarget;
 
 	/**
 	 * Create the frame.
 	 */
-	public CestaGUI(final JFrame ventanaPadre, List<Producto> productos, final WebTarget appTarget) {
+	public CestaGUI(final JFrame ventanaPadre, ArrayList<Producto> productos, final WebTarget appTarget) {
 		
 		final CestaGUI esto = this;
 		pedidoTarget = appTarget.path("/pedidos");
 		
 		for (Producto p : productos){
-			this.productos.add(p);
+			System.out.println("Lista de la Tienda: "+ p);
+			productos2.add(p);
+			System.out.println("Lista de la Cesta: "+ productos2);
 			model.addElement(p);
 			getProductosCantidad().put(p, 1);
+			System.out.println("Metodo get productos cantidad: " + getProductosCantidad());
 		}
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -81,15 +84,9 @@ public class CestaGUI extends JFrame implements ICesta {
 		btnNewButton.addActionListener (new ActionListener () {
 			@Override
 		    public void actionPerformed(ActionEvent e) {
-				Date date = new Date();
-				Pedido pedido = new Pedido(TiendaGUI.getCliente(), date, "en proceso", calcularPrecio(), productos.size());
-
-				pedido.setProducto((ArrayList<Producto>) productos);
-				
-				esto.setEnabled(false);
-				esto.setVisible(false);
-				VentanaMetodoPago vmp = new VentanaMetodoPago(ventanaPadre, pedido, appTarget);
-				vmp.setVisible(true);
+				System.out.println("Boton Aceptar: " +productos2);
+				VentanaLugarEntregaGUI vle = new VentanaLugarEntregaGUI(esto, productos2, appTarget);
+				vle.setVisible(true);
 				esto.setEnabled(false);
 			}
 		});
@@ -182,36 +179,36 @@ public class CestaGUI extends JFrame implements ICesta {
 		
 	}
 
-	@Override
-	public int calcularPrecio() {
+	
+	public static int calcularPrecio() {
 		int precioTotal = 0;
 		for (Producto p : productos_cantidad.keySet()){
 			precioTotal += p.getPrecio()*productos_cantidad.get(p);
+//			productos2.add(p);
 		}
 		return precioTotal;
 	}
 
-	@Override
-	public void createPedido() {
-		productos.removeAll(productos);
-		int precio_pedido = 0;
-		for(Producto p : productos_cantidad.keySet()){
-			precio_pedido = productos_cantidad.get(p)*p.getPrecio();
-			productos.add(p);
-		}
-		Date date = new Date();
-		Pedido pedido = new Pedido(TiendaGUI.getCliente(), date,"en proceso" , precio_pedido, 0);
-	    pedido.setProducto((ArrayList<Producto>) productos);	
-		pedidoTarget.request(MediaType.APPLICATION_JSON).post(Entity.entity(pedido, MediaType.APPLICATION_JSON));
-	}
+//	public void createPedido() {
+//		productos.removeAll(productos);
+//		int precio_pedido = 0;
+//		for(Producto p : productos_cantidad.keySet()){
+//			precio_pedido = productos_cantidad.get(p)*p.getPrecio();
+//			productos.add(p);
+//		}
+//		Date date = new Date();
+//		Pedido pedido = new Pedido(TiendaGUI.getCliente(), date,"en proceso" , precio_pedido, 0, "");
+//	    pedido.setProducto((ArrayList<Producto>) productos);	
+//		pedidoTarget.request(MediaType.APPLICATION_JSON).post(Entity.entity(pedido, MediaType.APPLICATION_JSON));
+//	}
 
 	@Override
 	public List<Producto> getProductos(){
-        return this.productos;
+        return CestaGUI.productos2;
     }
 
 	@Override
 	public HashMap<Producto, Integer> getProductosCantidad() {
-		return this.productos_cantidad;
+		return CestaGUI.productos_cantidad;
 	}
 }

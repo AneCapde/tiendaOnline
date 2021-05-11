@@ -83,7 +83,7 @@ public class TiendaGUI extends JFrame {
 	private List<Producto> productos;
 	private List<Pedido> pedidos = new ArrayList<>(); 
 	private static List<Producto> productos_deseados = new ArrayList<Producto>();
-	public static List<Producto> productos_cesta = new ArrayList<Producto>();
+	public static ArrayList<Producto> productos_cesta = new ArrayList<Producto>();
 	private static JButton botonLogin;
     private static JButton btnDeseado;
 	private static JButton botonComprar;
@@ -259,6 +259,7 @@ public class TiendaGUI extends JFrame {
 				productoSeleccionado =  listaElementos.getSelectedValue();
 				if (!productos_cesta.contains(productoSeleccionado)){
 					productos_cesta.add(productoSeleccionado);
+					System.out.println("productos de la cesta:" + productos_cesta);
 				}
 			}
 		});
@@ -305,25 +306,16 @@ public class TiendaGUI extends JFrame {
 		botonComprar.setVisible(false);
 		botonComprar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Date date = new Date();
+				
 				productoSeleccionado = listaElementos.getSelectedValue();
-				List<Producto> productoPedido = new ArrayList<>();
-				Pedido pedido = new Pedido(TiendaGUI.getCliente(), date, "en proceso", productoSeleccionado.getPrecio(),
-						1);
-				productoPedido.add(productoSeleccionado);
-				pedido.setProducto((ArrayList<Producto>) productoPedido);
-				
-				esto.setEnabled(false);
+				ArrayList<Producto> productos = new ArrayList<>();
+				productos.add(productoSeleccionado);
+				System.out.println("producto tienda GUI: " +productos);
+				VentanaLugarEntregaGUI vle = new VentanaLugarEntregaGUI(esto, productos, appTarget);
+				vle.setVisible(true);
+
 				esto.setVisible(false);
-				VentanaMetodoPago vmp = new VentanaMetodoPago(esto, pedido, appTarget);
-
-				vmp.setVisible(true);
-				esto.setEnabled(false);
-
-//				 pedidoTarget.request(MediaType.APPLICATION_JSON)
-//				 		.post(Entity.entity(pedido, MediaType.APPLICATION_JSON));
-				 //pedidos.add(pedido);
-				
+				esto.setEnabled(false);	
 			}
 		});
 		
@@ -551,7 +543,6 @@ public class TiendaGUI extends JFrame {
 	
 	public static void setCliente(Cliente cliente) {
 		TiendaGUI.cliente = cliente;
-		cargarLista();
 		botonLogin.setText("Log out");
 		botonLogin.updateUI();
 		botonListaDeseados.setEnabled(true);

@@ -117,7 +117,8 @@ public class VentanaPagoVisa extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 
 				if (crearPedido(pedido, credencialesvisa, pedidoTarget)){ 
-					ventanaPadre.setEnabled(true);
+//					ventanaPadre.setEnabled(true);
+//					ventanaPadre.setVisible(true);
 					TiendaGUI.setButtons();
 					dispose();
 				}

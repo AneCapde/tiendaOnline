@@ -18,7 +18,11 @@ import java.awt.Image;
 
 public class VentanaMetodoPago extends JFrame{
 
-    private JPanel pCentral;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private JPanel pCentral;
     private JPanel pSuperior;
     private JButton paypal;
     private JButton visa;
@@ -61,13 +65,11 @@ public class VentanaMetodoPago extends JFrame{
 
         paypal.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				esto.setEnabled(false);
-				esto.setVisible(true);
 				ventanaPadre.setEnabled(true);
 				ventanaPadre.setVisible(true);
+				dispose();
                 VentanaPagoPayPal vPaypal= new VentanaPagoPayPal(ventanaPadre, pedido, appTarget);
-				vPaypal.setVisible(true);
-				dispose();				
+				vPaypal.setVisible(true);					
 			}
 		});
 
@@ -81,17 +83,12 @@ public class VentanaMetodoPago extends JFrame{
 
         visa.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				esto.setEnabled(false);
-				esto.setVisible(true);
 				ventanaPadre.setEnabled(true);
 				ventanaPadre.setVisible(true);
+				dispose();
                 VentanaPagoVisa vVisa= new VentanaPagoVisa(esto, pedido, appTarget);
-				vVisa.setVisible(true);
-				dispose();				
+				vVisa.setVisible(true);					
 			}
 		});
 	}
 }
-
-    
-

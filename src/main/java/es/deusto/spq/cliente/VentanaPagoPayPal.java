@@ -6,13 +6,9 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Map.Entry;
 
-import javax.jdo.annotations.Key;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -20,22 +16,22 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-import javax.swing.UIManager;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
-
-import org.glassfish.jersey.internal.util.collection.Value;
 
 import javax.ws.rs.client.Entity;
 
 import es.deusto.spq.models.Pago;
 import es.deusto.spq.models.Pedido;
-import es.deusto.spq.models.Producto;
 
 public class VentanaPagoPayPal extends JFrame {
 
-    private JPanel pCentral;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private JPanel pCentral;
     private JPanel pSuperior;
     private JPanel pInferior;
     private JTextField accountField;
@@ -122,7 +118,8 @@ public class VentanaPagoPayPal extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 
 				if (crearPedido(pedido, credencialespaypal, pedidoTarget)) {
-					ventanaPadre.setEnabled(true);
+//					ventanaPadre.setEnabled(true);
+//					ventanaPadre.setVisible(true);
 					TiendaGUI.setButtons();
 					dispose();
 				}
