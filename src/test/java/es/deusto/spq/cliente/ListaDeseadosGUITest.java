@@ -62,13 +62,24 @@ public class ListaDeseadosGUITest {
 	
 	@Ignore
 	@Test
-	public void updateClient() {
+	public void testInicio() {
+		listaDeseadosGUI.Inicio(web);
+		listaDeseadosGUI.updateClient(web);
+	}
+	
+	@Ignore
+	@Test
+	public void testUpdateClient() {
 		ListaDeseadosGUI cGui = Mockito.mock(ListaDeseadosGUI.class);
+		try(MockedStatic<TiendaGUI> utilities = Mockito.mockStatic(TiendaGUI.class)){
+			utilities.when(TiendaGUI::getCliente).thenReturn(cliente);
+
+		}
 		verify(cGui).updateClient(web);
 	}
 	
 	@Test 
-	public void eliminar() {
+	public void testEliminar() {
 		Producto producto = null;
 		for (Producto p : productos){
 			if (p1.getNombre().equals(p.getNombre())) {
@@ -81,7 +92,7 @@ public class ListaDeseadosGUITest {
 	
 	
 	@Test
-	public void anyadir() {
+	public void testAnyadir() {
 		p2 = new Producto("producto2", "producto2", 1, 1, "producto2", 
 				new SubCategoria("Subcategoria2", "Subcategoria2", new Categoria("categoria2", "categoria2")), new Marca("marca2", "marca2"));
 		if(!productos.contains(p2)){
@@ -92,14 +103,15 @@ public class ListaDeseadosGUITest {
 	
 	@Ignore
 	@Test
-	public void setCliente(){
-		
+	public void testSetCliente(){
+		ListaDeseadosGUI.anyadirProductosDeseados();
 		assertEquals(cliente, ListaDeseadosGUI.setCliente(cliente));
 	}
 	
+	
 	@Ignore
 	@Test
-	public void anyadirProductosDeseados() {
+	public void testAnyadirProductosDeseados() {
 		ArrayList<Producto> productos1 = new ArrayList<>();
 		productos1.add(p1);
 		listaDeseadosGUI.setProductosDeseados(productos1);
@@ -126,5 +138,11 @@ public class ListaDeseadosGUITest {
 		listaDeseadosGUI.setProductosDeseados(productos1);
 		ArrayList<Producto> res = ListaDeseadosGUI.getProductosDeseados();
 		assertEquals(productos1, res);
+	}
+	
+	@Ignore
+	@Test 
+	public void testImagenes() {
+		listaDeseadosGUI.Imagenes();
 	}
 }

@@ -6,7 +6,6 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
@@ -43,9 +42,7 @@ public class ListaDeseadosGUI extends JFrame {
 
 	public ListaDeseadosGUI(final JFrame ventanaPadre, final WebTarget appTarget) {
 		clientesTarget = appTarget.path("/clientes/update");
-		
-
-		
+	
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 872, 560);
 		contentPane = new JPanel();
@@ -109,25 +106,7 @@ public class ListaDeseadosGUI extends JFrame {
 			
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
-				botonAnyadir.setVisible(true);
-				btnEliminar.setVisible(true);
-				productoSeleccionado = listaElementos.getSelectedValue();
-				textArea.setText(null);
-				if (ListaDeseadosGUI.productoSeleccionado != null) {
-					ListaDeseadosGUI.imagePlacehold.removeAll();
-					ImageIcon icono_3 = new ImageIcon(getClass().getResource("/"+ productoSeleccionado.getImagen()));
-					ImageIcon icono_4 = new ImageIcon(icono_3.getImage().getScaledInstance(imagePlacehold.getWidth(), imagePlacehold.getHeight(),Image.SCALE_DEFAULT));
-					JLabel label = new JLabel(icono_4);
-					imagePlacehold.add(label);
-					imagePlacehold.revalidate();
-					
-					textArea.append("- NOMBRE: " + productoSeleccionado.nombre + "\n");
-					textArea.append("- DESCRIPCIÓN: " + productoSeleccionado.descripcion + "\n");
-					textArea.append("- PRECIO: " + productoSeleccionado.precio + "\n");
-					textArea.append("- CATEGORÍA: " + productoSeleccionado.getSubcategoria().getCategoria().getNombre() + "\n");
-					textArea.append("    SUBCATEGORÍA: " + productoSeleccionado.getSubcategoria().getNombre() + "\n");
-					
-				}
+				Imagenes();
 			}
 		});
 
@@ -138,22 +117,22 @@ public class ListaDeseadosGUI extends JFrame {
 		contentPane.add(btnInicio);
 		btnInicio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				setVisible(false);
-				updateClient(appTarget);
-				TiendaGUI tienda = new TiendaGUI();
-				tienda.setVisible(true);
-				TiendaGUI.setCliente(TiendaGUI.getCliente());
-				dispose();
+				Inicio(appTarget);
 			}
-		});
-		
+		});	
 	}
 	
-
+	public void Inicio(final WebTarget appTarget) {
+		setVisible(false);
+		updateClient(appTarget);
+		TiendaGUI tienda = new TiendaGUI();
+		tienda.setVisible(true);
+		TiendaGUI.setCliente(TiendaGUI.getCliente());
+		dispose();
+	}
 	public void updateClient(final WebTarget appTarget){
 		System.out.println(productos_deseados);
 		TiendaGUI.getCliente().setProductosDeseados((ArrayList<Producto>) productos_deseados);
-		
 		clientesTarget.request(MediaType.APPLICATION_JSON).post(Entity.entity(TiendaGUI.getCliente(), MediaType.APPLICATION_JSON));
 	}
 		
@@ -204,5 +183,27 @@ public class ListaDeseadosGUI extends JFrame {
 	
 	public void setProductosDeseados(ArrayList<Producto> productos_deseados) {
 		ListaDeseadosGUI.productos_deseados = productos_deseados;
+	}
+	
+	public void Imagenes() {
+		botonAnyadir.setVisible(true);
+		btnEliminar.setVisible(true);
+		productoSeleccionado = listaElementos.getSelectedValue();
+		textArea.setText(null);
+		if (ListaDeseadosGUI.productoSeleccionado != null) {
+			ListaDeseadosGUI.imagePlacehold.removeAll();
+			ImageIcon icono_3 = new ImageIcon(getClass().getResource("/"+ productoSeleccionado.getImagen()));
+			ImageIcon icono_4 = new ImageIcon(icono_3.getImage().getScaledInstance(imagePlacehold.getWidth(), imagePlacehold.getHeight(),Image.SCALE_DEFAULT));
+			JLabel label = new JLabel(icono_4);
+			imagePlacehold.add(label);
+			imagePlacehold.revalidate();
+			
+			textArea.append("- NOMBRE: " + productoSeleccionado.nombre + "\n");
+			textArea.append("- DESCRIPCIÓN: " + productoSeleccionado.descripcion + "\n");
+			textArea.append("- PRECIO: " + productoSeleccionado.precio + "\n");
+			textArea.append("- CATEGORÍA: " + productoSeleccionado.getSubcategoria().getCategoria().getNombre() + "\n");
+			textArea.append("    SUBCATEGORÍA: " + productoSeleccionado.getSubcategoria().getNombre() + "\n");
+			
+		}
 	}
 }
