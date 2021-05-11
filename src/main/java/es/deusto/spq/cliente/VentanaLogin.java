@@ -124,7 +124,7 @@ public class VentanaLogin extends JFrame{
 		bAceptar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Aceptar();
+				Aceptar(ventanaPadre, appTarget);
 			}
 		});
 	    
@@ -148,7 +148,7 @@ public class VentanaLogin extends JFrame{
         }); 
 	}
 	
-	public void Aceptar() {
+	public void Aceptar(JFrame ventanaPadre, WebTarget appTarget) {
 		final WebTarget clientesTarget = appTarget.path("/clientes").path("/"+emailTextField.getText()).path("/"+ new String(passwordField.getPassword()));
 		Cliente cliente = clientesTarget.request(MediaType.APPLICATION_JSON).get(Cliente.class);
 		

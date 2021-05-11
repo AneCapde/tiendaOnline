@@ -215,7 +215,7 @@ public class VentanaRegistro extends JFrame {
 	
 	private boolean Validar() {
 		boolean valido = false;
-		try {
+//		try {
 			if(elEmailCorrecto(email.getText())) {
 				if(nombreCorrecto(nombre.getText())) {
 					if(apellidoCorrecto(apellidos.getText())) {
@@ -260,9 +260,9 @@ public class VentanaRegistro extends JFrame {
 				JOptionPane.showMessageDialog(null, "Email incorrecto","Validar Email", JOptionPane.INFORMATION_MESSAGE);
 				email.requestFocus();
 			}
-		}catch(Exception e){
-			JOptionPane.showMessageDialog(this,"Error", "Mensaje de Error", JOptionPane.ERROR_MESSAGE);
-		}
+//		}catch(Exception e){
+//			JOptionPane.showMessageDialog(this,"Error", "Mensaje de Error", JOptionPane.ERROR_MESSAGE);
+//		}
 		return valido;
 	}
 	
