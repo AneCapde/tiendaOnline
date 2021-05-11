@@ -14,6 +14,7 @@ public class Pedido {
 	private String estado;
 	private int importe;
 	private int cantidad;
+	private String lugar;
 	@Persistent(defaultFetchGroup = "true")
 	private Cliente cliente;
 	
@@ -21,13 +22,14 @@ public class Pedido {
 	@Join
 	private ArrayList<Producto> productoPedido = new ArrayList<>();
 	
-	public Pedido(Cliente cliente, Date fecha, String estado, int importe, int cantidad) {
+	public Pedido(Cliente cliente, Date fecha, String estado, int importe, int cantidad, String lugar) {
 		super();
 		this.cliente = cliente;
 		this.fecha = fecha;
 		this.estado = estado;
 		this.importe = importe;
 		this.cantidad = cantidad;
+		this.lugar = lugar;
 	}
 	
 	public Cliente getCliente() {
@@ -61,6 +63,14 @@ public class Pedido {
 	}
 	public void setCantidad(int cantidad) {
 		this.cantidad = cantidad;
+	}
+
+	public String getLugar() {
+		return lugar;
+	}
+
+	public void setLugar(String lugar) {
+		this.lugar = lugar;
 	}
 
 	public ArrayList<Producto> getProducto() {

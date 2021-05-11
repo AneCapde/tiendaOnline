@@ -27,7 +27,7 @@ public class PedidoTest {
 		Marca marc = new Marca("nombreMarc", "descMarc");
 		pro = new Producto("producto", "descripcion", 2, 2, "img", subca, marc);
 		arr.add(pro);
-		ped = new Pedido(cli, new Date(1619342158), "estado",22 ,2);
+		ped = new Pedido(cli, new Date(1619342158), "estado",22 ,2, "barcelona");
 	}
 
 	@Test
@@ -94,9 +94,22 @@ public class PedidoTest {
 		int resul = ped.getCantidad();
 		assertEquals(4, resul);
 	}
+	
+	@Test
+	public void testGetLugar() {
+		String resul = ped.getLugar();
+		assertEquals("barcelona", resul);
+	}
 
 	@Test
-	public void testSetGetProducto() {
+	public void testSetLugar() {
+		ped.setLugar("barcelona");
+		String resul = ped.getLugar();
+		assertEquals("barcelona", resul);
+	}
+
+	@Test
+	public void testSetProducto() {
 		cli = new Cliente("12345F", "NomCliente", "ApCliente", "email", "pass", 9999999,"Direccion", Genero.HOMBRE, 234455, "provincia", "localidad");
 		Categoria cat = new Categoria("nombreCat", "descCat");
 		SubCategoria subca = new SubCategoria("nombreSub", "descSub", cat);
