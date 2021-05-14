@@ -47,7 +47,7 @@ public class VentanaLugarEntregaGUI extends JFrame{
     String[] lugares = { "A Coruña", "Albacete", "Alicante", "Almeria", "Avila", "Badajoz", "Bilbao", 
 			"Barcelona", "Burgos", "Caceres", "Cadiz", "Catellon", "Ceuta", "Ciudad Real", "Cordoba", "Cuenca",
 			"Gerona", "Granada", "Guadalajara", "San Sebastian", "Huelva", "Huesca", "Jaen", "Logroño", "Leon", "Lleida", "Lugo", "Madrid",
-			"Malaga", "Mallorca", "Melilla", "Murcia", "Ourense", "Oviedo", "Palencia", "Pamplona", "Pontevedra, Salamanca", "Santander",
+			"Malaga", "Mallorca", "Melilla", "Murcia", "Ourense", "Oviedo", "Palencia", "Pamplona", "Pontevedra", "Salamanca", "Santander",
 			"Segovia", "Sevilla", "Soria","Tarragona", "Teruel", "Toledo", "Valencia", "Valladolid", "Vitoria", "Zamora", "Zaragoza"};
 	
 	public VentanaLugarEntregaGUI(final JFrame ventanaPadre, ArrayList<Producto> productos, WebTarget appTarget, int precio) {
@@ -153,7 +153,7 @@ public class VentanaLugarEntregaGUI extends JFrame{
 		boolean valido = false;
 //		try {	
 			if (rdbtnCorreos.isSelected()) {
-				if (provincia.getSelectedIndex() != 0) {
+				if (provincia.getSelectedIndex() >= 0) {
 					valido = true;
 				} else {
 					JOptionPane.showMessageDialog(null, "Hay que seleccionar una procincia", "Seleccionar Provincia",

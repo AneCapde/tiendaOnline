@@ -223,7 +223,7 @@ public class VentanaRegistro extends JFrame {
 							if(telefonoCorrecto(telefono.getText())) {
 								if(!direccion.getText().isEmpty()) {
 									if(CodPostalCorrecto(cod_postal.getText())) {
-										if(provincia.getSelectedIndex() != 0) {
+										if(provincia.getSelectedIndex() >= 0) {
 											if(localidadCorrecto(localidad.getText())) {
 												if(rdbtnHombre.isSelected() | rdbtnMujer.isSelected() | rdbtnNoBinario.isSelected()) {
 													valido = true;
