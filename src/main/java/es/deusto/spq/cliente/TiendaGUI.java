@@ -31,6 +31,8 @@ import es.deusto.spq.models.Pedido;
 import es.deusto.spq.models.Producto;
 import es.deusto.spq.models.SubCategoria;
 import es.deusto.spq.models.Tallas;
+import es.deusto.spq.util.Idiomas;
+import es.deusto.spq.util.PrepararDatos;
 
 import javax.swing.JLabel;
 import java.awt.Font;
@@ -90,6 +92,7 @@ public class TiendaGUI extends JFrame {
 
 	public TiendaGUI() {
 		client = ClientBuilder.newClient();
+		PrepararDatos.getInstance().cargarDatosXML();
 
         appTarget = client.target("http://localhost:8080/myapp");
 		final WebTarget categoriasTarget = appTarget.path("/categorias");
@@ -165,7 +168,7 @@ public class TiendaGUI extends JFrame {
 		});
 		
 		//#################################################################################################
-		JButton btnCesta = new JButton("Cesta");
+		JButton btnCesta = new JButton(Idiomas.seleccionarPalabra("cestaBoton"));
 		btnCesta.setFont(new Font("Segoe UI Black", Font.PLAIN, 15));
 		btnCesta.setBounds(10, 460, 194, 30);
 		panel.add(btnCesta);
@@ -200,7 +203,7 @@ public class TiendaGUI extends JFrame {
 		panel.add(comboBox_colores);
 		
 		//#################################################################################################
-		JLabel lblColores = new JLabel("Colores");
+		JLabel lblColores = new JLabel(Idiomas.seleccionarPalabra("color"));
 		lblColores.setBounds(10, 179, 196, 14);
 		panel.add(lblColores);
 		
@@ -232,23 +235,23 @@ public class TiendaGUI extends JFrame {
 		panel.add(comboBox_Categoria);
 		
 		//#################################################################################################
-		JLabel lblSubcategora = new JLabel("Subcategoría");
+		JLabel lblSubcategora = new JLabel(Idiomas.seleccionarPalabra("subcategoria"));
 		lblSubcategora.setBounds(10, 122, 143, 14);
 		panel.add(lblSubcategora);
 		
 		//#################################################################################################
-		JLabel lblCategora = new JLabel("Categoría");
+		JLabel lblCategora = new JLabel(Idiomas.seleccionarPalabra("categoria"));
 		lblCategora.setBounds(10, 62, 153, 14);
 		panel.add(lblCategora);
 		
 		//#################################################################################################
-		JLabel lblCaracteristicas = new JLabel("Caracteristicas");
+		JLabel lblCaracteristicas = new JLabel(Idiomas.seleccionarPalabra("caracteristicas"));
 		lblCaracteristicas.setBounds(507, 361, 162, 14);
 		lblCaracteristicas.setFont(new Font("Segoe UI Black", Font.PLAIN, 14));
 		contentPane.add(lblCaracteristicas);
 		
 		//#################################################################################################
-		botonAnyadir = new JButton("Añadir A la Cesta");
+		botonAnyadir = new JButton(Idiomas.seleccionarPalabra("anyadircestaBoton"));
 		botonAnyadir.setBounds(507, 310, 229, 41);
 		botonAnyadir.setFont(new Font("Segoe UI Black", Font.PLAIN, 20));
 		contentPane.add(botonAnyadir);
@@ -264,7 +267,7 @@ public class TiendaGUI extends JFrame {
 		});
 		
 		//#################################################################################################
-		botonLogin = new JButton("Log in");
+		botonLogin = new JButton(Idiomas.seleccionarPalabra("iniciarsesionBoton"));
 		botonLogin.setBounds(518, 10, 122, 23);
 		contentPane.add(botonLogin);
 		botonLogin.addActionListener(new ActionListener() {
@@ -283,7 +286,7 @@ public class TiendaGUI extends JFrame {
 		});
 		
 		//#################################################################################################
-		JButton botonSignIn = new JButton("Sign in");
+		JButton botonSignIn = new JButton(Idiomas.seleccionarPalabra("registrarseBoton"));
 		botonSignIn.setBounds(709, 10, 122, 23);
 		contentPane.add(botonSignIn);
 		botonSignIn.addActionListener(new ActionListener() {
@@ -298,7 +301,7 @@ public class TiendaGUI extends JFrame {
 		});
 		
 		//#################################################################################################
-		botonComprar = new JButton("COMPRAR");
+		botonComprar = new JButton(Idiomas.seleccionarPalabra("comprarBoton"));
 		botonComprar.setBounds(507, 470, 229, 41);
 		botonComprar.setFont(new Font("Segoe UI Black", Font.PLAIN, 20));
 		contentPane.add(botonComprar);

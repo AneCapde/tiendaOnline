@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.MediaType;
 
 import org.databene.contiperf.PerfTest;
 import org.databene.contiperf.Required;
@@ -17,6 +18,7 @@ import org.junit.Test;
 
 import es.deusto.spq.Main;
 import es.deusto.spq.cliente.TiendaGUI;
+import es.deusto.spq.models.Cliente;
 
 @PerfTest(invocations = 5)
 @Required(max = 1200, average = 250)
@@ -44,10 +46,13 @@ public class TiendaOnlineTest {
         server.shutdown();
     }
     @Test 
-    @PerfTest(invocations = 100, threads = 20)
+    @PerfTest(invocations = 1000, threads = 20)
     @Required(max = 20000, average = 3000)
-    public void connection(){
-        new TiendaGUI();
+    public void connectionCliente(){
+        Client client = ClientBuilder.newClient();
+        final WebTarget appTarget = client.target("http://localhost:8080/myapp");
+        final WebTarget clientesTarget = appTarget.path("/clientes").path("/"+"usuario@gmail.com").path("/"+ "12345r");
+		Cliente cliente = clientesTarget.request(MediaType.APPLICATION_JSON).get(Cliente.class);
     }
 
 

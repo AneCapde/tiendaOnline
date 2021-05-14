@@ -15,6 +15,7 @@ import java.util.InvalidPropertiesFormatException;
 import java.util.Properties;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -25,6 +26,7 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 
 import es.deusto.spq.models.Cliente;
+import es.deusto.spq.util.Idiomas;
 
 public class VentanaLogin extends JFrame{
 
@@ -32,12 +34,16 @@ public class VentanaLogin extends JFrame{
 	private JPanel pCentral;
 	private JPanel pSuperior;
 	private JPanel pInferior;
+	private JPanel pIZQ;
+	private JPanel pDerecho;
 	private JTextField emailTextField;
 	private JPasswordField password;
 	private JButton bAceptar;
 	private JButton bCancelar;
 	private JLabel lTexto;
 	private static JPasswordField passwordField;
+	private JComboBox<String> combo;
+	public static Idiomas idioma = Idiomas.Español;
 	TiendaGUI ventanaPadre;
 	WebTarget appTarget;
 	
@@ -78,22 +84,57 @@ public class VentanaLogin extends JFrame{
 		pSuperior.setEnabled(false);
 		pSuperior.setBackground(Color.LIGHT_GRAY);
 		getContentPane().add(pSuperior,BorderLayout.NORTH);
-		
+
+		pIZQ = new JPanel();
+		pIZQ.setBackground(Color.LIGHT_GRAY);
+
+		pDerecho = new JPanel();
+		pDerecho.setBackground(Color.LIGHT_GRAY);
+
+		getContentPane().add(pDerecho,BorderLayout.EAST);
+
+		combo = new JComboBox<>();
+		combo.addItem(Idiomas.seleccionarPalabra("nombre1"));
+		combo.addItem(Idiomas.seleccionarPalabra("nombre2"));
+		combo.setBounds(5, 5, 100, 20);
+		combo.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println(combo.getSelectedItem().equals("Ingles"));
+				if (combo.getSelectedItem().equals("Ingles") || combo.getSelectedItem().equals("English")){
+					VentanaLogin.idioma = Idiomas.Ingles;
+					System.out.println(VentanaLogin.idioma);
+				}else{
+					System.out.println(VentanaLogin.idioma);
+					VentanaLogin.idioma = Idiomas.Español;
+				}
+				combo.removeAllItems();
+				combo.addItem(Idiomas.seleccionarPalabra("nombre1"));
+				combo.addItem(Idiomas.seleccionarPalabra("nombre2"));
+				lTexto.setText(Idiomas.seleccionarPalabra("iniciarsesionPanel"));
+				bAceptar.setText(Idiomas.seleccionarPalabra("aceptarBoton"));
+				bCancelar.setText(Idiomas.seleccionarPalabra("volverBoton"));
+			}
+		});
+		//pIZQ.add(combo);
+		getContentPane().add(pIZQ,BorderLayout.WEST);
+
 		pInferior = new JPanel();
 		pInferior.setEnabled(false);
 		pInferior.setBackground(Color.LIGHT_GRAY);
 		getContentPane().add(pInferior,BorderLayout.SOUTH);
 		
-		lTexto = new JLabel("Inicia sesion con tu email");
+		lTexto = new JLabel(Idiomas.seleccionarPalabra("iniciarsesionPanel"));
 		lTexto.setForeground(Color.BLACK);
 		lTexto.setFont(new Font("Times New Roman", Font.BOLD, 36));
 		pSuperior.add(lTexto);
 		
 		password = new JPasswordField(50);
 		password.setBackground(Color.WHITE);
-		password.setPreferredSize(new Dimension(50, 35));
+		password.setPreferredSize(new Dimension(40, 35));
 		
 		getContentPane().add(pCentral, BorderLayout.CENTER);
+		pCentral.add(combo);
 		pCentral.setLayout(null);
 		JLabel Email = new JLabel("Email:");
 		Email.setToolTipText("");
@@ -107,7 +148,7 @@ public class VentanaLogin extends JFrame{
 		emailTextField.setBounds(86, 40, 472, 35);
 		pCentral.add(emailTextField);
 		emailTextField.setBackground(Color.WHITE);
-		emailTextField.setPreferredSize(new Dimension(50, 35));
+		emailTextField.setPreferredSize(new Dimension(40, 35));
 
 		passwordField = new JPasswordField();
 		passwordField.setBounds(114, 129, 444, 35);
@@ -118,17 +159,17 @@ public class VentanaLogin extends JFrame{
 		pCentral.add(lblPassword);
 		lblPassword.setFont(new Font("Segoe UI Black", Font.PLAIN, 16));
 		
-		bAceptar = new JButton("Aceptar");
+		bAceptar = new JButton(Idiomas.seleccionarPalabra("aceptarBoton"));
 		bAceptar.setBounds((this.getWidth()/100)*5, (this.getHeight()/18)*8, (this.getWidth()/35)*10, (this.getHeight()/18)*3);
 	    pInferior.add(bAceptar);
 		bAceptar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Aceptar(ventanaPadre, appTarget);
+				aceptar(ventanaPadre, appTarget);
 			}
 		});
 	    
-	    bCancelar = new JButton("Cancelar");
+	    bCancelar = new JButton(Idiomas.seleccionarPalabra("volverBoton"));
 	    bCancelar.setBounds((this.getWidth()/100)*16, (this.getHeight()/18)*8, (this.getWidth()/35)*10, (this.getHeight()/18)*3);
 	    pInferior.add(bCancelar);
 	    
@@ -148,13 +189,12 @@ public class VentanaLogin extends JFrame{
         }); 
 	}
 	
-	public void Aceptar(JFrame ventanaPadre, WebTarget appTarget) {
+	public void aceptar(JFrame ventanaPadre, WebTarget appTarget) {
 		final WebTarget clientesTarget = appTarget.path("/clientes").path("/"+emailTextField.getText()).path("/"+ new String(passwordField.getPassword()));
 		Cliente cliente = clientesTarget.request(MediaType.APPLICATION_JSON).get(Cliente.class);
 		
 		try {
 			if (!cliente.equals(null)) {
-				System.out.println("Credenciales correctas");
 				TiendaGUI.setCliente(cliente);
 				ventanaPadre.setEnabled(true);
 				dispose();

@@ -30,12 +30,12 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 
 
 
-public class PrepararDatos {
+public class PrepararDatos implements IPrepararDatos {
 
+	private static IPrepararDatos instance;
 	private static final String FILENAME = "src/main/resources/idiomas.xml";
 	private HashMap<String, String> idioma_ingles = new HashMap<>();
 	private HashMap<String, String> idioma_espanyol = new HashMap<>();
@@ -45,18 +45,29 @@ public class PrepararDatos {
 	"iniciarsesionBoton", "iniciarsesionPanel", "aceptarBoton", "volverBoton",
 	"eliminarBoton", "anyadircestaBoton", "precio","cantidad"};
 
+	public static IPrepararDatos getInstance() {
+		if (instance == null) {
+			instance = new PrepararDatos();
+		}		
+		return instance;
+	}
+	@Override
 	public HashMap<String, String> getEspanyol(){
 		return idioma_espanyol;
 	}
+	@Override
 	public HashMap<String, String> getIngles(){
 		return idioma_ingles;
 	}
+	@Override
 	public String getPalabraEspanyol(String palabra){
 		return idioma_espanyol.get(palabra);
 	}
+	@Override
 	public String getPalabraIngles( String palabra){
 		return idioma_ingles.get(palabra);
 	}
+	@Override
 	public void cargarDatosXML(){
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 
@@ -72,8 +83,6 @@ public class PrepararDatos {
               Node node = list.item(temp);
 
               if (node.getNodeType() == Node.ELEMENT_NODE) {
-
-
                 Element element = (Element) node;
 				if (temp == 0){
 					for (String i : idioma_caract){
@@ -92,9 +101,6 @@ public class PrepararDatos {
 		}
 	}
 	public static void main(String[] args) {
-
-		PrepararDatos p = new PrepararDatos();
-		p.cargarDatosXML();
 
 		PersistenceManagerFactory pmf = JDOHelper.getPersistenceManagerFactory("datanucleus.properties");
 		PersistenceManager pm = pmf.getPersistenceManager();
