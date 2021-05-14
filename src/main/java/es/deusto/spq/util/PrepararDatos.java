@@ -19,12 +19,83 @@ import es.deusto.spq.models.Tallas;
 import es.deusto.spq.models.Cliente.Genero;
 import es.deusto.spq.models.Pago;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 
 
 
 public class PrepararDatos {
-	
+
+	private static final String FILENAME = "src/main/resources/idiomas.xml";
+	private HashMap<String, String> idioma_ingles = new HashMap<>();
+	private HashMap<String, String> idioma_espanyol = new HashMap<>();
+	private String [] idioma_caract = { "nombre1","nombre2", "listadeseadosBoton", 
+	"historialBoton", "cestaBoton", "buscarBoton", "comprarBoton", "categoria", 
+	"subcategoria", "color", "talla", "marca", "caracteristicas", "registrarseBoton",
+	"iniciarsesionBoton", "iniciarsesionPanel", "aceptarBoton", "volverBoton",
+	"eliminarBoton", "anyadircestaBoton", "precio","cantidad"};
+
+	public HashMap<String, String> getEspanyol(){
+		return idioma_espanyol;
+	}
+	public HashMap<String, String> getIngles(){
+		return idioma_ingles;
+	}
+	public String getPalabraEspanyol(String palabra){
+		return idioma_espanyol.get(palabra);
+	}
+	public String getPalabraIngles( String palabra){
+		return idioma_ingles.get(palabra);
+	}
+	public void cargarDatosXML(){
+		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+
+      	try {
+			DocumentBuilder db = dbf.newDocumentBuilder();
+			Document doc = db.parse(new File(FILENAME));
+			doc.getDocumentElement().normalize();
+
+			NodeList list = doc.getElementsByTagName("idioma");
+
+          	for (int temp = 0; temp < list.getLength(); temp++) {
+
+              Node node = list.item(temp);
+
+              if (node.getNodeType() == Node.ELEMENT_NODE) {
+
+
+                Element element = (Element) node;
+				if (temp == 0){
+					for (String i : idioma_caract){
+						getIngles().put(i, element.getElementsByTagName(i).item(0).getTextContent());
+					}
+				}else{
+					for (String i : idioma_caract){
+						getEspanyol().put(i, element.getElementsByTagName(i).item(0).getTextContent());
+					}
+				}
+			  }
+			}
+		}
+		catch (ParserConfigurationException | SAXException | IOException e) {
+			e.printStackTrace();
+		}
+	}
 	public static void main(String[] args) {
+
+		PrepararDatos p = new PrepararDatos();
+		p.cargarDatosXML();
+
 		PersistenceManagerFactory pmf = JDOHelper.getPersistenceManagerFactory("datanucleus.properties");
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
@@ -153,10 +224,5 @@ public class PrepararDatos {
 			}
 			pm.close();
 		}
-
-		
 	}
-	
-	//
-
 }

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<idiomas>
+    <idioma>
+        <nombre1>English</nombre1>
+        <nombre2>Spanish</nombre2>
+        <listadeseadosBoton>WishList</listadeseadosBoton>
+        <historialBoton>ShoppingRecords</historialBoton>
+        <cestaBoton>Cart</cestaBoton>
+        <buscarBoton>Search</buscarBoton>
+        <comprarBoton>Buy</comprarBoton>
+        <categoria>Category</categoria>
+        <subcategoria>Subcategory</subcategoria>
+        <color>Color</color>
+        <talla>Size</talla>
+        <marca>Brand</marca>
+        <caracteristicas>Characteristic</caracteristicas>
+        <registrarseBoton>Sig In</registrarseBoton>
+        <iniciarsesionBoton>Log In</iniciarsesionBoton>
+        <iniciarsesionPanel>Log In using your email</iniciarsesionPanel>
+        <aceptarBoton>Continue</aceptarBoton>
+        <volverBoton>Return</volverBoton>
+        <eliminarBoton>Delete</eliminarBoton>
+        <anyadircestaBoton>Add to Cart</anyadircestaBoton>
+        <precio>Price</precio>
+        <cantidad>Quantity</cantidad>
+    </idioma>
+    <idioma>
+        <nombre1>Inglés</nombre1>
+        <nombre2>Español</nombre2>
+        <listadeseadosBoton>Lista Deseados</listadeseadosBoton>
+        <historialBoton>Historial</historialBoton>
+        <cestaBoton>Cesta</cestaBoton>
+        <buscarBoton>Buscar</buscarBoton>
+        <comprarBoton>Comprar</comprarBoton>
+        <categoria>Categoria</categoria>
+        <subcategoria>Subcategoria</subcategoria>
+        <color>Color</color>
+        <talla>Talla</talla>
+        <marca>Marca</marca>
+        <caracteristicas>Caracteristica</caracteristicas>
+        <registrarseBoton>Registrarse</registrarseBoton>
+        <iniciarsesionBoton>Iniciar Sesion</iniciarsesionBoton>
+        <iniciarsesionPanel>Inicia Sesión con tu email</iniciarsesionPanel>
+        <aceptarBoton>Aceptar</aceptarBoton>
+        <volverBoton>Volver</volverBoton>
+        <eliminarBoton>Eliminar</eliminarBoton>
+        <anyadircestaBoton>Añadir al Carrito</anyadircestaBoton>
+        <precio>Precio</precio>
+        <cantidad>Cantidad</cantidad>
+    </idioma>
+</idiomas>
