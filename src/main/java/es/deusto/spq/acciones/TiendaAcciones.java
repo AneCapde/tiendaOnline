@@ -61,15 +61,15 @@ public class TiendaAcciones {
 		}
 		return futuroComboBox_Subcategoria;
 	}
-	public void LoginOrLogout(Cliente cliente, JFrame esto, WebTarget appTarget, JPanel contentPane) {
-		if (cliente == null) {
-			esto.setEnabled(false);
-			VentanaLogin ventanaLogin = new VentanaLogin(esto, appTarget);
-			ventanaLogin.setVisible(true);
-			contentPane.setEnabled(false);
-		}else{
-			esto.dispose();
-		}
-		//acciones.LoginOrLogout(cliente, (JFrame)esto, appTarget, contentPane);
-	}
+//	public void LoginOrLogout(Cliente cliente, JFrame esto, WebTarget appTarget, JPanel contentPane) {
+//		if (cliente == null) {
+//			esto.setEnabled(false);
+//			VentanaLogin ventanaLogin = new VentanaLogin(esto, appTarget);
+//			ventanaLogin.setVisible(true);
+//			contentPane.setEnabled(false);
+//		}else{
+//			esto.dispose();
+//		}
+//		//acciones.LoginOrLogout(cliente, (JFrame)esto, appTarget, contentPane);
+//	}
 }

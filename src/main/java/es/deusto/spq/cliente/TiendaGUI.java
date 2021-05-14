@@ -54,7 +54,7 @@ public class TiendaGUI extends JFrame {
 	private Client client;
 	private JPanel contentPane;
 	private JTextField txtBuscador;
-	private DefaultListModel<Producto> model = new DefaultListModel<>();
+	private DefaultListModel<Producto> model = new DefaultListModel<Producto>();
 	private DefaultListModel<Pedido> model2 = new DefaultListModel<>();
 	private JList<Producto> listaElementos;
 	private JComboBox<Colores> comboBox_colores;
@@ -501,8 +501,13 @@ public class TiendaGUI extends JFrame {
 		//esa característica
 		botonBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				ArrayList<Producto> subCatTemp = new ArrayList<Producto>();
 				model.removeAllElements();
-				buscar();
+				subCatTemp = acciones.buscar(txtBuscador.getText(), categoriaSeleccionada, subCategoriaSeleccionada, marcaSeleccionada, colorSelecionado, tallaSeleccionada, productos);
+				for (int i = 0; i < subCatTemp.size(); i++) {
+					model.addElement(subCatTemp.get(i));
+				}
+				
 			}
 		});
 
@@ -568,42 +573,42 @@ public class TiendaGUI extends JFrame {
 		botonAnyadir.setVisible(true);
     }
     
-    public void buscar() {
-
-    	textoBuscador = txtBuscador.getText();
-    	categoriaSeleccionada = (Categoria) comboBox_Categoria.getSelectedItem();
-    	subCategoriaSeleccionada = (SubCategoria) comboBox_Subcategoria.getSelectedItem();
-    	marcaSeleccionada = (Marca) comboBoxMarca.getSelectedItem();
-    	colorSelecionado = (Colores) comboBox_colores.getSelectedItem();
-    	tallaSeleccionada = (Tallas) comboBoxTalla.getSelectedItem();
-
-    	model.removeAllElements();
-    	System.out.println(productos);
-    	for (int i = 0; i < productos.size(); i++) {
-    		System.out.println(productos.get(i).getMarca() + "==" + marcaSeleccionada);
-    		if (productos.get(i).getNombre().toLowerCase().indexOf(textoBuscador.toLowerCase()) == 0) {
-
-    			System.out.println(productos.get(i).getSubcategoria().getCategoria() + " =? " + categoriaSeleccionada + (productos.get(i).getSubcategoria().getCategoria() == categoriaSeleccionada));
-    			System.out.println(productos.get(i).getSubcategoria() + " =? " + subCategoriaSeleccionada + (productos.get(i).getSubcategoria() == subCategoriaSeleccionada));
-    			System.out.println(productos.get(i).getMarca() + " =? " + marcaSeleccionada + (productos.get(i).getMarca() == marcaSeleccionada));
-    			System.out.println();
-
-    			if 		(
-    					(categoriaSeleccionada == null || productos.get(i).getSubcategoria().getCategoria().getNombre().equals(categoriaSeleccionada.getNombre())) 
-    					&& (subCategoriaSeleccionada == null || productos.get(i).getSubcategoria().getNombre().equals(subCategoriaSeleccionada.getNombre()))
-    					&& (marcaSeleccionada == null || productos.get(i).getMarca().getNombre().equals(marcaSeleccionada.getNombre()))
-    					//&& ((colorSelecionado == null || productos.get(i).getTallas_colores().containsKey(colorSelecionado))  &&  (tallaSeleccionada == null || productos.get(i).getTallas_colores().containsValue(tallaSeleccionada)))
-    					)
-
-    			{
-
-    				model.addElement(productos.get(i));
-    			}
-    		}
-
-    	}
-
-    }
+//    public void buscar() {
+//
+//    	textoBuscador = txtBuscador.getText();
+//    	categoriaSeleccionada = (Categoria) comboBox_Categoria.getSelectedItem();
+//    	subCategoriaSeleccionada = (SubCategoria) comboBox_Subcategoria.getSelectedItem();
+//    	marcaSeleccionada = (Marca) comboBoxMarca.getSelectedItem();
+//    	colorSelecionado = (Colores) comboBox_colores.getSelectedItem();
+//    	tallaSeleccionada = (Tallas) comboBoxTalla.getSelectedItem();
+//
+//    	model.removeAllElements();
+//    	System.out.println(productos);
+//    	for (int i = 0; i < productos.size(); i++) {
+//    		System.out.println(productos.get(i).getMarca() + "==" + marcaSeleccionada);
+//    		if (productos.get(i).getNombre().toLowerCase().indexOf(textoBuscador.toLowerCase()) == 0) {
+//
+//    			System.out.println(productos.get(i).getSubcategoria().getCategoria() + " =? " + categoriaSeleccionada + (productos.get(i).getSubcategoria().getCategoria() == categoriaSeleccionada));
+//    			System.out.println(productos.get(i).getSubcategoria() + " =? " + subCategoriaSeleccionada + (productos.get(i).getSubcategoria() == subCategoriaSeleccionada));
+//    			System.out.println(productos.get(i).getMarca() + " =? " + marcaSeleccionada + (productos.get(i).getMarca() == marcaSeleccionada));
+//    			System.out.println();
+//
+//    			if 		(
+//    					(categoriaSeleccionada == null || productos.get(i).getSubcategoria().getCategoria().getNombre().equals(categoriaSeleccionada.getNombre())) 
+//    					&& (subCategoriaSeleccionada == null || productos.get(i).getSubcategoria().getNombre().equals(subCategoriaSeleccionada.getNombre()))
+//    					&& (marcaSeleccionada == null || productos.get(i).getMarca().getNombre().equals(marcaSeleccionada.getNombre()))
+//    					//&& ((colorSelecionado == null || productos.get(i).getTallas_colores().containsKey(colorSelecionado))  &&  (tallaSeleccionada == null || productos.get(i).getTallas_colores().containsValue(tallaSeleccionada)))
+//    					)
+//
+//    			{
+//
+//    				model.addElement(productos.get(i));
+//    			}
+//    		}
+//
+//    	}
+//
+//    }
     
     public void rellenarSubcat() {
     	comboBox_Subcategoria.removeAllItems();
