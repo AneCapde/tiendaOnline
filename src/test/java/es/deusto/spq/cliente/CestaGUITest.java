@@ -38,9 +38,10 @@ public class CestaGUITest {
 		p1 = new Producto("producto1", "producto1", 1, 1, "producto1", 
 		new SubCategoria("Subcategoria1", "Subcategoria1", new Categoria("categoria1", "categoria1")), new Marca("marca1", "marca1"));
 		productos.add(p1);
-		System.out.println("Prueba test: " + productos);
+		System.out.println("Prueba test Cesta GUI: " + productos);
 		cestaGUI = new CestaGUI(tiendaGUI, productos, web);
 	}
+	
 	@Test
 	public void testGetProductos() {
 		List<Producto> productos1 = new ArrayList<>();
@@ -48,7 +49,6 @@ public class CestaGUITest {
 		assertEquals(productos1, cestaGUI.getProductos());
 	}
 	
-	@Ignore
 	@Test
 	public void testGetProductosCantidad(){
 		HashMap<Producto,Integer> productosCantidad = new HashMap<>();
@@ -58,20 +58,12 @@ public class CestaGUITest {
 	
 	@Test
     public void testCalcularPrecio(){
-		Producto p2 = new Producto("producto2", "producto2", 1, 5, "producto2", 
-		new SubCategoria("Subcategoria2", "Subcategoria2", new Categoria("categoria2", "categoria2")), new Marca("marca2", "marca2"));
-		cestaGUI.getProductosCantidad().put(p2, 1);
 		HashMap<Producto,Integer> productosCantidad = new HashMap<>();
 		productosCantidad.put(p1, 1);
-		productosCantidad.put(p2, 1);
 		int precioTotal = 0;
 		for (Producto p : productosCantidad.keySet()){
 			precioTotal += p.getPrecio()*productosCantidad.get(p);
 		}
 		assertEquals(precioTotal, CestaGUI.calcularPrecio());
 	}
-//    public void testCreatePedido(){
-//		CestaGUI cGui = Mockito.mock(CestaGUI.class);
-//		verify(cGui).createPedido();
-//	}
 }

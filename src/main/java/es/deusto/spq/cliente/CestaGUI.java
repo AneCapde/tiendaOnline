@@ -9,11 +9,8 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.border.LineBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.MediaType;
 
-import es.deusto.spq.models.Pedido;
 import es.deusto.spq.models.Producto;
 
 import java.awt.Color;
@@ -21,7 +18,6 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.Image;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.awt.event.ActionListener;
@@ -33,18 +29,16 @@ import javax.swing.JButton;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 
-public class CestaGUI extends JFrame implements ICesta {
+public class CestaGUI extends JFrame{
 
-	/**
-	 *
-	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField textField;
-	private DefaultListModel<Producto> model = new DefaultListModel<>();
+	static DefaultListModel<Producto> model = new DefaultListModel<>();
 	static ArrayList<Producto> productos2 = new ArrayList<>();
 	static HashMap<Producto, Integer> productos_cantidad = new HashMap<Producto, Integer>();
 	final WebTarget pedidoTarget;
+	static JList<Producto> list;
 
 	/**
 	 * Create the frame.
@@ -85,7 +79,7 @@ public class CestaGUI extends JFrame implements ICesta {
 			@Override
 		    public void actionPerformed(ActionEvent e) {
 				System.out.println("Boton Aceptar: " +productos2);
-				VentanaLugarEntregaGUI vle = new VentanaLugarEntregaGUI(esto, productos2, appTarget);
+				VentanaLugarEntregaGUI vle = new VentanaLugarEntregaGUI(esto, productos2, appTarget, calcularPrecio() );
 				vle.setVisible(true);
 				esto.setEnabled(false);
 			}
@@ -96,7 +90,7 @@ public class CestaGUI extends JFrame implements ICesta {
 		contentPane.add(panel);
 		
 	
-		JList<Producto> list = new JList<>(model);
+		list = new JList<>(model);
 		list.setBorder(new LineBorder(new Color(0, 0, 0)));
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		list.setBounds(10, 27, 236, 387);
@@ -178,36 +172,19 @@ public class CestaGUI extends JFrame implements ICesta {
 		textField.setColumns(10);
 		
 	}
-
 	
 	public static int calcularPrecio() {
 		int precioTotal = 0;
 		for (Producto p : productos_cantidad.keySet()){
 			precioTotal += p.getPrecio()*productos_cantidad.get(p);
-//			productos2.add(p);
 		}
 		return precioTotal;
 	}
 
-//	public void createPedido() {
-//		productos.removeAll(productos);
-//		int precio_pedido = 0;
-//		for(Producto p : productos_cantidad.keySet()){
-//			precio_pedido = productos_cantidad.get(p)*p.getPrecio();
-//			productos.add(p);
-//		}
-//		Date date = new Date();
-//		Pedido pedido = new Pedido(TiendaGUI.getCliente(), date,"en proceso" , precio_pedido, 0, "");
-//	    pedido.setProducto((ArrayList<Producto>) productos);	
-//		pedidoTarget.request(MediaType.APPLICATION_JSON).post(Entity.entity(pedido, MediaType.APPLICATION_JSON));
-//	}
-
-	@Override
 	public List<Producto> getProductos(){
         return CestaGUI.productos2;
-    }
-
-	@Override
+	}
+	
 	public HashMap<Producto, Integer> getProductosCantidad() {
 		return CestaGUI.productos_cantidad;
 	}

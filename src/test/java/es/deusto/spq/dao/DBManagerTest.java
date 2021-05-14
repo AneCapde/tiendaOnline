@@ -33,7 +33,8 @@ public class DBManagerTest {
 		SubCategoria subCategoria = new SubCategoria("Subcategoria1", "Subcategoria1", null);
 		Producto p1 = new Producto("producto1", "producto1", 1, 1, "producto1", null, null);
 		Cliente cliente = new Cliente("12132", "usuario", "usuario", "usuario", "usuario", 1213124, "usuario", Genero.MUJER, 48920, "usuario", "usuario");
-		Pedido ped1 = new Pedido(null, new Date(), "en proceso", 10, 1, "");
+
+		Pedido ped1 = new Pedido(null, new Date(), "en proceso", 10, 1, "barcelona");
 		HashMap<String,String> paypal = new HashMap<String,String>();
 		paypal.put("usuario@gmail.com", "1234");
 		HashMap<String,String> visa = new HashMap<String,String>();
@@ -81,7 +82,8 @@ public class DBManagerTest {
 		Producto p1 = new Producto("producto1", "producto1", 1, 1, "producto1", null, null);
 		Cliente cliente = new Cliente("12132", "usuario", "usuario", "usuario", "usuario", 1213124, "usuario",
 				Genero.MUJER, 48920, "usuario", "usuario");
-		Pedido ped1 = new Pedido(null, new Date(), "en proceso", 10, 1, "");
+
+		Pedido ped1 = new Pedido(null, new Date(), "en proceso", 10, 1, "barcelona");
 		HashMap<String, String> paypal = new HashMap<String, String>();
 		paypal.put("usuario@gmail.com", "1234");
 		HashMap<String, String> visa = new HashMap<String, String>();

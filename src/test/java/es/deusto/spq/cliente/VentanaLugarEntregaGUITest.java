@@ -34,9 +34,12 @@ public class VentanaLugarEntregaGUITest {
 	TiendaGUI tiendaGUI = Mockito.mock(TiendaGUI.class);
 	
 	ArrayList<Producto> productos = new ArrayList<Producto>();
-
 	Producto p1;
+	int precio;
 
+	/**
+	 * This method is executed before any JUnit test method is executed: It is annotated with the Before annotation.
+	*/
 	@Before
 	public void inicio(){
 		
@@ -44,7 +47,9 @@ public class VentanaLugarEntregaGUITest {
 				new SubCategoria("Subcategoria1", "Subcategoria1", new Categoria("categoria1", "categoria1")),
 				new Marca("marca1", "marca1"));
 		productos.add(p1);
-		ventanaLugarEntregaGUI = new VentanaLugarEntregaGUI(tiendaGUI, productos, web);
+		precio = 1;
+		System.out.println("Prueba test Ventana Lugar: " + productos);
+		ventanaLugarEntregaGUI = new VentanaLugarEntregaGUI(tiendaGUI, productos, web,precio);
 	}
 	
 	
@@ -110,7 +115,7 @@ public class VentanaLugarEntregaGUITest {
 	
 	@Test
 	public void testAceptar1() {
-		ventanaLugarEntregaGUI.aceptar(tiendaGUI,productos,web, pedidoTarget);
+		ventanaLugarEntregaGUI.aceptar(tiendaGUI,productos,web, pedidoTarget, precio);
 		ventanaLugarEntregaGUI.datosValidar("12333333a","Albacete");
 		ventanaLugarEntregaGUI.datosValidar2("12333333a","Albacete");
 		ventanaLugarEntregaGUI.aceptar1();
@@ -118,7 +123,7 @@ public class VentanaLugarEntregaGUITest {
 	
 	@Test
 	public void testAceptar2() {
-		ventanaLugarEntregaGUI.aceptar(tiendaGUI,productos,web, pedidoTarget);
+		ventanaLugarEntregaGUI.aceptar(tiendaGUI,productos,web, pedidoTarget, precio);
 		ventanaLugarEntregaGUI.datosValidar2("12333333a","Albacete");
 		ventanaLugarEntregaGUI.aceptar2();
 	}
