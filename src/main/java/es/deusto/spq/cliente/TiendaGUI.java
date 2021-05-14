@@ -311,7 +311,7 @@ public class TiendaGUI extends JFrame {
 				ArrayList<Producto> productos = new ArrayList<>();
 				productos.add(productoSeleccionado);
 				System.out.println("producto tienda GUI: " +productos);
-				VentanaLugarEntregaGUI vle = new VentanaLugarEntregaGUI(esto, productos, appTarget);
+				VentanaLugarEntregaGUI vle = new VentanaLugarEntregaGUI(esto, productos, appTarget, productoSeleccionado.getPrecio());
 				vle.setVisible(true);
 
 				esto.setVisible(false);

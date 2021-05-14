@@ -50,7 +50,7 @@ public class VentanaLugarEntregaGUI extends JFrame{
 			"Malaga", "Mallorca", "Melilla", "Murcia", "Ourense", "Oviedo", "Palencia", "Pamplona", "Pontevedra, Salamanca", "Santander",
 			"Segovia", "Sevilla", "Soria","Tarragona", "Teruel", "Toledo", "Valencia", "Valladolid", "Vitoria", "Zamora", "Zaragoza"};
 	
-	public VentanaLugarEntregaGUI(final JFrame ventanaPadre, ArrayList<Producto> productoSeleccionado, WebTarget appTarget) {
+	public VentanaLugarEntregaGUI(final JFrame ventanaPadre, ArrayList<Producto> productos, WebTarget appTarget, int precio) {
 		pedidoTarget = appTarget.path("/pedidos");
 		
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -127,7 +127,8 @@ public class VentanaLugarEntregaGUI extends JFrame{
 		pCentral.add(btnAceptar);
 		btnAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				aceptar(ventanaPadre, productoSeleccionado, appTarget, pedidoTarget);
+//				System.out.println(productos);
+				aceptar(ventanaPadre, productos, appTarget, pedidoTarget, precio);
 			}
 		});
 		
@@ -209,46 +210,58 @@ public class VentanaLugarEntregaGUI extends JFrame{
 		provincia.setVisible(false);
 	}
 
-	public void aceptar(final JFrame ventanaPadre, ArrayList<Producto> productos, WebTarget appTarget, WebTarget pedidoTarget) {
-		
+	@SuppressWarnings("unlikely-arg-type")
+	public void aceptar(final JFrame ventanaPadre, ArrayList<Producto> productos, WebTarget appTarget,
+			WebTarget pedidoTarget, int precio) {
+
 		if (validar()) {
 			Date date = new Date();
-			int precio_pedido = 0;
-			for (int i = 0; i < rdbtnArray.length; i++) {
 //				System.out.println("entra1");
-				if (rdbtnArray[0].isSelected()) {
-//					System.out.println("entra2");
-					provinciaSelecionada = ("Correos " + (String) provincia.getSelectedItem());
-					CestaGUI.productos2.removeAll(CestaGUI.productos2);
-					precio_pedido = CestaGUI.calcularPrecio();
+			if (rdbtnArray[0].isSelected()) {
+//				System.out.println("entra2 Boton 0");
+				provinciaSelecionada = ("Correos " + (String) provincia.getSelectedItem());
 //					System.out.println("entra4");
-					Pedido pedido = new Pedido(TiendaGUI.getCliente(), date,"en proceso" , precio_pedido, 0, provinciaSelecionada);
+				Pedido pedido = new Pedido(TiendaGUI.getCliente(), date, "en proceso", precio, 1, provinciaSelecionada);
 //					System.out.println("Meter pedido en la base de datos: " + pedido);
 //					System.out.println("entra5");
 //					System.out.println();
-				    pedido.setProducto(productos);	
+//				System.out.println("Productos que se añaden al pedido: " + productos);
+				pedido.setProducto(productos);
+//				System.out.println("Lista de productos dentro del pedido una vez añadidos : " + pedido);
 //				    System.out.println("entra6");
-					pedidoTarget.request(MediaType.APPLICATION_JSON).post(Entity.entity(pedido, MediaType.APPLICATION_JSON));
+//				pedidoTarget.request(MediaType.APPLICATION_JSON)
+//						.post(Entity.entity(pedido, MediaType.APPLICATION_JSON));
 //					System.out.println("entra7");
-					ventanaPadre.setEnabled(false);
-					ventanaPadre.setVisible(false);
-					dispose();
-					vmp = new VentanaMetodoPago(ventanaPadre, pedido, appTarget);
-					vmp.setVisible(true);
-					
-				} else if (rdbtnArray[1].isSelected()) {
-					direccion1 = direccion.getText();
-					CestaGUI.productos2.removeAll(CestaGUI.productos2);
-					precio_pedido = CestaGUI.calcularPrecio();
-					Pedido pedido = new Pedido(TiendaGUI.getCliente(), date,"en proceso" , precio_pedido, 0, direccion1);
-				    pedido.setProducto(productos);	
-					pedidoTarget.request(MediaType.APPLICATION_JSON).post(Entity.entity(pedido, MediaType.APPLICATION_JSON));
-					ventanaPadre.setEnabled(false);
-					ventanaPadre.setVisible(false);
-					dispose();
-					vmp = new VentanaMetodoPago(ventanaPadre, pedido, appTarget);
-					vmp.setVisible(true);
+				if(CestaGUI.productos2 != null && CestaGUI.model != null && CestaGUI.list != null) {
+					CestaGUI.productos2.remove(CestaGUI.productos2);
+					CestaGUI.model.removeAllElements();
+					CestaGUI.list.setModel(CestaGUI.model);
 				}
+				
+				ventanaPadre.setEnabled(false);
+				ventanaPadre.setVisible(false);
+				dispose();
+				vmp = new VentanaMetodoPago(ventanaPadre, pedido, appTarget);
+				vmp.setVisible(true);
+
+			} else if (rdbtnArray[1].isSelected()) {
+//				System.out.println("entra2 Boton 1");
+				direccion1 = direccion.getText();
+				Pedido pedido = new Pedido(TiendaGUI.getCliente(), date, "en proceso", precio, 1, direccion1);
+				pedido.setProducto(productos);
+//				System.out.println("Lista de productos dentro del pedido: " + productos);
+//				pedidoTarget.request(MediaType.APPLICATION_JSON)
+//						.post(Entity.entity(pedido, MediaType.APPLICATION_JSON));
+				if(CestaGUI.productos2 != null && CestaGUI.model != null && CestaGUI.list != null) {
+					CestaGUI.productos2.remove(CestaGUI.productos2);
+					CestaGUI.model.removeAllElements();
+					CestaGUI.list.setModel(CestaGUI.model);
+				}
+				ventanaPadre.setEnabled(false);
+				ventanaPadre.setVisible(false);
+				dispose();
+				vmp = new VentanaMetodoPago(ventanaPadre, pedido, appTarget);
+				vmp.setVisible(true);
 			}
 		}
 	}
