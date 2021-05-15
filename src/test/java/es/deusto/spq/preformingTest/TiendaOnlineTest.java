@@ -1,10 +1,12 @@
 package es.deusto.spq.preformingTest;
 
+import java.util.List;
 import java.util.logging.Logger;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 
 import org.databene.contiperf.PerfTest;
@@ -18,7 +20,9 @@ import org.junit.Test;
 
 import es.deusto.spq.Main;
 import es.deusto.spq.cliente.TiendaGUI;
+import es.deusto.spq.models.Categoria;
 import es.deusto.spq.models.Cliente;
+import es.deusto.spq.models.SubCategoria;
 
 @PerfTest(invocations = 5)
 @Required(max = 1200, average = 250)
@@ -54,6 +58,30 @@ public class TiendaOnlineTest {
         final WebTarget clientesTarget = appTarget.path("/clientes").path("/"+"usuario@gmail.com").path("/"+ "12345r");
 		Cliente cliente = clientesTarget.request(MediaType.APPLICATION_JSON).get(Cliente.class);
     }
+    
+    @Test 
+    @PerfTest(invocations = 1000, threads = 20)
+    @Required(max = 20000, average = 3000)
+    public void connectionCategoria(){
+        Client client = ClientBuilder.newClient();
+        final WebTarget appTarget = client.target("http://localhost:8080/myapp");
+		final WebTarget categoriasTarget = appTarget.path("/categorias");
+		GenericType<List<Categoria>> genericType_categoria = new GenericType<List<Categoria>>() {};
+        List<Categoria> categorias = categoriasTarget.request(MediaType.APPLICATION_JSON).get(genericType_categoria);
+    }
+    
+    @Test 
+    @PerfTest(invocations = 1000, threads = 20)
+    @Required(max = 20000, average = 3000)
+    public void connectionSubCategoria(){
+        Client client = ClientBuilder.newClient();
+        final WebTarget appTarget = client.target("http://localhost:8080/myapp");
+        final WebTarget subTarget = appTarget.path("/subcategorias");
+		GenericType<List<SubCategoria>> genericType_sub = new GenericType<List<SubCategoria>>() {};
+		List<SubCategoria> subCategorias = subTarget.request(MediaType.APPLICATION_JSON).get(genericType_sub);
+    }
+    
+    
 
 
 }
