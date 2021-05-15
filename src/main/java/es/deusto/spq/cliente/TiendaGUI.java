@@ -65,6 +65,7 @@ public class TiendaGUI extends JFrame {
 	private List<SubCategoria> subCategorias;
 	private static JButton botonListaDeseados;
 	private static JButton botonHistorial;
+	private static JButton addComent;
 	
 	private TiendaGUI esto;
 	private WebTarget appTarget;
@@ -322,6 +323,28 @@ public class TiendaGUI extends JFrame {
 		});
 		
 		//#################################################################################################
+		addComent = new JButton("Añadir Comentario");
+		addComent.setBounds(10, 345, 194, 25);
+		addComent.setFont(new Font("Segoe UI Black", Font.PLAIN, 15));
+		panel.add(addComent);
+		addComent.setEnabled(false);
+		
+		addComent.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				esto.setEnabled(false);
+		    	updateUserList(appTarget);
+		    	ComentariosGUI comentarios = new ComentariosGUI(esto, appTarget);
+		    	comentarios.setVisible(true);
+		    	contentPane.setEnabled(false);
+		    	dispose();
+				
+			}
+			
+		});
+		
+		//#################################################################################################
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(240, 10, 252, 500);
 		contentPane.add(scrollPane);
@@ -554,6 +577,7 @@ public class TiendaGUI extends JFrame {
 		botonLogin.updateUI();
 		botonListaDeseados.setEnabled(true);
 		botonHistorial.setEnabled(true);
+		addComent.setEnabled(true);
 	}
 	
 	private static void cargarLista() {
