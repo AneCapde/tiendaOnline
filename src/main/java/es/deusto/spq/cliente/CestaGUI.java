@@ -34,11 +34,11 @@ public class CestaGUI extends JFrame{
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField textField;
-	static DefaultListModel<Producto> model = new DefaultListModel<>();
-	static ArrayList<Producto> productos2 = new ArrayList<>();
+	public static DefaultListModel<Producto> model = new DefaultListModel<>();
+	public static ArrayList<Producto> productos2 = new ArrayList<>();
 	static HashMap<Producto, Integer> productos_cantidad = new HashMap<Producto, Integer>();
 	final WebTarget pedidoTarget;
-	static JList<Producto> list;
+	public static JList<Producto> list;
 
 	/**
 	 * Create the frame.

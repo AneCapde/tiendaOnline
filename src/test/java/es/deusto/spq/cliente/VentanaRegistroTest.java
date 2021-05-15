@@ -247,7 +247,7 @@ public class VentanaRegistroTest {
 	
 	@Test
 	public void testValidarDatosProvinciaMal()throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-		vent.datosValidar("em@gmail.com", "nom", "apel", "12333333a", "123456789", "dir", "12435", "", "loc");
+		vent.datosValidar("em@gmail.com", "nom", "apel", "12333333a", "123456789", "dir", "12435", null, "loc");
 		Method method = VentanaRegistro.class.getDeclaredMethod("Validar");
 		method.setAccessible(true);
 		Boolean result = (Boolean) method.invoke(vent);
