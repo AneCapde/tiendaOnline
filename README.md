@@ -62,9 +62,25 @@ El servidor REST de la aplicación se lanza utilizando el comando
 
 Si el servidor ha sido iniciado correctamente se pueden obtener los datos de prueba accediendo con el navegador a la URL http://localhost:8080/myapp/users.
 
-
 **Inicio de la aplicación cliente**
 
 La aplicación cliente puede iniciarse usando el comando
 
     mvn exec:java -Pcliente
+    
+Documentación
+-------------  
+   
+**Documentación**
+
+Para generar informes de doxygen
+
+	mvn doxygen: report
+	
+Para copiar el directorio html generado en la carpeta de documentos
+	
+	mvn validate
+
+Para eliminar los archivos de destino generados, incluidos los documentos de directorio con código html
+
+	mvn clean
