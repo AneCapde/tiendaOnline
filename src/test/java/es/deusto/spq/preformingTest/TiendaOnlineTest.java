@@ -22,6 +22,7 @@ import es.deusto.spq.Main;
 import es.deusto.spq.cliente.TiendaGUI;
 import es.deusto.spq.models.Categoria;
 import es.deusto.spq.models.Cliente;
+import es.deusto.spq.models.Pedido;
 import es.deusto.spq.models.SubCategoria;
 
 @PerfTest(invocations = 5)
@@ -81,6 +82,18 @@ public class TiendaOnlineTest {
 		List<SubCategoria> subCategorias = subTarget.request(MediaType.APPLICATION_JSON).get(genericType_sub);
     }
     
+//    @Test 
+//    @PerfTest(invocations = 1000, threads = 20)
+//    @Required(max = 20000, average = 3000)
+//    public void connectionPedido(){
+//        Client client = ClientBuilder.newClient();
+//        final WebTarget appTarget = client.target("http://localhost:8080/myapp");
+//        final WebTarget pedTarget = appTarget.path("/pedidos").path("/"+"12399345K");
+//		  GenericType<List<Pedido>> genericType_ped = new GenericType<List<Pedido>>() {};
+//		  List<Pedido> pedidos = pedTarget.request(MediaType.APPLICATION_JSON).get(genericType_ped);
+//        
+//    }
+//    
     
 
 
