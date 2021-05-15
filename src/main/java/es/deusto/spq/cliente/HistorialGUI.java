@@ -1,29 +1,25 @@
 package es.deusto.spq.cliente;
 
-import java.awt.BorderLayout;
+
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Image;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.DefaultListModel;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JSpinner;
 import javax.swing.JTextArea;
 import javax.swing.ListSelectionModel;
-import javax.swing.SpinnerNumberModel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.border.LineBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.ws.rs.client.WebTarget;
@@ -31,18 +27,15 @@ import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 
 import es.deusto.spq.models.Pedido;
-import es.deusto.spq.models.Producto;
+
 
 @SuppressWarnings("serial")
 public class HistorialGUI extends JFrame{
 	
 	private JPanel contentPane;
 	private DefaultListModel<Pedido> model = new DefaultListModel<>();
-	private DefaultListModel<Producto> model2 = new DefaultListModel<>();
 	private Pedido pedidoSeleccionado;
-	private Producto productoSeleccionado;
 	private JButton botonDevolver;
-	private ArrayList<Producto> productos = new ArrayList<>();
 	private List<Pedido> pedidos = new ArrayList<>();
 	private JTextArea textArea;
 	private JList<Pedido> list;
@@ -72,15 +65,6 @@ public class HistorialGUI extends JFrame{
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(20, 37, 400, 457);
 		contentPane.add(scrollPane);
-		
-//		JScrollPane scrollPane2 = new JScrollPane();
-//		scrollPane2.setBounds(500, 37, 400, 457);
-//		contentPane.add(scrollPane2);
-//
-//		JPanel imagePlacehold = new JPanel();
-//		imagePlacehold.setBounds(464, 51, 367, 260);
-//		imagePlacehold.setBackground(Color.WHITE);
-//		contentPane.add(imagePlacehold);
 		
 		JLabel lblCaracteristicas = new JLabel("Caracteristicas");
 		lblCaracteristicas.setBounds(452, 192, 162, 14);
@@ -114,46 +98,6 @@ public class HistorialGUI extends JFrame{
 
 			
 		});
-		
-		//Obtenemos los productos que hay dentro de un pedido para mostrar el articulo junto con la foto
-//		for (Pedido pedido : pedidos) {
-//			productos = pedido.getProducto();
-//		}
-//		
-//		//JList para los productos que hay dentro de un determinado pedido
-//		for (int i = 0; i < productos.size(); i++) {
-//			model2.addElement(productos.get(i)); 
-//		}
-//		
-		//JList para los productos
-		
-//		JList<Producto> list2 = new JList<>(model2);
-//		list2.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-//		scrollPane2.setViewportView(list2);
-//		list2.addListSelectionListener(new ListSelectionListener() {
-//			
-//			@Override
-//			public void valueChanged(ListSelectionEvent e) {
-//				productoSeleccionado = list2.getSelectedValue();
-//				textArea.setText(null);
-//				if (productoSeleccionado != null) {
-//					imagePlacehold.removeAll();
-//					ImageIcon icono_3 = new ImageIcon(getClass().getResource("/"+ productoSeleccionado.getImagen()));
-//					ImageIcon icono_4 = new ImageIcon(icono_3.getImage().getScaledInstance(imagePlacehold.getWidth(), imagePlacehold.getHeight(),Image.SCALE_DEFAULT));
-//					JLabel label = new JLabel(icono_4);
-//					imagePlacehold.add(label);
-//					imagePlacehold.revalidate();
-//					
-//					textArea.append("- NOMBRE: " + productoSeleccionado.nombre + "\n");
-//					textArea.append("- DESCRIPCIÓN: " + productoSeleccionado.descripcion + "\n");
-//					textArea.append("- PRECIO: " + productoSeleccionado.precio + "\n");
-//					textArea.append("- CATEGORÍA: " + productoSeleccionado.getSubcategoria().getCategoria().getNombre() + "\n");
-//					textArea.append("    SUBCATEGORÍA: " + productoSeleccionado.getSubcategoria().getNombre() + "\n");
-//					
-//				}
-//			}
-//		});
-
 		
 		botonDevolver = new JButton("DEVOLUCIÓN");
 		botonDevolver.setForeground(Color.BLACK);
@@ -212,6 +156,7 @@ public class HistorialGUI extends JFrame{
 			textArea.append("- ESTADO: " + pedidoSeleccionado.getEstado() + "\n");
 			textArea.append(" -IMPORTE: " + pedidoSeleccionado.getImporte() + "\n");
 			textArea.append(" -CANTIDAD: " + pedidoSeleccionado.getCantidad() + "\n");
+			textArea.append(" -LUGAR: " + pedidoSeleccionado.getLugar() + "\n");
 			
 			
 		}
