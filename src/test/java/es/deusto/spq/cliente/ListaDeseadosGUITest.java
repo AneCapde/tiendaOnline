@@ -16,8 +16,6 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static org.mockito.Mockito.*;
-
 import es.deusto.spq.models.Categoria;
 import es.deusto.spq.models.Cliente;
 import es.deusto.spq.models.Marca;
@@ -39,7 +37,9 @@ public class ListaDeseadosGUITest {
 	Producto p1, p2;
 	Cliente cliente;
 
-	
+	/**
+	 * Este método se ejecuta antes de que se ejecute cualquier método de prueba JUnit: se anota con la anotación Before.
+	*/
 	@Before
 	public void inicio(){
 		cliente = new Cliente("12132", "usuario", "usuario", "usuario", "usuario", 1213124, "usuario", Genero.MUJER, 48920, "usuario", "usuario");
@@ -49,13 +49,7 @@ public class ListaDeseadosGUITest {
 		
 		try(MockedStatic<TiendaGUI> utilities = Mockito.mockStatic(TiendaGUI.class)){
 			utilities.when(TiendaGUI::getCliente).thenReturn(cliente);
-//			doReturn(productos).when(TiendaGUI::getCliente).getProductosDeseados();
-//			utilities.when(TiendaGUI::getProductosDeseados).thenReturn(productos);
 		}
-//		when(tiendaGUI.getCliente()).thenReturn(cliente);
-//		when(tiendaGUI.getCliente().getProductosDeseados()).thenReturn(productos);
-		
-//		doReturn(tiendaGUI.getCliente()).when().thenReturn(true);
 		listaDeseadosGUI = new ListaDeseadosGUI(tiendaGUI, web);
 		listaDeseadosGUI.setProductosDeseados(productos);
 	}
@@ -78,6 +72,9 @@ public class ListaDeseadosGUITest {
 		verify(cGui).updateClient(web);
 	}
 	
+	/**
+	 * Metodo que valida que el metodo Eliminar de la clase Lista Deseados GUI funcione correctamente
+	 */
 	@Test 
 	public void testEliminar() {
 		Producto producto = null;
@@ -90,7 +87,9 @@ public class ListaDeseadosGUITest {
 		 assertEquals(productos, listaDeseadosGUI.eliminar());
 	}
 	
-	
+	/**
+	 * Metodo que valida que el metodo Anyadir de la clase Lista Deseados GUI funcione correctamente
+	 */
 	@Test
 	public void testAnyadir() {
 		p2 = new Producto("producto2", "producto2", 1, 1, "producto2", 
@@ -123,6 +122,9 @@ public class ListaDeseadosGUITest {
 		assertEquals(productos1, ListaDeseadosGUI.anyadirProductosDeseados());
 	}
 	
+	/**
+	 * Metodo que valida que el metodo GetProductosDeseados de la clase Lista Deseados GUI funcione correctamente
+	 */
 	@Test
 	public void testGetProductosDeseados() {
 		ArrayList<Producto> productos1 = new ArrayList<>();
@@ -130,7 +132,9 @@ public class ListaDeseadosGUITest {
 		assertEquals(productos1, ListaDeseadosGUI.getProductosDeseados());
 	}
 	
-	
+	/**
+	 * Metodo que valida que el metodo SetproductosDeseados de la clase Lista Deseados GUI funcione correctamente
+	 */
 	@Test
 	public void testSetProductosDeseados() {
 		ArrayList<Producto> productos1 = new ArrayList<>();
@@ -143,6 +147,6 @@ public class ListaDeseadosGUITest {
 	@Ignore
 	@Test 
 	public void testImagenes() {
-		//listaDeseadosGUI.imagenes();
+		listaDeseadosGUI.imagenes(p1);
 	}
 }

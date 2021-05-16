@@ -5,8 +5,6 @@ import static org.junit.Assert.assertEquals;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 import javax.ws.rs.client.WebTarget;
 
@@ -61,7 +59,7 @@ public class VentanaLugarEntregaGUITest {
 	}
 	
 	/**
-	 * Este metodo comprueba que el metodo valdiar de la Ventana Lugar Entrega GUI funcione adecuadamente cuando entra en el primer if
+	 * Este metodo comprueba que el metodo validar de la Ventana Lugar Entrega GUI funcione adecuadamente cuando entra en el primer if
 	 * @throws NoSuchMethodException
 	 * @throws SecurityException
 	 * @throws IllegalAccessException
@@ -78,7 +76,7 @@ public class VentanaLugarEntregaGUITest {
 	}
 	
 	/**
-	 *  Este metodo comprueba que el metodo valdiar de la Ventana Lugar Entrega GUI funcione adecuadamente cuando entra en el segundo if
+	 *  Este metodo comprueba que el metodo validar de la Ventana Lugar Entrega GUI funcione adecuadamente cuando entra en el segundo if
 	 * @throws NoSuchMethodException
 	 * @throws SecurityException
 	 * @throws IllegalAccessException
@@ -95,7 +93,7 @@ public class VentanaLugarEntregaGUITest {
 	}
 	
 	/**
-	 *  Este metodo comprueba que el metodo valdiar de la Ventana Lugar Entrega GUI funcione adecuadamente cuando no se a introduccido ningun dato
+	 *  Este metodo comprueba que el metodo validar de la Ventana Lugar Entrega GUI funcione adecuadamente cuando no se a introduccido ningun dato
 	 * @throws NoSuchMethodException
 	 * @throws SecurityException
 	 * @throws IllegalAccessException
@@ -112,7 +110,7 @@ public class VentanaLugarEntregaGUITest {
 	}
 	
 	/**
-	 *  Este metodo comprueba que el metodo valdiar de la Ventana Lugar Entrega GUI funcione adecuadamente cuando no se introducce la provincia
+	 *  Este metodo comprueba que el metodo validar de la Ventana Lugar Entrega GUI funcione adecuadamente cuando no se introducce la provincia
 	 * @throws NoSuchMethodException
 	 * @throws SecurityException
 	 * @throws IllegalAccessException
@@ -129,7 +127,7 @@ public class VentanaLugarEntregaGUITest {
 	}
 	
 	/**
-	 * Este metodo comprueba que el metodo valdiar de la Ventana Lugar Entrega GUI funcione adecuadamente cuando no se introducce la direccion
+	 * Este metodo comprueba que el metodo validar de la Ventana Lugar Entrega GUI funcione adecuadamente cuando no se introducce la direccion
 	 * @throws NoSuchMethodException
 	 * @throws SecurityException
 	 * @throws IllegalAccessException
@@ -161,17 +159,20 @@ public class VentanaLugarEntregaGUITest {
 		ventanaLugarEntregaGUI.domicilio();
 	}
 	
-//	/**
-//	 * 
-//	 */
-//	@Test
-//	public void testAceptar1() {
-//		ventanaLugarEntregaGUI.aceptar(tiendaGUI,productos,web, pedidoTarget, precio);
-//		ventanaLugarEntregaGUI.datosValidar("12333333a","Albacete");
-//		ventanaLugarEntregaGUI.datosValidar2("12333333a","Albacete");
-//		ventanaLugarEntregaGUI.aceptar1();
-//	}
-//	
+	/**
+	 * Metodo que comprueba ue el metodo Acepatr de la Ventana Lugar Entrega GUI funciona adecuadamente
+	 * @throws SecurityException 
+	 * @throws NoSuchMethodException 
+	 * 
+	 */
+	@Test
+	public void testAceptar() throws NoSuchMethodException, SecurityException{
+		ventanaLugarEntregaGUI.aceptar(tiendaGUI,productos,web, pedidoTarget, precio);
+		ventanaLugarEntregaGUI.datosValidar2("12333333a","Albacete");
+		Method method = VentanaLugarEntregaGUI.class.getDeclaredMethod("validar");
+		method.setAccessible(true);
+	}
+	
 //	@Test
 //	public void testAceptar2() {
 //		ventanaLugarEntregaGUI.aceptar(tiendaGUI,productos,web, pedidoTarget, precio);

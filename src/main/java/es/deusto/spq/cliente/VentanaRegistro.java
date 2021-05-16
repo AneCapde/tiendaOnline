@@ -47,6 +47,7 @@ public class VentanaRegistro extends JFrame {
 	JRadioButton rdbtnMujer;
 	JRadioButton rdbtnNoBinario;
 	Cliente.Genero[] generos = { Cliente.Genero.HOMBRE, Cliente.Genero.MUJER, Cliente.Genero.NO_BINARIO };
+	WebTarget clientesTarget;
 	
 	String[] provincias = { "A Coruña", "Alava", "Albacete", "Alicante", "Almeria", "Asturias", "Avila", "Badajoz", "Baleares",
 			"Barcelona", "Burgos", "Caceres", "Cadiz", "Cantabria", "Catellon", "Ceuta", "Ciudad Real", "Cordoba", "Cuenca",
@@ -54,7 +55,9 @@ public class VentanaRegistro extends JFrame {
 			"Malaga", "Melilla", "Murcia", "Navarra", "Ourense", "Palencia", "Pontevedra, Salamanca", "Segovia", "Sevilla", "Soria",
 			"Tarragona", "Teruel", "Toledo", "Valencia", "Valladolid", "Vizcaya", "Zamora", "Zaragoza"};
 	
-	// metodo para validar el correo
+	/**
+	 * Metodo para validar el correo
+	 */
 	protected static boolean elEmailCorrecto(String email) {
 
 		boolean valido = false;
@@ -70,7 +73,11 @@ public class VentanaRegistro extends JFrame {
 		return valido;
 	}
 	
-	// metodo para validar el correo
+	/**
+	 * Metodo para validar el nombre
+	 * @param nombre El nombre introducido por el usuario
+	 * @return true si el nombre es valido, false si el nombre no es valido
+	 */
 	protected static boolean nombreCorrecto(String nombre) {
 
 		boolean valido = false;
@@ -85,7 +92,11 @@ public class VentanaRegistro extends JFrame {
 		return valido;
 	}
 	
-	// metodo para validar el DNI
+	/**
+	 * Metodo para validar el DNI
+	 * @param dni	El DNI introducido por el usuario
+	 * @return true Si el DNI es valido, false si el DNI no es valido
+	 */
 	protected static boolean DNICorrecto(String dni) {
 
 		boolean valido = false;
@@ -100,8 +111,11 @@ public class VentanaRegistro extends JFrame {
 		return valido;
 	}
 	
-	
-	// metodo para validar el Codigo Postal
+	/**
+	 * Metodo para validar el Codigo Postal
+	 * @param cod_postal	El Codigo postal introducido por el usuario
+	 * @return true 	Si el Codigo Postal es valido, false si el Codigo Postal no es valido
+	 */	 
 	protected static boolean CodPostalCorrecto(String cod_postal) {
 
 		boolean valido = false;
@@ -116,7 +130,11 @@ public class VentanaRegistro extends JFrame {
 		return valido;
 	}
 	
-	// metodo para validar el Telefono
+	/**
+	 * Metodo para validar el Telefono
+	 * @param telefono telefono introducido por el usuario
+	 * @return true si el telefono es correcto, false si el telefono es incorrecto
+	 */
 	protected static boolean telefonoCorrecto(String telefono) {
 
 		boolean valido = false;
@@ -131,7 +149,11 @@ public class VentanaRegistro extends JFrame {
 		return valido;
 	}
 
-	// metodo para validar el apellido
+	/**
+	 * Metodo para valdiar el apellido
+	 * @param apellido El apellido introducido por el usuario
+	 * @return	true si el apellido es correcto, false si el apellido es incorrecto
+	 */
 	protected static boolean apellidoCorrecto(String apellido) {
 
 		boolean valido = false;
@@ -146,23 +168,29 @@ public class VentanaRegistro extends JFrame {
 		return valido;
 	}
 	
-	// metodo para validar la localidad
-		protected static boolean localidadCorrecto(String localidad) {
+	/**
+	 * Metodo para validar la Localidad
+	 * @param localidad Localidad introducida por el usuario
+	 * @return	True si la localidad es correcta, false si la localidad es incorrecta
+	 */
+	protected static boolean localidadCorrecto(String localidad) {
 
-			boolean valido = false;
+		boolean valido = false;
 
-			Pattern patronLocalidad = Pattern
-					.compile("[a-zA-Z]*\\D{3}");
+		Pattern patronLocalidad = Pattern.compile("[a-zA-Z]*\\D{3}");
 
-			Matcher mLocalidad = patronLocalidad.matcher(localidad.toLowerCase());
-			if (mLocalidad.matches()) {
-				valido = true;
-			}
-			return valido;
+		Matcher mLocalidad = patronLocalidad.matcher(localidad.toLowerCase());
+		if (mLocalidad.matches()) {
+			valido = true;
 		}
-		
+		return valido;
+	}
 	
-	// metodo para validar la contraseña
+	/**
+	 * Metodo para validar la contraseña
+	 * @param password	Contraseña introducida por el usuario
+	 * @return	Devuelve un mensaje con el resultado de la calidad de la contraseña
+	 */
 	protected static String elPasswordCorrecto(String password) {
 		String resultado = "Muy Buena"; // Resultado de password valido
 
@@ -213,9 +241,12 @@ public class VentanaRegistro extends JFrame {
 		return(resultado);
 	}
 	
+	/**
+	 * Metodo que valdia que todos los datos introducidos por el usuario son valdios
+	 * @return	True si los datos son validos, false si los datos no son validos
+	 */
 	private boolean Validar() {
 		boolean valido = false;
-//		try {
 			if(elEmailCorrecto(email.getText())) {
 				if(nombreCorrecto(nombre.getText())) {
 					if(apellidoCorrecto(apellidos.getText())) {
@@ -234,7 +265,7 @@ public class VentanaRegistro extends JFrame {
 												JOptionPane.showMessageDialog(null, "Solo se admite texto", "Validar Localidad", JOptionPane.INFORMATION_MESSAGE);
 											}
 										}else {
-											JOptionPane.showMessageDialog(null, "Hay que seleccionar una procincia", "Seleccionar Provincia", JOptionPane.INFORMATION_MESSAGE);
+											JOptionPane.showMessageDialog(null, "Hay que seleccionar una provincia", "Seleccionar Provincia", JOptionPane.INFORMATION_MESSAGE);
 										}
 									}else {
 										JOptionPane.showMessageDialog(null, "Solo se admiten 5 numeros", "Validar Codigo Postal", JOptionPane.INFORMATION_MESSAGE);
@@ -260,16 +291,17 @@ public class VentanaRegistro extends JFrame {
 				JOptionPane.showMessageDialog(null, "Email incorrecto","Validar Email", JOptionPane.INFORMATION_MESSAGE);
 				email.requestFocus();
 			}
-//		}catch(Exception e){
-//			JOptionPane.showMessageDialog(this,"Error", "Mensaje de Error", JOptionPane.ERROR_MESSAGE);
-//		}
 		return valido;
 	}
 	
-
+	/**
+	 * Ventana donde los usuarios se registran en la Tienda Online
+	 * @param ventanaPadre	Ventana anterior, a traves de la cual se a llegado a esta
+	 * @param appTarget	Objeto para la comunicacion con el server
+	 */
 	public VentanaRegistro(final JFrame ventanaPadre, WebTarget appTarget ) {
 
-		final WebTarget clientesTarget = appTarget.path("/clientes");
+		clientesTarget = appTarget.path("/clientes");
 
 		setIconImage(Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("/img/registro2.png")));
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -424,40 +456,7 @@ public class VentanaRegistro extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Thread t = new Thread() {
-					public void run() {
-						if (Validar()) {
-							String dniUsuario = dni.getText();
-							String usuarioNick = nombre.getText();
-							String apellidosUsuario = apellidos.getText();
-							String correo = email.getText();
-							String password = new String(passwordField.getPassword());
-							Integer telefonoUsuario =  Integer.parseInt(telefono.getText());
-							String direccionUsuario = direccion.getText();
-							Integer cod_postalUsuario = Integer.parseInt(cod_postal.getText());
-							String provinciaSelecionada = (String) provincia.getSelectedItem();
-							String localidadUsuario = localidad.getText();
-							Cliente.Genero genero = null;
-							for (int i = 0; i < rdbtnArray.length; i++) {
-								if (rdbtnArray[i].isSelected()) {
-									genero = generos[i];
-								}
-							}
-			
-							Cliente cliente = new Cliente(dniUsuario, usuarioNick, apellidosUsuario, correo, password,
-									telefonoUsuario, direccionUsuario, genero, cod_postalUsuario, provinciaSelecionada,
-									localidadUsuario);
-			
-							clientesTarget.request(MediaType.APPLICATION_JSON).post(Entity.entity(cliente, MediaType.APPLICATION_JSON));
-
-							dispose();
-							ventanaPadre.setEnabled(true);
-						}				
-
-					}
-				};
-				t.start();
-				System.out.println("Aceptar");
+				aceptar(ventanaPadre);
 			}
 		});
 
@@ -486,7 +485,55 @@ public class VentanaRegistro extends JFrame {
 
 	}
 	
+	public void aceptar(JFrame ventanaPadre) {
+		Thread t = new Thread() {
+			public void run() {
+				if (Validar()) {
+					String dniUsuario = dni.getText();
+					String usuarioNick = nombre.getText();
+					String apellidosUsuario = apellidos.getText();
+					String correo = email.getText();
+					String password = new String(passwordField.getPassword());
+					Integer telefonoUsuario =  Integer.parseInt(telefono.getText());
+					String direccionUsuario = direccion.getText();
+					Integer cod_postalUsuario = Integer.parseInt(cod_postal.getText());
+					String provinciaSelecionada = (String) provincia.getSelectedItem();
+					String localidadUsuario = localidad.getText();
+					Cliente.Genero genero = null;
+					for (int i = 0; i < rdbtnArray.length; i++) {
+						if (rdbtnArray[i].isSelected()) {
+							genero = generos[i];
+						}
+					}
+	
+					Cliente cliente = new Cliente(dniUsuario, usuarioNick, apellidosUsuario, correo, password,
+							telefonoUsuario, direccionUsuario, genero, cod_postalUsuario, provinciaSelecionada,
+							localidadUsuario);
+	
+					clientesTarget.request(MediaType.APPLICATION_JSON).post(Entity.entity(cliente, MediaType.APPLICATION_JSON));
 
+					dispose();
+					ventanaPadre.setEnabled(true);
+				}				
+
+			}
+		};
+		t.start();
+		System.out.println("Aceptar");
+	}
+	
+	/**
+	 * Metodo para validar que los datos introducidos son correctos cuando no se selcciona ningun Radio Button
+	 * @param em 	Email introducido por el usuario
+	 * @param nom	Nombre introducido por el usuario
+	 * @param apel	Apellidos introducidos por el usuario
+	 * @param dn	DNI introducido por el usuario
+	 * @param tel	Telefono introducido por el usuario
+	 * @param dir	Direccion introducida por el usuario
+	 * @param cod	Codigo Postal introducido por el usuario
+	 * @param prov	Provincia introducida por el usuario
+	 * @param loc	Localidad introducida por el usuario
+	 */
 	public void datosValidar2(String em, String nom, String apel, String dn, String tel, String dir, String cod, String prov,
 			String loc) {
 		email.setText(em);
@@ -503,6 +550,18 @@ public class VentanaRegistro extends JFrame {
 		rdbtnNoBinario.setSelected(false);	
 	}
 	
+	/**
+	 * Metodo para validar que los datos introducidos son correctos cuando no se selcciona el Radio Button de Hombre
+	 * @param em	Email introducido por el usuario
+	 * @param nom	Nombre introducido por el usuario
+	 * @param apel	Apellidos introducidos por el usuario
+	 * @param dn	DNI introducido por el usuario
+	 * @param tel	Telefono introducido por el usuario
+	 * @param dir	Direccion introducida por el usuario
+	 * @param cod	Codigo Postal introducido por el usuario
+	 * @param prov	Provincia introducida por el usuario
+	 * @param loc	Localidad introducida por el usuario
+	 */
 	public void datosValidar(String em, String nom, String apel, String dn, String tel, String dir, String cod, String prov,
 			String loc) {
 		email.setText(em);
@@ -516,15 +575,4 @@ public class VentanaRegistro extends JFrame {
 		provincia.setSelectedItem(prov);
 		rdbtnHombre.setSelected(true);	
 	}
-	
-//	public static void main(String[] args) {
-////		BD.initData();
-//		try { // Cambiamos el look and feel (se tiene que hacer antes de crear la GUI
-//			UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
-//		} catch (Exception e) {
-//		} // Si Nimbus no está disponible, se usa el l&f por defecto
-//		VentanaRegistro v = new VentanaRegistro();
-//		v.setVisible(true);
-//	}
-
 }
