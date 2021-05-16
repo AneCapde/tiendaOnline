@@ -242,9 +242,15 @@ public class TiendaGUI extends JFrame {
 		//Cada vez que se cambia una categoría hay que eliminar todas las subactegorias y meter nuevas eb el comboBox
 		GenericType<List<SubCategoria>> genericType_sub = new GenericType<List<SubCategoria>>() {};
         subCategorias = subTarget.request(MediaType.APPLICATION_JSON).get(genericType_sub);
-		comboBox_Categoria.addActionListener (new ActionListener () {
+		
+        comboBox_Categoria.addActionListener (new ActionListener () {
 		    public void actionPerformed(ActionEvent e) {
-		    	rellenarSubcat();
+		    	ArrayList<SubCategoria> subcaTem = new ArrayList<SubCategoria>();
+		    	categoriaSeleccionada = (Categoria) comboBox_Categoria.getSelectedItem();
+		    	subcaTem = acciones.rellenarSubcategorias(categoriaSeleccionada, subCategorias);
+		    	for (SubCategoria SubCategoria : subcaTem) {
+					comboBox_Subcategoria.addItem(SubCategoria);
+				}
 		    }
 		});
 		
@@ -332,7 +338,6 @@ public class TiendaGUI extends JFrame {
 				System.out.println("producto tienda GUI: " +productos);
 				VentanaLugarEntregaGUI vle = new VentanaLugarEntregaGUI(esto, productos, appTarget, productoSeleccionado.getPrecio());
 				vle.setVisible(true);
-
 				esto.setVisible(false);
 				esto.setEnabled(false);	
 			}
@@ -551,6 +556,7 @@ public class TiendaGUI extends JFrame {
 
 		//Cada vez que se le da a buscar se mira todos los combobox y el apartado de busqueda y se mira si los elementos en la lista tienen
 		//esa característica
+		
 		botonBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ArrayList<Producto> subCatTemp = new ArrayList<Producto>();
@@ -682,18 +688,18 @@ public class TiendaGUI extends JFrame {
 //
 //    }
     
-    public void rellenarSubcat() {
-    	comboBox_Subcategoria.removeAllItems();
-    	comboBox_Subcategoria.addItem(null);		    	
-    	categoriaSeleccionada = (Categoria) comboBox_Categoria.getSelectedItem();
-    	for (int i = 0; i < subCategorias.size(); i++) {
-    		if (categoriaSeleccionada != null) {			
-    			if (categoriaSeleccionada.getNombre().equals(subCategorias.get(i).getCategoria().getNombre())) {
-    				comboBox_Subcategoria.addItem(subCategorias.get(i));
-    			}
-    		}
-    	}
-    }
+//    public void rellenarSubcat() {
+//    	comboBox_Subcategoria.removeAllItems();
+//    	comboBox_Subcategoria.addItem(null);		    	
+//    	categoriaSeleccionada = (Categoria) comboBox_Categoria.getSelectedItem();
+//    	for (int i = 0; i < subCategorias.size(); i++) {
+//    		if (categoriaSeleccionada != null) {			
+//    			if (categoriaSeleccionada.getNombre().equals(subCategorias.get(i).getCategoria().getNombre())) {
+//    				comboBox_Subcategoria.addItem(subCategorias.get(i));
+//    			}
+//    		}
+//    	}
+//    }
     
     public void botonListaDeseados() {
     	System.out.println(cliente);

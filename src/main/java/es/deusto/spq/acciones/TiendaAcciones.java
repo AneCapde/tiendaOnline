@@ -51,7 +51,10 @@ public class TiendaAcciones {
 	}
 	
 	public ArrayList<SubCategoria> rellenarSubcategorias(Categoria categoriaSeleccionada, List<SubCategoria> subCategorias){
-    	ArrayList<SubCategoria> futuroComboBox_Subcategoria = new ArrayList<SubCategoria>();
+    	System.out.println(subCategorias);
+    	System.out.println(categoriaSeleccionada);
+    	
+		ArrayList<SubCategoria> futuroComboBox_Subcategoria = new ArrayList<SubCategoria>();
 		for (int i = 0; i < subCategorias.size(); i++) {
     		if (categoriaSeleccionada != null) {			
 				if (categoriaSeleccionada.getNombre().equals(subCategorias.get(i).getCategoria().getNombre())) {
@@ -59,6 +62,7 @@ public class TiendaAcciones {
 				}
     		}
 		}
+		System.out.println(futuroComboBox_Subcategoria);
 		return futuroComboBox_Subcategoria;
 	}
 //	public void LoginOrLogout(Cliente cliente, JFrame esto, WebTarget appTarget, JPanel contentPane) {
