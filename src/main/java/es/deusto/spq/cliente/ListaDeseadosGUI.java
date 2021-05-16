@@ -30,6 +30,10 @@ import es.deusto.spq.util.Idiomas;
 
 public class ListaDeseadosGUI extends JFrame {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private static ArrayList<Producto> productos_deseados = new ArrayList<>();
 	public static JPanel contentPane, imagePlacehold;
 	public static JTextArea textArea;

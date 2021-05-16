@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import javax.ws.rs.client.WebTarget;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -158,17 +159,20 @@ public class VentanaLugarEntregaGUITest {
 		ventanaLugarEntregaGUI.domicilio();
 	}
 	
-//	/**
-//	 * 
-//	 */
-//	@Test
-//	public void testAceptar1() {
-//		ventanaLugarEntregaGUI.aceptar(tiendaGUI,productos,web, pedidoTarget, precio);
-//		ventanaLugarEntregaGUI.datosValidar("12333333a","Albacete");
-//		ventanaLugarEntregaGUI.datosValidar2("12333333a","Albacete");
-//		ventanaLugarEntregaGUI.aceptar1();
-//	}
-//	
+	/**
+	 * Metodo que comprueba ue el metodo Acepatr de la Ventana Lugar Entrega GUI funciona adecuadamente
+	 * @throws SecurityException 
+	 * @throws NoSuchMethodException 
+	 * 
+	 */
+	@Test
+	public void testAceptar() throws NoSuchMethodException, SecurityException{
+		ventanaLugarEntregaGUI.aceptar(tiendaGUI,productos,web, pedidoTarget, precio);
+		ventanaLugarEntregaGUI.datosValidar2("12333333a","Albacete");
+		Method method = VentanaLugarEntregaGUI.class.getDeclaredMethod("validar");
+		method.setAccessible(true);
+	}
+	
 //	@Test
 //	public void testAceptar2() {
 //		ventanaLugarEntregaGUI.aceptar(tiendaGUI,productos,web, pedidoTarget, precio);

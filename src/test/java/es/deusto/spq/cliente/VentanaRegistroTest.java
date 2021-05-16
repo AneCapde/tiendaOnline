@@ -524,5 +524,13 @@ public class VentanaRegistroTest {
 		Boolean result = (Boolean) method.invoke(vent);
 		assertEquals(false, result);	
 	}
+	
+	@Test
+	public void testAceptar() throws NoSuchMethodException, SecurityException {
+		vent.aceptar(padre);
+		vent.datosValidar("em@gmail.com", "nom", "apel", "12333333a", "123456789", "dir", "12435", "Albacete", "loc");
+		Method method = VentanaRegistro.class.getDeclaredMethod("Validar");
+		method.setAccessible(true);
+	}
 
 }

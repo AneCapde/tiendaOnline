@@ -47,6 +47,7 @@ public class VentanaRegistro extends JFrame {
 	JRadioButton rdbtnMujer;
 	JRadioButton rdbtnNoBinario;
 	Cliente.Genero[] generos = { Cliente.Genero.HOMBRE, Cliente.Genero.MUJER, Cliente.Genero.NO_BINARIO };
+	WebTarget clientesTarget;
 	
 	String[] provincias = { "A Coruña", "Alava", "Albacete", "Alicante", "Almeria", "Asturias", "Avila", "Badajoz", "Baleares",
 			"Barcelona", "Burgos", "Caceres", "Cadiz", "Cantabria", "Catellon", "Ceuta", "Ciudad Real", "Cordoba", "Cuenca",
@@ -264,7 +265,7 @@ public class VentanaRegistro extends JFrame {
 												JOptionPane.showMessageDialog(null, "Solo se admite texto", "Validar Localidad", JOptionPane.INFORMATION_MESSAGE);
 											}
 										}else {
-											JOptionPane.showMessageDialog(null, "Hay que seleccionar una procincia", "Seleccionar Provincia", JOptionPane.INFORMATION_MESSAGE);
+											JOptionPane.showMessageDialog(null, "Hay que seleccionar una provincia", "Seleccionar Provincia", JOptionPane.INFORMATION_MESSAGE);
 										}
 									}else {
 										JOptionPane.showMessageDialog(null, "Solo se admiten 5 numeros", "Validar Codigo Postal", JOptionPane.INFORMATION_MESSAGE);
@@ -300,7 +301,7 @@ public class VentanaRegistro extends JFrame {
 	 */
 	public VentanaRegistro(final JFrame ventanaPadre, WebTarget appTarget ) {
 
-		final WebTarget clientesTarget = appTarget.path("/clientes");
+		clientesTarget = appTarget.path("/clientes");
 
 		setIconImage(Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("/img/registro2.png")));
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -455,40 +456,7 @@ public class VentanaRegistro extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Thread t = new Thread() {
-					public void run() {
-						if (Validar()) {
-							String dniUsuario = dni.getText();
-							String usuarioNick = nombre.getText();
-							String apellidosUsuario = apellidos.getText();
-							String correo = email.getText();
-							String password = new String(passwordField.getPassword());
-							Integer telefonoUsuario =  Integer.parseInt(telefono.getText());
-							String direccionUsuario = direccion.getText();
-							Integer cod_postalUsuario = Integer.parseInt(cod_postal.getText());
-							String provinciaSelecionada = (String) provincia.getSelectedItem();
-							String localidadUsuario = localidad.getText();
-							Cliente.Genero genero = null;
-							for (int i = 0; i < rdbtnArray.length; i++) {
-								if (rdbtnArray[i].isSelected()) {
-									genero = generos[i];
-								}
-							}
-			
-							Cliente cliente = new Cliente(dniUsuario, usuarioNick, apellidosUsuario, correo, password,
-									telefonoUsuario, direccionUsuario, genero, cod_postalUsuario, provinciaSelecionada,
-									localidadUsuario);
-			
-							clientesTarget.request(MediaType.APPLICATION_JSON).post(Entity.entity(cliente, MediaType.APPLICATION_JSON));
-
-							dispose();
-							ventanaPadre.setEnabled(true);
-						}				
-
-					}
-				};
-				t.start();
-				System.out.println("Aceptar");
+				aceptar(ventanaPadre);
 			}
 		});
 
@@ -515,6 +483,43 @@ public class VentanaRegistro extends JFrame {
 			}
 		});
 
+	}
+	
+	public void aceptar(JFrame ventanaPadre) {
+		Thread t = new Thread() {
+			public void run() {
+				if (Validar()) {
+					String dniUsuario = dni.getText();
+					String usuarioNick = nombre.getText();
+					String apellidosUsuario = apellidos.getText();
+					String correo = email.getText();
+					String password = new String(passwordField.getPassword());
+					Integer telefonoUsuario =  Integer.parseInt(telefono.getText());
+					String direccionUsuario = direccion.getText();
+					Integer cod_postalUsuario = Integer.parseInt(cod_postal.getText());
+					String provinciaSelecionada = (String) provincia.getSelectedItem();
+					String localidadUsuario = localidad.getText();
+					Cliente.Genero genero = null;
+					for (int i = 0; i < rdbtnArray.length; i++) {
+						if (rdbtnArray[i].isSelected()) {
+							genero = generos[i];
+						}
+					}
+	
+					Cliente cliente = new Cliente(dniUsuario, usuarioNick, apellidosUsuario, correo, password,
+							telefonoUsuario, direccionUsuario, genero, cod_postalUsuario, provinciaSelecionada,
+							localidadUsuario);
+	
+					clientesTarget.request(MediaType.APPLICATION_JSON).post(Entity.entity(cliente, MediaType.APPLICATION_JSON));
+
+					dispose();
+					ventanaPadre.setEnabled(true);
+				}				
+
+			}
+		};
+		t.start();
+		System.out.println("Aceptar");
 	}
 	
 	/**
