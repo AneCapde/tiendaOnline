@@ -32,7 +32,12 @@ public class VentanaLoginTest {
 	
 	@Test
 	public void testAceptar() {
-//		ventanaLogin.Aceptar();
+//		ventanaLogin.aceptar(tiendaGUI, web);
+	}
+	
+	@Test
+	public void testSeleccionidioma() {
+//		ventanaLogin.seleccionIdioma();
 	}
 
 }

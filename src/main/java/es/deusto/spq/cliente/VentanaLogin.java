@@ -47,6 +47,11 @@ public class VentanaLogin extends JFrame{
 	TiendaGUI ventanaPadre;
 	WebTarget appTarget;
 	
+	/**
+	 * Ventana para hacer Login en la Tineda Online
+	 * @param ventanaPadre Ventana anterior, a traves de la cual se a llegado a esta
+	 * @param appTarget    Objeto para la comunicacion con el server
+	 */
 	public VentanaLogin(final JFrame ventanaPadre, WebTarget appTarget) {
 
 		this.addWindowListener(new WindowAdapter() {
@@ -100,23 +105,10 @@ public class VentanaLogin extends JFrame{
 		combo.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println(combo.getSelectedItem().equals("Ingles"));
-				if (combo.getSelectedItem().equals("Ingles") || combo.getSelectedItem().equals("English")){
-					VentanaLogin.idioma = Idiomas.Ingles;
-					System.out.println(VentanaLogin.idioma);
-				}else{
-					System.out.println(VentanaLogin.idioma);
-					VentanaLogin.idioma = Idiomas.Español;
-				}
-				combo.removeAllItems();
-				combo.addItem(Idiomas.seleccionarPalabra("nombre1"));
-				combo.addItem(Idiomas.seleccionarPalabra("nombre2"));
-				lTexto.setText(Idiomas.seleccionarPalabra("iniciarsesionPanel"));
-				bAceptar.setText(Idiomas.seleccionarPalabra("aceptarBoton"));
-				bCancelar.setText(Idiomas.seleccionarPalabra("volverBoton"));
+				seleccionIdioma();
 			}
 		});
-		//pIZQ.add(combo);
+
 		getContentPane().add(pIZQ,BorderLayout.WEST);
 
 		pInferior = new JPanel();
@@ -189,6 +181,11 @@ public class VentanaLogin extends JFrame{
         }); 
 	}
 	
+	/**
+	 * Meotodo para verificar que el cliente que se esta intentando loggear a sido previamente resgistrado
+	 * @param ventanaPadre Ventana anterior, a traves de la cual se a llegado a esta
+	 * @param appTarget Objeto para la comunicacion con el server
+	 */
 	public void aceptar(JFrame ventanaPadre, WebTarget appTarget) {
 		final WebTarget clientesTarget = appTarget.path("/clientes").path("/"+emailTextField.getText()).path("/"+ new String(passwordField.getPassword()));
 		Cliente cliente = clientesTarget.request(MediaType.APPLICATION_JSON).get(Cliente.class);
@@ -203,5 +200,25 @@ public class VentanaLogin extends JFrame{
 		catch(NullPointerException nl) {
 			JOptionPane.showMessageDialog(null, "Credenciales incorrectas", "Validar Credenciales", JOptionPane.INFORMATION_MESSAGE);
 		}
+	}
+	
+	/**
+	 * Metodo para seleccionar en que idioma se desea visualizar la ventana
+	 */
+	public void seleccionIdioma() {
+		System.out.println(combo.getSelectedItem().equals("Ingles"));
+		if (combo.getSelectedItem().equals("Ingles") || combo.getSelectedItem().equals("English")){
+			VentanaLogin.idioma = Idiomas.Ingles;
+			System.out.println(VentanaLogin.idioma);
+		}else{
+			System.out.println(VentanaLogin.idioma);
+			VentanaLogin.idioma = Idiomas.Español;
+		}
+		combo.removeAllItems();
+		combo.addItem(Idiomas.seleccionarPalabra("nombre1"));
+		combo.addItem(Idiomas.seleccionarPalabra("nombre2"));
+		lTexto.setText(Idiomas.seleccionarPalabra("iniciarsesionPanel"));
+		bAceptar.setText(Idiomas.seleccionarPalabra("aceptarBoton"));
+		bCancelar.setText(Idiomas.seleccionarPalabra("volverBoton"));
 	}
 }
