@@ -46,6 +46,11 @@ public class VentanaLogin extends JFrame{
 	TiendaGUI ventanaPadre;
 	WebTarget appTarget;
 	
+	/**
+	 * Ventana para hacer Login en la Tineda Online
+	 * @param ventanaPadre Ventana anterior, a traves de la cual se a llegado a esta
+	 * @param appTarget    Objeto para la comunicacion con el server
+	 */
 	public VentanaLogin(final JFrame ventanaPadre, WebTarget appTarget) {
 
 		this.addWindowListener(new WindowAdapter() {
@@ -163,6 +168,11 @@ public class VentanaLogin extends JFrame{
         }); 
 	}
 	
+	/**
+	 * Meotodo para verificar que el cliente que se esta intentando loggear a sido previamente resgistrado
+	 * @param ventanaPadre Ventana anterior, a traves de la cual se a llegado a esta
+	 * @param appTarget Objeto para la comunicacion con el server
+	 */
 	public void aceptar(JFrame ventanaPadre, WebTarget appTarget) {
 		final WebTarget clientesTarget = appTarget.path("/clientes").path("/"+emailTextField.getText()).path("/"+ new String(passwordField.getPassword()));
 		Cliente cliente = clientesTarget.request(MediaType.APPLICATION_JSON).get(Cliente.class);
@@ -178,4 +188,5 @@ public class VentanaLogin extends JFrame{
 			JOptionPane.showMessageDialog(null, "Credenciales incorrectas", "Validar Credenciales", JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
+	
 }
