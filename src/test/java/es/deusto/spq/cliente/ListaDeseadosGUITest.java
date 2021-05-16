@@ -143,6 +143,6 @@ public class ListaDeseadosGUITest {
 	@Ignore
 	@Test 
 	public void testImagenes() {
-		listaDeseadosGUI.imagenes();
+		//listaDeseadosGUI.imagenes();
 	}
 }
