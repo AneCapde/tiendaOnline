@@ -24,6 +24,17 @@ public class TiendaAcciones {
 	
 	
 	
+	/**
+	 * Clase que busca los elementos segun parametros introducidos.
+	 * @param textoBuscador Parametro para la busqueda por nombre.
+	 * @param categoriaSeleccionada	Parametro para la busqueda por categoria
+	 * @param subCategoriaSeleccionada Parametro para la busqueda por subcategoria
+	 * @param marcaSeleccionada Parametro para la busqueda por marca
+	 * @param colorSelecionado Parametro para la busqueda por color
+	 * @param tallaSeleccionada Parametro para la busqueda por talla
+	 * @param productos La lista de productos en la que buscar
+	 * @return
+	 */
 	public ArrayList<Producto> buscar(String textoBuscador, Categoria categoriaSeleccionada, SubCategoria subCategoriaSeleccionada,
 											 Marca marcaSeleccionada, Colores colorSelecionado, Tallas tallaSeleccionada, List<Producto> productos) {
 				
@@ -50,6 +61,12 @@ public class TiendaAcciones {
 		return model;
 	}
 	
+	/**
+	 * Clase para sacar las subcategorias dependiendo de las categoria seleccionada.
+	 * @param categoriaSeleccionada Categoria seleccionada.
+	 * @param subCategorias Lista de las subcategorias en las que buscar.
+	 * @return
+	 */
 	public ArrayList<SubCategoria> rellenarSubcategorias(Categoria categoriaSeleccionada, List<SubCategoria> subCategorias){
     	System.out.println(subCategorias);
     	System.out.println(categoriaSeleccionada);
