@@ -25,6 +25,7 @@ import es.deusto.spq.cliente.TiendaGUI;
 import es.deusto.spq.models.Categoria;
 import es.deusto.spq.models.Cliente;
 import es.deusto.spq.models.Pedido;
+import es.deusto.spq.models.Producto;
 import es.deusto.spq.models.SubCategoria;
 
 @PerfTest(invocations = 5)
@@ -36,6 +37,8 @@ public class TiendaOnlineTest {
     Cliente cliente;
     List<Categoria> categorias;
     List<SubCategoria> subCategorias;
+    List<Producto> productos;
+    
     
     // If you use the EmptyReportModule, the report is not generated
 	//@Rule public ContiPerfRule rule = new ContiPerfRule(new EmptyReportModule());
@@ -81,6 +84,18 @@ public class TiendaOnlineTest {
         final WebTarget subTarget = appTarget.path("/subcategorias");
 		GenericType<List<SubCategoria>> genericType_sub = new GenericType<List<SubCategoria>>() {};
 		subCategorias = subTarget.request(MediaType.APPLICATION_JSON).get(genericType_sub);
+    }
+    
+    @Test 
+    @PerfTest(invocations = 1000, threads = 20)
+    @Required(max = 20000, average = 3000)
+    public void connectionProducto(){
+    	Client client = ClientBuilder.newClient();
+        final WebTarget appTarget = client.target("http://localhost:8080/myapp");
+        final WebTarget prodTarget = appTarget.path("/productos");
+		GenericType<List<Producto>> genericType_sub = new GenericType<List<Producto>>() {};
+		productos = prodTarget.request(MediaType.APPLICATION_JSON).get(genericType_sub);
+        
     }
     
     @Test 
