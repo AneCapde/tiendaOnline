@@ -43,7 +43,8 @@ public class PrepararDatos implements IPrepararDatos {
 	"historialBoton", "cestaBoton", "buscarBoton", "comprarBoton", "categoria", 
 	"subcategoria", "color", "talla", "marca", "caracteristicas", "registrarseBoton",
 	"iniciarsesionBoton", "iniciarsesionPanel", "aceptarBoton", "volverBoton",
-	"eliminarBoton", "anyadircestaBoton", "precio","cantidad"};
+	"eliminarBoton", "anyadircestaBoton", "precio","cantidad", "devolucion", "anyadirComentario",
+	"masComprados"};
 	
 	private static ArrayList<String> coment = new ArrayList<String>();
 

@@ -27,9 +27,9 @@ import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 
 import es.deusto.spq.models.Pedido;
+import es.deusto.spq.util.Idiomas;
 
 
-@SuppressWarnings("serial")
 public class HistorialGUI extends JFrame{
 	
 	private JPanel contentPane;
@@ -48,8 +48,6 @@ public class HistorialGUI extends JFrame{
 		GenericType<List<Pedido>> genericType_pedido = new GenericType<List<Pedido>>() {};
 		pedidos = pedidoTarget.request(MediaType.APPLICATION_JSON).get(genericType_pedido);
 		
-		System.out.println(pedidos + "kfjwofjiwqjgiwqjgpi");
-		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 872, 560);
 		contentPane = new JPanel();
@@ -66,7 +64,7 @@ public class HistorialGUI extends JFrame{
 		scrollPane.setBounds(20, 37, 400, 457);
 		contentPane.add(scrollPane);
 		
-		JLabel lblCaracteristicas = new JLabel("Caracteristicas");
+		JLabel lblCaracteristicas = new JLabel(Idiomas.seleccionarPalabra("caracteristicas"));
 		lblCaracteristicas.setBounds(452, 192, 162, 14);
 		lblCaracteristicas.setFont(new Font("Segoe UI Black", Font.PLAIN, 14));
 		contentPane.add(lblCaracteristicas);
@@ -99,7 +97,7 @@ public class HistorialGUI extends JFrame{
 			
 		});
 		
-		botonDevolver = new JButton("DEVOLUCIÓN");
+		botonDevolver = new JButton(Idiomas.seleccionarPalabra("devolucion"));
 		botonDevolver.setForeground(Color.BLACK);
 		botonDevolver.setBackground(new Color(0, 255, 0));
 		botonDevolver.setBounds(650, 11, 109, 29);
@@ -117,7 +115,7 @@ public class HistorialGUI extends JFrame{
 			}
 	    });
 		
-	    JButton btnInicio = new JButton("INICIO");
+	    JButton btnInicio = new JButton(Idiomas.seleccionarPalabra("volverBoton"));
 		btnInicio.setForeground(Color.BLACK);
 		btnInicio.setBackground(new Color(0, 255, 0));
 		btnInicio.setBounds(469, 11, 109, 29);

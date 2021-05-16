@@ -23,6 +23,9 @@
         <anyadircestaBoton>Add to Cart</anyadircestaBoton>
         <precio>Price</precio>
         <cantidad>Quantity</cantidad>
+        <devolucion>Refund</devolucion>
+        <anyadirComentario>Leave your Opinion</anyadirComentario>
+        <masComprados>Most bought</masComprados>
     </idioma>
     <idioma>
         <nombre1>Español</nombre1>
@@ -47,5 +50,8 @@
         <anyadircestaBoton>Añadir al Carrito</anyadircestaBoton>
         <precio>Precio</precio>
         <cantidad>Cantidad</cantidad>
+        <devolucion>Devolucion</devolucion>
+        <anyadirComentario>Añadir Comentario</anyadirComentario>
+        <masComprados>Más comprados</masComprados>
     </idioma>
 </idiomas>

@@ -33,7 +33,6 @@ public class TiendaOnlineTest {
     
     static Logger logger = Logger.getLogger(TiendaGUI.class.getName());
     private HttpServer server;
-    private WebTarget target;
     Cliente cliente;
     List<Categoria> categorias;
     List<SubCategoria> subCategorias;
@@ -47,9 +46,6 @@ public class TiendaOnlineTest {
     public void setUp() {
      // start the server
      server = Main.startServer();
-     // create the client
-     Client c = ClientBuilder.newClient();
-     target = c.target(Main.BASE_URI);
     }
     @After
     public void tearDown() throws Exception {
