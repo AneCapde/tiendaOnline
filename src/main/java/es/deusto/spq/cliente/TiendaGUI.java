@@ -102,6 +102,7 @@ public class TiendaGUI extends JFrame {
 	private JButton btnCesta;
 	private JButton botonBuscar;
 	private JButton botonSignIn;
+	private JButton btnMasComprados;
 	public static Idiomas idioma = Idiomas.Español;
 
 
@@ -351,7 +352,7 @@ public class TiendaGUI extends JFrame {
 		});
 		
 		//#################################################################################################
-		addComent = new JButton("Añadir Comentario");
+		addComent = new JButton(Idiomas.seleccionarPalabra("anyadirComentario"));
 		addComent.setBounds(10, 500, 194, 30);
 		addComent.setFont(new Font("Segoe UI Black", Font.PLAIN, 15));
 		panel.add(addComent);
@@ -581,7 +582,7 @@ public class TiendaGUI extends JFrame {
 		panel.add(botonListaDeseados);
 		
 	//#############################################################################
-		JButton btnMasComprados = new JButton("Más Comprados");
+		btnMasComprados = new JButton(Idiomas.seleccionarPalabra("masComprados"));
 		btnMasComprados.setBounds(370, 10, 122, 23);
 		contentPane.add(btnMasComprados);
 		btnMasComprados.setEnabled(false);
@@ -761,6 +762,7 @@ public class TiendaGUI extends JFrame {
 		botones.add(botonHistorial);
 		botones.add(botonLogin);
 		botones.add(botonSignIn);
+		botones.add(btnMasComprados);
 		return botones;
 	}
 	private ArrayList<JLabel> getJLabels(){

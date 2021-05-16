@@ -412,10 +412,15 @@ public class DBManager implements IDBManager{
 		try {
 			
 			tx.begin();
-			Query<?> query = pm.newQuery("SELECT producto.* FROM producto LEFT OUTER JOIN pedido_productopedido ON producto.PRODUCTO_ID = pedido_productopedido.PRODUCTO_ID_EID\r\n" + 
-										 "GROUP BY producto.NOMBRE order by count(PEDIDO_ID_OID) desc ;");
+			Query<?> query = pm.newQuery("SELECT producto.* FROM producto LEFT OUTER JOIN pedido_productopedido ON producto.PRODUCTO_ID" + 
+										 " = pedido_productopedido.PRODUCTO_ID_EID GROUP BY producto.NOMBRE order by count(PEDIDO_ID_OID) desc ;");
 			
-			productos = (ArrayList<Producto>) query.execute();
+			
+			Extent<Producto> extent =  (Extent<Producto>) query.execute();
+			
+			for (Producto producto : extent) {
+				productos.add(producto);
+			}
 			tx.commit();
 		} catch (Exception ex) {
 			System.out.println("  $ Error retrieving all the Productos: " + ex.getMessage());

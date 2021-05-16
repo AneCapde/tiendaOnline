@@ -26,8 +26,8 @@ import javax.ws.rs.core.MediaType;
 
 import es.deusto.spq.models.Cliente;
 import es.deusto.spq.models.Producto;
+import es.deusto.spq.util.Idiomas;
 
-@SuppressWarnings("serial")
 public class ListaDeseadosGUI extends JFrame {
 	
 	private static ArrayList<Producto> productos_deseados = new ArrayList<>();
@@ -64,7 +64,7 @@ public class ListaDeseadosGUI extends JFrame {
 		scrollPane.setBounds(20, 37, 400, 457);
 		contentPane.add(scrollPane);
 		
-		JLabel lblCaracteristicas = new JLabel("Caracteristicas");
+		JLabel lblCaracteristicas = new JLabel(Idiomas.seleccionarPalabra("caracteristicas"));
 		lblCaracteristicas.setBounds(464, 322, 162, 14);
 		lblCaracteristicas.setFont(new Font("Segoe UI Black", Font.PLAIN, 14));
 		contentPane.add(lblCaracteristicas);
@@ -78,7 +78,7 @@ public class ListaDeseadosGUI extends JFrame {
 		imagePlacehold.setBackground(Color.WHITE);
 		contentPane.add(imagePlacehold);
 		
-		botonAnyadir = new JButton("Añadir A la Cesta");
+		botonAnyadir = new JButton(Idiomas.seleccionarPalabra("anyadircestaBoton"));
 		botonAnyadir.setBounds(605, 11, 212, 29);
 		botonAnyadir.setFont(new Font("Segoe UI Black", Font.PLAIN, 20));
 		contentPane.add(botonAnyadir);
@@ -89,7 +89,7 @@ public class ListaDeseadosGUI extends JFrame {
 			}
 		});
 		
-		JButton btnEliminar = new JButton("ELIMINAR");
+	 	btnEliminar = new JButton(Idiomas.seleccionarPalabra("eliminarBoton"));
 		btnEliminar.setForeground(Color.WHITE);
 		btnEliminar.setBackground(new Color(128, 0, 0));
 		btnEliminar.setBounds(733, 487, 98, 23);
@@ -108,11 +108,12 @@ public class ListaDeseadosGUI extends JFrame {
 			
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
-				Imagenes();
+				productoSeleccionado = listaElementos.getSelectedValue();
+				imagenes(productoSeleccionado);
 			}
 		});
 
-		JButton btnInicio = new JButton("INICIO");
+		JButton btnInicio = new JButton(Idiomas.seleccionarPalabra("volverBoton"));
 		btnInicio.setForeground(Color.BLACK);
 		btnInicio.setBackground(new Color(0, 255, 0));
 		btnInicio.setBounds(469, 11, 109, 29);
@@ -220,15 +221,11 @@ public class ListaDeseadosGUI extends JFrame {
 		ListaDeseadosGUI.productos_deseados = productos_deseados;
 	}
 	
-	/**
-	 * Metodo para visualizar la imagen del producto seleccionado y poder ver ssu caracteristicas
-	 */
-	public void Imagenes() {
+	public void imagenes(Producto producto) {
 		botonAnyadir.setVisible(true);
 		btnEliminar.setVisible(true);
-		productoSeleccionado = listaElementos.getSelectedValue();
 		textArea.setText(null);
-		if (ListaDeseadosGUI.productoSeleccionado != null) {
+		if (producto != null) {
 			ListaDeseadosGUI.imagePlacehold.removeAll();
 			ImageIcon icono_3 = new ImageIcon(getClass().getResource("/"+ productoSeleccionado.getImagen()));
 			ImageIcon icono_4 = new ImageIcon(icono_3.getImage().getScaledInstance(imagePlacehold.getWidth(), imagePlacehold.getHeight(),Image.SCALE_DEFAULT));
@@ -236,11 +233,11 @@ public class ListaDeseadosGUI extends JFrame {
 			imagePlacehold.add(label);
 			imagePlacehold.revalidate();
 			
-			textArea.append("- NOMBRE: " + productoSeleccionado.nombre + "\n");
-			textArea.append("- DESCRIPCIÓN: " + productoSeleccionado.descripcion + "\n");
-			textArea.append("- PRECIO: " + productoSeleccionado.precio + "\n");
-			textArea.append("- CATEGORÍA: " + productoSeleccionado.getSubcategoria().getCategoria().getNombre() + "\n");
-			textArea.append("    SUBCATEGORÍA: " + productoSeleccionado.getSubcategoria().getNombre() + "\n");
+			textArea.append("- NOMBRE: " + producto.nombre + "\n");
+			textArea.append("- DESCRIPCIÓN: " + producto.descripcion + "\n");
+			textArea.append("- PRECIO: " + producto.precio + "\n");
+			textArea.append("- CATEGORÍA: " + producto.getSubcategoria().getCategoria().getNombre() + "\n");
+			textArea.append("    SUBCATEGORÍA: " + producto.getSubcategoria().getNombre() + "\n");
 			
 		}
 	}

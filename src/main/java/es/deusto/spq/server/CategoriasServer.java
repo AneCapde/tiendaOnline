@@ -26,7 +26,7 @@ public class CategoriasServer {
     }
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public void addCategoria(Categoria categoria) {
+    public static void addCategoria(Categoria categoria) {
         DBManager.getInstance().store(categoria);
     }
     @DELETE

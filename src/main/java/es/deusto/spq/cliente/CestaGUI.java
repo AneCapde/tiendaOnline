@@ -12,6 +12,7 @@ import javax.swing.event.ListSelectionListener;
 import javax.ws.rs.client.WebTarget;
 
 import es.deusto.spq.models.Producto;
+import es.deusto.spq.util.Idiomas;
 
 import java.awt.Color;
 import javax.swing.JLabel;
@@ -64,13 +65,13 @@ public class CestaGUI extends JFrame{
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblCarro = new JLabel("CARRO");
+		JLabel lblCarro = new JLabel(Idiomas.seleccionarPalabra("cestaBoton"));
 		lblCarro.setFont(new Font("Segoe UI Black", Font.PLAIN, 15));
 		lblCarro.setBounds(10, 11, 134, 14);
 		contentPane.add(lblCarro);
 
 		
-		JButton btnNewButton = new JButton("COMPRAR");
+		JButton btnNewButton = new JButton(Idiomas.seleccionarPalabra("comprarBoton"));
 		btnNewButton.setFont(new Font("Segoe UI Black", Font.PLAIN, 20));
 		btnNewButton.setBounds(346, 417, 143, 48);
 		contentPane.add(btnNewButton);
@@ -118,7 +119,7 @@ public class CestaGUI extends JFrame{
 		spinner.setBounds(361, 377, 40, 29);
 		contentPane.add(spinner);
 		
-		JLabel lblCantidad = new JLabel("CANTIDAD");
+		JLabel lblCantidad = new JLabel(Idiomas.seleccionarPalabra(""));
 		lblCantidad.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		lblCantidad.setBounds(269, 377, 134, 22);
 		contentPane.add(lblCantidad);
@@ -142,7 +143,7 @@ public class CestaGUI extends JFrame{
 			}
 		});
 
-		JButton btnEliminar = new JButton("ELIMINAR");
+		JButton btnEliminar = new JButton(Idiomas.seleccionarPalabra("eliminarBoton"));
 		btnEliminar.setForeground(Color.WHITE);
 		btnEliminar.setBackground(new Color(128, 0, 0));
 		btnEliminar.setBounds(486, 377, 90, 29);
@@ -158,7 +159,7 @@ public class CestaGUI extends JFrame{
 				textField.setText(String.valueOf(calcularPrecio()));
 			}
 		});
-		JLabel lblPrecio = new JLabel("Precio:");
+		JLabel lblPrecio = new JLabel(Idiomas.seleccionarPalabra("precio"));
 		lblPrecio.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		lblPrecio.setBounds(10, 433, 81, 27);
 		contentPane.add(lblPrecio);
