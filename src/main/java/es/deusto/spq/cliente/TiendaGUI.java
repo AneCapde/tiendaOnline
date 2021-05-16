@@ -77,6 +77,7 @@ public class TiendaGUI extends JFrame {
 	private TiendaGUI esto;
 	private WebTarget appTarget;
 	
+	
 	private JTextArea textArea;
 	ImageIcon imagen1, imagen2;
 	Icon icono1, icono2;
@@ -103,6 +104,7 @@ public class TiendaGUI extends JFrame {
 	private JButton botonSignIn;
 	public static Idiomas idioma = Idiomas.Español;
 
+
 	public TiendaGUI() {
 		client = ClientBuilder.newClient();
 		PrepararDatos.getInstance().cargarDatosXML();
@@ -114,6 +116,7 @@ public class TiendaGUI extends JFrame {
 		final WebTarget pedidoTarget= appTarget.path("/pedidos");
 		final WebTarget pagoTarget= appTarget.path("/pagos");
 		final WebTarget productosTarget = appTarget.path("/productos");
+		final WebTarget masBuscadoTarget = appTarget.path("/productos/masBuscado");
 
 		esto = this;
 		
@@ -371,7 +374,7 @@ public class TiendaGUI extends JFrame {
 		
 		//#################################################################################################
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(240, 10, 252, 500);
+		scrollPane.setBounds(240, 40, 252, 470);
 		contentPane.add(scrollPane);
 		
 		//#################################################################################################
@@ -576,6 +579,25 @@ public class TiendaGUI extends JFrame {
 		botonListaDeseados.setFont(new Font("Segoe UI Black", Font.PLAIN, 15));
 		botonListaDeseados.setBounds(10, 378, 194, 30);
 		panel.add(botonListaDeseados);
+		
+	//#############################################################################
+		JButton btnMasComprados = new JButton("Más Comprados");
+		btnMasComprados.setBounds(370, 10, 122, 23);
+		contentPane.add(btnMasComprados);
+		btnMasComprados.setEnabled(false);
+		btnMasComprados.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				model.removeAllElements();
+				List<Producto> productosTemp;
+				GenericType<List<Producto>> genericType_productosMas = new GenericType<List<Producto>>() {};
+		        productosTemp = masBuscadoTarget.request(MediaType.APPLICATION_JSON).get(genericType_productosMas);
+		        for (int i = 0; i < productos.size(); i++) {
+					model.addElement(productos.get(i));
+				}
+				
+			}
+		});
 	
 	}
 	
