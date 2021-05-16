@@ -5,8 +5,12 @@ import static org.junit.Assert.assertEquals;
 import java.util.Date;
 import java.util.HashMap;
 
+import org.glassfish.grizzly.http.server.HttpServer;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
+import es.deusto.spq.Main;
 import es.deusto.spq.models.Categoria;
 import es.deusto.spq.models.Cliente;
 import es.deusto.spq.models.Marca;
@@ -17,7 +21,19 @@ import es.deusto.spq.models.SubCategoria;
 import es.deusto.spq.models.Cliente.Genero;
 
 public class DBManagerTest {
+
+	private HttpServer server;
     
+	@Before 
+    public void setUp() {
+     // start the server
+     server = Main.startServer();
+    }
+    @After
+    public void tearDown() throws Exception {
+        server.shutdown();
+    }
+
 	@Test
 	public void testStoreObjectInDB(){
         Cliente cliente = new Cliente("12132", "usuario", "usuario", "usuario", "usuario", 1213124, "usuario", Genero.MUJER, 48920, "usuario", "usuario");
