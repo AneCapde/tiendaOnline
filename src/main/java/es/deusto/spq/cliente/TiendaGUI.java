@@ -98,7 +98,7 @@ public class TiendaGUI extends JFrame {
     private static JButton btnDeseado;
 	private static JButton botonComprar;
 	private static JButton botonAnyadir;
-	private JComboBox<String> combo;
+	private static JComboBox<String> combo;
 	private JButton btnCesta;
 	private JButton botonBuscar;
 	private JButton botonSignIn;
@@ -723,7 +723,7 @@ public class TiendaGUI extends JFrame {
     	dispose();
 
     }
-	private void cambiarIdioma() {
+	public void cambiarIdioma() {
 		if (combo.getSelectedItem().equals("Ingles") || combo.getSelectedItem().equals("English")){
 			TiendaGUI.idioma = Idiomas.Ingles;
 		}else{
@@ -758,7 +758,7 @@ public class TiendaGUI extends JFrame {
 			}
 		}
 	}
-	private ArrayList<JButton> getJButtons(){
+	public ArrayList<JButton> getJButtons(){
 		ArrayList<JButton> botones = new ArrayList<>();
 		botones.add(btnCesta);
 		botones.add(botonListaDeseados);
@@ -771,7 +771,7 @@ public class TiendaGUI extends JFrame {
 		botones.add(btnMasComprados);
 		return botones;
 	}
-	private ArrayList<JLabel> getJLabels(){
+	public ArrayList<JLabel> getJLabels(){
 		ArrayList<JLabel> labels = new ArrayList<>();
 		labels.add(lblMarca);
 		labels.add(lblCaracteristicas);
@@ -780,5 +780,8 @@ public class TiendaGUI extends JFrame {
 		labels.add(lblSubcategora);
 		labels.add(lblTalla);
 		return labels;
+	}
+	public static JComboBox<String> getComboBox(){
+		return combo;
 	}
 }
