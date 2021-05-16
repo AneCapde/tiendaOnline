@@ -24,6 +24,15 @@ public class ProductosServer {
 		List<Producto> productos = DBManager.getInstance().getProductos();
 		return productos;
     }
+    
+    @GET
+    @Path("/masBuscado")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Producto> getMasComprados() {
+		List<Producto> productos = DBManager.getInstance().getMasComprados();
+		return productos;
+    }
+    
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public void addProducto(Producto producto) {

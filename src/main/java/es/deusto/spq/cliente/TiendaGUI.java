@@ -66,9 +66,17 @@ public class TiendaGUI extends JFrame {
 	private static JButton botonListaDeseados;
 	private static JButton botonHistorial;
 	private static JButton addComent;
-	
+
+	private JLabel lblColores;
+	private JLabel lblSubcategora;
+	private JLabel lblCategora;
+	private JLabel lblCaracteristicas;
+	private JLabel lblMarca;
+	private JLabel lblTalla;
+
 	private TiendaGUI esto;
 	private WebTarget appTarget;
+	
 	
 	private JTextArea textArea;
 	ImageIcon imagen1, imagen2;
@@ -90,6 +98,12 @@ public class TiendaGUI extends JFrame {
     private static JButton btnDeseado;
 	private static JButton botonComprar;
 	private static JButton botonAnyadir;
+	private JComboBox<String> combo;
+	private JButton btnCesta;
+	private JButton botonBuscar;
+	private JButton botonSignIn;
+	public static Idiomas idioma = Idiomas.Español;
+
 
 	public TiendaGUI() {
 		client = ClientBuilder.newClient();
@@ -102,6 +116,7 @@ public class TiendaGUI extends JFrame {
 		final WebTarget pedidoTarget= appTarget.path("/pedidos");
 		final WebTarget pagoTarget= appTarget.path("/pagos");
 		final WebTarget productosTarget = appTarget.path("/productos");
+		final WebTarget masBuscadoTarget = appTarget.path("/productos/masBuscado");
 
 		esto = this;
 		
@@ -118,7 +133,7 @@ public class TiendaGUI extends JFrame {
 //		}
 		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 872, 560);
+		setBounds(140, 70, 872, 600);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -140,7 +155,7 @@ public class TiendaGUI extends JFrame {
 		txtBuscador.setColumns(10);
 		
 		//#################################################################################################
-		botonHistorial = new JButton("Historial");
+		botonHistorial = new JButton(Idiomas.seleccionarPalabra("historialBoton"));
 		botonHistorial.setFont(new Font("Segoe UI Black", Font.PLAIN, 15));
 		botonHistorial.setBounds(10, 419, 194, 30);
 		panel.add(botonHistorial);
@@ -169,7 +184,7 @@ public class TiendaGUI extends JFrame {
 		});
 		
 		//#################################################################################################
-		JButton btnCesta = new JButton(Idiomas.seleccionarPalabra("cestaBoton"));
+		btnCesta = new JButton(Idiomas.seleccionarPalabra("cestaBoton"));
 		btnCesta.setFont(new Font("Segoe UI Black", Font.PLAIN, 15));
 		btnCesta.setBounds(10, 460, 194, 30);
 		panel.add(btnCesta);
@@ -204,7 +219,7 @@ public class TiendaGUI extends JFrame {
 		panel.add(comboBox_colores);
 		
 		//#################################################################################################
-		JLabel lblColores = new JLabel(Idiomas.seleccionarPalabra("color"));
+		lblColores = new JLabel(Idiomas.seleccionarPalabra("color"));
 		lblColores.setBounds(10, 179, 196, 14);
 		panel.add(lblColores);
 		
@@ -236,17 +251,17 @@ public class TiendaGUI extends JFrame {
 		panel.add(comboBox_Categoria);
 		
 		//#################################################################################################
-		JLabel lblSubcategora = new JLabel(Idiomas.seleccionarPalabra("subcategoria"));
+		lblSubcategora = new JLabel(Idiomas.seleccionarPalabra("subcategoria"));
 		lblSubcategora.setBounds(10, 122, 143, 14);
 		panel.add(lblSubcategora);
 		
 		//#################################################################################################
-		JLabel lblCategora = new JLabel(Idiomas.seleccionarPalabra("categoria"));
+		lblCategora = new JLabel(Idiomas.seleccionarPalabra("categoria"));
 		lblCategora.setBounds(10, 62, 153, 14);
 		panel.add(lblCategora);
 		
 		//#################################################################################################
-		JLabel lblCaracteristicas = new JLabel(Idiomas.seleccionarPalabra("caracteristicas"));
+		lblCaracteristicas = new JLabel(Idiomas.seleccionarPalabra("caracteristicas"));
 		lblCaracteristicas.setBounds(507, 361, 162, 14);
 		lblCaracteristicas.setFont(new Font("Segoe UI Black", Font.PLAIN, 14));
 		contentPane.add(lblCaracteristicas);
@@ -287,7 +302,7 @@ public class TiendaGUI extends JFrame {
 		});
 		
 		//#################################################################################################
-		JButton botonSignIn = new JButton(Idiomas.seleccionarPalabra("registrarseBoton"));
+		botonSignIn = new JButton(Idiomas.seleccionarPalabra("registrarseBoton"));
 		botonSignIn.setBounds(709, 10, 122, 23);
 		contentPane.add(botonSignIn);
 		botonSignIn.addActionListener(new ActionListener() {
@@ -321,10 +336,23 @@ public class TiendaGUI extends JFrame {
 				esto.setEnabled(false);	
 			}
 		});
+
+		
+		combo = new JComboBox<>();
+		combo.addItem(Idiomas.seleccionarPalabra("nombre1"));
+		combo.addItem(Idiomas.seleccionarPalabra("nombre2"));
+		combo.setBounds(260, 520, 194, 30);
+		contentPane.add(combo);
+		combo.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				cambiarIdioma();
+			}
+		});
 		
 		//#################################################################################################
 		addComent = new JButton("Añadir Comentario");
-		addComent.setBounds(10, 345, 194, 25);
+		addComent.setBounds(10, 500, 194, 30);
 		addComent.setFont(new Font("Segoe UI Black", Font.PLAIN, 15));
 		panel.add(addComent);
 		addComent.setEnabled(false);
@@ -346,7 +374,7 @@ public class TiendaGUI extends JFrame {
 		
 		//#################################################################################################
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(240, 10, 252, 500);
+		scrollPane.setBounds(240, 40, 252, 470);
 		contentPane.add(scrollPane);
 		
 		//#################################################################################################
@@ -494,7 +522,7 @@ public class TiendaGUI extends JFrame {
 			
 		
 		//######################################################################
-		JLabel lblTalla = new JLabel("Talla");
+		lblTalla = new JLabel(Idiomas.seleccionarPalabra("talla"));
 		lblTalla.setBounds(10, 237, 46, 14);
 		panel.add(lblTalla);
 		
@@ -511,12 +539,12 @@ public class TiendaGUI extends JFrame {
 		panel.add(comboBoxMarca);
 		
 		//#####################################################################
-		JLabel lblMarca = new JLabel("Marca");
+		lblMarca = new JLabel(Idiomas.seleccionarPalabra("marca"));
 		lblMarca.setBounds(10, 296, 46, 14);
 		panel.add(lblMarca);
 		
 		//#################################################################################################
-		JButton botonBuscar = new JButton("Buscar");
+		botonBuscar = new JButton(Idiomas.seleccionarPalabra("buscarBoton"));
 		botonBuscar.setFont(new Font("Segoe UI Black", Font.PLAIN, 11));
 		botonBuscar.setToolTipText("Buscar");
 
@@ -538,7 +566,7 @@ public class TiendaGUI extends JFrame {
 		botonBuscar.setBounds(136, 11, 70, 38);
 		panel.add(botonBuscar);
 		
-		botonListaDeseados = new JButton("ListaDeseados");
+		botonListaDeseados = new JButton(Idiomas.seleccionarPalabra("listadeseadosBoton"));
 		botonListaDeseados.setEnabled(false);
 		botonListaDeseados.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -551,6 +579,25 @@ public class TiendaGUI extends JFrame {
 		botonListaDeseados.setFont(new Font("Segoe UI Black", Font.PLAIN, 15));
 		botonListaDeseados.setBounds(10, 378, 194, 30);
 		panel.add(botonListaDeseados);
+		
+	//#############################################################################
+		JButton btnMasComprados = new JButton("Más Comprados");
+		btnMasComprados.setBounds(370, 10, 122, 23);
+		contentPane.add(btnMasComprados);
+		btnMasComprados.setEnabled(false);
+		btnMasComprados.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				model.removeAllElements();
+				List<Producto> productosTemp;
+				GenericType<List<Producto>> genericType_productosMas = new GenericType<List<Producto>>() {};
+		        productosTemp = masBuscadoTarget.request(MediaType.APPLICATION_JSON).get(genericType_productosMas);
+		        for (int i = 0; i < productos.size(); i++) {
+					model.addElement(productos.get(i));
+				}
+				
+			}
+		});
 	
 	}
 	
@@ -669,5 +716,61 @@ public class TiendaGUI extends JFrame {
     	dispose();
 
     }
-
+	private void cambiarIdioma() {
+		if (combo.getSelectedItem().equals("Ingles") || combo.getSelectedItem().equals("English")){
+			TiendaGUI.idioma = Idiomas.Ingles;
+		}else{
+			TiendaGUI.idioma = Idiomas.Español;
+		}
+		combo.removeAllItems();
+		combo.addItem(Idiomas.seleccionarPalabra("nombre1"));
+		combo.addItem(Idiomas.seleccionarPalabra("nombre2"));
+		for (String i : PrepararDatos.getInstance().getIdiomaCaract()){
+			if (combo.getSelectedItem().equals("English") || combo.getSelectedItem().equals("Ingles")){
+				for (JButton b : getJButtons()){
+					if (b.getText().equals(PrepararDatos.getInstance().getPalabraEspanyol(i))){
+						b.setText(Idiomas.seleccionarPalabra(i));
+					}
+				}
+				for (JLabel l : getJLabels()){
+					if (l.getText().equals(PrepararDatos.getInstance().getPalabraEspanyol(i))){
+						l.setText(Idiomas.seleccionarPalabra(i));
+					}
+				}
+			} else{
+				for (JButton b : getJButtons()){
+					if (b.getText().equals(PrepararDatos.getInstance().getPalabraIngles(i))){
+						b.setText(Idiomas.seleccionarPalabra(i));
+					}
+				}
+				for (JLabel l : getJLabels()){
+					if (l.getText().equals(PrepararDatos.getInstance().getPalabraIngles(i))){
+						l.setText(Idiomas.seleccionarPalabra(i));
+					}
+				}
+			}
+		}
+	}
+	private ArrayList<JButton> getJButtons(){
+		ArrayList<JButton> botones = new ArrayList<>();
+		botones.add(btnCesta);
+		botones.add(botonListaDeseados);
+		botones.add(botonAnyadir);
+		botones.add(botonComprar);
+		botones.add(botonBuscar);
+		botones.add(botonHistorial);
+		botones.add(botonLogin);
+		botones.add(botonSignIn);
+		return botones;
+	}
+	private ArrayList<JLabel> getJLabels(){
+		ArrayList<JLabel> labels = new ArrayList<>();
+		labels.add(lblMarca);
+		labels.add(lblCaracteristicas);
+		labels.add(lblCategora);
+		labels.add(lblColores);
+		labels.add(lblSubcategora);
+		labels.add(lblTalla);
+		return labels;
+	}
 }

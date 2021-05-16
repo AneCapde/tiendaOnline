@@ -34,10 +34,5 @@ public class VentanaLoginTest {
 	public void testAceptar() {
 //		ventanaLogin.aceptar(tiendaGUI, web);
 	}
-	
-	@Test
-	public void testSeleccionidioma() {
-//		ventanaLogin.seleccionIdioma();
-	}
 
 }

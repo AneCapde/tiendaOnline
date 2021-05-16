@@ -321,58 +321,58 @@ public class DBManager implements IDBManager{
 
 	@Override
 	public HashMap<String, String> getPaypal(Cliente cliente) {
-	PersistenceManager pm = pmf.getPersistenceManager();
-	pm.getFetchPlan().setMaxFetchDepth(4);
-	Transaction tx = pm.currentTransaction();
-	Pago pago = null; 
-	HashMap<String, String> paypal = null;
-	try {
-		System.out.println("  * Querying Paypal account : " + cliente.getDNI());
-		tx.begin();
+		PersistenceManager pm = pmf.getPersistenceManager();
+		pm.getFetchPlan().setMaxFetchDepth(4);
+		Transaction tx = pm.currentTransaction();
+		Pago pago = null; 
+		HashMap<String, String> paypal = null;
+		try {
+			System.out.println("  * Querying Paypal account : " + cliente.getDNI());
+			tx.begin();
 
-		Query<?> query = pm.newQuery("SELECT FROM " + Pago.class.getName() + " WHERE DNI == '" + cliente.getDNI() + "'");
-		query.setUnique(true);
-		pago = (Pago) query.execute();
-		paypal = pago.getCredencialesPaypal();
+			Query<?> query = pm.newQuery("SELECT FROM " + Pago.class.getName() + " WHERE DNI == '" + cliente.getDNI() + "'");
+			query.setUnique(true);
+			pago = (Pago) query.execute();
+			paypal = pago.getCredencialesPaypal();
 
-		tx.commit();
-	} catch (Exception ex) {
-		System.out.println(" $ Error querying paypal account: " + ex.getMessage());
-	} finally {
-		if (tx != null && tx.isActive()) {
-			tx.rollback();
+			tx.commit();
+		} catch (Exception ex) {
+			System.out.println(" $ Error querying paypal account: " + ex.getMessage());
+		} finally {
+			if (tx != null && tx.isActive()) {
+				tx.rollback();
+			}
+			pm.close();
 		}
-		pm.close();
-	}
-	return paypal;
+		return paypal;
 	}
 
 	@Override
 	public HashMap<String, String> getVisa(Cliente cliente) {
-	PersistenceManager pm = pmf.getPersistenceManager();
-	pm.getFetchPlan().setMaxFetchDepth(4);
-	Transaction tx = pm.currentTransaction();
-	Pago pago = null; 
-	HashMap<String, String> visa = null;
-	try {
-		System.out.println("  * Querying Visa account : " + cliente.getDNI());
-		tx.begin();
+		PersistenceManager pm = pmf.getPersistenceManager();
+		pm.getFetchPlan().setMaxFetchDepth(4);
+		Transaction tx = pm.currentTransaction();
+		Pago pago = null; 
+		HashMap<String, String> visa = null;
+		try {
+			System.out.println("  * Querying Visa account : " + cliente.getDNI());
+			tx.begin();
 
-		Query<?> query = pm.newQuery("SELECT FROM " + Pago.class.getName() + " WHERE DNI == '" + cliente.getDNI() + "'");
-		query.setUnique(true);
-		pago = (Pago) query.execute();
-		visa = pago.getCredencialesVisa();
+			Query<?> query = pm.newQuery("SELECT FROM " + Pago.class.getName() + " WHERE DNI == '" + cliente.getDNI() + "'");
+			query.setUnique(true);
+			pago = (Pago) query.execute();
+			visa = pago.getCredencialesVisa();
 
-		tx.commit();
-	} catch (Exception ex) {
-		System.out.println(" $ Error querying Visa account: " + ex.getMessage());
-	} finally {
-		if (tx != null && tx.isActive()) {
-			tx.rollback();
+			tx.commit();
+		} catch (Exception ex) {
+			System.out.println(" $ Error querying Visa account: " + ex.getMessage());
+		} finally {
+			if (tx != null && tx.isActive()) {
+				tx.rollback();
+			}
+			pm.close();
 		}
-		pm.close();
-	}
-	return visa;
+		return visa;
 	}
 
 	@Override
@@ -399,6 +399,33 @@ public class DBManager implements IDBManager{
 		pm.close();
 	}
 	return pago;
+	}
+	
+	@Override
+	public ArrayList<Producto> getMasComprados() {
+		
+		ArrayList<Producto> productos = new ArrayList<>();		
+		PersistenceManager pm = pmf.getPersistenceManager();
+		pm.getFetchPlan().setMaxFetchDepth(4);
+		Transaction tx = pm.currentTransaction();
+		
+		try {
+			
+			tx.begin();
+			Query<?> query = pm.newQuery("SELECT producto.* FROM producto LEFT OUTER JOIN pedido_productopedido ON producto.PRODUCTO_ID = pedido_productopedido.PRODUCTO_ID_EID\r\n" + 
+										 "GROUP BY producto.NOMBRE order by count(PEDIDO_ID_OID) desc ;");
+			
+			productos = (ArrayList<Producto>) query.execute();
+			tx.commit();
+		} catch (Exception ex) {
+			System.out.println("  $ Error retrieving all the Productos: " + ex.getMessage());
+		} finally {
+			if (tx != null && tx.isActive()) {
+				tx.rollback();
+			}
+			pm.close();
+        }
+		return productos;	
 	}
     
     @Override

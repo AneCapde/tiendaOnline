@@ -27,6 +27,7 @@ public interface IDBManager {
     public ArrayList<Marca> getMarcas();
     public ArrayList<Categoria> getCategorias();
     public ArrayList<SubCategoria> getSubcategorias();
+    public ArrayList<Producto>  getMasComprados();
     public Cliente getCliente(String DNI);
     public Pedido getPedido(Date fecha);
     public Producto getProducto(String nombre);
@@ -40,4 +41,5 @@ public interface IDBManager {
     // public void deletePago(Pago pago);
     public void deleteCliente(Cliente cliente);
     public void deleteObjectFromDB(Object object);
+    
 }

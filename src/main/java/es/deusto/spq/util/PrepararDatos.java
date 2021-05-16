@@ -52,6 +52,10 @@ public class PrepararDatos implements IPrepararDatos {
 		return instance;
 	}
 	@Override
+	public String[] getIdiomaCaract() {
+		return idioma_caract;
+	}
+	@Override
 	public HashMap<String, String> getEspanyol(){
 		return idioma_espanyol;
 	}

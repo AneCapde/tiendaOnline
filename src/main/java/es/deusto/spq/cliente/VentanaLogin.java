@@ -22,6 +22,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.border.Border;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 
@@ -42,8 +43,6 @@ public class VentanaLogin extends JFrame{
 	private JButton bCancelar;
 	private JLabel lTexto;
 	private static JPasswordField passwordField;
-	private JComboBox<String> combo;
-	public static Idiomas idioma = Idiomas.Español;
 	TiendaGUI ventanaPadre;
 	WebTarget appTarget;
 	
@@ -93,23 +92,12 @@ public class VentanaLogin extends JFrame{
 		pIZQ = new JPanel();
 		pIZQ.setBackground(Color.LIGHT_GRAY);
 
+		getContentPane().add(pIZQ, BorderLayout.WEST);
+
 		pDerecho = new JPanel();
 		pDerecho.setBackground(Color.LIGHT_GRAY);
 
 		getContentPane().add(pDerecho,BorderLayout.EAST);
-
-		combo = new JComboBox<>();
-		combo.addItem(Idiomas.seleccionarPalabra("nombre1"));
-		combo.addItem(Idiomas.seleccionarPalabra("nombre2"));
-		combo.setBounds(5, 5, 100, 20);
-		combo.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				seleccionIdioma();
-			}
-		});
-
-		getContentPane().add(pIZQ,BorderLayout.WEST);
 
 		pInferior = new JPanel();
 		pInferior.setEnabled(false);
@@ -126,7 +114,6 @@ public class VentanaLogin extends JFrame{
 		password.setPreferredSize(new Dimension(40, 35));
 		
 		getContentPane().add(pCentral, BorderLayout.CENTER);
-		pCentral.add(combo);
 		pCentral.setLayout(null);
 		JLabel Email = new JLabel("Email:");
 		Email.setToolTipText("");
@@ -202,23 +189,4 @@ public class VentanaLogin extends JFrame{
 		}
 	}
 	
-	/**
-	 * Metodo para seleccionar en que idioma se desea visualizar la ventana
-	 */
-	public void seleccionIdioma() {
-		System.out.println(combo.getSelectedItem().equals("Ingles"));
-		if (combo.getSelectedItem().equals("Ingles") || combo.getSelectedItem().equals("English")){
-			VentanaLogin.idioma = Idiomas.Ingles;
-			System.out.println(VentanaLogin.idioma);
-		}else{
-			System.out.println(VentanaLogin.idioma);
-			VentanaLogin.idioma = Idiomas.Español;
-		}
-		combo.removeAllItems();
-		combo.addItem(Idiomas.seleccionarPalabra("nombre1"));
-		combo.addItem(Idiomas.seleccionarPalabra("nombre2"));
-		lTexto.setText(Idiomas.seleccionarPalabra("iniciarsesionPanel"));
-		bAceptar.setText(Idiomas.seleccionarPalabra("aceptarBoton"));
-		bCancelar.setText(Idiomas.seleccionarPalabra("volverBoton"));
-	}
 }
