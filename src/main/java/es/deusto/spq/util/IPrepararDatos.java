@@ -9,5 +9,6 @@ public interface IPrepararDatos {
 	public String getPalabraEspanyol(String palabra);
 	public String getPalabraIngles( String palabra);
 	public void cargarDatosXML();
+	public String [] getIdiomaCaract();
 
 }
