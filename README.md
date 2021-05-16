@@ -75,7 +75,7 @@ Documentación
 
 Para generar informes de doxygen
 
-	mvn doxygen: report
+	mvn doxygen:report
 	
 Para copiar el directorio html generado en la carpeta de documentos
 	
