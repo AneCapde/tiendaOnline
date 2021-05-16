@@ -76,6 +76,7 @@ public class PrepararDatos implements IPrepararDatos {
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 
       	try {
+			  
 			DocumentBuilder db = dbf.newDocumentBuilder();
 			Document doc = db.parse(new File(FILENAME));
 			doc.getDocumentElement().normalize();
