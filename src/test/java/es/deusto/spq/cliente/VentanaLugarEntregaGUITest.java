@@ -5,13 +5,10 @@ import static org.junit.Assert.assertEquals;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 import javax.ws.rs.client.WebTarget;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -61,7 +58,7 @@ public class VentanaLugarEntregaGUITest {
 	}
 	
 	/**
-	 * Este metodo comprueba que el metodo valdiar de la Ventana Lugar Entrega GUI funcione adecuadamente cuando entra en el primer if
+	 * Este metodo comprueba que el metodo validar de la Ventana Lugar Entrega GUI funcione adecuadamente cuando entra en el primer if
 	 * @throws NoSuchMethodException
 	 * @throws SecurityException
 	 * @throws IllegalAccessException
@@ -78,7 +75,7 @@ public class VentanaLugarEntregaGUITest {
 	}
 	
 	/**
-	 *  Este metodo comprueba que el metodo valdiar de la Ventana Lugar Entrega GUI funcione adecuadamente cuando entra en el segundo if
+	 *  Este metodo comprueba que el metodo validar de la Ventana Lugar Entrega GUI funcione adecuadamente cuando entra en el segundo if
 	 * @throws NoSuchMethodException
 	 * @throws SecurityException
 	 * @throws IllegalAccessException
@@ -95,7 +92,7 @@ public class VentanaLugarEntregaGUITest {
 	}
 	
 	/**
-	 *  Este metodo comprueba que el metodo valdiar de la Ventana Lugar Entrega GUI funcione adecuadamente cuando no se a introduccido ningun dato
+	 *  Este metodo comprueba que el metodo validar de la Ventana Lugar Entrega GUI funcione adecuadamente cuando no se a introduccido ningun dato
 	 * @throws NoSuchMethodException
 	 * @throws SecurityException
 	 * @throws IllegalAccessException
@@ -112,7 +109,7 @@ public class VentanaLugarEntregaGUITest {
 	}
 	
 	/**
-	 *  Este metodo comprueba que el metodo valdiar de la Ventana Lugar Entrega GUI funcione adecuadamente cuando no se introducce la provincia
+	 *  Este metodo comprueba que el metodo validar de la Ventana Lugar Entrega GUI funcione adecuadamente cuando no se introducce la provincia
 	 * @throws NoSuchMethodException
 	 * @throws SecurityException
 	 * @throws IllegalAccessException
@@ -129,7 +126,7 @@ public class VentanaLugarEntregaGUITest {
 	}
 	
 	/**
-	 * Este metodo comprueba que el metodo valdiar de la Ventana Lugar Entrega GUI funcione adecuadamente cuando no se introducce la direccion
+	 * Este metodo comprueba que el metodo validar de la Ventana Lugar Entrega GUI funcione adecuadamente cuando no se introducce la direccion
 	 * @throws NoSuchMethodException
 	 * @throws SecurityException
 	 * @throws IllegalAccessException
