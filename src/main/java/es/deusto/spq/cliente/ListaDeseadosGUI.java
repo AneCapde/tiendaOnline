@@ -29,7 +29,7 @@ import es.deusto.spq.models.Producto;
 
 @SuppressWarnings("serial")
 public class ListaDeseadosGUI extends JFrame {
-
+	
 	private static ArrayList<Producto> productos_deseados = new ArrayList<>();
 	public static JPanel contentPane, imagePlacehold;
 	public static JTextArea textArea;
@@ -39,7 +39,12 @@ public class ListaDeseadosGUI extends JFrame {
 	public static JButton botonAnyadir, btnEliminar;
 	static Cliente cliente;
 	final WebTarget clientesTarget;
-
+	
+	/** Ventana donde se encuentran todos los articulos que el cliente ha indicado que son sus favoritos
+	 * 
+	 * @param ventanaPadre Ventana anterior, a traves de la cual se a llegado a esta
+	 * @param appTarget Objeto para la comunicacion con el server
+	 */
 	public ListaDeseadosGUI(final JFrame ventanaPadre, final WebTarget appTarget) {
 		clientesTarget = appTarget.path("/clientes/update");
 	
@@ -54,7 +59,6 @@ public class ListaDeseadosGUI extends JFrame {
 		lblProductosDeseados.setFont(new Font("Segoe UI Black", Font.PLAIN, 15));
 		lblProductosDeseados.setBounds(20, 11, 382, 14);
 		contentPane.add(lblProductosDeseados);
-		
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(20, 37, 400, 457);
@@ -97,8 +101,6 @@ public class ListaDeseadosGUI extends JFrame {
 			}
 		});
 		
-
-		
 		listaElementos = new JList<Producto>(model);
 		listaElementos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPane.setViewportView(listaElementos);
@@ -122,6 +124,10 @@ public class ListaDeseadosGUI extends JFrame {
 		});	
 	}
 	
+	/**
+	 * Metodo para volver a la ventana de inicio de la tienda
+	 * @param appTarget Objeto para la comunicacion con el server
+	 */
 	public void Inicio(final WebTarget appTarget) {
 		setVisible(false);
 		updateClient(appTarget);
@@ -130,12 +136,21 @@ public class ListaDeseadosGUI extends JFrame {
 		TiendaGUI.setCliente(TiendaGUI.getCliente());
 		dispose();
 	}
+	
+	/**
+	 * 
+	 * @param appTarget Objeto para la comunicacion con el server
+	 */
 	public void updateClient(final WebTarget appTarget){
 		System.out.println(productos_deseados);
 		TiendaGUI.getCliente().setProductosDeseados((ArrayList<Producto>) productos_deseados);
 		clientesTarget.request(MediaType.APPLICATION_JSON).post(Entity.entity(TiendaGUI.getCliente(), MediaType.APPLICATION_JSON));
 	}
 		
+	/**
+	 * Metodo para eliminar un producto de la lista de deseados
+	 * @return devuelve la lista con los productos deseados
+	 */
 	public ArrayList<Producto> eliminar() {
 		Producto p1 = listaElementos.getSelectedValue();
 		model.removeElement(p1);
@@ -150,6 +165,10 @@ public class ListaDeseadosGUI extends JFrame {
 		return productos_deseados;
 	}
 	
+	/**
+	 * Metodo para añadir un producto a el carrito de la cesta
+	 * @return devuelve la lista con los productos deseados
+	 */
 	public ArrayList<Producto> anyadir() {
 		productoSeleccionado = listaElementos.getSelectedValue();
 		 if (!TiendaGUI.productos_cesta.contains(productoSeleccionado)){
@@ -158,12 +177,21 @@ public class ListaDeseadosGUI extends JFrame {
 		return productos_deseados;
 	}
 	
+	/**
+	 * Metodo para indicar que cliente hay actualmente en la tienda
+	 * @param cliente Objeto cliente
+	 * @return devuleve el cliente que esta actualmente logeado en la tienda
+	 */
 	public static Cliente setCliente(Cliente cliente) {
 		ListaDeseadosGUI.cliente = cliente;
 		anyadirProductosDeseados();
 		return cliente;
 	}
 	
+	/**
+	 * Metodo para añadir los productos deseados a esta ventana y hacer que se visualicen
+	 * @return devuelve la lista con los productos deseados
+	 */
 	public static ArrayList<Producto> anyadirProductosDeseados() {
 		productos_deseados.removeAll(productos_deseados);
 		model.removeAllElements();
@@ -176,15 +204,25 @@ public class ListaDeseadosGUI extends JFrame {
 		return productos_deseados;
 	}
 	
+	/**
+	 * Metodo que devuleve una lista con los productos deseados
+	 * @return devuelve la lista con los productos deseados
+	 */
 	public static ArrayList<Producto> getProductosDeseados() {
 		return productos_deseados;
 	}
 	
-	
+	/**
+	 * 
+	 * @param productos_deseados lista con los productos deseados
+	 */
 	public void setProductosDeseados(ArrayList<Producto> productos_deseados) {
 		ListaDeseadosGUI.productos_deseados = productos_deseados;
 	}
 	
+	/**
+	 * Metodo para visualizar la imagen del producto seleccionado y poder ver ssu caracteristicas
+	 */
 	public void Imagenes() {
 		botonAnyadir.setVisible(true);
 		btnEliminar.setVisible(true);
