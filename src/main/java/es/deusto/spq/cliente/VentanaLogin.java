@@ -15,14 +15,12 @@ import java.util.InvalidPropertiesFormatException;
 import java.util.Properties;
 
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-import javax.swing.border.Border;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 
@@ -47,7 +45,7 @@ public class VentanaLogin extends JFrame{
 	WebTarget appTarget;
 	
 	/**
-	 * Ventana para hacer Login en la Tineda Online
+	 * Ventana para hacer Login en la Tienda Online
 	 * @param ventanaPadre Ventana anterior, a traves de la cual se a llegado a esta
 	 * @param appTarget    Objeto para la comunicacion con el server
 	 */
