@@ -44,6 +44,8 @@ public class PrepararDatos implements IPrepararDatos {
 	"subcategoria", "color", "talla", "marca", "caracteristicas", "registrarseBoton",
 	"iniciarsesionBoton", "iniciarsesionPanel", "aceptarBoton", "volverBoton",
 	"eliminarBoton", "anyadircestaBoton", "precio","cantidad"};
+	
+	private static ArrayList<String> coment = new ArrayList<String>();
 
 	public static IPrepararDatos getInstance() {
 		if (instance == null) {
@@ -76,6 +78,7 @@ public class PrepararDatos implements IPrepararDatos {
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 
       	try {
+			  
 			DocumentBuilder db = dbf.newDocumentBuilder();
 			Document doc = db.parse(new File(FILENAME));
 			doc.getDocumentElement().normalize();
@@ -202,30 +205,30 @@ public class PrepararDatos implements IPrepararDatos {
 			tallas.add(Tallas.XL);
 			
 			
-			Producto producto1 = new Producto("Chaqueta Vaquera","Chaqueta vaquera azul",10,45,"img/chaquetaVaquera.png",subcategoria1,marca1,colores,tallas);
+			Producto producto1 = new Producto("Chaqueta Vaquera","Chaqueta vaquera azul",10,45,"img/chaquetaVaquera.png",subcategoria1,marca1,colores,tallas,coment);
 			pm.makePersistent(producto1);
-			Producto producto2 = new Producto("Chaqueta de cuero","Chaqueta de cuero negra",10,35,"img/chaquetaCuero.png",subcategoria1,marca1,colores,tallas);
+			Producto producto2 = new Producto("Chaqueta de cuero","Chaqueta de cuero negra",10,35,"img/chaquetaCuero.png",subcategoria1,marca1,colores,tallas,coment);
 			pm.makePersistent(producto2);
-			Producto producto3 = new Producto("Abrigo de piel","Abrigo de piel marron",10,80,"img/chaquetaPiel.png",subcategoria1,marca1,colores,tallas);
+			Producto producto3 = new Producto("Abrigo de piel","Abrigo de piel marron",10,80,"img/chaquetaPiel.png",subcategoria1,marca1,colores,tallas,coment);
 			pm.makePersistent(producto3);
-			Producto producto4 = new Producto("Camiseta de tirantes","Camiseta de tirantes azul",5,10,"img/camisetaTirante.png",subcategoria2,marca1,colores,tallas);
+			Producto producto4 = new Producto("Camiseta de tirantes","Camiseta de tirantes azul",5,10,"img/camisetaTirante.png",subcategoria2,marca1,colores,tallas,coment);
 			pm.makePersistent(producto4);
-			Producto producto5 = new Producto("Pantalon Vaquero","Pantalon vaquero azul",15,30,"img/pantalonVaquero.png",subcategoria3,marca2,colores,tallas);
+			Producto producto5 = new Producto("Pantalon Vaquero","Pantalon vaquero azul",15,30,"img/pantalonVaquero.png",subcategoria3,marca2,colores,tallas,coment);
 			pm.makePersistent(producto5);
-			Producto producto6 = new Producto("Falda de flores","Falda estampado floral",10,25,"img/faldaFlores.jpg",subcategoria4,marca2,colores,tallas);
+			Producto producto6 = new Producto("Falda de flores","Falda estampado floral",10,25,"img/faldaFlores.jpg",subcategoria4,marca2,colores,tallas,coment);
 			pm.makePersistent(producto6);
-			Producto producto7 = new Producto("Vestido negro","Vestido negro de tirantes",10,35,"img/vestidoNegro.png",subcategoria6,marca2,colores,tallas);
+			Producto producto7 = new Producto("Vestido negro","Vestido negro de tirantes",10,35,"img/vestidoNegro.png",subcategoria6,marca2,colores,tallas,coment);
 			pm.makePersistent(producto7);
-			Producto producto8 = new Producto("Camisa blanca","Camisa blanca elegante",10,35,"img/camisaBlanca.png",subcategoria7,marca2,colores,tallas);
+			Producto producto8 = new Producto("Camisa blanca","Camisa blanca elegante",10,35,"img/camisaBlanca.png",subcategoria7,marca2,colores,tallas,coment);
 			pm.makePersistent(producto8);
-			Producto producto10 = new Producto("Deportivas","Deportivas blancas planas converse",10,70,"img/zapatillasDeportivas.png",subcategoria8,marca2,colores,tallas);
+			Producto producto10 = new Producto("Deportivas","Deportivas blancas planas converse",10,70,"img/zapatillasDeportivas.png",subcategoria8,marca2,colores,tallas,coment);
 			pm.makePersistent(producto10);
-			Producto producto11 = new Producto("Botas altas","Botas altas negras con cordones",10,75,"img/botasAltas.png",subcategoria10,marca2,colores,tallas);
+			Producto producto11 = new Producto("Botas altas","Botas altas negras con cordones",10,75,"img/botasAltas.png",subcategoria10,marca2,colores,tallas,coment);
 			pm.makePersistent(producto11);
 			//meter mas productos de zapatos
-			Producto producto15 = new Producto("Pendientes de aro","Pendienets de aro bañados en plata",10,20,"img/pendientesAro.png",subcategoria12,marca3);
+			Producto producto15 = new Producto("Pendientes de aro","Pendienets de aro bañados en plata",10,20,"img/pendientesAro.png",subcategoria12,marca3,coment);
 			pm.makePersistent(producto15);
-			Producto producto16 = new Producto("Bolso","Bolso pequeño marron con tira desplegable",10,90,"img/bolso.png",subcategoria13,marca3);
+			Producto producto16 = new Producto("Bolso","Bolso pequeño marron con tira desplegable",10,90,"img/bolso.png",subcategoria13,marca3,coment);
 			pm.makePersistent(producto16);
 			tx.commit();
 		} finally {

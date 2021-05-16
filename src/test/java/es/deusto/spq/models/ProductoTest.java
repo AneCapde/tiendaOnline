@@ -11,13 +11,14 @@ import es.deusto.spq.models.Cliente.Genero;
 
 public class ProductoTest {
 	
-	//pro2,mar2 igual no es necesario (inicializar)
-	Producto pro,pro2;
+	
+	Producto pro,pro2,pro1;
 	Marca mar,mar2;
 	SubCategoria sub,sub2;
 	Categoria cat,cat2;
 	ArrayList<Colores> colores; 
 	ArrayList<Tallas> tallas;
+	ArrayList<String> coment = new ArrayList<String>();
 	
 	//Tenemos dos constructores de productos
 	@Before
@@ -27,8 +28,9 @@ public class ProductoTest {
 		mar = new Marca("","");
 		colores = new ArrayList<>(); 
 		tallas = new ArrayList<>();
-		pro = new Producto("producto","descripcion",5,5,"h",sub,mar);
-		pro2 = new Producto("producto3","descripcion3",7,7,"e",sub,mar,colores,tallas);
+		pro1 = new Producto("producto","descripcion",5,5,"h",sub,mar);
+		pro = new Producto("producto","descripcion",5,5,"h",sub,mar,coment);
+		pro2 = new Producto("producto3","descripcion3",7,7,"e",sub,mar,colores,tallas,coment);
 		
 	}
 
@@ -129,7 +131,7 @@ public class ProductoTest {
 	@Test
 	public void testSetGetColores() {
 		colores = new ArrayList<>();
-		pro2 = new Producto("producto3","descripcion3",7,7,"e",sub,mar,colores,tallas);
+		pro2 = new Producto("producto3","descripcion3",7,7,"e",sub,mar,colores,tallas,coment);
 		ArrayList<Colores> resul = pro2.getColores();
 		assertEquals(colores, resul);
 	}
@@ -137,7 +139,7 @@ public class ProductoTest {
 	@Test
 	public void testSetGetTallas() {
 		tallas = new ArrayList<>();
-		pro2 = new Producto("producto3","descripcion3",7,7,"e",sub,mar,colores,tallas);
+		pro2 = new Producto("producto3","descripcion3",7,7,"e",sub,mar,colores,tallas,coment);
 		ArrayList<Tallas> resul = pro2.getTallas();
 		assertEquals(tallas, resul);
 	}
