@@ -57,14 +57,13 @@ public class PedidosServer {
         DBManager.getInstance().store(pedido);
     }
     
-    @DELETE
-    @Path("/{code}")
-    public Response deletePedido(@PathParam("code") int code) {
-        if (code == 10) {
-            System.out.println("Deleting pedido...");
-            return Response.status(Response.Status.OK).build();
-        } else {
-            return Response.status(Response.Status.NOT_FOUND).build();
-        }
+    @POST
+    @Path("/update")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void devolverPedido(Pedido pedido) {
+       
+        Pedido p = DBManager.getInstance().getPedido(pedido.getFecha());
+        p.setEstado("Devuelto");
+        DBManager.getInstance().store(p);
     }
 }

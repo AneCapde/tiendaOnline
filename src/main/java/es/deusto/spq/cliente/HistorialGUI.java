@@ -15,6 +15,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -22,6 +23,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
@@ -48,6 +50,8 @@ public class HistorialGUI extends JFrame{
 		GenericType<List<Pedido>> genericType_pedido = new GenericType<List<Pedido>>() {};
 		pedidos = pedidoTarget.request(MediaType.APPLICATION_JSON).get(genericType_pedido);
 		
+		final WebTarget updateTarget = appTarget.path("/pedidos/update");
+
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 872, 560);
 		contentPane = new JPanel();
@@ -100,18 +104,29 @@ public class HistorialGUI extends JFrame{
 		botonDevolver = new JButton(Idiomas.seleccionarPalabra("devolucion"));
 		botonDevolver.setForeground(Color.BLACK);
 		botonDevolver.setBackground(new Color(0, 255, 0));
-		botonDevolver.setBounds(650, 11, 109, 29);
-	    contentPane.add(botonDevolver);
+		botonDevolver.setBounds(640, 11, 155, 29);
+		contentPane.add(botonDevolver);
 	    
 	    //Boton para realizar la devolucion del producto seleccionado (funcionalidad más adelante)
 	    botonDevolver.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-//				pedidoSeleccionado = list.getSelectedValue();
-//				if (pedidoSeleccionado != null) {
-//				
-//			}	 
+				pedidoSeleccionado = list.getSelectedValue();
+				if (pedidoSeleccionado != null) {
+					// Miramos el día del pedido para ver si corresponde a los ultimos 14 dias
+					if (((System.currentTimeMillis() - pedidoSeleccionado.getFecha().getTime()) / (1000 * 60 * 60 * 24)) < 14) {
+						// Miramos si el pedido está devuelto ya o no
+						if (pedidoSeleccionado.getEstado().equals("Devuelto")) {
+							JOptionPane.showMessageDialog(null, "El pedido seleccionado ya está devuleto", "Error en la devolución", JOptionPane.INFORMATION_MESSAGE);
+						} else
+						// Cambiamos el estado del pedido a "Devuelto"
+						devolverPedido(updateTarget, pedidoSeleccionado, ventanaPadre, appTarget);
+
+					} else {
+						JOptionPane.showMessageDialog(null, "Ya ha transcurrido el periodo de devolución de 14 días", "Error en la devolución", JOptionPane.INFORMATION_MESSAGE);
+					}
+				} 
 			}
 	    });
 		
@@ -142,6 +157,23 @@ public class HistorialGUI extends JFrame{
 		
 	}
 	
+	
+	/** Método que permite devolver un pedido y cambia el estado del mismo a "devuelto"
+	 * @param updateTarget
+	 * @param pedido
+	 * @param ventanaPadre
+	 * @param appTarget
+	 */
+	private void devolverPedido(WebTarget updateTarget, Pedido pedido, JFrame ventanaPadre, WebTarget appTarget) {
+		updateTarget.request(MediaType.APPLICATION_JSON).post(Entity.entity(pedido, MediaType.APPLICATION_JSON));
+		setVisible(false);
+
+		HistorialGUI h = new HistorialGUI(ventanaPadre,appTarget);
+		h.setVisible(true);
+		JOptionPane.showMessageDialog(null, "Deberás concretar la entrega del paquete escibiendo al email \n devolucion@tienda.com y se te reembolsará el dinero del pedido.", "Devolución completada", JOptionPane.INFORMATION_MESSAGE);
+
+	}
+
 	private void cargarLista() {
 		pedidoSeleccionado = list.getSelectedValue();
 		textArea.setText(null);

@@ -50,7 +50,7 @@
         <anyadircestaBoton>Añadir al Carrito</anyadircestaBoton>
         <precio>Precio</precio>
         <cantidad>Cantidad</cantidad>
-        <devolucion>Devolucion</devolucion>
+        <devolucion>Devolver</devolucion>
         <anyadirComentario>Añadir Comentario</anyadirComentario>
         <masComprados>Más comprados</masComprados>
     </idioma>
