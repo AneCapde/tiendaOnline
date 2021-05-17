@@ -3,27 +3,32 @@ package es.deusto.spq.acciones;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.DefaultListModel;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.ws.rs.client.WebTarget;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
 
-import es.deusto.spq.cliente.VentanaLogin;
+import es.deusto.spq.cliente.TiendaGUI;
 import es.deusto.spq.models.Categoria;
-import es.deusto.spq.models.Cliente;
 import es.deusto.spq.models.Colores;
 import es.deusto.spq.models.Marca;
 import es.deusto.spq.models.Producto;
 import es.deusto.spq.models.SubCategoria;
 import es.deusto.spq.models.Tallas;
+import es.deusto.spq.util.Idiomas;
+import es.deusto.spq.util.PrepararDatos;
 
-public class TiendaAcciones {
-	
-	public TiendaAcciones() {
+public class TiendaAcciones implements ITiendaAcciones{
+
+	private static ITiendaAcciones instance;
+
+	public static ITiendaAcciones getInstance() {
+		if (instance == null) {
+			instance = new TiendaAcciones();
+		}		
+		return instance;
 	}
 	
-	
-	
+	@Override
 	public ArrayList<Producto> buscar(String textoBuscador, Categoria categoriaSeleccionada, SubCategoria subCategoriaSeleccionada,
 											 Marca marcaSeleccionada, Colores colorSelecionado, Tallas tallaSeleccionada, List<Producto> productos) {
 				
@@ -49,7 +54,7 @@ public class TiendaAcciones {
 		}
 		return model;
 	}
-	
+	@Override
 	public ArrayList<SubCategoria> rellenarSubcategorias(Categoria categoriaSeleccionada, List<SubCategoria> subCategorias){
     	System.out.println(subCategorias);
     	System.out.println(categoriaSeleccionada);
@@ -64,6 +69,42 @@ public class TiendaAcciones {
 		}
 		System.out.println(futuroComboBox_Subcategoria);
 		return futuroComboBox_Subcategoria;
+	}
+	@Override
+	public void cambiarIdioma(ArrayList<JButton> buttons, ArrayList<JLabel> labels, JComboBox<String> combo) {
+		if (combo.getSelectedItem().equals("Ingles") || combo.getSelectedItem().equals("English")){
+			TiendaGUI.idioma = Idiomas.Ingles;
+		}else{
+			TiendaGUI.idioma = Idiomas.Español;
+		}
+		combo.removeAllItems();
+		combo.addItem(Idiomas.seleccionarPalabra("nombre1"));
+		combo.addItem(Idiomas.seleccionarPalabra("nombre2"));
+		for (String i : PrepararDatos.getInstance().getIdiomaCaract()){
+			if (combo.getSelectedItem().equals("English") || combo.getSelectedItem().equals("Ingles")){
+				for (JButton b : buttons){
+					if (b.getText().equals(PrepararDatos.getInstance().getPalabraEspanyol(i))){
+						b.setText(Idiomas.seleccionarPalabra(i));
+					}
+				}
+				for (JLabel l : labels){
+					if (l.getText().equals(PrepararDatos.getInstance().getPalabraEspanyol(i))){
+						l.setText(Idiomas.seleccionarPalabra(i));
+					}
+				}
+			} else{
+				for (JButton b : buttons){
+					if (b.getText().equals(PrepararDatos.getInstance().getPalabraIngles(i))){
+						b.setText(Idiomas.seleccionarPalabra(i));
+					}
+				}
+				for (JLabel l :labels){
+					if (l.getText().equals(PrepararDatos.getInstance().getPalabraIngles(i))){
+						l.setText(Idiomas.seleccionarPalabra(i));
+					}
+				}
+			}
+		}
 	}
 //	public void LoginOrLogout(Cliente cliente, JFrame esto, WebTarget appTarget, JPanel contentPane) {
 //		if (cliente == null) {

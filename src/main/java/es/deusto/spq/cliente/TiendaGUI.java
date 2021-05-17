@@ -49,7 +49,6 @@ import javax.swing.JTextArea;
 
 public class TiendaGUI extends JFrame {
 	
-	private TiendaAcciones acciones = new TiendaAcciones();
 	private static final long serialVersionUID = 1L;
 	private Client client;
 	private JPanel contentPane;
@@ -247,7 +246,7 @@ public class TiendaGUI extends JFrame {
 		    public void actionPerformed(ActionEvent e) {
 		    	ArrayList<SubCategoria> subcaTem = new ArrayList<SubCategoria>();
 		    	categoriaSeleccionada = (Categoria) comboBox_Categoria.getSelectedItem();
-		    	subcaTem = acciones.rellenarSubcategorias(categoriaSeleccionada, subCategorias);
+		    	subcaTem = TiendaAcciones.getInstance().rellenarSubcategorias(categoriaSeleccionada, subCategorias);
 		    	for (SubCategoria SubCategoria : subcaTem) {
 					comboBox_Subcategoria.addItem(SubCategoria);
 				}
@@ -352,7 +351,7 @@ public class TiendaGUI extends JFrame {
 		combo.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				cambiarIdioma();
+				TiendaAcciones.getInstance().cambiarIdioma(getJButtons(), getJLabels(), getComboBox());;
 			}
 		});
 		
@@ -561,7 +560,7 @@ public class TiendaGUI extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				ArrayList<Producto> subCatTemp = new ArrayList<Producto>();
 				model.removeAllElements();
-				subCatTemp = acciones.buscar(txtBuscador.getText(), categoriaSeleccionada, subCategoriaSeleccionada, marcaSeleccionada, colorSelecionado, tallaSeleccionada, productos);
+				subCatTemp = TiendaAcciones.getInstance().buscar(txtBuscador.getText(), categoriaSeleccionada, subCategoriaSeleccionada, marcaSeleccionada, colorSelecionado, tallaSeleccionada, productos);
 				for (int i = 0; i < subCatTemp.size(); i++) {
 					model.addElement(subCatTemp.get(i));
 				}
@@ -723,41 +722,6 @@ public class TiendaGUI extends JFrame {
     	dispose();
 
     }
-	public void cambiarIdioma() {
-		if (combo.getSelectedItem().equals("Ingles") || combo.getSelectedItem().equals("English")){
-			TiendaGUI.idioma = Idiomas.Ingles;
-		}else{
-			TiendaGUI.idioma = Idiomas.Español;
-		}
-		combo.removeAllItems();
-		combo.addItem(Idiomas.seleccionarPalabra("nombre1"));
-		combo.addItem(Idiomas.seleccionarPalabra("nombre2"));
-		for (String i : PrepararDatos.getInstance().getIdiomaCaract()){
-			if (combo.getSelectedItem().equals("English") || combo.getSelectedItem().equals("Ingles")){
-				for (JButton b : getJButtons()){
-					if (b.getText().equals(PrepararDatos.getInstance().getPalabraEspanyol(i))){
-						b.setText(Idiomas.seleccionarPalabra(i));
-					}
-				}
-				for (JLabel l : getJLabels()){
-					if (l.getText().equals(PrepararDatos.getInstance().getPalabraEspanyol(i))){
-						l.setText(Idiomas.seleccionarPalabra(i));
-					}
-				}
-			} else{
-				for (JButton b : getJButtons()){
-					if (b.getText().equals(PrepararDatos.getInstance().getPalabraIngles(i))){
-						b.setText(Idiomas.seleccionarPalabra(i));
-					}
-				}
-				for (JLabel l : getJLabels()){
-					if (l.getText().equals(PrepararDatos.getInstance().getPalabraIngles(i))){
-						l.setText(Idiomas.seleccionarPalabra(i));
-					}
-				}
-			}
-		}
-	}
 	public ArrayList<JButton> getJButtons(){
 		ArrayList<JButton> botones = new ArrayList<>();
 		botones.add(btnCesta);
@@ -781,7 +745,7 @@ public class TiendaGUI extends JFrame {
 		labels.add(lblTalla);
 		return labels;
 	}
-	public static JComboBox<String> getComboBox(){
+	public JComboBox<String> getComboBox(){
 		return combo;
 	}
 }

@@ -11,6 +11,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import es.deusto.spq.Main;
+import es.deusto.spq.acciones.TiendaAcciones;
+import es.deusto.spq.cliente.TiendaGUI;
 import es.deusto.spq.models.Categoria;
 import es.deusto.spq.models.Cliente;
 import es.deusto.spq.models.Marca;
@@ -19,6 +21,7 @@ import es.deusto.spq.models.Pedido;
 import es.deusto.spq.models.Producto;
 import es.deusto.spq.models.SubCategoria;
 import es.deusto.spq.models.Cliente.Genero;
+import es.deusto.spq.util.Idiomas;
 
 public class DBManagerTest {
 

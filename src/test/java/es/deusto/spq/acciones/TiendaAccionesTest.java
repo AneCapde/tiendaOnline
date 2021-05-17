@@ -4,13 +4,19 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+
 import org.junit.Before;
 import org.junit.Test;
 
+import es.deusto.spq.cliente.TiendaGUI;
 import es.deusto.spq.models.Categoria;
 import es.deusto.spq.models.Marca;
 import es.deusto.spq.models.Producto;
 import es.deusto.spq.models.SubCategoria;
+import es.deusto.spq.util.Idiomas;
 
 public class TiendaAccionesTest {
 	Categoria cat;
@@ -88,6 +94,5 @@ public class TiendaAccionesTest {
 		ArrayList<SubCategoria> res = acciones.rellenarSubcategorias(null, subcats);
 		ArrayList<SubCategoria> exp = new ArrayList<SubCategoria>();
 		assertEquals(exp, res);
-	}
-
+	}	
 }

@@ -48,28 +48,55 @@ public class PrepararDatos implements IPrepararDatos {
 	
 	private static ArrayList<String> coment = new ArrayList<String>();
 
+	
+	/** 
+	 * @return IPrepararDatos
+	 */
 	public static IPrepararDatos getInstance() {
 		if (instance == null) {
 			instance = new PrepararDatos();
 		}		
 		return instance;
 	}
+	
+	/** Devuelve la lista con todas las etiquetas para poder recorrer el xml de idiomas.
+	 * @return String[] lista con todas las etiquetas contenidas en el idiomas.xml
+	 */
 	@Override
 	public String[] getIdiomaCaract() {
 		return idioma_caract;
 	}
+	
+	/** Devuelve el HashMap que contiene las palabras del español
+	 * @return HashMap<String, String> contiene las etiquetas asociadas a las palabras en español
+	 */
 	@Override
 	public HashMap<String, String> getEspanyol(){
 		return idioma_espanyol;
 	}
+	
+	/** Devuelve el HashMap que contiene las palabras de ingles
+	 * @return HashMap<String, String> contiene las etiquetas asociadas a las palabras en ingles
+	 */
 	@Override
 	public HashMap<String, String> getIngles(){
 		return idioma_ingles;
 	}
+	
+	/** 
+	 * @param palabra
+	 * @return String
+	 */
 	@Override
 	public String getPalabraEspanyol(String palabra){
 		return idioma_espanyol.get(palabra);
 	}
+	
+	
+	/** 
+	 * @param palabra
+	 * @return String
+	 */
 	@Override
 	public String getPalabraIngles( String palabra){
 		return idioma_ingles.get(palabra);
@@ -108,6 +135,10 @@ public class PrepararDatos implements IPrepararDatos {
 			e.printStackTrace();
 		}
 	}
+	
+	/** 
+	 * @param args
+	 */
 	public static void main(String[] args) {
 
 		PersistenceManagerFactory pmf = JDOHelper.getPersistenceManagerFactory("datanucleus.properties");
