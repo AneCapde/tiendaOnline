@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import javax.ws.rs.client.WebTarget;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -46,7 +45,6 @@ public class VentanaLugarEntregaGUITest {
 				new Marca("marca1", "marca1"));
 		productos.add(p1);
 		precio = 1;
-		System.out.println("Prueba test Ventana Lugar: " + productos);
 		ventanaLugarEntregaGUI = new VentanaLugarEntregaGUI(tiendaGUI, productos, web,precio);
 	}
 	
@@ -106,7 +104,8 @@ public class VentanaLugarEntregaGUITest {
 		Method method = VentanaLugarEntregaGUI.class.getDeclaredMethod("validar");
 		method.setAccessible(true);
 		Boolean result = (Boolean) method.invoke(ventanaLugarEntregaGUI);
-		assertEquals(false, result);	
+		assertEquals(false, result);
+		ventanaLugarEntregaGUI.aceptar(tiendaGUI,productos,web, pedidoTarget, precio);
 	}
 	
 	/**
@@ -124,6 +123,7 @@ public class VentanaLugarEntregaGUITest {
 		method.setAccessible(true);
 		Boolean result = (Boolean) method.invoke(ventanaLugarEntregaGUI);
 		assertEquals(false, result);	
+		ventanaLugarEntregaGUI.aceptar(tiendaGUI,productos,web, pedidoTarget, precio);
 	}
 	
 	/**
@@ -141,6 +141,7 @@ public class VentanaLugarEntregaGUITest {
 		method.setAccessible(true);
 		Boolean result = (Boolean) method.invoke(ventanaLugarEntregaGUI);
 		assertEquals(false, result);	
+		ventanaLugarEntregaGUI.aceptar(tiendaGUI,productos,web, pedidoTarget, precio);
 	}	
 	
 	/**
@@ -160,28 +161,73 @@ public class VentanaLugarEntregaGUITest {
 	}
 	
 	/**
-	 * Metodo que comprueba ue el metodo Acepatr de la Ventana Lugar Entrega GUI funciona adecuadamente
+	 * Metodo que comprueba que el metodo Acepatar de la Ventana Lugar Entrega GUI funciona adecuadamente cuando se cumple Validar
 	 * @throws SecurityException 
 	 * @throws NoSuchMethodException 
+	 * @throws InvocationTargetException 
+	 * @throws IllegalArgumentException 
+	 * @throws IllegalAccessException 
 	 * 
 	 */
 	@Test
-	public void testAceptar() throws NoSuchMethodException, SecurityException{
+	public void testAceptar1() throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException{
+		ventanaLugarEntregaGUI.datosValidar("12333333a","Albacete");
+		Method method = VentanaLugarEntregaGUI.class.getDeclaredMethod("validar");
+		method.setAccessible(true);
 		ventanaLugarEntregaGUI.aceptar(tiendaGUI,productos,web, pedidoTarget, precio);
+	}
+	
+	/**
+	 * Metodo que comprueba que el metodo Acepatar de la Ventana Lugar Entrega GUI funciona adecuadamente cuando se cumple Validar
+	 * @throws NoSuchMethodException
+	 * @throws SecurityException
+	 */
+	@Test
+	public void testAceptar2() throws NoSuchMethodException, SecurityException {
 		ventanaLugarEntregaGUI.datosValidar2("12333333a","Albacete");
 		Method method = VentanaLugarEntregaGUI.class.getDeclaredMethod("validar");
 		method.setAccessible(true);
+		ventanaLugarEntregaGUI.aceptar(tiendaGUI,productos,web, pedidoTarget, precio);
+	}
+
+	/**
+	 * Metodo que comprueba que el metodo Acepatar de la Ventana Lugar Entrega GUI funciona adecuadamente cuando se cumple Validar
+	 * @throws NoSuchMethodException
+	 * @throws SecurityException
+	 */
+	@Test
+	public void testAceptar3() throws NoSuchMethodException, SecurityException {
+		CestaGUI.productos2 = null;
+		ventanaLugarEntregaGUI.datosValidar2("12333333a","Albacete");
+		Method method = VentanaLugarEntregaGUI.class.getDeclaredMethod("validar");
+		method.setAccessible(true);
+		ventanaLugarEntregaGUI.aceptar(tiendaGUI,productos,web, pedidoTarget, precio);
 	}
 	
-//	@Test
-//	public void testAceptar2() {
-//		ventanaLugarEntregaGUI.aceptar(tiendaGUI,productos,web, pedidoTarget, precio);
-//		ventanaLugarEntregaGUI.datosValidar2("12333333a","Albacete");
-//		ventanaLugarEntregaGUI.aceptar2();
-//	}
-//	
-//	@Test
-//	public void testAceptarFallo(){
-//		ventanaLugarEntregaGUI.datosValidarNada("12333333a","Albacete");
-//	}
+	/**
+	 * Metodo que comprueba que el metodo Acepatar de la Ventana Lugar Entrega GUI funciona adecuadamente cuando se cumple Validar
+	 * @throws NoSuchMethodException
+	 * @throws SecurityException
+	 */
+	@Test
+	public void testAceptar5() throws NoSuchMethodException, SecurityException {
+		CestaGUI.model = null;
+		ventanaLugarEntregaGUI.datosValidar2("12333333a","Albacete");
+		Method method = VentanaLugarEntregaGUI.class.getDeclaredMethod("validar");
+		method.setAccessible(true);
+		ventanaLugarEntregaGUI.aceptar(tiendaGUI,productos,web, pedidoTarget, precio);
+	}
+
+	/**
+	 * Metodo que comprueba que el metodo Acepatar de la Ventana Lugar Entrega GUI funciona adecuadamente cuando no se cumple Validar
+	 * @throws NoSuchMethodException
+	 * @throws SecurityException
+	 */
+	@Test
+	public void testAceptarFallo() throws NoSuchMethodException, SecurityException{
+		ventanaLugarEntregaGUI.datosValidarNada("12333333a","Albacete");
+		Method method = VentanaLugarEntregaGUI.class.getDeclaredMethod("validar");
+		method.setAccessible(true);
+		ventanaLugarEntregaGUI.aceptar(tiendaGUI,productos,web, pedidoTarget, precio);
+	}
 }

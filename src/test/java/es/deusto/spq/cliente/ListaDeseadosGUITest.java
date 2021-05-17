@@ -49,7 +49,9 @@ public class ListaDeseadosGUITest {
 		
 		try(MockedStatic<TiendaGUI> utilities = Mockito.mockStatic(TiendaGUI.class)){
 			utilities.when(TiendaGUI::getCliente).thenReturn(cliente);
+//			utilities.when(TiendaGUI::getCliente::getProductosDeseados.theReturn(productos));
 		}
+
 		listaDeseadosGUI = new ListaDeseadosGUI(tiendaGUI, web);
 		listaDeseadosGUI.setProductosDeseados(productos);
 	}
@@ -60,16 +62,16 @@ public class ListaDeseadosGUITest {
 		listaDeseadosGUI.Inicio(web);
 		listaDeseadosGUI.updateClient(web);
 	}
-	
+
 	@Ignore
 	@Test
 	public void testUpdateClient() {
 		ListaDeseadosGUI cGui = Mockito.mock(ListaDeseadosGUI.class);
-		try(MockedStatic<TiendaGUI> utilities = Mockito.mockStatic(TiendaGUI.class)){
-			utilities.when(TiendaGUI::getCliente).thenReturn(cliente);
-
-		}
-		verify(cGui).updateClient(web);
+//		try(MockedStatic<TiendaGUI> utilities = Mockito.mockStatic(TiendaGUI.class)){
+//			utilities.when(TiendaGUI::getCliente).thenReturn(cliente);
+//
+//		}
+		cGui.updateClient(web);
 	}
 	
 	/**
@@ -107,10 +109,10 @@ public class ListaDeseadosGUITest {
 		assertEquals(cliente, ListaDeseadosGUI.setCliente(cliente));
 	}
 	
-	
 	@Ignore
 	@Test
 	public void testAnyadirProductosDeseados() {
+		ListaDeseadosGUI.anyadirProductosDeseados();
 		ArrayList<Producto> productos1 = new ArrayList<>();
 		productos1.add(p1);
 		listaDeseadosGUI.setProductosDeseados(productos1);

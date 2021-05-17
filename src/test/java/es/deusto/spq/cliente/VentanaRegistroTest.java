@@ -4,7 +4,6 @@ import static org.junit.Assert.*;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.EmptyStackException;
 
 import javax.swing.JFrame;
 import javax.ws.rs.client.WebTarget;

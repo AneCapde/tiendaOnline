@@ -253,11 +253,11 @@ public class VentanaLugarEntregaGUI extends JFrame {
 	@SuppressWarnings("unlikely-arg-type")
 	public void aceptar(final JFrame ventanaPadre, ArrayList<Producto> productos, WebTarget appTarget,
 			WebTarget pedidoTarget, int precio) {
-
+		Date date = new Date();
+		System.out.println("entra0");
 		if (validar()) {
-			Date date = new Date();
 //				System.out.println("entra1");
-			if (rdbtnArray[0].isSelected()) {
+			if (rdbtnCorreos.isSelected()) {
 //				System.out.println("entra2 Boton 0");
 				provinciaSelecionada = ("Correos " + (String) provincia.getSelectedItem());
 //					System.out.println("entra4");
@@ -267,12 +267,9 @@ public class VentanaLugarEntregaGUI extends JFrame {
 //					System.out.println();
 //				System.out.println("Productos que se añaden al pedido: " + productos);
 				pedido.setProducto(productos);
-//				System.out.println("Lista de productos dentro del pedido una vez añadidos : " + pedido);
-//				    System.out.println("entra6");
-//				pedidoTarget.request(MediaType.APPLICATION_JSON)
-//						.post(Entity.entity(pedido, MediaType.APPLICATION_JSON));
 //					System.out.println("entra7");
 				if (CestaGUI.productos2 != null && CestaGUI.model != null && CestaGUI.list != null) {
+					System.out.println("entra7");
 					CestaGUI.productos2.remove(CestaGUI.productos2);
 					CestaGUI.model.removeAllElements();
 					CestaGUI.list.setModel(CestaGUI.model);
@@ -284,7 +281,7 @@ public class VentanaLugarEntregaGUI extends JFrame {
 				vmp = new VentanaMetodoPago(ventanaPadre, pedido, appTarget);
 				vmp.setVisible(true);
 
-			} else if (rdbtnArray[1].isSelected()) {
+			} else if (rdbtnDomicilio.isSelected()) {
 //				System.out.println("entra2 Boton 1");
 				direccion1 = direccion.getText();
 				Pedido pedido = new Pedido(TiendaGUI.getCliente(), date, "en proceso", precio, 1, direccion1);
@@ -305,13 +302,4 @@ public class VentanaLugarEntregaGUI extends JFrame {
 			}
 		}
 	}
-
-//	public void aceptar1() {
-//		validar();
-//		rdbtnCorreos.setSelected(true);
-//	}
-//
-//	public void aceptar2() {
-//		rdbtnDomicilio.setSelected(true);
-//	}
 }
