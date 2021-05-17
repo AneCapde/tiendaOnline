@@ -36,7 +36,7 @@ public class TiendaAcciones implements ITiendaAcciones{
 	 * @param colorSelecionado Parametro para la busqueda por color
 	 * @param tallaSeleccionada Parametro para la busqueda por talla
 	 * @param productos La lista de productos en la que buscar
-	 * @return
+	 * @return devuelve un Lista con todos los objetos encontrados
 	 */
 	@Override
 	public ArrayList<Producto> buscar(String textoBuscador, Categoria categoriaSeleccionada, SubCategoria subCategoriaSeleccionada,
@@ -68,7 +68,7 @@ public class TiendaAcciones implements ITiendaAcciones{
 	 * Clase para sacar las subcategorias dependiendo de las categoria seleccionada.
 	 * @param categoriaSeleccionada Categoria seleccionada.
 	 * @param subCategorias Lista de las subcategorias en las que buscar.
-	 * @return
+	 * @return devuelve una Lista con todas las subcategorias encontradas
 	 */
 	@Override
 	public ArrayList<SubCategoria> rellenarSubcategorias(Categoria categoriaSeleccionada, List<SubCategoria> subCategorias){
@@ -86,6 +86,7 @@ public class TiendaAcciones implements ITiendaAcciones{
 		System.out.println(futuroComboBox_Subcategoria);
 		return futuroComboBox_Subcategoria;
 	}
+	
 	@Override
 	public void cambiarIdioma(ArrayList<JButton> buttons, ArrayList<JLabel> labels, JComboBox<String> combo) {
 		if (combo.getSelectedItem().equals("Ingles") || combo.getSelectedItem().equals("English")){

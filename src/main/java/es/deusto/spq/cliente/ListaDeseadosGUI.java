@@ -143,7 +143,7 @@ public class ListaDeseadosGUI extends JFrame {
 	}
 	
 	/**
-	 * 
+	 * Metodo que estable la conexion con el servidor del suaurio conectado a la Tienda
 	 * @param appTarget Objeto para la comunicacion con el server
 	 */
 	public void updateClient(final WebTarget appTarget){
@@ -218,13 +218,17 @@ public class ListaDeseadosGUI extends JFrame {
 	}
 	
 	/**
-	 * 
+	 * Establece los productos que se han marcado como deseados
 	 * @param productos_deseados lista con los productos deseados
 	 */
 	public void setProductosDeseados(ArrayList<Producto> productos_deseados) {
 		ListaDeseadosGUI.productos_deseados = productos_deseados;
 	}
 	
+	/**
+	 * Metodo que al seleccionar un producto muestra su imagen
+	 * @param producto ProductoSeleccionado por el usuario
+	 */
 	public void imagenes(Producto producto) {
 		botonAnyadir.setVisible(true);
 		btnEliminar.setVisible(true);
