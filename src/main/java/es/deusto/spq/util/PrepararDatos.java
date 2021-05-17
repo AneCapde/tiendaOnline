@@ -83,9 +83,9 @@ public class PrepararDatos implements IPrepararDatos {
 		return idioma_ingles;
 	}
 	
-	/** 
-	 * @param palabra
-	 * @return String
+	/** Busca en el Hashmap de español la palabra correspondiente para hacer la traduccion
+	 * @param palabra el identificativo/key para buscar en el hashmap
+	 * @return String la palabra correspondiente en español
 	 */
 	@Override
 	public String getPalabraEspanyol(String palabra){
@@ -93,14 +93,16 @@ public class PrepararDatos implements IPrepararDatos {
 	}
 	
 	
-	/** 
-	 * @param palabra
-	 * @return String
+	/** Busca en el Hashmap de ingles la palabra correspondiente para hacer la traduccion
+	 * @param palabra el identificativo/key para buscar en el hashmap
+	 * @return String la palabra correspondiente en ingles
 	 */
 	@Override
 	public String getPalabraIngles( String palabra){
 		return idioma_ingles.get(palabra);
 	}
+	/** Craga los datos del xml de idiomas en los hashmap de ingle y de español
+	 */
 	@Override
 	public void cargarDatosXML(){
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -137,7 +139,7 @@ public class PrepararDatos implements IPrepararDatos {
 	}
 	
 	/** 
-	 * @param args
+	 * @param args la clase main para carga de los datos de prueba de la BD
 	 */
 	public static void main(String[] args) {
 
