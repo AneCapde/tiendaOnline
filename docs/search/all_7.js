@@ -1,0 +1,20 @@
+var searchData=
+[
+  ['idbmanager_161',['IDBManager',['../interfacees_1_1deusto_1_1spq_1_1dao_1_1_i_d_b_manager.html',1,'es::deusto::spq::dao']]],
+  ['idbmanager_2ejava_162',['IDBManager.java',['../_i_d_b_manager_8java.html',1,'']]],
+  ['idioma_163',['idioma',['../classes_1_1deusto_1_1spq_1_1cliente_1_1_tienda_g_u_i.html#ac46891b0f3fa092eb8f2aa1bb1c905e1',1,'es::deusto::spq::cliente::TiendaGUI']]],
+  ['idiomas_164',['Idiomas',['../enumes_1_1deusto_1_1spq_1_1util_1_1_idiomas.html',1,'es::deusto::spq::util']]],
+  ['idiomas_2ejava_165',['Idiomas.java',['../_idiomas_8java.html',1,'']]],
+  ['imagen_166',['imagen',['../classes_1_1deusto_1_1spq_1_1models_1_1_producto.html#aa3ed406c4a082ba8df3b7ff5190bcea2',1,'es::deusto::spq::models::Producto']]],
+  ['imagenes_167',['imagenes',['../classes_1_1deusto_1_1spq_1_1cliente_1_1_lista_deseados_g_u_i.html#a4d52270bcb788cd5c1494df76d0b357e',1,'es::deusto::spq::cliente::ListaDeseadosGUI']]],
+  ['ingles_168',['Ingles',['../enumes_1_1deusto_1_1spq_1_1util_1_1_idiomas.html#aab22b87669d45eae94e52b8e066cf00c',1,'es::deusto::spq::util::Idiomas']]],
+  ['inicializar_169',['inicializar',['../classes_1_1deusto_1_1spq_1_1acciones_1_1_tienda_acciones_test.html#af83d8e8fcbb0d4c4e35f41441234b567',1,'es.deusto.spq.acciones.TiendaAccionesTest.inicializar()'],['../classes_1_1deusto_1_1spq_1_1models_1_1_pago_test.html#a95967e3909188c974e398a84281ce13e',1,'es.deusto.spq.models.PagoTest.inicializar()']]],
+  ['inicio_170',['inicio',['../classes_1_1deusto_1_1spq_1_1cliente_1_1_lista_deseados_g_u_i_test.html#a6c95f67cef90c61b33d643572bf4685c',1,'es.deusto.spq.cliente.ListaDeseadosGUITest.inicio()'],['../classes_1_1deusto_1_1spq_1_1cliente_1_1_ventana_login_test.html#a4ba83e93699ac9ce3fa9d01ca9e3f730',1,'es.deusto.spq.cliente.VentanaLoginTest.inicio()'],['../classes_1_1deusto_1_1spq_1_1cliente_1_1_ventana_lugar_entrega_g_u_i_test.html#aae500d499a48e096f8b71e1a79cd2e92',1,'es.deusto.spq.cliente.VentanaLugarEntregaGUITest.inicio()']]],
+  ['inicio_171',['Inicio',['../classes_1_1deusto_1_1spq_1_1cliente_1_1_lista_deseados_g_u_i.html#a6563d1b2d034e30dcc6a047ce88fe4d7',1,'es::deusto::spq::cliente::ListaDeseadosGUI']]],
+  ['inio_172',['inio',['../classes_1_1deusto_1_1spq_1_1cliente_1_1_cesta_g_u_i_test.html#a8bb97b507e13053f6d0d4c9c3584f8f6',1,'es::deusto::spq::cliente::CestaGUITest']]],
+  ['initiali_173',['initiali',['../classes_1_1deusto_1_1spq_1_1models_1_1_categoria_test.html#aade4938f8a9e31968326f92418ea39ed',1,'es.deusto.spq.models.CategoriaTest.initiali()'],['../classes_1_1deusto_1_1spq_1_1models_1_1_cliente_test.html#acaa81b4926eefbe43d25dda065ae2213',1,'es.deusto.spq.models.ClienteTest.initiali()'],['../classes_1_1deusto_1_1spq_1_1models_1_1_marca_test.html#abef3c4c06cc704956d718bfbd5ddad63',1,'es.deusto.spq.models.MarcaTest.initiali()'],['../classes_1_1deusto_1_1spq_1_1models_1_1_producto_test.html#a0560424a26597a9aa196fe313f96b12a',1,'es.deusto.spq.models.ProductoTest.initiali()'],['../classes_1_1deusto_1_1spq_1_1models_1_1_sub_categoria_test.html#aced6c61898a87f841b41752c32441f3b',1,'es.deusto.spq.models.SubCategoriaTest.initiali()']]],
+  ['ipreparardatos_174',['IPrepararDatos',['../interfacees_1_1deusto_1_1spq_1_1util_1_1_i_preparar_datos.html',1,'es::deusto::spq::util']]],
+  ['ipreparardatos_2ejava_175',['IPrepararDatos.java',['../_i_preparar_datos_8java.html',1,'']]],
+  ['itiendaacciones_176',['ITiendaAcciones',['../interfacees_1_1deusto_1_1spq_1_1acciones_1_1_i_tienda_acciones.html',1,'es::deusto::spq::acciones']]],
+  ['itiendaacciones_2ejava_177',['ITiendaAcciones.java',['../_i_tienda_acciones_8java.html',1,'']]]
+];
