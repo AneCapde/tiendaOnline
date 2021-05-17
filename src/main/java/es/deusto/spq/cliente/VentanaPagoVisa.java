@@ -156,17 +156,29 @@ public class VentanaPagoVisa extends JFrame{
 		});	
     }
 
+	
+	/** Método que rellena automáticamente el número de Visa si el usuario tiene una cuenta asociada
+	 * @param pedido pedido que el cliente busca comprar
+	 * @param credencialesvisa Credenciales visa del cliente
+	 */
 	public void autoFill(Pedido pedido, HashMap<String, String> credencialesvisa) {
 		if (TiendaGUI.getCliente().getDNI().equals(pedido.getCliente().getDNI())) {
 			for(Entry<String, String> c: credencialesvisa.entrySet()) {
-				String email = c.getKey();
-				numTarjetaField.setText(email);
+				String num = c.getKey();
+				numTarjetaField.setText(num);
 				bAceptar.setVisible(true);
 				bCredenciales.setVisible(false);
 			}
 		}
 	}
 
+	
+	/** Método que crea el pedido una vez se ha verificado y completado el pago del mismo
+	 * @param pedido pedido que el cliente busca comprar
+	 * @param credencialesvisa Credenciales visa del cliente
+	 * @param pedidoTarget WebTarget para poder guardar el pedido en BD
+	 * @return boolean
+	 */
 	public boolean crearPedido(Pedido pedido, HashMap<String, String> credencialesvisa, final WebTarget pedidoTarget) {
 		boolean b = false;
 		for(Entry<String, String> c1: credencialesvisa.entrySet()) {
@@ -189,6 +201,13 @@ public class VentanaPagoVisa extends JFrame{
 		return b;
 	}
 	
+	
+	/** Método que sirve para actualizar la tarjeta visa asociada a la cuenta del cliente
+	 * @param credencialespaypal Credenciales paypal del cliente
+	 * @param credencialesvisa Credenciales visa del cliente
+	 * @param credencialespago Objeto 'Pago' que se actualiza
+	 * @param updateTarget WebTarget para poder actualizar el metodo de pago en BD
+	 */
 	public void updateVisa(HashMap<String, String> credencialespaypal, HashMap<String, String> credencialesvisa,
 	Pago credencialespago, final WebTarget updateTarget) {
 		String pass = new String(CVCField.getPassword());

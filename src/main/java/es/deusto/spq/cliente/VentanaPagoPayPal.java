@@ -159,6 +159,11 @@ public class VentanaPagoPayPal extends JFrame {
     }
 
 
+	
+	/** Método que rellena automáticamente el email de paypal si el usuario tiene una cuenta asociada
+	 * @param pedido pedido que el cliente busca comprar
+	 * @param credencialespaypal Credenciales paypal del cliente
+	 */
 	public void autoFill(Pedido pedido, HashMap<String, String> credencialespaypal) {
 		if (TiendaGUI.getCliente().getDNI().equals(pedido.getCliente().getDNI())) {
 			for(Entry<String, String> c: credencialespaypal.entrySet()) {
@@ -171,6 +176,13 @@ public class VentanaPagoPayPal extends JFrame {
 	}
 
 
+	
+	/** Método que crea el pedido una vez se ha verificado y completado el pago del mismo
+	 * @param pedido pedido que el cliente busca comprar
+	 * @param credencialespaypal Credenciales paypal del cliente
+	 * @param pedidoTarget WebTarget para poder guardar el pedido en BD
+	 * @return boolean
+	 */
 	public boolean crearPedido(Pedido pedido, HashMap<String, String> credencialespaypal, final WebTarget pedidoTarget) {
 		boolean b = false;
 
@@ -193,6 +205,13 @@ public class VentanaPagoPayPal extends JFrame {
 		return b;
 	}
 	
+	
+	/** Método que sirve para actualizar la cuenta de paypal asociada al cliente
+	 * @param credencialespaypal Credenciales paypal del cliente
+	 * @param credencialesvisa Credenciales visa del cliente
+	 * @param credencialespago Objeto 'Pago' que se actualiza
+	 * @param updateTarget WebTarget para poder actualizar el metodo de pago en BD
+	 */
 	public void updatePaypal(HashMap<String, String> credencialespaypal, HashMap<String, String> credencialesvisa,
 	Pago credencialespago, final WebTarget updateTarget) {
 		String pass = new String(passwordField.getPassword());

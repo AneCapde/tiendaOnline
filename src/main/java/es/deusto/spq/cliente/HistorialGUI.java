@@ -120,7 +120,7 @@ public class HistorialGUI extends JFrame{
 						if (pedidoSeleccionado.getEstado().equals("Devuelto")) {
 							JOptionPane.showMessageDialog(null, "El pedido seleccionado ya está devuleto", "Error en la devolución", JOptionPane.INFORMATION_MESSAGE);
 						} else
-						// Cambiamos el estado del pedido a "Devuelto"
+						//Pasamos el pedido seleccionado para editarlo
 						devolverPedido(updateTarget, pedidoSeleccionado, ventanaPadre, appTarget);
 
 					} else {
@@ -159,12 +159,13 @@ public class HistorialGUI extends JFrame{
 	
 	
 	/** Método que permite devolver un pedido y cambia el estado del mismo a "devuelto"
-	 * @param updateTarget
-	 * @param pedido
+	 * @param updateTarget 
+	 * @param pedido Pedido a actualizar
 	 * @param ventanaPadre
 	 * @param appTarget
 	 */
 	private void devolverPedido(WebTarget updateTarget, Pedido pedido, JFrame ventanaPadre, WebTarget appTarget) {
+		pedido.setEstado("Devuelto");
 		updateTarget.request(MediaType.APPLICATION_JSON).post(Entity.entity(pedido, MediaType.APPLICATION_JSON));
 		setVisible(false);
 

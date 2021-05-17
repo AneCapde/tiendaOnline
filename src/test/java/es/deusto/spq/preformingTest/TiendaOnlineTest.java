@@ -1,6 +1,7 @@
 package es.deusto.spq.preformingTest;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -17,6 +18,7 @@ import org.databene.contiperf.junit.ContiPerfRule;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -24,6 +26,7 @@ import es.deusto.spq.Main;
 import es.deusto.spq.cliente.TiendaGUI;
 import es.deusto.spq.models.Categoria;
 import es.deusto.spq.models.Cliente;
+import es.deusto.spq.models.Pago;
 import es.deusto.spq.models.Pedido;
 import es.deusto.spq.models.Producto;
 import es.deusto.spq.models.SubCategoria;
@@ -110,8 +113,41 @@ public class TiendaOnlineTest {
         pedidoTarget.request(MediaType.APPLICATION_JSON).post(Entity.entity(pedido, MediaType.APPLICATION_JSON));
         
     }
-    
-    
 
+    @Test 
+    @Ignore
+    @PerfTest(invocations = 1000, threads = 20)
+    @Required(max = 20000, average = 3000)
+    public void connectionDevolucion(){
+    	Date date = new Date();
+        Client client = ClientBuilder.newClient();
+        final WebTarget appTarget = client.target("http://localhost:8080/myapp");
+        final WebTarget updateTarget = appTarget.path("/pedidos/update");
+        final WebTarget pedidoTarget = appTarget.path("/pedidos");
+        Pedido pedido = new Pedido(cliente, date, "en proceso", 10, 1, "A Coruña");
+        pedidoTarget.request(MediaType.APPLICATION_JSON).post(Entity.entity(pedido, MediaType.APPLICATION_JSON));
+        pedido.setEstado("Devuelto");
+        updateTarget.request(MediaType.APPLICATION_JSON).post(Entity.entity(pedido, MediaType.APPLICATION_JSON));
+        
+    }
 
+    
+    @Test 
+    @Ignore
+    @PerfTest(invocations = 1000, threads = 20)
+    @Required(max = 20000, average = 3000)
+    public void connectionPago(){
+        Client client = ClientBuilder.newClient();
+        final WebTarget appTarget = client.target("http://localhost:8080/myapp");
+        final WebTarget pagoTarget = appTarget.path("/pagos");
+
+        HashMap<String,String> credencialesVisa = new HashMap<String,String>();
+        credencialesVisa.put("4444222211113333", "123");
+        HashMap<String,String> credencialesPaypal = new HashMap<String,String>();
+        credencialesPaypal.put("prueba@gmail.com", "12221");
+        Pago pago = new Pago(cliente.getDNI(), credencialesVisa, credencialesPaypal);
+
+        pagoTarget.request(MediaType.APPLICATION_JSON).post(Entity.entity(pago, MediaType.APPLICATION_JSON));
+        
+    }
 }
