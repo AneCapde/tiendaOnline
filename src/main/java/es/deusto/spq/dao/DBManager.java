@@ -3,12 +3,17 @@ package es.deusto.spq.dao;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.jdo.JDOHelper;
 import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
+
+import org.datanucleus.store.rdbms.query.ForwardQueryResult;
+
+import com.sun.org.apache.xalan.internal.xsltc.compiler.sym;
 
 import es.deusto.spq.models.Categoria;
 import es.deusto.spq.models.Cliente;
@@ -412,15 +417,19 @@ public class DBManager implements IDBManager{
 		try {
 			
 			tx.begin();
-			Query<?> query = pm.newQuery("SELECT producto.* FROM producto LEFT OUTER JOIN pedido_productopedido ON producto.PRODUCTO_ID" + 
-										 " = pedido_productopedido.PRODUCTO_ID_EID GROUP BY producto.NOMBRE order by count(PEDIDO_ID_OID) desc ;");
+			//Query<?> query = pm.newQuery( "SELECT p FROM "+ Producto.class.getName() + " p LEFT OUTER JOIN " + Pedido.class.getName() + " pe");// GROUP BY p.nombre order by count(p.nombre) ");
+			Query<?> query = pm.newQuery("javax.jdo.query.sql" , "select * FROM producto where DESCRIPCION in (\"Chaqueta vaquera azul\","+
+										 "\"Camisa blanca elegante\") ;");
+			//Query<?> query = pm.newQuery("javax.jdo.query.sql", "SELECT producto.* FROM producto LEFT OUTER JOIN pedido_productopedido ON producto.PRODUCTO_ID" + 
+			//							 " = pedido_productopedido.PRODUCTO_ID_EID GROUP BY producto.NOMBRE order by count(PEDIDO_ID_OID) desc ;");
+			System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
 			
-			
-			Extent<Producto> extent =  (Extent<Producto>) query.execute();
-			
-			for (Producto producto : extent) {
-				productos.add(producto);
-			}
+			List prod = (List) query.execute();
+			System.out.println("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
+//			for (int i = 0; i < prod.size(); i++) {
+//				productos.add((Producto) prod.get(i));
+//			}
+			System.out.println(productos);
 			tx.commit();
 		} catch (Exception ex) {
 			System.out.println("  $ Error retrieving all the Productos: " + ex.getMessage());

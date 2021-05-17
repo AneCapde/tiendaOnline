@@ -30,6 +30,7 @@ public class ProductosServer {
     @Produces(MediaType.APPLICATION_JSON)
     public List<Producto> getMasComprados() {
 		List<Producto> productos = DBManager.getInstance().getMasComprados();
+		System.out.println(productos);
 		return productos;
     }
     
