@@ -582,7 +582,7 @@ public class TiendaGUI extends JFrame {
 		btnMasComprados = new JButton(Idiomas.seleccionarPalabra("masComprados"));
 		btnMasComprados.setBounds(370, 10, 122, 23);
 		contentPane.add(btnMasComprados);
-		btnMasComprados.setEnabled(false);
+		btnMasComprados.setEnabled(true);
 		btnMasComprados.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -590,8 +590,8 @@ public class TiendaGUI extends JFrame {
 				List<Producto> productosTemp;
 				GenericType<List<Producto>> genericType_productosMas = new GenericType<List<Producto>>() {};
 		        productosTemp = masBuscadoTarget.request(MediaType.APPLICATION_JSON).get(genericType_productosMas);
-		        for (int i = 0; i < productos.size(); i++) {
-					model.addElement(productos.get(i));
+		        for (int i = 0; i < productosTemp.size(); i++) {
+					model.addElement(productosTemp.get(i));
 				}
 				
 			}
