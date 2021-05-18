@@ -21,6 +21,10 @@ public class TiendaAcciones implements ITiendaAcciones{
 
 	private static ITiendaAcciones instance;
 
+	
+	/** 
+	 * @return ITiendaAcciones devuelve una referencia estatica
+	 */
 	public static ITiendaAcciones getInstance() {
 		if (instance == null) {
 			instance = new TiendaAcciones();
@@ -87,6 +91,13 @@ public class TiendaAcciones implements ITiendaAcciones{
 		return futuroComboBox_Subcategoria;
 	}
 	
+	
+	/** 
+	 * Selecciona un idioma concreto y sustituye los textos por ese idioma
+	 * @param buttons ArrayList de botones  
+	 * @param labels ArrayList de labels 
+	 * @param combo JcomboBox con la seleccion del idioma
+	 */
 	@Override
 	public void cambiarIdioma(ArrayList<JButton> buttons, ArrayList<JLabel> labels, JComboBox<String> combo) {
 		if (combo.getSelectedItem().equals("Ingles") || combo.getSelectedItem().equals("English")){
