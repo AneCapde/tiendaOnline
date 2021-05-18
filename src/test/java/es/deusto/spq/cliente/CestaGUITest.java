@@ -66,6 +66,6 @@ public class CestaGUITest {
 		for (Producto p : productosCantidad.keySet()){
 			precioTotal += p.getPrecio()*productosCantidad.get(p);
 		}
-		assertEquals(precioTotal, CestaGUI.calcularPrecio());
+		assertEquals(precioTotal, cestaGUI.calcularPrecio());
 	}
 }
