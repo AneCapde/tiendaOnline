@@ -418,17 +418,23 @@ public class DBManager implements IDBManager{
 			
 			tx.begin();
 			//Query<?> query = pm.newQuery( "SELECT p FROM "+ Producto.class.getName() + " p LEFT OUTER JOIN " + Pedido.class.getName() + " pe");// GROUP BY p.nombre order by count(p.nombre) ");
-			Query<?> query = pm.newQuery("javax.jdo.query.sql" , "select * FROM producto where DESCRIPCION in (\"Chaqueta vaquera azul\","+
-										 "\"Camisa blanca elegante\") ;");
-			//Query<?> query = pm.newQuery("javax.jdo.query.sql", "SELECT producto.* FROM producto LEFT OUTER JOIN pedido_productopedido ON producto.PRODUCTO_ID" + 
-			//							 " = pedido_productopedido.PRODUCTO_ID_EID GROUP BY producto.NOMBRE order by count(PEDIDO_ID_OID) desc ;");
-			System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+			//Query<?> query = pm.newQuery("javax.jdo.query.SQL" , "select NOMBRE FROM producto where DESCRIPCION in (\"Chaqueta vaquera azul\","+
+			//							 "\"Camisa blanca elegante\") ;");
+			Query<?> query = pm.newQuery("javax.jdo.query.SQL", "SELECT NOMBRE FROM producto LEFT OUTER JOIN pedido_productopedido ON producto.PRODUCTO_ID" + 
+										 " = pedido_productopedido.PRODUCTO_ID_EID GROUP BY producto.NOMBRE order by count(PEDIDO_ID_OID) desc ;");
+
+			Producto prod = null;
+			List productosBusque = (List) query.execute();
 			
-			List prod = (List) query.execute();
-			System.out.println("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
-//			for (int i = 0; i < prod.size(); i++) {
-//				productos.add((Producto) prod.get(i));
-//			}
+			for (int i = 0; i < productosBusque.size(); i++) {
+				Query<?> query2 = pm.newQuery("SELECT FROM "+ Producto.class.getName() + " WHERE nombre =='" + productosBusque.get(i) + "'");
+				query2.setUnique(true);
+				prod = (Producto) query2.execute();
+				productos.add(prod);
+				System.out.println(prod.toStringDebug());
+				//productos.add((Producto) prod.get(i));
+			}
+//			
 			System.out.println(productos);
 			tx.commit();
 		} catch (Exception ex) {
