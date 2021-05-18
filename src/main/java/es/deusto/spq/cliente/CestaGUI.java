@@ -174,7 +174,12 @@ public class CestaGUI extends JFrame{
 		
 	}
 	
-	public static int calcularPrecio() {
+	
+	/** 
+	 * Calcula el precio del pedido mediante la suma de la cantidad de cada producto por su precio
+	 * @return int precio total del pedido
+	 */
+	public int calcularPrecio() {
 		int precioTotal = 0;
 		for (Producto p : productos_cantidad.keySet()){
 			precioTotal += p.getPrecio()*productos_cantidad.get(p);
@@ -182,10 +187,18 @@ public class CestaGUI extends JFrame{
 		return precioTotal;
 	}
 
+	
+	/** 
+	 * @return List<Producto> lista de productos que el usuario a añadido a la cesta
+	 */
 	public List<Producto> getProductos(){
         return CestaGUI.productos2;
 	}
 	
+	
+	/** 
+	 * @return HashMap<Producto, Integer> cada producto dispone de un int con la cantidad que se desea pedir
+	 */
 	public HashMap<Producto, Integer> getProductosCantidad() {
 		return CestaGUI.productos_cantidad;
 	}

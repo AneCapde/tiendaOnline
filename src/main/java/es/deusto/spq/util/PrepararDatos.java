@@ -59,7 +59,8 @@ public class PrepararDatos implements IPrepararDatos {
 		return instance;
 	}
 	
-	/** Devuelve la lista con todas las etiquetas para poder recorrer el xml de idiomas.
+	/** 
+	 * Devuelve la lista con todas las etiquetas para poder recorrer el xml de idiomas.
 	 * @return String[] lista con todas las etiquetas contenidas en el idiomas.xml
 	 */
 	@Override
@@ -67,7 +68,8 @@ public class PrepararDatos implements IPrepararDatos {
 		return idioma_caract;
 	}
 	
-	/** Devuelve el HashMap que contiene las palabras del español
+	/** 
+	 * Devuelve el HashMap que contiene las palabras del español
 	 * @return HashMap<String, String> contiene las etiquetas asociadas a las palabras en español
 	 */
 	@Override
@@ -75,7 +77,8 @@ public class PrepararDatos implements IPrepararDatos {
 		return idioma_espanyol;
 	}
 	
-	/** Devuelve el HashMap que contiene las palabras de ingles
+	/** 
+	 * Devuelve el HashMap que contiene las palabras de ingles
 	 * @return HashMap<String, String> contiene las etiquetas asociadas a las palabras en ingles
 	 */
 	@Override
@@ -83,7 +86,8 @@ public class PrepararDatos implements IPrepararDatos {
 		return idioma_ingles;
 	}
 	
-	/** Busca en el Hashmap de español la palabra correspondiente para hacer la traduccion
+	/** 
+	 * Busca en el Hashmap de español la palabra correspondiente para hacer la traduccion
 	 * @param palabra el identificativo/key para buscar en el hashmap
 	 * @return String la palabra correspondiente en español
 	 */
@@ -93,7 +97,8 @@ public class PrepararDatos implements IPrepararDatos {
 	}
 	
 	
-	/** Busca en el Hashmap de ingles la palabra correspondiente para hacer la traduccion
+	/** 
+	 * Busca en el Hashmap de ingles la palabra correspondiente para hacer la traduccion
 	 * @param palabra el identificativo/key para buscar en el hashmap
 	 * @return String la palabra correspondiente en ingles
 	 */
