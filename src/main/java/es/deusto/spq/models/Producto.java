@@ -1,7 +1,7 @@
 package es.deusto.spq.models;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+
 
 import javax.jdo.annotations.Join;
 import javax.jdo.annotations.PersistenceCapable;
@@ -39,21 +39,20 @@ public class Producto {
 		this.marca = marca;
 	}
 	
-	public Producto( String nombre, String descripcion, int stock, int precio, String imagen, SubCategoria subcategoria, Marca marca, ArrayList<String> comentarios) {
-		super();
-		this.nombre = nombre;
-		this.descripcion = descripcion;
-		this.stock = stock;
-		this.precio = precio;
-		this.imagen = imagen;
-		this.subcategoria = subcategoria;
-		this.marca = marca;
-		this.comentarios = new ArrayList<>();
-	}
+//	public Producto( String nombre, String descripcion, int stock, int precio, String imagen, SubCategoria subcategoria, Marca marca, ArrayList<String> comentarios) {
+//		super();
+//		this.nombre = nombre;
+//		this.descripcion = descripcion;
+//		this.stock = stock;
+//		this.precio = precio;
+//		this.imagen = imagen;
+//		this.subcategoria = subcategoria;
+//		this.marca = marca;
+//		this.comentarios = new ArrayList<>();
+//	}
 	
 	
-	public Producto( String nombre, String descripcion, int stock, int precio, String imagen, SubCategoria subcategoria, Marca marca, ArrayList<Colores> colores, ArrayList<Tallas> tallas,
-			ArrayList<String> comentarios) {
+	public Producto( String nombre, String descripcion, int stock, int precio, String imagen, SubCategoria subcategoria, Marca marca, ArrayList<Colores> colores, ArrayList<Tallas> tallas) {
 		super();
 		this.nombre = nombre;
 		this.descripcion = descripcion;
@@ -64,7 +63,6 @@ public class Producto {
 		this.marca = marca;
 		this.setColores(colores);
 		this.setTallas(tallas);
-		this.comentarios = new ArrayList<>();
 	}
 
 	public String getNombre() {
@@ -146,6 +144,14 @@ public class Producto {
 
 	public void setTallas(ArrayList<Tallas> tallas) {
 		this.tallas = tallas;
+	}
+
+	public ArrayList<String> getComentarios() {
+		return comentarios;
+	}
+
+	public void setComentarios(ArrayList<String> comentarios) {
+		this.comentarios = comentarios;
 	}
 	
 	

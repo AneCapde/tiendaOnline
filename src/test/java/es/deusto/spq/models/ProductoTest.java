@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 
-import es.deusto.spq.models.Cliente.Genero;
 
 public class ProductoTest {
 	
@@ -19,8 +18,7 @@ public class ProductoTest {
 	ArrayList<Colores> colores; 
 	ArrayList<Tallas> tallas;
 	ArrayList<String> coment = new ArrayList<String>();
-	
-	//Tenemos dos constructores de productos
+
 	@Before
 	public void initiali() {
 		cat = new Categoria("","");
@@ -28,9 +26,8 @@ public class ProductoTest {
 		mar = new Marca("","");
 		colores = new ArrayList<>(); 
 		tallas = new ArrayList<>();
-		pro1 = new Producto("producto","descripcion",5,5,"h",sub,mar);
-		pro = new Producto("producto","descripcion",5,5,"h",sub,mar,coment);
-		pro2 = new Producto("producto3","descripcion3",7,7,"e",sub,mar,colores,tallas,coment);
+		pro = new Producto("producto","descripcion",5,5,"h",sub,mar);
+		pro2 = new Producto("producto3","descripcion3",7,7,"e",sub,mar,colores,tallas);
 		
 	}
 
@@ -131,7 +128,7 @@ public class ProductoTest {
 	@Test
 	public void testSetGetColores() {
 		colores = new ArrayList<>();
-		pro2 = new Producto("producto3","descripcion3",7,7,"e",sub,mar,colores,tallas,coment);
+		pro2 = new Producto("producto3","descripcion3",7,7,"e",sub,mar,colores,tallas);
 		ArrayList<Colores> resul = pro2.getColores();
 		assertEquals(colores, resul);
 	}
@@ -139,7 +136,7 @@ public class ProductoTest {
 	@Test
 	public void testSetGetTallas() {
 		tallas = new ArrayList<>();
-		pro2 = new Producto("producto3","descripcion3",7,7,"e",sub,mar,colores,tallas,coment);
+		pro2 = new Producto("producto3","descripcion3",7,7,"e",sub,mar,colores,tallas);
 		ArrayList<Tallas> resul = pro2.getTallas();
 		assertEquals(tallas, resul);
 	}
@@ -154,6 +151,15 @@ public class ProductoTest {
 	public void testToString() {
 		String resul = pro.toString();
 		assertEquals("producto", resul);	
+	}
+	
+	@Test
+	public void testSetGetComentarios() {
+		coment = new ArrayList<>();
+		coment.add("hola");
+		pro.setComentarios(coment);
+		ArrayList<String> resul = pro.getComentarios();
+		assertEquals(coment,resul);
 	}
 
 }
