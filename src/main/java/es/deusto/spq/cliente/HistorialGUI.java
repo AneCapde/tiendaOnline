@@ -34,6 +34,10 @@ import es.deusto.spq.util.Idiomas;
 
 public class HistorialGUI extends JFrame{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private DefaultListModel<Pedido> model = new DefaultListModel<>();
 	private Pedido pedidoSeleccionado;
@@ -42,7 +46,12 @@ public class HistorialGUI extends JFrame{
 	private JTextArea textArea;
 	private JList<Pedido> list;
 	
-	
+	/**
+	 * Ventana en la que se  muestran los pedidos que realiza un cliente determinado, asi como
+	 * las caracteristicas del pedido realizado
+	 * @param ventanaPadre Ventana anterior, a traves de la cual se a llegado a esta
+	 * @param appTarget Objeto para la comunicacion con el server
+	 */
 	
 	public HistorialGUI(final JFrame ventanaPadre, WebTarget appTarget) {
 		
@@ -148,6 +157,10 @@ public class HistorialGUI extends JFrame{
 		
 	}
 	
+	/**
+	 * Método que permite volver a la ventana principal TiendaGUI
+	 */
+	
 	private void botonInicio() {
 		setVisible(false);
 		TiendaGUI tienda = new TiendaGUI();
@@ -174,6 +187,11 @@ public class HistorialGUI extends JFrame{
 		JOptionPane.showMessageDialog(null, "Deberás concretar la entrega del paquete escibiendo al email \n devolucion@tienda.com y se te reembolsará el dinero del pedido.", "Devolución completada", JOptionPane.INFORMATION_MESSAGE);
 
 	}
+	
+	/**
+	 * Método que permite cargar la lista con la información del pedido seleccionado en el 
+	 * modelo
+	 */
 
 	private void cargarLista() {
 		pedidoSeleccionado = list.getSelectedValue();

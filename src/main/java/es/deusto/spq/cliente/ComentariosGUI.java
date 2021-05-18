@@ -22,6 +22,7 @@ import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.border.EmptyBorder;
 import javax.ws.rs.client.WebTarget;
 
 import es.deusto.spq.models.Producto;
@@ -39,72 +40,92 @@ public class ComentariosGUI extends JFrame{
 	private SpinnerModel modeloSpinner;
 	private JLabel intComent;
 	private JLabel verComent;
-	private JPanel pCentral,pInferior,pSuperior,p1,p2;
+	private JPanel contentPane;
 	private JTextField comentario;
 	private DefaultListModel<String> model = new DefaultListModel<>();
 	private JList<String> list;
 	private ArrayList<String> coment;
 	
+	/**
+	 * Ventana en la que se pueden añadir comentarios de un producto y tambien se pueden 
+	 * ver los comentarios asociados al producto seleccionado
+	 * @param ventanaPadre Ventana anterior, a traves de la cual se a llegado a esta
+	 * @param producto Producto del que se quieren ver los comentarios
+	 * @param appTarget Objeto para la comunicacion con el server
+	 */
+	
 	public ComentariosGUI(final JFrame ventanaPadre, Producto producto, WebTarget appTarget) {
 		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 872, 560);
-		
-		pCentral = new JPanel();
-		getContentPane().add(pCentral,BorderLayout.CENTER);
-		pCentral.setLayout(new GridLayout(1,2));
-		
-		pInferior = new JPanel();
-		getContentPane().add(pInferior,BorderLayout.SOUTH);
-		
-		pSuperior = new JPanel();
-		pSuperior.setLayout(new GridLayout(1,2));
-		p1 = new JPanel(new FlowLayout(FlowLayout.CENTER));
-		p2 = new JPanel(new FlowLayout(FlowLayout.CENTER));
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
 		
 		modeloSpinner = new SpinnerNumberModel(0,0,5,1);
 		puntuacion = new JSpinner(modeloSpinner);
+		puntuacion.setBounds(65,90,300,29);
 		puntuacion.setPreferredSize(new Dimension(550, 35));
-		pCentral.add(puntuacion);
+		contentPane.add(puntuacion);
 		
 		intComent = new JLabel("Añadir comentario");
-		intComent.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 30));
-		p1.add(intComent);
+		intComent.setBounds(120,11,200,29);
+		intComent.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 16));
+		contentPane.add(intComent);
 		
 		comentario = new JTextField();
-		comentario.setBounds(260, 119,159, 16);
-		pCentral.add(comentario);
+		comentario.setBounds(65,150,300,250);
+		contentPane.add(comentario);
 		
-		if(coment != null) {
-			coment = producto.getComentarios();
-		
-		
-			for (int i = 0; i < coment.size(); i++) {
-				model.addElement(coment.get(i)); 
-			}
+		//si no pongo esto nullPointer (forma 1)
+//		if(coment != null) {
+//			coment = producto.getComentarios();
+//		
+//		
+//			for (int i = 0; i < coment.size(); i++) {
+//				model.addElement(coment.get(i)); 
+//			}
 			
 			//JList para los comentarios
-			list = new JList<>(model);
-			list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-			JScrollPane scrollPane = new JScrollPane();
-			scrollPane.setViewportView(list);
-			pCentral.add(scrollPane);
+//			list = new JList<>(model);
+//			list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+//			list.setBounds(200, 27, 236, 387);
+//			JScrollPane scrollPane = new JScrollPane();
+//			scrollPane.setViewportView(list);
+//			contentPane.add(scrollPane);
+//		}
+		
+		coment = new ArrayList<>();
+		coment.add("prueba");
+		coment.add("prueba2");
+		
+		for (int i = 0; i < coment.size(); i++) {
+			model.addElement(coment.get(i)); 
 		}
+		
+		list = new JList<>(model);
+		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		list.setBounds(500, 90, 236, 387);
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setViewportView(list);
+		contentPane.add(scrollPane);
 			
 		verComent = new JLabel("Comentarios del Producto");
-		intComent.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 30));
-		p2.add(verComent);
+		//verComent.setBounds(200, 100, 236, 387);
+		verComent.setBounds(500,11,200,29);
+		verComent.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 16));
+		contentPane.add(verComent);
 		
 		botonEnviar = new JButton("Enviar");
-		botonEnviar.setBounds(469, 11, 109, 29);
-		pInferior.add(botonEnviar);
+		botonEnviar.setBounds(300, 450, 117, 29);
+		contentPane.add(botonEnviar);
 		
 		botonEnviar.addActionListener(new ActionListener() {
 			
 			//añadir comentarios a la BD
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//no tengo que crear una nueva lista, coger la de la BD y añadirlo a esa
 				coment = new ArrayList<String>();
 				String c = comentario.getText();
 				coment.add(c);
@@ -115,8 +136,8 @@ public class ComentariosGUI extends JFrame{
 		});
 		
 		botonCancelar = new JButton("Cancelar");
-		botonCancelar.setBounds(469, 50, 109, 29);
-		pInferior.add(botonCancelar);
+		botonCancelar.setBounds(500, 450, 117, 29);
+		contentPane.add(botonCancelar);
 		
 		botonCancelar.addActionListener(new ActionListener() {
 
