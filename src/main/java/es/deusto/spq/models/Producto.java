@@ -25,7 +25,9 @@ public class Producto {
 	private ArrayList<Colores> colores;
 	@Persistent(defaultFetchGroup = "true", dependentElement = "true")
 	@Join
-	private ArrayList<Tallas> tallas; 
+	private ArrayList<Tallas> tallas;
+	@Persistent(defaultFetchGroup = "true", dependentElement = "true")
+	@Join
 	private ArrayList<String> comentarios;
 	
 	public Producto( String nombre, String descripcion, int stock, int precio, String imagen, SubCategoria subcategoria, Marca marca) {

@@ -8,6 +8,7 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -18,9 +19,12 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 import javax.ws.rs.client.WebTarget;
+
+import es.deusto.spq.models.Producto;
 
 
 public class ComentariosGUI extends JFrame{
@@ -38,9 +42,10 @@ public class ComentariosGUI extends JFrame{
 	private JPanel pCentral,pInferior,pSuperior,p1,p2;
 	private JTextField comentario;
 	private DefaultListModel<String> model = new DefaultListModel<>();
-	private JList<String> comentarios = new JList<>();
+	private JList<String> list;
+	private ArrayList<String> coment;
 	
-	public ComentariosGUI(final JFrame ventanaPadre, WebTarget appTarget) {
+	public ComentariosGUI(final JFrame ventanaPadre, Producto producto, WebTarget appTarget) {
 		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 872, 560);
@@ -70,14 +75,22 @@ public class ComentariosGUI extends JFrame{
 		comentario.setBounds(260, 119,159, 16);
 		pCentral.add(comentario);
 		
-		//modelo donde se van a imprimir los comentarios
-		model = new DefaultListModel<>();
-		comentarios = new JList<>(model);
-		JScrollPane scroll =  new JScrollPane(comentarios);
-		scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-		pCentral.add(scroll);
+		if(coment != null) {
+			coment = producto.getComentarios();
 		
+		
+			for (int i = 0; i < coment.size(); i++) {
+				model.addElement(coment.get(i)); 
+			}
+			
+			//JList para los comentarios
+			list = new JList<>(model);
+			list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+			JScrollPane scrollPane = new JScrollPane();
+			scrollPane.setViewportView(list);
+			pCentral.add(scrollPane);
+		}
+			
 		verComent = new JLabel("Comentarios del Producto");
 		intComent.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 30));
 		p2.add(verComent);
@@ -91,8 +104,12 @@ public class ComentariosGUI extends JFrame{
 			//añadir comentarios a la BD
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				
+				//no tengo que crear una nueva lista, coger la de la BD y añadirlo a esa
+				coment = new ArrayList<String>();
+				String c = comentario.getText();
+				coment.add(c);
+				producto.setComentarios(coment);	
+				System.out.println(coment);
 			}
 			
 		});

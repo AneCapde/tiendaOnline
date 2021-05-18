@@ -241,10 +241,20 @@ public class PrepararDatos implements IPrepararDatos {
 			tallas.add(Tallas.L);
 			tallas.add(Tallas.XL);
 			
+			//Arraylist de comentarios
+			ArrayList<String> comentarios = new ArrayList<>();
+			comentarios.add("hola");
+			comentarios.add("jfiog");
+			
+			ArrayList<String> comentarios2 = new ArrayList<>();
+			comentarios.add("adios");
+			comentarios.add("hfajf");
 			
 			Producto producto1 = new Producto("Chaqueta Vaquera","Chaqueta vaquera azul",10,45,"img/chaquetaVaquera.png",subcategoria1,marca1,colores,tallas);
+			producto1.setComentarios(comentarios);
 			pm.makePersistent(producto1);
 			Producto producto2 = new Producto("Chaqueta de cuero","Chaqueta de cuero negra",10,35,"img/chaquetaCuero.png",subcategoria1,marca1,colores,tallas);
+			producto2.setComentarios(comentarios2);
 			pm.makePersistent(producto2);
 			Producto producto3 = new Producto("Abrigo de piel","Abrigo de piel marron",10,80,"img/chaquetaPiel.png",subcategoria1,marca1,colores,tallas);
 			pm.makePersistent(producto3);
@@ -262,7 +272,6 @@ public class PrepararDatos implements IPrepararDatos {
 			pm.makePersistent(producto10);
 			Producto producto11 = new Producto("Botas altas","Botas altas negras con cordones",10,75,"img/botasAltas.png",subcategoria10,marca2,colores,tallas);
 			pm.makePersistent(producto11);
-			//meter mas productos de zapatos
 			Producto producto15 = new Producto("Pendientes de aro","Pendienets de aro bañados en plata",10,20,"img/pendientesAro.png",subcategoria12,marca3);
 			pm.makePersistent(producto15);
 			Producto producto16 = new Producto("Bolso","Bolso pequeño marron con tira desplegable",10,90,"img/bolso.png",subcategoria13,marca3);

@@ -1,6 +1,7 @@
 package es.deusto.spq.cliente;
 
 import javax.swing.JFrame;
+
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.Panel;
@@ -27,7 +28,6 @@ import es.deusto.spq.models.Categoria;
 import es.deusto.spq.models.Cliente;
 import es.deusto.spq.models.Colores;
 import es.deusto.spq.models.Marca;
-import es.deusto.spq.models.Pedido;
 import es.deusto.spq.models.Producto;
 import es.deusto.spq.models.SubCategoria;
 import es.deusto.spq.models.Tallas;
@@ -54,7 +54,6 @@ public class TiendaGUI extends JFrame {
 	private JPanel contentPane;
 	private JTextField txtBuscador;
 	private DefaultListModel<Producto> model = new DefaultListModel<Producto>();
-	private DefaultListModel<Pedido> model2 = new DefaultListModel<>();
 	private JList<Producto> listaElementos;
 	private JComboBox<Colores> comboBox_colores;
 	private JComboBox<Tallas> comboBoxTalla;
@@ -90,7 +89,6 @@ public class TiendaGUI extends JFrame {
 	private Producto productoSeleccionado;
 	static Cliente cliente;
 	private List<Producto> productos;
-	private List<Pedido> pedidos = new ArrayList<>(); 
 	private static List<Producto> productos_deseados = new ArrayList<Producto>();
 	public static ArrayList<Producto> productos_cesta = new ArrayList<Producto>();
 	private static JButton botonLogin;
@@ -125,12 +123,6 @@ public class TiendaGUI extends JFrame {
 		for (int i = 0; i < productos.size(); i++) {
 			model.addElement(productos.get(i));
 		}
-		
-//		GenericType<List<Pedido>> genericType_pedidos = new GenericType<List<Pedido>>() {};
-//        pedidos = pedidoTarget.request(MediaType.APPLICATION_JSON).get(genericType_pedidos);
-//		for (int i = 0; i < pedidos.size(); i++) {
-//			model2.addElement(pedidos.get(i));
-//		}
 		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(140, 70, 872, 600);
@@ -367,8 +359,8 @@ public class TiendaGUI extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				esto.setEnabled(false);
-		    	updateUserList(appTarget);
-		    	ComentariosGUI comentarios = new ComentariosGUI(esto, appTarget);
+		    	productoSeleccionado = listaElementos.getSelectedValue();
+		    	ComentariosGUI comentarios = new ComentariosGUI(esto, productoSeleccionado,appTarget);
 		    	comentarios.setVisible(true);
 		    	contentPane.setEnabled(false);
 		    	dispose();
