@@ -35,7 +35,12 @@ public class ListaDeseadosGUITest {
 	ArrayList<Producto> productos = new ArrayList<Producto>();
 
 	Producto p1, p2;
+	
+	@Mock
 	Cliente cliente;
+	
+	@Mock 
+	private Cliente clienteMock = Mockito.mock(Cliente.class);
 
 	/**
 	 * Este método se ejecuta antes de que se ejecute cualquier método de prueba JUnit: se anota con la anotación Before.
@@ -46,32 +51,16 @@ public class ListaDeseadosGUITest {
 		p1 = new Producto("producto1", "producto1", 1, 1, "producto1", 
 		new SubCategoria("Subcategoria1", "Subcategoria1", new Categoria("categoria1", "categoria1")), new Marca("marca1", "marca1"));
 		productos.add(p1);
+//		Mockito.when(clienteMock.getProductosDeseados()).thenReturn(productos);
 		
-		try(MockedStatic<TiendaGUI> utilities = Mockito.mockStatic(TiendaGUI.class)){
-			utilities.when(TiendaGUI::getCliente).thenReturn(cliente);
-//			utilities.when(TiendaGUI::getCliente::getProductosDeseados.theReturn(productos));
-		}
-
+//		try(MockedStatic<TiendaGUI> utilities = Mockito.mockStatic(TiendaGUI.class)){
+//			utilities.when(TiendaGUI::getCliente).thenReturn(clienteMock);
+//			Cliente cliente2 = TiendaGUI.getCliente();
+//		}
+		
+//		Mockito.when(clienteMock.getProductosDeseados()).thenReturn(productos);
 		listaDeseadosGUI = new ListaDeseadosGUI(tiendaGUI, web);
 		listaDeseadosGUI.setProductosDeseados(productos);
-	}
-	
-	@Ignore
-	@Test
-	public void testInicio() {
-		listaDeseadosGUI.Inicio(web);
-		listaDeseadosGUI.updateClient(web);
-	}
-
-	@Ignore
-	@Test
-	public void testUpdateClient() {
-		ListaDeseadosGUI cGui = Mockito.mock(ListaDeseadosGUI.class);
-//		try(MockedStatic<TiendaGUI> utilities = Mockito.mockStatic(TiendaGUI.class)){
-//			utilities.when(TiendaGUI::getCliente).thenReturn(cliente);
-//
-//		}
-		cGui.updateClient(web);
 	}
 	
 	/**
@@ -102,28 +91,6 @@ public class ListaDeseadosGUITest {
 		assertEquals(productos, listaDeseadosGUI.anyadir());
 	}
 	
-	@Ignore
-	@Test
-	public void testSetCliente(){
-		ListaDeseadosGUI.anyadirProductosDeseados();
-		assertEquals(cliente, ListaDeseadosGUI.setCliente(cliente));
-	}
-	
-	@Ignore
-	@Test
-	public void testAnyadirProductosDeseados() {
-		ListaDeseadosGUI.anyadirProductosDeseados();
-		ArrayList<Producto> productos1 = new ArrayList<>();
-		productos1.add(p1);
-		listaDeseadosGUI.setProductosDeseados(productos1);
-		ArrayList<Producto> res = ListaDeseadosGUI.getProductosDeseados();
-		for(Producto p : res) {
-			ListaDeseadosGUI.getProductosDeseados().add(p);
-		}
-		
-		assertEquals(productos1, ListaDeseadosGUI.anyadirProductosDeseados());
-	}
-	
 	/**
 	 * Metodo que valida que el metodo GetProductosDeseados de la clase Lista Deseados GUI funcione correctamente
 	 */
@@ -150,5 +117,51 @@ public class ListaDeseadosGUITest {
 	@Test 
 	public void testImagenes() {
 		listaDeseadosGUI.imagenes(p1);
+	}
+	
+	@Ignore
+	@Test
+	public void testInicio() {
+		listaDeseadosGUI.Inicio(web);
+		listaDeseadosGUI.updateClient(web);
+	}
+
+	@Ignore
+	@Test
+	public void testUpdateClient() {
+		ListaDeseadosGUI cGui = Mockito.mock(ListaDeseadosGUI.class);
+//		try(MockedStatic<TiendaGUI> utilities = Mockito.mockStatic(TiendaGUI.class)){
+//			utilities.when(TiendaGUI::getCliente).thenReturn(cliente);
+//
+//		}
+		cGui.updateClient(web);
+	}
+	
+	@Ignore
+	@Test
+	public void testSetCliente(){
+		ListaDeseadosGUI.anyadirProductosDeseados();
+		assertEquals(cliente, ListaDeseadosGUI.setCliente(cliente));
+	}
+	
+	@Ignore
+	@Test
+	public void testAnyadirProductosDeseados() {
+		Cliente cliente2;
+		ListaDeseadosGUI.anyadirProductosDeseados();
+		try(MockedStatic<TiendaGUI> utilities = Mockito.mockStatic(TiendaGUI.class)){
+			utilities.when(TiendaGUI::getCliente).thenReturn(clienteMock);
+			cliente2 = TiendaGUI.getCliente();
+		}
+		cliente2.getProductosDeseados();
+		ArrayList<Producto> productos1 = new ArrayList<>();
+		productos1.add(p1);
+		listaDeseadosGUI.setProductosDeseados(productos1);
+		ArrayList<Producto> res = ListaDeseadosGUI.getProductosDeseados();
+		for(Producto p : res) {
+			ListaDeseadosGUI.getProductosDeseados().add(p);
+		}
+		
+		assertEquals(productos1, ListaDeseadosGUI.anyadirProductosDeseados());
 	}
 }
