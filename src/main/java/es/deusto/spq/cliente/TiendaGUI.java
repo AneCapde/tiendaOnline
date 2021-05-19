@@ -157,21 +157,6 @@ public class TiendaGUI extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				botonHistorial();
-//				try {
-//					if (!TiendaGUI.getCliente().equals(null)) {
-//						esto.setEnabled(false);
-//						updateUserList(appTarget);
-//						HistorialGUI historial= new HistorialGUI(esto, pedidos, appTarget);
-//						historial.setVisible(true);
-//						contentPane.setEnabled(false);
-//						dispose();
-//					}else {
-//						botonHistorial.setEnabled(false);
-//					}
-//				}
-//				catch(NullPointerException nl) {
-//					JOptionPane.showMessageDialog(null, "Ningun Usuario ha Iniciado Sesion", "Validar Credenciales", JOptionPane.INFORMATION_MESSAGE);
-//				}
 			}			
 		});
 		
@@ -396,36 +381,7 @@ public class TiendaGUI extends JFrame {
 		btnDeseado.setVisible(false);
 		btnDeseado.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0){
-				try{
-				if(productoSeleccionado != null) {
-					btnDeseado.setVisible(true);
-					boolean incluido = false;
-					Producto producto = null;
-					for (Producto p : productos_deseados){
-						if (p.getNombre().equals(productoSeleccionado.getNombre())){
-							incluido = true;
-							producto = p;
-							ImageIcon icono_1 = new ImageIcon(getClass().getResource("/img/corazon-blanco.png"));
-							ImageIcon icono_2 = new ImageIcon(icono_1.getImage().getScaledInstance(btnDeseado.getWidth(), btnDeseado.getHeight(),Image.SCALE_DEFAULT));
-							btnDeseado.setIcon(icono_2);
-							btnDeseado.updateUI();
-						}
-					}
-					productos_deseados.remove(producto);
-					if (!incluido){
-						productos_deseados.add(productoSeleccionado);
-						ImageIcon icono_1 = new ImageIcon(getClass().getResource("/img/corazon-rojo.png"));
-						ImageIcon icono_2 = new ImageIcon(icono_1.getImage().getScaledInstance(btnDeseado.getWidth(), btnDeseado.getHeight(),Image.SCALE_DEFAULT));
-						btnDeseado.setIcon(icono_2);
-						btnDeseado.updateUI();
-					}
-
-				}
-				}catch(NullPointerException nl4){
-					return;
-				}
-
-
+				deseados();
 			}
 		});
 		
@@ -555,8 +511,7 @@ public class TiendaGUI extends JFrame {
 				subCatTemp = TiendaAcciones.getInstance().buscar(txtBuscador.getText(), categoriaSeleccionada, subCategoriaSeleccionada, marcaSeleccionada, colorSelecionado, tallaSeleccionada, productos);
 				for (int i = 0; i < subCatTemp.size(); i++) {
 					model.addElement(subCatTemp.get(i));
-				}
-				
+				}	
 			}
 		});
 
@@ -568,9 +523,7 @@ public class TiendaGUI extends JFrame {
 		botonListaDeseados.setEnabled(false);
 		botonListaDeseados.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				botonListaDeseados();
-				
-				
+				botonListaDeseados();	
 			}
 		});
 		
@@ -642,56 +595,6 @@ public class TiendaGUI extends JFrame {
 		botonAnyadir.setVisible(true);
     }
     
-//    public void buscar() {
-//
-//    	textoBuscador = txtBuscador.getText();
-//    	categoriaSeleccionada = (Categoria) comboBox_Categoria.getSelectedItem();
-//    	subCategoriaSeleccionada = (SubCategoria) comboBox_Subcategoria.getSelectedItem();
-//    	marcaSeleccionada = (Marca) comboBoxMarca.getSelectedItem();
-//    	colorSelecionado = (Colores) comboBox_colores.getSelectedItem();
-//    	tallaSeleccionada = (Tallas) comboBoxTalla.getSelectedItem();
-//
-//    	model.removeAllElements();
-//    	System.out.println(productos);
-//    	for (int i = 0; i < productos.size(); i++) {
-//    		System.out.println(productos.get(i).getMarca() + "==" + marcaSeleccionada);
-//    		if (productos.get(i).getNombre().toLowerCase().indexOf(textoBuscador.toLowerCase()) == 0) {
-//
-//    			System.out.println(productos.get(i).getSubcategoria().getCategoria() + " =? " + categoriaSeleccionada + (productos.get(i).getSubcategoria().getCategoria() == categoriaSeleccionada));
-//    			System.out.println(productos.get(i).getSubcategoria() + " =? " + subCategoriaSeleccionada + (productos.get(i).getSubcategoria() == subCategoriaSeleccionada));
-//    			System.out.println(productos.get(i).getMarca() + " =? " + marcaSeleccionada + (productos.get(i).getMarca() == marcaSeleccionada));
-//    			System.out.println();
-//
-//    			if 		(
-//    					(categoriaSeleccionada == null || productos.get(i).getSubcategoria().getCategoria().getNombre().equals(categoriaSeleccionada.getNombre())) 
-//    					&& (subCategoriaSeleccionada == null || productos.get(i).getSubcategoria().getNombre().equals(subCategoriaSeleccionada.getNombre()))
-//    					&& (marcaSeleccionada == null || productos.get(i).getMarca().getNombre().equals(marcaSeleccionada.getNombre()))
-//    					//&& ((colorSelecionado == null || productos.get(i).getTallas_colores().containsKey(colorSelecionado))  &&  (tallaSeleccionada == null || productos.get(i).getTallas_colores().containsValue(tallaSeleccionada)))
-//    					)
-//
-//    			{
-//
-//    				model.addElement(productos.get(i));
-//    			}
-//    		}
-//
-//    	}
-//
-//    }
-    
-//    public void rellenarSubcat() {
-//    	comboBox_Subcategoria.removeAllItems();
-//    	comboBox_Subcategoria.addItem(null);		    	
-//    	categoriaSeleccionada = (Categoria) comboBox_Categoria.getSelectedItem();
-//    	for (int i = 0; i < subCategorias.size(); i++) {
-//    		if (categoriaSeleccionada != null) {			
-//    			if (categoriaSeleccionada.getNombre().equals(subCategorias.get(i).getCategoria().getNombre())) {
-//    				comboBox_Subcategoria.addItem(subCategorias.get(i));
-//    			}
-//    		}
-//    	}
-//    }
-    
     public void botonListaDeseados() {
     	System.out.println(cliente);
     	esto.setEnabled(false);
@@ -707,7 +610,6 @@ public class TiendaGUI extends JFrame {
 
     	esto.setEnabled(false);
     	updateUserList(appTarget);
-    	//HistorialGUI historial= new HistorialGUI(esto, pedidos, appTarget);
     	HistorialGUI historial= new HistorialGUI(esto, appTarget);
     	historial.setVisible(true);
     	contentPane.setEnabled(false);
@@ -739,5 +641,38 @@ public class TiendaGUI extends JFrame {
 	}
 	public JComboBox<String> getComboBox(){
 		return combo;
+	}
+	
+	public void deseados() {
+		try {
+			if (productoSeleccionado != null) {
+				btnDeseado.setVisible(true);
+				boolean incluido = false;
+				Producto producto = null;
+				for (Producto p : productos_deseados) {
+					if (p.getNombre().equals(productoSeleccionado.getNombre())) {
+						incluido = true;
+						producto = p;
+						ImageIcon icono_1 = new ImageIcon(getClass().getResource("/img/corazon-blanco.png"));
+						ImageIcon icono_2 = new ImageIcon(icono_1.getImage().getScaledInstance(btnDeseado.getWidth(),
+								btnDeseado.getHeight(), Image.SCALE_DEFAULT));
+						btnDeseado.setIcon(icono_2);
+						btnDeseado.updateUI();
+					}
+				}
+				productos_deseados.remove(producto);
+				if (!incluido) {
+					productos_deseados.add(productoSeleccionado);
+					ImageIcon icono_1 = new ImageIcon(getClass().getResource("/img/corazon-rojo.png"));
+					ImageIcon icono_2 = new ImageIcon(icono_1.getImage().getScaledInstance(btnDeseado.getWidth(),
+							btnDeseado.getHeight(), Image.SCALE_DEFAULT));
+					btnDeseado.setIcon(icono_2);
+					btnDeseado.updateUI();
+				}
+
+			}
+		} catch (NullPointerException nl4) {
+			return;
+		}
 	}
 }
