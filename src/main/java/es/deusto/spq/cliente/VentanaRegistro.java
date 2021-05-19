@@ -19,6 +19,7 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 
 import es.deusto.spq.models.Cliente;
+import es.deusto.spq.util.Idiomas;
 
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
@@ -315,13 +316,13 @@ public class VentanaRegistro extends JFrame {
 		panel.setBounds(10, 11, 574, 54);
 		getContentPane().add(panel);
 		
-		JLabel registro = new JLabel("Escribe tus datos de Registro");
+		JLabel registro = new JLabel(Idiomas.seleccionarPalabra("datosregistro"));
 		registro.setForeground(Color.BLUE);
 		registro.setFont(new Font("Times New Roman", Font.BOLD, 36));
 		panel.add(registro);
 
 
-		JLabel lblNombre = new JLabel("Nombre");
+		JLabel lblNombre = new JLabel(Idiomas.seleccionarPalabra("nombre"));
 		lblNombre.setBounds(10, 153, 61, 16);
 		getContentPane().add(lblNombre);
 		
@@ -330,7 +331,7 @@ public class VentanaRegistro extends JFrame {
 		getContentPane().add(nombre);
 		nombre.setColumns(10);
 		
-		JLabel lblApellidos = new JLabel("Apellidos");
+		JLabel lblApellidos = new JLabel(Idiomas.seleccionarPalabra("apellido"));
 		lblApellidos.setBounds(266, 153, 61, 16);
 		getContentPane().add(lblApellidos);
 		
@@ -339,7 +340,7 @@ public class VentanaRegistro extends JFrame {
 		apellidos.setBounds(337, 151, 223, 23);
 		getContentPane().add(apellidos);
 
-		JLabel lblContrasea = new JLabel("Contraseña");
+		JLabel lblContrasea = new JLabel(Idiomas.seleccionarPalabra("contrasenya"));
 		lblContrasea.setBounds(10, 116, 86, 16);
 		getContentPane().add(lblContrasea);
 		
@@ -354,7 +355,7 @@ public class VentanaRegistro extends JFrame {
 			}
 		});
 		
-		JLabel lbldni= new JLabel("DNI");
+		JLabel lbldni= new JLabel(Idiomas.seleccionarPalabra("dni"));
 		lbldni.setBounds(10, 195, 61, 16);
 		getContentPane().add(lbldni);
 		
@@ -363,7 +364,7 @@ public class VentanaRegistro extends JFrame {
 		dni.setBounds(93, 191, 106, 23);
 		getContentPane().add(dni);
 		
-		JLabel lbltelefono = new JLabel("Telefono");
+		JLabel lbltelefono = new JLabel(Idiomas.seleccionarPalabra("telefono"));
 		lbltelefono.setBounds(266, 198, 61, 16);
 		getContentPane().add(lbltelefono);
 		
@@ -445,7 +446,7 @@ public class VentanaRegistro extends JFrame {
 		bg.add(rdbtnNoBinario);
 
 		
-		JButton btnAceptar = new JButton("Aceptar");
+		JButton btnAceptar = new JButton("OK");
 		btnAceptar.setBounds(145, 429, 117, 29);
 		getContentPane().add(btnAceptar);
 		
@@ -460,7 +461,7 @@ public class VentanaRegistro extends JFrame {
 			}
 		});
 
-		JButton btnCancelar = new JButton("Cancelar");
+		JButton btnCancelar = new JButton(Idiomas.seleccionarPalabra("volverBoton"));
 		btnCancelar.setBounds(337, 429, 117, 29);
 		getContentPane().add(btnCancelar);
 		

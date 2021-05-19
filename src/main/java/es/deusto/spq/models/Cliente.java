@@ -26,6 +26,7 @@ public class Cliente {
 	private int cod_postal;
 	private String provincia;
 	private String localidad;
+	private String idioma;
 
 	@Persistent(defaultFetchGroup = "true")
 	@Join
@@ -58,7 +59,7 @@ public class Cliente {
 		this.cod_postal = cod_postal;
 		this.provincia = provincia;
 		this.localidad = localidad;
-	}	
+	}
 	
 	public String getDNI() {
 		return this.DNI;
@@ -155,6 +156,12 @@ public class Cliente {
 		this.productosDeseados = productosDeseados;
 	}
 
+	public String getIdioma(){
+		return idioma;
+	}
+	public void setIdioma(String idioma){
+		this.idioma = idioma;
+	}
 
 	public String toStringDebug() {
 		return "Cliente [DNI=" + DNI + ", nombre=" + nombre + ", apellidos=" + apellidos + ", email=" + email
