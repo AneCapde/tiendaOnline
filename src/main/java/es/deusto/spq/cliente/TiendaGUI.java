@@ -558,11 +558,20 @@ public class TiendaGUI extends JFrame {
 	
 	}
 	
+	/**
+	 * Método que permite actualizar la lista de deseados de un usuario concreto
+	 * @param appTarget Objeto para la comunicación con el server
+	 */
 	public static void updateUserList(final WebTarget appTarget){
 		TiendaGUI.getCliente().setProductosDeseados((ArrayList<Producto>) productos_deseados);
 		final WebTarget clientesTarget = appTarget.path("/clientes/update");
 		clientesTarget.request(MediaType.APPLICATION_JSON).post(Entity.entity(TiendaGUI.getCliente(), MediaType.APPLICATION_JSON));
 	}
+	
+	/**
+	 * Método que permite actualizar un cliente 
+	 * @param appTarget Objeto para la comunicación con el server
+	 */
 	
 	public static void updateUser(final WebTarget appTarget){
 		final WebTarget clientesTarget = appTarget.path("/clientes").path("/"+TiendaGUI.getCliente().getEmail()).path("/"+ TiendaGUI.getCliente().getPassword());
@@ -570,10 +579,19 @@ public class TiendaGUI extends JFrame {
 		TiendaGUI.setCliente(cliente);
 	}
 	
+	/**
+	 * Método main en el que se inicializa la ventana principal del proyecto
+	 * @param args
+	 */
 	public static void main(String[] args) {
         TiendaGUI tiendaGUI = new TiendaGUI();
 		tiendaGUI.setVisible(true);
     }
+	
+	/**
+	 * Método que permite hacer set de un cliente
+	 * @param cliente Un cliente determinado
+	 */
 	
 	public static void setCliente(Cliente cliente) {
 		TiendaGUI.cliente = cliente;
@@ -584,10 +602,17 @@ public class TiendaGUI extends JFrame {
 		addComent.setEnabled(true);
 	}
 	
+	/**
+	 * Método que permite hacer set de un cliente
+	 * @param cliente Un cliente determinado
+	 */
 	public static void setCliente2(Cliente cliente) {
 		TiendaGUI.cliente = cliente;
 	}
 	
+	/**
+	 * Método que permite cargar la lista de los productos deseados
+	 */
 	private static void cargarLista() {
 		productos_deseados.removeAll(productos_deseados);
 		for (Producto p :TiendaGUI.getCliente().getProductosDeseados()){
@@ -595,16 +620,27 @@ public class TiendaGUI extends JFrame {
 		}
 	}
 	
+	/**
+	 * Método que permite devolver el cliente logeado en la tienda
+	 * @return el cliente que esta logeado
+	 */
 	public static Cliente getCliente() {
 		return TiendaGUI.cliente;
 	}
 
+	/**
+	 * Método en el que se hacen visibles algunos botones
+	 */
     public static void setButtons() {
         btnDeseado.setVisible(true);
 		botonComprar.setVisible(true);
 		botonAnyadir.setVisible(true);
     }
     
+    /**
+     * Método en el que se le da funcionalidad al boton Lista de deseados
+     * y se abre la ventana 
+     */
     public void botonListaDeseados() {
     	System.out.println(cliente);
     	esto.setEnabled(false);
@@ -616,6 +652,10 @@ public class TiendaGUI extends JFrame {
 
     }
     
+    /**
+     * Método en el que se le da funcionalidad al boton historial
+     * y se abre esa ventana
+     */
     public void botonHistorial() {
 
     	esto.setEnabled(false);
@@ -626,6 +666,11 @@ public class TiendaGUI extends JFrame {
     	dispose();
 
     }
+    
+    /**
+     * Método en el que se añaden los botones de la tienda a un arraylist
+     * @return la lista de botones que tiene la tienda
+     */
 	public ArrayList<JButton> getJButtons(){
 		ArrayList<JButton> botones = new ArrayList<>();
 		botones.add(btnCesta);
@@ -639,6 +684,11 @@ public class TiendaGUI extends JFrame {
 		botones.add(btnMasComprados);
 		return botones;
 	}
+	
+	/**
+	 * Método en el que se añaden los labels de la tienda a un arraylist
+	 * @return la lista de labels
+	 */
 	public ArrayList<JLabel> getJLabels(){
 		ArrayList<JLabel> labels = new ArrayList<>();
 		labels.add(lblMarca);
@@ -649,10 +699,19 @@ public class TiendaGUI extends JFrame {
 		labels.add(lblTalla);
 		return labels;
 	}
+	
+	/**
+	 * Método que devuelve un ComboBox
+	 * @return el combo
+	 */
 	public JComboBox<String> getComboBox(){
 		return combo;
 	}
 	
+	/**
+	 * Método que añade a los productos deseados el producto seleccionado
+	 * en la lista si este no esta ya añadido
+	 */
 	public void deseados() {
 		try {
 			if (productoSeleccionado != null) {
