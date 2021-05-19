@@ -123,6 +123,8 @@ public class VentanaPagoVisaTest {
             if (num.equals("4444333322221111") && cvc.equals("232")) {
                 pedidoTarget = appTarget.path("/pedidos");
                 pedidoTarget.request(MediaType.APPLICATION_JSON).post(Entity.entity(pedido, MediaType.APPLICATION_JSON));
+                DBManager.getInstance().deleteObjectFromDB(pedido);
+
             }
         }
         // WebTarget getpedidoTarget = appTarget.path("/pedidos12399345K");
@@ -131,6 +133,7 @@ public class VentanaPagoVisaTest {
        
         // List<Pedido> pedidos = DBManager.getInstance().getPedidos();
         assertEquals(pedido.getCantidad(), 1);
+        DBManager.getInstance().deleteObjectFromDB(pedido);
     }
 
     @Test
@@ -162,5 +165,7 @@ public class VentanaPagoVisaTest {
 
         // System.out.println("testUpdatevisa");
         assertEquals(pass, cvc);
+        DBManager.getInstance().deleteObjectFromDB(pedido);
+
     }
 }

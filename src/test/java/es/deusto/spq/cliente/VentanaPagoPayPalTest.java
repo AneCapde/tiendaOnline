@@ -120,6 +120,8 @@ public class VentanaPagoPayPalTest {
             if (email.equals("usuario@gmail.com") && pass.equals("123r")) {
                 pedidoTarget = appTarget.path("/pedidos");
                 pedidoTarget.request(MediaType.APPLICATION_JSON).post(Entity.entity(pedido, MediaType.APPLICATION_JSON));
+                DBManager.getInstance().deleteObjectFromDB(pedido);
+
             }
         }
         // WebTarget getpedidoTarget = appTarget.path("/pedidos12399345K");
@@ -128,7 +130,7 @@ public class VentanaPagoPayPalTest {
        
         // List<Pedido> pedidos = DBManager.getInstance().getPedidos();
         assertEquals(pedido.getCantidad(), 1);
-        
+
     }
 
     @Test
@@ -159,5 +161,7 @@ public class VentanaPagoPayPalTest {
         }
 
         assertEquals(pass, contr);
+        DBManager.getInstance().deleteObjectFromDB(pedido);
+
     }   
 }

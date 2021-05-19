@@ -82,11 +82,11 @@ public class DBManagerTest {
 		DBManager.getInstance().deleteObjectFromDB(subCategoria);
 
 		DBManager.getInstance().store(cat);
-		assertEquals(cat.toString(), DBManager.getInstance().getCategorias().get(2).toString());
+		assertEquals(cat.toString(), DBManager.getInstance().getCategorias().get(0).toString());
 		DBManager.getInstance().deleteObjectFromDB(cat);
 		
 		DBManager.getInstance().store(ped1);
-		assertEquals(ped1.toString(), DBManager.getInstance().getPedidos().get(0).toString());
+		assertEquals(ped1.toString(), DBManager.getInstance().getPedidos().get(2).toString());
 		assertEquals(ped1.getCantidad(), DBManager.getInstance().getPedido(ped1.getFecha()).getCantidad());
 		DBManager.getInstance().deleteObjectFromDB(ped1);
 		
