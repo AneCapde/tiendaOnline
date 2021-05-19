@@ -115,7 +115,6 @@ public class TiendaOnlineTest {
     }
 
     @Test 
-    @Ignore
     @PerfTest(invocations = 1000, threads = 20)
     @Required(max = 20000, average = 3000)
     public void connectionDevolucion(){
@@ -133,7 +132,6 @@ public class TiendaOnlineTest {
 
     
     @Test 
-    @Ignore
     @PerfTest(invocations = 1000, threads = 20)
     @Required(max = 20000, average = 3000)
     public void connectionPago(){
@@ -145,7 +143,7 @@ public class TiendaOnlineTest {
         credencialesVisa.put("4444222211113333", "123");
         HashMap<String,String> credencialesPaypal = new HashMap<String,String>();
         credencialesPaypal.put("prueba@gmail.com", "12221");
-        Pago pago = new Pago(cliente.getDNI(), credencialesVisa, credencialesPaypal);
+        Pago pago = new Pago("123456789Z", credencialesVisa, credencialesPaypal);
 
         pagoTarget.request(MediaType.APPLICATION_JSON).post(Entity.entity(pago, MediaType.APPLICATION_JSON));
         
