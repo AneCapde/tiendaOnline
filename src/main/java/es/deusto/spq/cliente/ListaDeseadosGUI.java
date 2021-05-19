@@ -200,6 +200,8 @@ public class ListaDeseadosGUI extends JFrame {
 	public static ArrayList<Producto> anyadirProductosDeseados() {
 		productos_deseados.removeAll(productos_deseados);
 		model.removeAllElements();
+		System.out.println("Cliente: " +TiendaGUI.getCliente());
+		System.out.println("Productos Deseados: " + TiendaGUI.getCliente().getProductosDeseados());
 		for (Producto p : TiendaGUI.getCliente().getProductosDeseados()){
 			getProductosDeseados().add(p);
 		}
