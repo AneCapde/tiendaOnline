@@ -11,10 +11,6 @@ import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
 
-import org.datanucleus.store.rdbms.query.ForwardQueryResult;
-
-import com.sun.org.apache.xalan.internal.xsltc.compiler.sym;
-
 import es.deusto.spq.models.Categoria;
 import es.deusto.spq.models.Cliente;
 import es.deusto.spq.models.Marca;
