@@ -44,8 +44,8 @@ public class ListaDeseadosGUI extends JFrame {
 	static Cliente cliente;
 	final WebTarget clientesTarget;
 	
-	/** Ventana donde se encuentran todos los articulos que el cliente ha indicado que son sus favoritos
-	 * 
+	/** 
+	 * Ventana donde se encuentran todos los articulos que el cliente ha indicado que son sus favoritos
 	 * @param ventanaPadre Ventana anterior, a traves de la cual se a llegado a esta
 	 * @param appTarget Objeto para la comunicacion con el server
 	 */
