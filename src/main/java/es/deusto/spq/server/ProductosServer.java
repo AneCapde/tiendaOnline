@@ -47,7 +47,10 @@ public class ProductosServer {
     @Consumes(MediaType.APPLICATION_JSON)
     public void updateProducto(Producto producto) {
     	Producto produc = DBManager.getInstance().getProducto(producto.nombre);
-    	DBManager.getInstance().updateProducto(produc);
+    	produc.setComentarios(producto.getComentarios());
+    		
+    	
+    	DBManager.getInstance().store(produc);
 }
     
     @DELETE

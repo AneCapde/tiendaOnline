@@ -84,30 +84,21 @@ public class ComentariosGUI extends JFrame{
 		contentPane.add(comentario);
 		
 		//nullPointer
-		if(coment != null) {
-			coment = producto.getComentarios();
+		coment = producto.getComentarios();
 		
 		
-			for (int i = 0; i < coment.size(); i++) {
-				model.addElement(coment.get(i)); 
-			}
-		
-			//JList para los comentarios
-			list = new JList<>(model);
-			list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-			list.setBounds(200, 27, 236, 387);
-			JScrollPane scrollPane = new JScrollPane();
-			scrollPane.setViewportView(list);
-			contentPane.add(scrollPane);
+		for (int i = 0; i < coment.size(); i++) {
+			model.addElement(coment.get(i)); 
 		}
 		
-		list = new JList<>(model);
+		//JList para los comentarios
+		list = new JList<>(model);			
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		list.setBounds(500, 90, 236, 387);
+		list.setBounds(200, 27, 236, 387);
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setViewportView(list);
-		contentPane.add(scrollPane);
-			
+		contentPane.add(list);
+		
 		verComent = new JLabel("Comentarios del Producto");
 		verComent.setBounds(500,11,200,29);
 		verComent.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 16));
@@ -125,6 +116,7 @@ public class ComentariosGUI extends JFrame{
 				String c = comentario.getText();
 				coment.add(c);
 				producto.setComentarios(coment);
+				System.out.println(coment);
 				productosTarget.request(MediaType.APPLICATION_JSON).post(Entity.entity(producto, MediaType.APPLICATION_JSON));
 
 			}
