@@ -18,7 +18,13 @@ public class Pago {
 	@Join
     private HashMap<String,String> credencialesPaypal = new HashMap<String,String>();
 
-    public Pago(String DNI, HashMap<String,String> credencialesVisa, HashMap<String,String> credencialesPaypal) {
+    /** 
+	* La clase asocia unas credenciales visa y credenciales paypal con cada cliente registrado
+	* @param DNI DNI del cliente
+	* @param credencialesvisa Credenciales visa del cliente
+	* @param credencialespaypal Credenciales paypal del cliente
+	*/
+	public Pago(String DNI, HashMap<String,String> credencialesVisa, HashMap<String,String> credencialesPaypal) {
         this.DNI = DNI;
         this.credencialesVisa = credencialesVisa;
         this.credencialesPaypal = credencialesPaypal;

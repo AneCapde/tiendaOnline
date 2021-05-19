@@ -160,7 +160,8 @@ public class VentanaPagoPayPal extends JFrame {
 
 
 	
-	/** Método que rellena automáticamente el email de paypal si el usuario tiene una cuenta asociada
+	/** 
+	 * Método que rellena automáticamente el email de paypal si el usuario tiene una cuenta asociada
 	 * @param pedido pedido que el cliente busca comprar
 	 * @param credencialespaypal Credenciales paypal del cliente
 	 */
@@ -177,7 +178,8 @@ public class VentanaPagoPayPal extends JFrame {
 
 
 	
-	/** Método que crea el pedido una vez se ha verificado y completado el pago del mismo
+	/** 
+	 * Método que crea el pedido una vez se ha verificado y completado el pago del mismo
 	 * @param pedido pedido que el cliente busca comprar
 	 * @param credencialespaypal Credenciales paypal del cliente
 	 * @param pedidoTarget WebTarget para poder guardar el pedido en BD
@@ -206,7 +208,8 @@ public class VentanaPagoPayPal extends JFrame {
 	}
 	
 	
-	/** Método que sirve para actualizar la cuenta de paypal asociada al cliente
+	/** 
+	 * Método que sirve para actualizar la cuenta de paypal asociada al cliente
 	 * @param credencialespaypal Credenciales paypal del cliente
 	 * @param credencialesvisa Credenciales visa del cliente
 	 * @param credencialespago Objeto 'Pago' que se actualiza

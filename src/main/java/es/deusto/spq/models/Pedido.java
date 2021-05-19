@@ -22,6 +22,15 @@ public class Pedido {
 	@Join
 	private ArrayList<Producto> productoPedido = new ArrayList<>();
 	
+	/**
+	 * Crea un nuevo Pedido
+	 * @param cliente	Cliente que realzia el pedido
+	 * @param fecha		Fecha en la que se realzia en pedido
+	 * @param estado	Estado actual del pedido
+	 * @param importe	Importe que supone el pedido
+	 * @param cantidad	Cantidad de articulos dentro del pedido
+	 * @param lugar		Lugar en el que se desea recibir el pedido
+	 */
 	public Pedido(Cliente cliente, Date fecha, String estado, int importe, int cantidad, String lugar) {
 		super();
 		this.cliente = cliente;

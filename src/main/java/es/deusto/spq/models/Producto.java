@@ -30,6 +30,16 @@ public class Producto {
 	@Join
 	private ArrayList<String> comentarios;
 	
+	/**
+	 * Crea un nuevo Producto
+	 * @param nombre		Nombre del producto
+	 * @param descripcion	Descripcion del Producto
+	 * @param stock			Stock de el producto en la tienda
+	 * @param precio		Precio del Producto
+	 * @param imagen		Imagen del Producto
+	 * @param subcategoria	Subcategoria del producto
+	 * @param marca			Marca del Producto
+	 */
 	public Producto( String nombre, String descripcion, int stock, int precio, String imagen, SubCategoria subcategoria, Marca marca) {
 		super();
 		this.nombre = nombre;

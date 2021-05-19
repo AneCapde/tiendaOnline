@@ -26,11 +26,26 @@ public class Cliente {
 	private int cod_postal;
 	private String provincia;
 	private String localidad;
+	private String idioma;
 
 	@Persistent(defaultFetchGroup = "true")
 	@Join
 	private ArrayList<Producto> productosDeseados = new ArrayList<>();
 	
+	/**
+	 * Crea un nuevo Cliente
+	 * @param DNI 	DNi del cliente
+	 * @param nombre	Nombre del cliente
+	 * @param apellidos	Apellidos del Cliente
+	 * @param email		Email del Cliente
+	 * @param password	Password del Cliente
+	 * @param telefono	Telefono del Cliente
+	 * @param direccion	Direccion  del Cliente
+	 * @param genero	Genero del Cliente
+	 * @param cod_postal	Codigo postal del Cliente
+	 * @param provincia		Provincia del Cliente
+	 * @param localidad		Localidad del Cliente	
+	 */
 	public Cliente(String DNI, String nombre,String apellidos, String email, String password,
 			int telefono, String direccion, Genero genero, int cod_postal, String provincia, String localidad) {
 		this.DNI = DNI;
@@ -44,7 +59,7 @@ public class Cliente {
 		this.cod_postal = cod_postal;
 		this.provincia = provincia;
 		this.localidad = localidad;
-	}	
+	}
 	
 	public String getDNI() {
 		return this.DNI;
@@ -141,6 +156,12 @@ public class Cliente {
 		this.productosDeseados = productosDeseados;
 	}
 
+	public String getIdioma(){
+		return idioma;
+	}
+	public void setIdioma(String idioma){
+		this.idioma = idioma;
+	}
 
 	public String toStringDebug() {
 		return "Cliente [DNI=" + DNI + ", nombre=" + nombre + ", apellidos=" + apellidos + ", email=" + email

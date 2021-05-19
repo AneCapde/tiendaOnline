@@ -8,6 +8,11 @@ public class Marca {
 	private String nombre;
 	private String descripcion;
 	
+	/**
+	 * Crea una nueva Marca
+	 * @param nombre		Nombre de la marca
+	 * @param descripcion	Descripcion de la Marca
+	 */
 	public Marca(String nombre, String descripcion) {
 		super();
 		this.nombre = nombre;

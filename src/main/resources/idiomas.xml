@@ -26,6 +26,13 @@
         <devolucion>Refund</devolucion>
         <anyadirComentario>Leave your Opinion</anyadirComentario>
         <masComprados>Most bought</masComprados>
+        <nombre>Name</nombre>
+        <apellido>Surname</apellido>
+        <contrasenya>Password</contrasenya>
+        <datosregistro>Write your personal information</datosregistro>
+        <dni>ID</dni>
+        <telefono>Telephone</telefono>
+        <cerrarsesion>Log Out</cerrarsesion>
     </idioma>
     <idioma>
         <nombre1>Español</nombre1>
@@ -53,5 +60,12 @@
         <devolucion>Devolver</devolucion>
         <anyadirComentario>Añadir Comentario</anyadirComentario>
         <masComprados>Más comprados</masComprados>
+        <nombre>Nombre</nombre>
+        <apellido>Apellidos</apellido>
+        <contrasenya>Contraseña</contrasenya>
+        <datosregistro>Escribe tus datos de registro</datosregistro>
+        <dni>DNI</dni>
+        <telefono>Telefono</telefono>
+        <cerrarsesion>Cerrar Sesion</cerrarsesion>
     </idioma>
 </idiomas>

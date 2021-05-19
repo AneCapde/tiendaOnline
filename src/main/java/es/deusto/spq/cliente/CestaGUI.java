@@ -172,8 +172,30 @@ public class CestaGUI extends JFrame{
 		contentPane.add(textField);
 		textField.setColumns(10);
 		
+		JButton btnInicio = new JButton(Idiomas.seleccionarPalabra("volverBoton"));
+		btnInicio.setForeground(Color.BLACK);
+		btnInicio.setBackground(new Color(0, 255, 0));
+		btnInicio.setBounds(469, 11, 109, 29);
+		contentPane.add(btnInicio);
+		btnInicio.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				botonInicio();			
+			}
+		
+		});
+	
 	}
 	
+	/**
+	 * Método que permite volver a la ventana principal TiendaGUI
+	 */
+	private void botonInicio() {
+		setVisible(false);
+		TiendaGUI tienda = new TiendaGUI();
+		tienda.setVisible(true);
+		TiendaGUI.setCliente(TiendaGUI.getCliente());
+		dispose();		
+	}
 	
 	/** 
 	 * Calcula el precio del pedido mediante la suma de la cantidad de cada producto por su precio

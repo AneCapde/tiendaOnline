@@ -171,7 +171,8 @@ public class HistorialGUI extends JFrame{
 	}
 	
 	
-	/** Método que permite devolver un pedido y cambia el estado del mismo a "devuelto"
+	/** 
+	 * Método que permite devolver un pedido y cambia el estado del mismo a "devuelto"
 	 * @param updateTarget 
 	 * @param pedido Pedido a actualizar
 	 * @param ventanaPadre

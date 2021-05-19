@@ -8,7 +8,11 @@ public class Categoria {
 	public String nombre;
 	public String descripcion;
 
-	
+	/**
+	 * Crea una nueva Categoria
+	 * @param nombre Nombre de la categoria
+	 * @param descripcion	Descripcion de la categoria
+	 */
 	public Categoria(String nombre, String descripcion) {
 		super();
 		this.nombre = nombre;
@@ -30,13 +34,13 @@ public class Categoria {
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
+	
 	public String toStringDebug() {
 		return "Categoria [nombre=" + nombre + ", descripcion=" + descripcion + "]";
 	}
+	
 	@Override
 	public String toString() {
 		return nombre;
-	}
-	
-	
+	}	
 }
