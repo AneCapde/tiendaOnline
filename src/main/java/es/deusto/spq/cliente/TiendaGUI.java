@@ -577,7 +577,7 @@ public class TiendaGUI extends JFrame {
 	
 	public static void setCliente(Cliente cliente) {
 		TiendaGUI.cliente = cliente;
-		botonLogin.setText("Log out");
+		botonLogin.setText(Idiomas.seleccionarPalabra("cerrarsesion"));
 		botonLogin.updateUI();
 		botonListaDeseados.setEnabled(true);
 		botonHistorial.setEnabled(true);

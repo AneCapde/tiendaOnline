@@ -44,7 +44,7 @@ public class PrepararDatos implements IPrepararDatos {
 	"subcategoria", "color", "talla", "marca", "caracteristicas", "registrarseBoton",
 	"iniciarsesionBoton", "iniciarsesionPanel", "aceptarBoton", "volverBoton",
 	"eliminarBoton", "anyadircestaBoton", "precio","cantidad", "devolucion", "anyadirComentario",
-	"masComprados", "nombre", "apellido", "contrasenya", "datosregistro", "dni", "telefono"};
+	"masComprados", "nombre", "apellido", "contrasenya", "datosregistro", "dni", "telefono", "cerrarsesion"};
 
 	
 	/** 

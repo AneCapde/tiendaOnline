@@ -32,6 +32,7 @@
         <datosregistro>Write your personal information</datosregistro>
         <dni>ID</dni>
         <telefono>Telephone</telefono>
+        <cerrarsesion>Log Out</cerrarsesion>
     </idioma>
     <idioma>
         <nombre1>Español</nombre1>
@@ -65,5 +66,6 @@
         <datosregistro>Escribe tus datos de registro</datosregistro>
         <dni>DNI</dni>
         <telefono>Telefono</telefono>
+        <cerrarsesion>Cerrar Sesion</cerrarsesion>
     </idioma>
 </idiomas>
