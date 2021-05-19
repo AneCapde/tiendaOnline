@@ -40,6 +40,7 @@ public class DBManager implements IDBManager{
 		return instance;
 	}
 
+    
     @Override
 	public void storeObjectInDB(Object object) {
 		PersistenceManager pm = pmf.getPersistenceManager();
@@ -89,7 +90,11 @@ public class DBManager implements IDBManager{
 	 public void store(Pago pago) {
 	 	DBManager.getInstance().storeObjectInDB(pago);	
 	 }
-
+	 /**
+     * Devuelve todos los clientes almacenados en la base de datos.
+     * 
+     */
+	 
     @Override
 	public ArrayList<Cliente> getClientes() {
 		ArrayList<Cliente> clientes = new ArrayList<>();		
@@ -116,6 +121,9 @@ public class DBManager implements IDBManager{
 		return clientes;		
 	}
 
+    /**
+     * Devuelve todos los pedidos almacenados en la base de datos.
+     */
     @Override
 	public ArrayList<Pedido> getPedidos() {
 		ArrayList<Pedido> pedidos = new ArrayList<>();		
@@ -142,6 +150,10 @@ public class DBManager implements IDBManager{
         }
 		return pedidos;		
 	}
+    
+    /**
+     * Devuelve todos los productos almacenados en la base de datos.
+     */
     @Override
 	public ArrayList<Producto> getProductos() {
 		ArrayList<Producto> productos = new ArrayList<>();		
@@ -166,6 +178,10 @@ public class DBManager implements IDBManager{
         }
 		return productos;		
 	}
+    
+    /**
+     * Devuelve todas las categorias almacenadas en la base de datos.
+     */
     @Override
 	public ArrayList<Categoria> getCategorias() {
 		ArrayList<Categoria> categorias = new ArrayList<>();		
@@ -192,6 +208,10 @@ public class DBManager implements IDBManager{
         }
 		return categorias;		
 	}
+    
+    /**
+     * Devuelve todas las marcas almacenadas en la base de datos.
+     */
     @Override
 	public ArrayList<Marca> getMarcas() {
 		ArrayList<Marca> marcas = new ArrayList<>();		
@@ -218,6 +238,10 @@ public class DBManager implements IDBManager{
         }
 		return marcas;		
 	}
+    
+    /**
+     * Devuelve todas las subcategorias almacenadas en la base de datos.
+     */
     @Override
 	public ArrayList<SubCategoria> getSubcategorias() {
 		ArrayList<SubCategoria> subcategorias = new ArrayList<>();		
@@ -243,7 +267,10 @@ public class DBManager implements IDBManager{
         }
 		return subcategorias;			
 	}
-    
+    /**
+     * Devuelve el cliente con el DNI introducido.
+     * @DNI Dni del cliente que quieres buscar.
+     */
 	@Override
 	public Cliente getCliente(String DNI) {
 		PersistenceManager pm = pmf.getPersistenceManager();
@@ -269,6 +296,10 @@ public class DBManager implements IDBManager{
 		return cliente;
 	}
 	
+	/**
+	 * Devuelve los pedidos hechos en la fecha introducida.
+	 * @fecha fecha en la que quieres buscar los pedidos.
+	 */
 	@Override
 	public Pedido getPedido(Date fecha) {
 		PersistenceManager pm = pmf.getPersistenceManager();
@@ -298,6 +329,11 @@ public class DBManager implements IDBManager{
 		return pedido;
 	}
 
+	
+	/**
+	 * Conseguir los productos con el nombre introducido.
+	 * @nombre Nombre por el que quieres buscar.
+	 */
 	@Override
 	public Producto getProducto(String nombre) {
 		PersistenceManager pm = pmf.getPersistenceManager();
@@ -323,7 +359,12 @@ public class DBManager implements IDBManager{
 		}
 		return producto;
 	}
-
+	
+	/**
+	 * Devuelve un HashMap con el email y la contraseña de PayPal
+	 * @cliente Cliente por el que quieres buscar
+	 */
+	
 	@Override
 	public HashMap<String, String> getPaypal(Cliente cliente) {
 		PersistenceManager pm = pmf.getPersistenceManager();
@@ -352,6 +393,10 @@ public class DBManager implements IDBManager{
 		return paypal;
 	}
 
+	/**
+	 * Devuelve un HashMap con el numero de tarjeta y la contraseña de la visa
+	 * @cliente Cliente por el que quieres buscar
+	 */
 	@Override
 	public HashMap<String, String> getVisa(Cliente cliente) {
 		PersistenceManager pm = pmf.getPersistenceManager();
@@ -380,6 +425,10 @@ public class DBManager implements IDBManager{
 		return visa;
 	}
 
+	/**
+	 * Devuelve el pago hecho por el cliente introducido.
+	 * @cliente Cliente por el que quieres buscar.
+	 */
 	@Override
 	public Pago getPago(Cliente cliente) {
 	PersistenceManager pm = pmf.getPersistenceManager();
@@ -406,6 +455,9 @@ public class DBManager implements IDBManager{
 	return pago;
 	}
 	
+	/**
+	 * Busca los elementos más pedidos y los devuelve en un arraylist.
+	 */
 	@Override
 	public ArrayList<Producto> getMasComprados() {
 		
@@ -448,6 +500,10 @@ public class DBManager implements IDBManager{
 		return productos;	
 	}
     
+	/**
+	 * Actualiza el cliente en la base de datos.
+	 * @cliente Cliente que quieres actualizar con los nuevos datos.
+	 */
     @Override
 	public void updateCliente(Cliente cliente) {
 		PersistenceManager pm = pmf.getPersistenceManager();
@@ -465,7 +521,10 @@ public class DBManager implements IDBManager{
 			pm.close();
 		}
 	}
-    
+    /**
+	 * Actualiza el producto en la base de datos.
+	 * @producto Producto que quieres actualizar con los nuevos datos.
+	 */
     @Override
 	public void updateProducto(Producto producto) {
 		PersistenceManager pm = pmf.getPersistenceManager();
@@ -484,6 +543,10 @@ public class DBManager implements IDBManager{
 		}
 	}
     
+    /**
+	 * Actualiza el pedido en la base de datos.
+	 * @pedido Pedido que quieres actualizar con los nuevos datos.
+	 */
     @Override
 	public void updatePedido(Pedido pedido) {
 		PersistenceManager pm = pmf.getPersistenceManager();
@@ -501,7 +564,11 @@ public class DBManager implements IDBManager{
 			pm.close();
 		}
 	}
-
+    
+    /**
+	 * Actualiza el pago en la base de datos.
+	 * @pago Pago que quieres actualizar con los nuevos datos.
+	 */
 	 @Override
 	 public void updatePago(Pago pago) {
 	 	PersistenceManager pm = pmf.getPersistenceManager();
@@ -519,7 +586,11 @@ public class DBManager implements IDBManager{
 	 		pm.close();
 	 	}
 	 }
-    
+	 
+    /**
+	 * Borra un cliente en la base de datos.
+	 * @cliente Cliente que quieres borrar.
+	 */
     @Override
 	public void deleteCliente(Cliente cliente) {
     	System.out.println("- Cleaning the Cliente from the DB...");
