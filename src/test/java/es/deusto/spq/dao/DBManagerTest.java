@@ -2,9 +2,11 @@ package es.deusto.spq.dao;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
+import org.apache.log4j.Logger;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.junit.After;
 import org.junit.Before;
@@ -21,6 +23,7 @@ import es.deusto.spq.models.Pedido;
 import es.deusto.spq.models.Producto;
 import es.deusto.spq.models.SubCategoria;
 import es.deusto.spq.models.Cliente.Genero;
+import es.deusto.spq.server.PedidosServer;
 import es.deusto.spq.util.Idiomas;
 
 public class DBManagerTest {
@@ -31,6 +34,7 @@ public class DBManagerTest {
     public void setUp() {
      // start the server
      server = Main.startServer();
+     
     }
     @After
     public void tearDown() throws Exception {
@@ -121,4 +125,72 @@ public class DBManagerTest {
 		DBManager.getInstance().updatePago(pago1);
 		DBManager.getInstance().deleteObjectFromDB(pago1);
 	}
+	
+	public void testMasComprado() {
+		Producto p1 = new Producto("producto1", "producto1", 1, 1, "producto1", null, null);
+		Producto p2 = new Producto("producto2", "producto2", 1, 1, "producto2", null, null);
+		Producto p3 = new Producto("producto3", "producto3", 1, 1, "producto3", null, null);
+		Producto p4 = new Producto("producto4", "producto4", 1, 1, "producto4", null, null);
+		Cliente cliente = new Cliente("12132", "usuario", "usuario", "usuario", "usuario", 1213124, "usuario",
+				Genero.MUJER, 48920, "usuario", "usuario");
+		
+		Pedido ped1 = new Pedido(cliente, new Date(1619342158), "estado",22 ,2, "barcelona");
+		Pedido ped2 = new Pedido(cliente, new Date(1619342158), "estado",22 ,2, "barcelona");
+		Pedido ped3 = new Pedido(cliente, new Date(1619342158), "estado",22 ,2, "barcelona");
+		Pedido ped4 = new Pedido(cliente, new Date(1619342158), "estado",22 ,2, "barcelona");
+		Pedido ped5 = new Pedido(cliente, new Date(1619342158), "estado",22 ,2, "barcelona");
+		Pedido ped6 = new Pedido(cliente, new Date(1619342158), "estado",22 ,2, "barcelona");
+		ArrayList<Producto> list = new ArrayList<Producto>();
+		
+		DBManager.getInstance().store(p1);
+		DBManager.getInstance().store(p2);
+		DBManager.getInstance().store(p3);
+		DBManager.getInstance().store(p4);
+		
+		list.clear();
+		list.add(p2);
+		ped1.setProducto(list);
+		DBManager.getInstance().store(ped1);
+		
+		list.clear();
+		list.add(p3);
+		ped2.setProducto(list);
+		ped3.setProducto(list);
+		DBManager.getInstance().store(ped2);
+		DBManager.getInstance().store(ped3);
+		
+		list.clear();
+		list.add(p4);
+		ped4.setProducto(list);
+		ped5.setProducto(list);
+		ped6.setProducto(list);
+		DBManager.getInstance().store(ped4);
+		DBManager.getInstance().store(ped5);
+		DBManager.getInstance().store(ped6);
+		
+		ArrayList<Producto> res = DBManager.getInstance().getMasComprados();
+		ArrayList<Producto> exp = new ArrayList<Producto>();
+		
+		exp.add(p4);
+		exp.add(p3);
+		exp.add(p2);
+		exp.add(p1);
+		
+		
+		assertEquals(exp, res);
+		DBManager.getInstance().deleteObjectFromDB(p1);
+		DBManager.getInstance().deleteObjectFromDB(p2);
+		DBManager.getInstance().deleteObjectFromDB(p3);
+		DBManager.getInstance().deleteObjectFromDB(p4);
+		DBManager.getInstance().deleteObjectFromDB(ped1);
+		DBManager.getInstance().deleteObjectFromDB(ped2);
+		DBManager.getInstance().deleteObjectFromDB(ped3);
+		DBManager.getInstance().deleteObjectFromDB(ped4);
+		DBManager.getInstance().deleteObjectFromDB(ped5);
+		DBManager.getInstance().deleteObjectFromDB(ped6);
+
+		
+	}
+	
+	
 }
