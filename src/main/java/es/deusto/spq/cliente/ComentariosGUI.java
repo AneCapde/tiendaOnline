@@ -23,7 +23,9 @@ import javax.swing.ListSelectionModel;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.border.EmptyBorder;
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.MediaType;
 
 import es.deusto.spq.models.Producto;
 
@@ -44,7 +46,8 @@ public class ComentariosGUI extends JFrame{
 	private JTextField comentario;
 	private DefaultListModel<String> model = new DefaultListModel<>();
 	private JList<String> list;
-	private ArrayList<String> coment;
+	private ArrayList<String> coment = new ArrayList<>();
+	final WebTarget productosTarget;
 	
 	/**
 	 * Ventana en la que se pueden añadir comentarios de un producto y tambien se pueden 
@@ -55,6 +58,8 @@ public class ComentariosGUI extends JFrame{
 	 */
 	
 	public ComentariosGUI(final JFrame ventanaPadre, Producto producto, WebTarget appTarget) {
+		
+		productosTarget = appTarget.path("/productos/update");
 		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 872, 560);
@@ -78,30 +83,22 @@ public class ComentariosGUI extends JFrame{
 		comentario.setBounds(65,150,300,250);
 		contentPane.add(comentario);
 		
-		//si no pongo esto nullPointer (forma 1)
-//		if(coment != null) {
-//			coment = producto.getComentarios();
-//		
-//		
-//			for (int i = 0; i < coment.size(); i++) {
-//				model.addElement(coment.get(i)); 
-//			}
-			
+		//nullPointer
+		if(coment != null) {
+			coment = producto.getComentarios();
+		
+		
+			for (int i = 0; i < coment.size(); i++) {
+				model.addElement(coment.get(i)); 
+			}
+		
 			//JList para los comentarios
-//			list = new JList<>(model);
-//			list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-//			list.setBounds(200, 27, 236, 387);
-//			JScrollPane scrollPane = new JScrollPane();
-//			scrollPane.setViewportView(list);
-//			contentPane.add(scrollPane);
-//		}
-		
-		coment = new ArrayList<>();
-		coment.add("prueba");
-		coment.add("prueba2");
-		
-		for (int i = 0; i < coment.size(); i++) {
-			model.addElement(coment.get(i)); 
+			list = new JList<>(model);
+			list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+			list.setBounds(200, 27, 236, 387);
+			JScrollPane scrollPane = new JScrollPane();
+			scrollPane.setViewportView(list);
+			contentPane.add(scrollPane);
 		}
 		
 		list = new JList<>(model);
@@ -112,7 +109,6 @@ public class ComentariosGUI extends JFrame{
 		contentPane.add(scrollPane);
 			
 		verComent = new JLabel("Comentarios del Producto");
-		//verComent.setBounds(200, 100, 236, 387);
 		verComent.setBounds(500,11,200,29);
 		verComent.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 16));
 		contentPane.add(verComent);
@@ -126,11 +122,11 @@ public class ComentariosGUI extends JFrame{
 			//añadir comentarios a la BD
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				coment = new ArrayList<String>();
 				String c = comentario.getText();
 				coment.add(c);
-				producto.setComentarios(coment);	
-				System.out.println(coment);
+				producto.setComentarios(coment);
+				productosTarget.request(MediaType.APPLICATION_JSON).post(Entity.entity(producto, MediaType.APPLICATION_JSON));
+
 			}
 			
 		});
