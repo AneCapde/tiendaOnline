@@ -268,9 +268,9 @@ public class VentanaLugarEntregaGUI extends JFrame {
 //				System.out.println("Productos que se añaden al pedido: " + productos);
 				pedido.setProducto(productos);
 //					System.out.println("entra7");
-				if (CestaGUI.productos2 != null && CestaGUI.model != null && CestaGUI.list != null) {
+				if (productos != null && CestaGUI.model != null && CestaGUI.list != null) {
 					System.out.println("entra7");
-					CestaGUI.productos2.remove(CestaGUI.productos2);
+					productos.remove(productos);
 					CestaGUI.model.removeAllElements();
 					CestaGUI.list.setModel(CestaGUI.model);
 				}
@@ -289,8 +289,8 @@ public class VentanaLugarEntregaGUI extends JFrame {
 //				System.out.println("Lista de productos dentro del pedido: " + productos);
 //				pedidoTarget.request(MediaType.APPLICATION_JSON)
 //						.post(Entity.entity(pedido, MediaType.APPLICATION_JSON));
-				if (CestaGUI.productos2 != null && CestaGUI.model != null && CestaGUI.list != null) {
-					CestaGUI.productos2.remove(CestaGUI.productos2);
+				if (productos != null && CestaGUI.model != null && CestaGUI.list != null) {
+					productos.remove(productos);
 					CestaGUI.model.removeAllElements();
 					CestaGUI.list.setModel(CestaGUI.model);
 				}

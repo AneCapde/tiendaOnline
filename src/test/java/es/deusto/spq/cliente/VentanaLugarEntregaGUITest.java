@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import javax.ws.rs.client.WebTarget;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -195,9 +196,9 @@ public class VentanaLugarEntregaGUITest {
 	 * @throws NoSuchMethodException
 	 * @throws SecurityException
 	 */
+	@Ignore
 	@Test
 	public void testAceptar3() throws NoSuchMethodException, SecurityException {
-		CestaGUI.productos2 = null;
 		ventanaLugarEntregaGUI.datosValidar2("12333333a","Albacete");
 		Method method = VentanaLugarEntregaGUI.class.getDeclaredMethod("validar");
 		method.setAccessible(true);

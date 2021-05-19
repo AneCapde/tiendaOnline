@@ -11,7 +11,6 @@ import javax.ws.rs.client.WebTarget;
 
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import org.mockito.Mockito;
@@ -49,7 +48,6 @@ public class CestaGUITest {
 		assertEquals(productos1, cestaGUI.getProductos());
 	}
 	
-	@Ignore
 	@Test
 	public void testGetProductosCantidad(){
 		HashMap<Producto,Integer> productosCantidad = new HashMap<>();
@@ -57,7 +55,6 @@ public class CestaGUITest {
 		assertEquals(productosCantidad, cestaGUI.getProductosCantidad());
 	}
 	
-	@Ignore
 	@Test
     public void testCalcularPrecio(){
 		HashMap<Producto,Integer> productosCantidad = new HashMap<>();

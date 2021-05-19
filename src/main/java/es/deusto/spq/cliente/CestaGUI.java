@@ -36,8 +36,8 @@ public class CestaGUI extends JFrame{
 	private JPanel contentPane;
 	private JTextField textField;
 	public static DefaultListModel<Producto> model = new DefaultListModel<>();
-	public static ArrayList<Producto> productos2 = new ArrayList<>();
-	static HashMap<Producto, Integer> productos_cantidad = new HashMap<Producto, Integer>();
+	public ArrayList<Producto> productos2 = new ArrayList<>();
+	public HashMap<Producto, Integer> productos_cantidad = new HashMap<Producto, Integer>();
 	final WebTarget pedidoTarget;
 	public static JList<Producto> list;
 
@@ -192,7 +192,7 @@ public class CestaGUI extends JFrame{
 	 * @return List<Producto> lista de productos que el usuario a añadido a la cesta
 	 */
 	public List<Producto> getProductos(){
-        return CestaGUI.productos2;
+        return productos2;
 	}
 	
 	
@@ -200,6 +200,6 @@ public class CestaGUI extends JFrame{
 	 * @return HashMap<Producto, Integer> cada producto dispone de un int con la cantidad que se desea pedir
 	 */
 	public HashMap<Producto, Integer> getProductosCantidad() {
-		return CestaGUI.productos_cantidad;
+		return productos_cantidad;
 	}
 }
