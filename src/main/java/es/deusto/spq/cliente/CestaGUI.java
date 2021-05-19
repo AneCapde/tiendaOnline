@@ -194,7 +194,12 @@ public class CestaGUI extends JFrame{
 		TiendaGUI tienda = new TiendaGUI();
 		tienda.setVisible(true);
 		TiendaGUI.setCliente(TiendaGUI.getCliente());
-		dispose();		
+		dispose();	
+		productos2.clear();
+		productos_cantidad.clear();
+		list.removeAll();
+		model.clear();
+		TiendaGUI.productos_cesta.clear();
 	}
 	
 	/** 

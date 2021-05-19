@@ -584,6 +584,10 @@ public class TiendaGUI extends JFrame {
 		addComent.setEnabled(true);
 	}
 	
+	public static void setCliente2(Cliente cliente) {
+		TiendaGUI.cliente = cliente;
+	}
+	
 	private static void cargarLista() {
 		productos_deseados.removeAll(productos_deseados);
 		for (Producto p :TiendaGUI.getCliente().getProductosDeseados()){

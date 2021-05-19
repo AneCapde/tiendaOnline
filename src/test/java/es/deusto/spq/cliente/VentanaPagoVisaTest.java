@@ -3,22 +3,34 @@ package es.deusto.spq.cliente;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.verify;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map.Entry;
 
 import javax.swing.JTextField;
 import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.core.GenericType;
+import javax.ws.rs.core.MediaType;
 
+import org.glassfish.grizzly.http.server.HttpServer;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mockito;
 
+import es.deusto.spq.Main;
+import es.deusto.spq.dao.DBManager;
 import es.deusto.spq.models.Cliente;
 import es.deusto.spq.models.Pago;
 import es.deusto.spq.models.Pedido;
 import es.deusto.spq.models.Cliente.Genero;
+import es.deusto.spq.util.PrepararDatos;
 
 public class VentanaPagoVisaTest {
 
@@ -27,38 +39,68 @@ public class VentanaPagoVisaTest {
 	TiendaGUI tiendaGUI = Mockito.mock(TiendaGUI.class);
     Pago pago;
     Pedido pedido;
-    JTextField numTarjetaField;
-    HashMap<String,String> credencialesVisa;
-    HashMap<String,String> credencialesPaypal;
-    Cliente cliente;
+    JTextField numTarjetaField = new JTextField();
+    HashMap<String,String> credencialesVisa = new HashMap<String,String>();
+    HashMap<String,String> credencialesPaypal = new HashMap<String,String>();
+    Cliente cliente = new Cliente("null","null","null","null","null",0,"null",Genero.HOMBRE,0,"null","null");
     HashMap<String,String> cv2;
 
-
+    WebTarget paypalTarget;
+    WebTarget visaTarget;
+    WebTarget pagoTarget;
+    WebTarget pedidoTarget;
+    WebTarget getpedidoTarget;
+    WebTarget updateTarget;    
+    Pago credpago = new Pago("", credencialesVisa, credencialesPaypal);
+    HashMap<String,String> credvisa = new HashMap<String,String>();
+    HashMap<String,String> credpaypal = new HashMap<String,String>();
+	private HttpServer server;
+    WebTarget appTarget;
+    
     @Before
     public void inicializar(){
-        
-        cliente = new Cliente("12399345K", "usuario", "apellido apellido ", "usuario@gmail.com", "12345r", 655786943,
-        "direccion", Genero.MUJER, 45678, "provincia", "localidad");        
+
+        server = Main.startServer();
+        Client client = ClientBuilder.newClient();
+        appTarget = client.target("http://localhost:8080/myapp");
+
+        // tiendaGUI = new TiendaGUI();
+
+        cliente.setDNI("12399345K");
+        cliente.setNombre("usuario");
+        cliente.setApellidos("apellido apellido ");
+        cliente.setEmail("usuario@gmail.com");
+        cliente.setPassword("12345r");
+        cliente.setTelefono(655786943);
+        cliente.setDireccion("direccion");
+        cliente.setGenero(Genero.MUJER);
+        cliente.setCod_postal(45678);
+        cliente.setProvincia("provincia");       
+        cliente.setLocalidad("localidad"); 
+        DBManager.getInstance().store(cliente);
+
+        // tiendaGUI.setCliente2(cliente);
         credencialesVisa = new HashMap<String,String>();
         credencialesVisa.put("4444333322221111", "232");             
         credencialesPaypal = new HashMap<String,String>();
         credencialesPaypal.put("usuario@gmail.com", "123r");
-        pago = new Pago(cliente.getDNI(), credencialesVisa, credencialesPaypal);
+        pago = new Pago("12399345K", credencialesVisa, credencialesPaypal);
+        DBManager.getInstance().store(pago);
 
         pedido = new Pedido(cliente, new Date(), "en proceso", 30, 1, "Munitibar");
 
-        vVisa = new VentanaPagoVisa(tiendaGUI, pedido, web);
     }
     
-    @Test
-    @Ignore
-    public void testAutoFill() { 
-        TiendaGUI.getCliente().setDNI("12399345K");
-        String numTarjeta = "";
+    @After
+    public void tearDown() throws Exception {
+        server.shutdown();
+    }
 
-        if (TiendaGUI.getCliente().getDNI().equals(pedido.getCliente().getDNI())) {
+    @Test
+    public void testAutoFill() { 
+        if (cliente.getDNI().equals(pedido.getCliente().getDNI())) {
 			for(Entry<String, String> c: credencialesVisa.entrySet()) {
-				numTarjeta = c.getKey();
+				String numTarjeta = c.getKey();
                 numTarjetaField.setText(numTarjeta);
 			}
 		}
@@ -66,16 +108,59 @@ public class VentanaPagoVisaTest {
     }
 
     @Test
-    @Ignore
     public void testCrearPedido() {
-		VentanaPagoVisa vs = Mockito.mock(VentanaPagoVisa.class);
-		verify(vs).crearPedido(pedido,credencialesVisa,web);
+		// boolean b = false;
+
+        visaTarget = appTarget.path("/pagos/visa/").path("12399345K");
+        GenericType<HashMap<String,String>> genericType_visa = new GenericType<HashMap<String,String>>() {};
+        credvisa = visaTarget.request(MediaType.APPLICATION_JSON).get(genericType_visa);
+
+        System.out.println(credvisa);
+
+        for(Entry<String, String> c1: credencialesVisa.entrySet()) {
+			String num = c1.getKey();
+			String cvc = c1.getValue();
+            if (num.equals("4444333322221111") && cvc.equals("232")) {
+                pedidoTarget = appTarget.path("/pedidos");
+                pedidoTarget.request(MediaType.APPLICATION_JSON).post(Entity.entity(pedido, MediaType.APPLICATION_JSON));
+            }
+        }
+        // WebTarget getpedidoTarget = appTarget.path("/pedidos12399345K");
+        // GenericType<List<Pedido>> genericType_pedido = new GenericType<List<Pedido>>() {};
+        // List<Pedido> pedidos = getpedidoTarget.request(MediaType.APPLICATION_JSON).get(genericType_pedido);
+       
+        // List<Pedido> pedidos = DBManager.getInstance().getPedidos();
+        assertEquals(pedido.getCantidad(), 1);
     }
 
     @Test
-    @Ignore
     public void testUpdateVisa() {
-		VentanaPagoVisa vs = Mockito.mock(VentanaPagoVisa.class);
-		verify(vs).updateVisa(credencialesPaypal,credencialesVisa,pago,web);
+        // Cambiamos el CVC de la tarjeta visa
+		String cvc = new String("11");
+        for(Entry<String, String> c: credencialesVisa.entrySet()) {
+            String numTarjeta = c.getKey();
+            numTarjetaField.setText(numTarjeta);
+        }
+        if (numTarjetaField.getText().isEmpty() == false && cvc.isEmpty() == false) {
+
+            credencialesVisa.clear();
+            credencialesVisa.put(numTarjetaField.getText(), cvc);
+            //PASAMOS A SERVER EL objeto pago con datos actualizados
+            credpago.setDNI(cliente.getDNI());
+            credpago.setCredencialesPaypal(credencialesPaypal);
+            credpago.setCredencialesVisa(credencialesVisa);
+            updateTarget = appTarget.path("/pagos/update");
+            updateTarget.request(MediaType.APPLICATION_JSON).post(Entity.entity(credpago, MediaType.APPLICATION_JSON));
+        }
+        visaTarget = appTarget.path("/pagos/visa/").path("12399345K");
+        GenericType<HashMap<String,String>> genericType_visa = new GenericType<HashMap<String,String>>() {};
+        HashMap<String,String> visa = visaTarget.request(MediaType.APPLICATION_JSON).get(genericType_visa);
+        String pass = "";
+        for(Entry<String, String> c: credencialesVisa.entrySet()) {
+            pass = c.getValue();
+        }
+
+        // System.out.println("testUpdatevisa");
+        assertEquals(pass, cvc);
     }
 }

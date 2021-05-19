@@ -211,6 +211,8 @@
 							<excludes>
 								<exclude>dao/*Test.java</exclude>
 								<exclude>preformingTest/**</exclude>
+								<exclude>cliente/VentanaPagoVisaTest.java</exclude>
+								<exclude>cliente/VentanaPagoPayPalTest.java</exclude>
 							</excludes>
 						</configuration>
 					</plugin>
@@ -227,6 +229,8 @@
 						<version>2.19.1</version>
 						<configuration>
 							<includes>
+								<include>cliente/VentanaPagoVisaTest.java</include>
+								<include>cliente/VentanaPagoPayPalTest.java</include>
 								<include>dao/*Test.java</include>
 							</includes>
 						</configuration>
