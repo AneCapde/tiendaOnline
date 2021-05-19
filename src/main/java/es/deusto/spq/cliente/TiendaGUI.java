@@ -101,7 +101,10 @@ public class TiendaGUI extends JFrame {
 	private JButton botonSignIn;
 	private JButton btnMasComprados;
 	public static Idiomas idioma = Idiomas.Español;
-
+	
+	/**
+	 * Ventana principal del proyecto. De esta clase heredan todas las demás ventanas
+	 */
 
 	public TiendaGUI() {
 		client = ClientBuilder.newClient();
@@ -345,12 +348,15 @@ public class TiendaGUI extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				esto.setEnabled(false);
 		    	productoSeleccionado = listaElementos.getSelectedValue();
-		    	ComentariosGUI comentarios = new ComentariosGUI(esto, productoSeleccionado,appTarget);
-		    	comentarios.setVisible(true);
-		    	contentPane.setEnabled(false);
-		    	dispose();
-				
-			}
+		    	if(productoSeleccionado != null) {
+		    		ComentariosGUI comentarios = new ComentariosGUI(esto, productoSeleccionado,appTarget);
+			    	comentarios.setVisible(true);
+			    	contentPane.setEnabled(false);
+			    	dispose();
+		    	}else {
+		    		JOptionPane.showMessageDialog(null, "Selecciona un producto");
+				}	
+		    	}
 			
 		});
 		
