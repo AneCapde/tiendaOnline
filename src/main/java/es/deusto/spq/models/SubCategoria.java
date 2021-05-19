@@ -10,7 +10,12 @@ public class SubCategoria {
 	@Persistent(defaultFetchGroup = "true")
 	private Categoria categoria;
 
-
+	/**
+	 * Crea una nueva SubCategoria
+	 * @param nombre		Nombre de la SubCategoria
+	 * @param descripcion	Descripcion de la SubCategoria
+	 * @param categoria		Categoria a la que pertenece la SubCategoria
+	 */
 	public SubCategoria(String nombre, String descripcion, Categoria categoria) {
 		super();
 		this.nombre = nombre;
