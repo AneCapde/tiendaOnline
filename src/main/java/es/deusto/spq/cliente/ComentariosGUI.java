@@ -15,6 +15,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
@@ -83,7 +84,6 @@ public class ComentariosGUI extends JFrame{
 		comentario.setBounds(65,150,300,250);
 		contentPane.add(comentario);
 		
-		//nullPointer
 		coment = producto.getComentarios();
 		
 		
@@ -94,7 +94,7 @@ public class ComentariosGUI extends JFrame{
 		//JList para los comentarios
 		list = new JList<>(model);			
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		list.setBounds(200, 27, 236, 387);
+		list.setBounds(500, 90, 236, 320);
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setViewportView(list);
 		contentPane.add(list);
@@ -118,7 +118,8 @@ public class ComentariosGUI extends JFrame{
 				producto.setComentarios(coment);
 				System.out.println(coment);
 				productosTarget.request(MediaType.APPLICATION_JSON).post(Entity.entity(producto, MediaType.APPLICATION_JSON));
-
+				JOptionPane.showMessageDialog(null, "Comentario enviado correctamente");
+				comentario.setText(null);
 			}
 			
 		});
