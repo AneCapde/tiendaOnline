@@ -8,9 +8,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 import es.deusto.spq.models.Categoria;
+import es.deusto.spq.models.Cliente;
 import es.deusto.spq.models.Marca;
 import es.deusto.spq.models.Producto;
 import es.deusto.spq.models.SubCategoria;
+import es.deusto.spq.models.Cliente.Genero;
 
 public class TiendaAccionesTest {
 	Categoria cat;
@@ -24,6 +26,7 @@ public class TiendaAccionesTest {
 	Producto prod2;
 	ArrayList<Producto> arr = new ArrayList<Producto>();
 	ArrayList<SubCategoria> subcats = new ArrayList<SubCategoria>();
+	
 	@Before
 	public void inicializar() {
 		cat = new Categoria("NombreCat", "DescripcionCat");
@@ -85,5 +88,5 @@ public class TiendaAccionesTest {
 		ArrayList<SubCategoria> res = TiendaAcciones.getInstance().rellenarSubcategorias(null, subcats);
 		ArrayList<SubCategoria> exp = new ArrayList<SubCategoria>();
 		assertEquals(exp, res);
-	}	
+	}
 }

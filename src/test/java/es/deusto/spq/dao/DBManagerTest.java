@@ -110,23 +110,20 @@ public class DBManagerTest {
 		DBManager.getInstance().deleteCliente(cliente);
 		
 		DBManager.getInstance().updateCliente(cliente);
-//		assertEquals(cliente.toString(), DBManager.getInstance().getClientes().get(0).toString());
+		assertEquals(cliente.toString(), DBManager.getInstance().getClientes().get(0).toString());
 		DBManager.getInstance().deleteCliente(cliente);
 		
 		
 		DBManager.getInstance().updatePedido(ped1);
-//		assertEquals(ped1.toString(), DBManager.getInstance().getPedidos().get(0).toString());
+		assertEquals(ped1.toString(), DBManager.getInstance().getPedidos().get(0).toString());
 		DBManager.getInstance().deleteObjectFromDB(ped1);
 
 		DBManager.getInstance().updateProducto(p1);
-//		assertEquals(p1.toString(), DBManager.getInstance().getProductos().get(0).toString());
-//		assertEquals(p1.toString(), DBManager.getInstance().getProducto(p1.getNombre()).toString());
+		assertEquals(p1.toString(), DBManager.getInstance().getProductos().get(0).toString());
 		DBManager.getInstance().deleteObjectFromDB(p1);
 		
 		DBManager.getInstance().updatePago(pago1);
-//		assertEquals(pago1.getDNI().toString(), DBManager.getInstance().getPago(cliente).getDNI().toString());
-//		assertEquals(pago1.getCredencialesPaypal().toString(), DBManager.getInstance().getPaypal(cliente).toString());
-//		assertEquals(pago1.getCredencialesVisa().toString(), DBManager.getInstance().getVisa(cliente).toString());
+		assertEquals(pago1.getDNI().toString(), DBManager.getInstance().getPago(cliente).getDNI().toString());
 		DBManager.getInstance().deleteObjectFromDB(pago1);
 	}
 	

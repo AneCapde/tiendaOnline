@@ -9,6 +9,7 @@ import javax.swing.JLabel;
 
 import es.deusto.spq.cliente.TiendaGUI;
 import es.deusto.spq.models.Categoria;
+import es.deusto.spq.models.Cliente;
 import es.deusto.spq.models.Colores;
 import es.deusto.spq.models.Marca;
 import es.deusto.spq.models.Producto;
@@ -134,15 +135,4 @@ public class TiendaAcciones implements ITiendaAcciones{
 			}
 		}
 	}
-//	public void LoginOrLogout(Cliente cliente, JFrame esto, WebTarget appTarget, JPanel contentPane) {
-//		if (cliente == null) {
-//			esto.setEnabled(false);
-//			VentanaLogin ventanaLogin = new VentanaLogin(esto, appTarget);
-//			ventanaLogin.setVisible(true);
-//			contentPane.setEnabled(false);
-//		}else{
-//			esto.dispose();
-//		}
-//		//acciones.LoginOrLogout(cliente, (JFrame)esto, appTarget, contentPane);
-//	}
 }
