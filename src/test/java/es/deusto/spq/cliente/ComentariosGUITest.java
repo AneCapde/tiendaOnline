@@ -2,9 +2,11 @@ package es.deusto.spq.cliente;
 
 import java.util.ArrayList;
 
+import javax.swing.JTextField;
 import javax.ws.rs.client.WebTarget;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -31,6 +33,7 @@ public class ComentariosGUITest {
 	
 	ArrayList<Colores> colores;
 	ArrayList<Tallas> tallas;
+	ArrayList<String> coment;
 	
 	/**
 	 * Este método se ejecuta antes de que se ejecute cualquier método de prueba JUnit: se anota con la anotación Before.
@@ -41,7 +44,7 @@ public class ComentariosGUITest {
 		colores.add(Colores.AMARILLO);
 		tallas = new ArrayList<>();
 		tallas.add(Tallas.L);
-		ArrayList<String> coment = new ArrayList<>();
+		coment = new ArrayList<>();
 		p1 = new Producto("producto1", "producto1", 1, 1, "producto1", 
 				new SubCategoria("Subcategoria1", "Subcategoria1", new Categoria("categoria1", "categoria1")), new Marca("marca1", "marca1"), colores, tallas);
 		coment.add("Comentario1");
@@ -49,6 +52,16 @@ public class ComentariosGUITest {
 		comentariosGUI = new ComentariosGUI(tiendaGUI, p1, web);
 	}
 	
+	@Ignore
+	@Test
+	public void testAceptar() {
+		JTextField textField = new JTextField();
+		String c = textField.getText();
+		coment.add(c);
+		p1.setComentarios(coment);
+		
+		
+	}
 	
 	@Test
 	public void testCancelar() {

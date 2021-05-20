@@ -109,13 +109,7 @@ public class ComentariosGUI extends JFrame{
 			//añadir comentarios a la BD
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String c = comentario.getText();
-				coment.add(c);
-				producto.setComentarios(coment);
-				System.out.println(coment);
-				productosTarget.request(MediaType.APPLICATION_JSON).post(Entity.entity(producto, MediaType.APPLICATION_JSON));
-				JOptionPane.showMessageDialog(null, "Comentario enviado correctamente");
-				comentario.setText(null);
+				botonAceptar(producto);
 			}
 			
 		});
@@ -129,21 +123,32 @@ public class ComentariosGUI extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				botonCancelar(ventanaPadre);
-//				setVisible(false);
-//				TiendaGUI tienda = new TiendaGUI();
-//				tienda.setVisible(true);
-//				TiendaGUI.setCliente(TiendaGUI.getCliente());
-//				dispose();
-				
+
 			}
 			
 		});
 	}
+	
+	/**
+	 * Metoodo que permite actualizar la lista de comentarios que tiene un producto
+	 * @param producto el producto que se quiere actualizar
+	 */
+	public void botonAceptar(Producto producto) {
+		String c = comentario.getText();
+		coment.add(c);
+		producto.setComentarios(coment);
+		System.out.println(coment);
+		productosTarget.request(MediaType.APPLICATION_JSON).post(Entity.entity(producto, MediaType.APPLICATION_JSON));
+		JOptionPane.showMessageDialog(null, "Comentario enviado correctamente");
+		comentario.setText(null);
+	}
+	
+	/**
+	 * Metodo que permite volver a la ventana principal
+	 * @param ventanaPadre ventana principal 
+	 */
 	public void botonCancelar(JFrame ventanaPadre) {
 		ventanaPadre.setVisible(false);
-//		TiendaGUI tienda = new TiendaGUI();
-//		tienda.setVisible(true);
-//		TiendaGUI.setCliente(TiendaGUI.getCliente());
 		dispose();
 	}
 }
