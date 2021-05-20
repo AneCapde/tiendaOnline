@@ -4,13 +4,20 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+
 import org.junit.Before;
 import org.junit.Test;
 
+import es.deusto.spq.cliente.TiendaGUI;
 import es.deusto.spq.models.Categoria;
 import es.deusto.spq.models.Marca;
 import es.deusto.spq.models.Producto;
 import es.deusto.spq.models.SubCategoria;
+import es.deusto.spq.util.Idiomas;
+import es.deusto.spq.util.PrepararDatos;
 
 public class TiendaAccionesTest {
 	Categoria cat;
@@ -26,6 +33,7 @@ public class TiendaAccionesTest {
 	ArrayList<SubCategoria> subcats = new ArrayList<SubCategoria>();
 	@Before
 	public void inicializar() {
+		PrepararDatos.getInstance().cargarDatosXML();
 		cat = new Categoria("NombreCat", "DescripcionCat");
 		cat2 = new Categoria("NombreCat2", "DescripcionCat");
 		subCat = new SubCategoria("NombreSub", "DescripcionSub", cat);
@@ -86,4 +94,17 @@ public class TiendaAccionesTest {
 		ArrayList<SubCategoria> exp = new ArrayList<SubCategoria>();
 		assertEquals(exp, res);
 	}	
+	@Test
+	public void testCambiarIdioma(){
+		TiendaGUI.idioma = Idiomas.Español;
+		JComboBox<String> idiomas = new JComboBox<String>();
+		idiomas.addItem("Español");
+		idiomas.addItem("Ingles");
+		idiomas.setSelectedItem("Ingles");
+		ArrayList<JButton> buttons = new ArrayList<>();
+		buttons.add(new JButton());
+		ArrayList<JLabel> labels = new ArrayList<>();
+		labels.add(new JLabel());
+		TiendaAcciones.getInstance().cambiarIdioma(buttons, labels, idiomas);
+	}
 }
