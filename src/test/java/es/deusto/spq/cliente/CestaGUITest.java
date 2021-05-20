@@ -36,7 +36,6 @@ public class CestaGUITest {
 		p1 = new Producto("producto1", "producto1", 1, 1, "producto1", 
 		new SubCategoria("Subcategoria1", "Subcategoria1", new Categoria("categoria1", "categoria1")), new Marca("marca1", "marca1"));
 		productos.add(p1);
-		System.out.println("Prueba test Cesta GUI: " + productos);
 		cestaGUI = new CestaGUI(tiendaGUI, productos, web);
 	}
 	

@@ -64,11 +64,7 @@ public class VentanaMetodoPago extends JFrame{
 
         paypal.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				ventanaPadre.setEnabled(true);
-				ventanaPadre.setVisible(true);
-				dispose();
-                VentanaPagoPayPal vPaypal= new VentanaPagoPayPal(ventanaPadre, pedido, appTarget);
-				vPaypal.setVisible(true);					
+				paypal(ventanaPadre, pedido, appTarget);				
 			}
 		});
 
@@ -82,12 +78,24 @@ public class VentanaMetodoPago extends JFrame{
 
         visa.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				ventanaPadre.setEnabled(true);
-				ventanaPadre.setVisible(true);
-				dispose();
-                VentanaPagoVisa vVisa= new VentanaPagoVisa(esto, pedido, appTarget);
-				vVisa.setVisible(true);					
+				visa(esto, pedido, appTarget);			
 			}
 		});
 	}
+    
+    public void paypal(JFrame ventanaPadre, Pedido pedido, WebTarget appTarget) {
+    	ventanaPadre.setEnabled(true);
+		ventanaPadre.setVisible(true);
+		dispose();
+        VentanaPagoPayPal vPaypal= new VentanaPagoPayPal(ventanaPadre, pedido, appTarget);
+		vPaypal.setVisible(true);	
+    }
+    
+    public void visa(JFrame ventanaPadre, Pedido pedido, WebTarget appTarget) {
+    	ventanaPadre.setEnabled(true);
+		ventanaPadre.setVisible(true);
+		dispose();
+        VentanaPagoVisa vVisa= new VentanaPagoVisa(ventanaPadre, pedido, appTarget);
+		vVisa.setVisible(true);		
+    }
 }

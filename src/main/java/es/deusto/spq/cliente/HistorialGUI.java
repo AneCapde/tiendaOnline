@@ -1,7 +1,5 @@
 package es.deusto.spq.cliente;
 
-
-
 import java.awt.Color;
 import java.awt.Font;
 
@@ -52,7 +50,6 @@ public class HistorialGUI extends JFrame{
 	 * @param ventanaPadre Ventana anterior, a traves de la cual se a llegado a esta
 	 * @param appTarget Objeto para la comunicacion con el server
 	 */
-	
 	public HistorialGUI(final JFrame ventanaPadre, WebTarget appTarget) {
 		
 		final WebTarget pedidoTarget = appTarget.path("/pedidos/").path(TiendaGUI.getCliente().getDNI());
