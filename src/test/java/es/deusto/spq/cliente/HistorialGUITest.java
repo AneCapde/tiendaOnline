@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.swing.JOptionPane;
 import javax.ws.rs.client.WebTarget;
 
 import org.junit.Before;
@@ -49,14 +50,15 @@ public class HistorialGUITest {
 	@Ignore
 	@Test
 	public void testDevolverPedido() {
-		
+		pedido.setEstado("Devuelto");
+
+		// Aquí se prueba el método, el guardado en base de datos se prueba en DBManagerTest
+		assertEquals(pedido.getEstado(), "Devuelto");
+		if (pedido.getEstado().equals("Devuelto")) {
+			JOptionPane.showMessageDialog(null, "Deberás concretar la entrega del paquete escibiendo al email \n devolucion@tienda.com y se te reembolsará el dinero del pedido.", "Devolución completada", JOptionPane.INFORMATION_MESSAGE);
+		}
 	}
-	@Ignore
-	@Test 
-	public void testBotonInicio() {
-		
-		
-	}
+
 	
 	@Ignore
 	@Test
