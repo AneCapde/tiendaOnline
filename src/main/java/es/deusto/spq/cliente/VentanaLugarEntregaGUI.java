@@ -259,20 +259,11 @@ public class VentanaLugarEntregaGUI extends JFrame {
 	public void aceptar(final JFrame ventanaPadre, ArrayList<Producto> productos, WebTarget appTarget,
 			WebTarget pedidoTarget, int precio) {
 		Date date = new Date();
-		System.out.println("entra0");
 		if (validar()) {
-//				System.out.println("entra1");
 			if (rdbtnCorreos.isSelected()) {
-//				System.out.println("entra2 Boton 0");
 				provinciaSelecionada = ("Correos " + (String) provincia.getSelectedItem());
-//					System.out.println("entra4");
 				Pedido pedido = new Pedido(TiendaGUI.getCliente(), date, "en proceso", precio, 1, provinciaSelecionada);
-//					System.out.println("Meter pedido en la base de datos: " + pedido);
-//					System.out.println("entra5");
-//					System.out.println();
-//				System.out.println("Productos que se añaden al pedido: " + productos);
 				pedido.setProducto(productos);
-//					System.out.println("entra7");
 				if (productos != null && CestaGUI.model != null && CestaGUI.list != null) {
 					System.out.println("entra7");
 					productos.remove(productos);
@@ -287,13 +278,9 @@ public class VentanaLugarEntregaGUI extends JFrame {
 				vmp.setVisible(true);
 
 			} else if (rdbtnDomicilio.isSelected()) {
-//				System.out.println("entra2 Boton 1");
 				direccion1 = direccion.getText();
 				Pedido pedido = new Pedido(TiendaGUI.getCliente(), date, "en proceso", precio, 1, direccion1);
 				pedido.setProducto(productos);
-//				System.out.println("Lista de productos dentro del pedido: " + productos);
-//				pedidoTarget.request(MediaType.APPLICATION_JSON)
-//						.post(Entity.entity(pedido, MediaType.APPLICATION_JSON));
 				if (productos != null && CestaGUI.model != null && CestaGUI.list != null) {
 					productos.remove(productos);
 					CestaGUI.model.removeAllElements();

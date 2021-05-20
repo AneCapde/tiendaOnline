@@ -13,16 +13,11 @@ import org.junit.Test;
 
 import es.deusto.spq.cliente.TiendaGUI;
 import es.deusto.spq.models.Categoria;
-import es.deusto.spq.models.Cliente;
 import es.deusto.spq.models.Marca;
 import es.deusto.spq.models.Producto;
 import es.deusto.spq.models.SubCategoria;
-<<<<<<< HEAD
-import es.deusto.spq.models.Cliente.Genero;
-=======
 import es.deusto.spq.util.Idiomas;
 import es.deusto.spq.util.PrepararDatos;
->>>>>>> branch 'master' of https://github.com/AneCapde/tiendaOnline.git
 
 public class TiendaAccionesTest {
 	Categoria cat;
@@ -99,21 +94,39 @@ public class TiendaAccionesTest {
 		ArrayList<SubCategoria> res = TiendaAcciones.getInstance().rellenarSubcategorias(null, subcats);
 		ArrayList<SubCategoria> exp = new ArrayList<SubCategoria>();
 		assertEquals(exp, res);
-<<<<<<< HEAD
-=======
 	}	
+	
 	@Test
 	public void testCambiarIdioma(){
 		TiendaGUI.idioma = Idiomas.Español;
+		JButton boton = new JButton(Idiomas.seleccionarPalabra("comprarBoton"));
+		JLabel label = new JLabel(Idiomas.seleccionarPalabra("comprarBoton"));
 		JComboBox<String> idiomas = new JComboBox<String>();
 		idiomas.addItem("Español");
 		idiomas.addItem("Ingles");
 		idiomas.setSelectedItem("Ingles");
 		ArrayList<JButton> buttons = new ArrayList<>();
-		buttons.add(new JButton());
+		buttons.add(boton);
 		ArrayList<JLabel> labels = new ArrayList<>();
-		labels.add(new JLabel());
+		labels.add(label);
 		TiendaAcciones.getInstance().cambiarIdioma(buttons, labels, idiomas);
->>>>>>> branch 'master' of https://github.com/AneCapde/tiendaOnline.git
+		assertEquals("English", idiomas.getItemAt(0));
+	}
+	
+	@Test
+	public void testCambiarIdioma2(){
+		TiendaGUI.idioma = Idiomas.Ingles;
+		JButton boton = new JButton(Idiomas.seleccionarPalabra("comprarBoton"));
+		JLabel label = new JLabel(Idiomas.seleccionarPalabra("comprarBoton"));
+		JComboBox<String> idiomas = new JComboBox<String>();
+		idiomas.addItem("Español");
+		idiomas.addItem("Ingles");
+		idiomas.setSelectedItem("Español");
+		ArrayList<JButton> buttons = new ArrayList<>();
+		buttons.add(boton);
+		ArrayList<JLabel> labels = new ArrayList<>();
+		labels.add(label);
+		TiendaAcciones.getInstance().cambiarIdioma(buttons, labels, idiomas);
+		assertEquals("Español", idiomas.getItemAt(0));
 	}
 }

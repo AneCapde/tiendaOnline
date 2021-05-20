@@ -69,4 +69,25 @@ public class CestaGUITest {
 		}
 		assertEquals(precioTotal, cestaGUI.calcularPrecio());
 	}
+	
+	@Test
+	public void testBotonComprar() {
+		cestaGUI.botonComprar(tiendaGUI, web);
+	}
+	
+	@Test
+	public void testImagenes() {
+		cestaGUI.imagenes();
+//		"acabar"
+	}
+	
+	@Test
+	public void botonOK() {
+		cestaGUI.botonOK();
+	}
+	
+	@Test
+	public void eliminar() {
+		cestaGUI.eliminar();
+	}
 }

@@ -40,13 +40,15 @@ public class CestaGUI extends JFrame{
 	public HashMap<Producto, Integer> productos_cantidad = new HashMap<Producto, Integer>();
 	final WebTarget pedidoTarget;
 	public static JList<Producto> list;
+	JButton btnNewButton;
+	JPanel panel;
+	JSpinner spinner;
 
 	/**
 	 * Create the frame.
 	 */
 	public CestaGUI(final JFrame ventanaPadre, ArrayList<Producto> productos, final WebTarget appTarget) {
 		
-		final CestaGUI esto = this;
 		pedidoTarget = appTarget.path("/pedidos");
 		
 		for (Producto p : productos){
@@ -71,7 +73,7 @@ public class CestaGUI extends JFrame{
 		contentPane.add(lblCarro);
 
 		
-		JButton btnNewButton = new JButton(Idiomas.seleccionarPalabra("comprarBoton"));
+		btnNewButton = new JButton(Idiomas.seleccionarPalabra("comprarBoton"));
 		btnNewButton.setFont(new Font("Segoe UI Black", Font.PLAIN, 20));
 		btnNewButton.setBounds(346, 417, 143, 48);
 		contentPane.add(btnNewButton);
@@ -79,14 +81,11 @@ public class CestaGUI extends JFrame{
 		btnNewButton.addActionListener (new ActionListener () {
 			@Override
 		    public void actionPerformed(ActionEvent e) {
-				System.out.println("Boton Aceptar: " +productos2);
-				VentanaLugarEntregaGUI vle = new VentanaLugarEntregaGUI(esto, productos2, appTarget, calcularPrecio() );
-				vle.setVisible(true);
-				esto.setEnabled(false);
+				botonComprar(ventanaPadre, appTarget);
 			}
 		});
 
-		JPanel panel = new JPanel();
+		panel = new JPanel();
 		panel.setBounds(269, 27, 309, 339);
 		contentPane.add(panel);
 		
@@ -99,22 +98,12 @@ public class CestaGUI extends JFrame{
 		list.addListSelectionListener(new ListSelectionListener() {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
-				btnNewButton.setVisible(true);
-				panel.removeAll();
-				Producto producto = list.getSelectedValue();
-				if (producto != null) {
-					ImageIcon icono_1 = new ImageIcon(getClass().getResource("/"+ producto.getImagen()));
-					ImageIcon icono_2 = new ImageIcon(icono_1.getImage().getScaledInstance(panel.getWidth(), panel.getHeight(),Image.SCALE_DEFAULT));
-					JLabel label = new JLabel(icono_2);
-					panel.add(label);
-					panel.revalidate();
-				}
-				
+				imagenes();
 			}
 		});
 		
 		SpinnerNumberModel model1 = new SpinnerNumberModel(1.0, 1.0, 20.0, 1.0);
-		JSpinner spinner = new JSpinner(model1);
+		spinner = new JSpinner(model1);
 		spinner.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		spinner.setBounds(361, 377, 40, 29);
 		contentPane.add(spinner);
@@ -129,17 +118,7 @@ public class CestaGUI extends JFrame{
 		contentPane.add(btnOk);
 		btnOk.addActionListener (new ActionListener () {
 		    public void actionPerformed(ActionEvent e) {
-				Producto producto = list.getSelectedValue();
-				int cantidad = Integer.valueOf(String.valueOf(Math.round((double) spinner.getValue())));
-				try {
-					if (!producto.equals(null)) {
-						textField.setText(String.valueOf(calcularPrecio()));
-						getProductosCantidad().put(producto, cantidad);
-					}
-				}
-				catch(NullPointerException nl) {
-					return;
-				}
+				botonOK();
 			}
 		});
 
@@ -151,12 +130,7 @@ public class CestaGUI extends JFrame{
 		btnEliminar.addActionListener (new ActionListener () {
 			@Override
 		    public void actionPerformed(ActionEvent e) {
-				Producto producto = list.getSelectedValue();
-				getProductos().remove(producto);
-				model.removeElement(producto);
-				panel.removeAll();
-				list.setModel( model);
-				textField.setText(String.valueOf(calcularPrecio()));
+				eliminar();
 			}
 		});
 		JLabel lblPrecio = new JLabel(Idiomas.seleccionarPalabra("precio"));
@@ -181,9 +155,7 @@ public class CestaGUI extends JFrame{
 			public void actionPerformed(ActionEvent arg0) {
 				botonInicio(ventanaPadre);			
 			}
-		
 		});
-	
 	}
 	
 	/**
@@ -192,9 +164,6 @@ public class CestaGUI extends JFrame{
 	public void botonInicio(JFrame ventanaPadre) {
 		setVisible(false);
 		ventanaPadre.setEnabled(true);
-//		TiendaGUI tienda = new TiendaGUI();
-//		tienda.setVisible(true);
-//		TiendaGUI.setCliente(TiendaGUI.getCliente());
 		dispose();	
 		productos2.clear();
 		productos_cantidad.clear();
@@ -229,5 +198,50 @@ public class CestaGUI extends JFrame{
 	 */
 	public HashMap<Producto, Integer> getProductosCantidad() {
 		return productos_cantidad;
+	}
+	
+	public void botonComprar(JFrame ventanaPadre, WebTarget appTarget) {
+		System.out.println("Boton Aceptar: " +productos2);
+		VentanaLugarEntregaGUI vle = new VentanaLugarEntregaGUI(ventanaPadre, productos2, appTarget, calcularPrecio() );
+		vle.setVisible(true);
+		ventanaPadre.setEnabled(false);
+	}
+	
+	public void imagenes() {
+		btnNewButton.setVisible(true);
+		panel.removeAll();
+		Producto producto = list.getSelectedValue();
+		System.out.println(producto);
+		if (producto != null) {
+			System.out.println("entra");
+			ImageIcon icono_1 = new ImageIcon(getClass().getResource("/"+ producto.getImagen()));
+			ImageIcon icono_2 = new ImageIcon(icono_1.getImage().getScaledInstance(panel.getWidth(), panel.getHeight(),Image.SCALE_DEFAULT));
+			JLabel label = new JLabel(icono_2);
+			panel.add(label);
+			panel.revalidate();
+		}
+	}
+	
+	public void botonOK() {
+		Producto producto = list.getSelectedValue();
+		int cantidad = Integer.valueOf(String.valueOf(Math.round((double) spinner.getValue())));
+		try {
+			if (!producto.equals(null)) {
+				textField.setText(String.valueOf(calcularPrecio()));
+				getProductosCantidad().put(producto, cantidad);
+			}
+		}
+		catch(NullPointerException nl) {
+			return;
+		}
+	}
+	
+	public void eliminar() {
+		Producto producto = list.getSelectedValue();
+		getProductos().remove(producto);
+		model.removeElement(producto);
+		panel.removeAll();
+		list.setModel( model);
+		textField.setText(String.valueOf(calcularPrecio()));
 	}
 }
