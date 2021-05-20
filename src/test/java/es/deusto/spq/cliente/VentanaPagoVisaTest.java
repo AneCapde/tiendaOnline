@@ -44,7 +44,7 @@ public class VentanaPagoVisaTest {
 
         cliente = new Cliente("12399345K","usuario","apellido","usuario@gmail.com","12345r",655786943,"direccion",Genero.MUJER,45678,"provincia","localidad");
 
-        tiendaGUI.setCliente2(cliente);
+        TiendaGUI.setCliente2(cliente);
         credencialesVisa = new HashMap<String,String>();
         credencialesVisa.put("4444333322221111", "232");             
         credencialesPaypal = new HashMap<String,String>();

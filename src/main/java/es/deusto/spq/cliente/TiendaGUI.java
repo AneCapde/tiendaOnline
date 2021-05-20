@@ -81,7 +81,6 @@ public class TiendaGUI extends JFrame {
 	Icon icono1, icono2;
 	
 	private Categoria categoriaSeleccionada;
-	private String textoBuscador;
 	private SubCategoria subCategoriaSeleccionada;
 	private Marca marcaSeleccionada;
 	private Tallas tallaSeleccionada;
@@ -114,8 +113,6 @@ public class TiendaGUI extends JFrame {
 		final WebTarget categoriasTarget = appTarget.path("/categorias");
 		final WebTarget marcasTarget = appTarget.path("/marcas");
 		final WebTarget subTarget = appTarget.path("/subcategorias");
-		final WebTarget pedidoTarget= appTarget.path("/pedidos");
-		final WebTarget pagoTarget= appTarget.path("/pagos");
 		final WebTarget productosTarget = appTarget.path("/productos");
 		final WebTarget masBuscadoTarget = appTarget.path("/productos/masBuscado");
 
@@ -177,7 +174,6 @@ public class TiendaGUI extends JFrame {
 						CestaGUI cestaGUI = new CestaGUI(esto, productos_cesta, appTarget);
 						cestaGUI.setVisible(true);
 						contentPane.setEnabled(false);
-						dispose();
 					}else {
 						btnCesta.setEnabled(false);
 					}
@@ -317,7 +313,6 @@ public class TiendaGUI extends JFrame {
 				System.out.println("producto tienda GUI: " +productos);
 				VentanaLugarEntregaGUI vle = new VentanaLugarEntregaGUI(esto, productos, appTarget, productoSeleccionado.getPrecio());
 				vle.setVisible(true);
-				esto.setVisible(false);
 				esto.setEnabled(false);	
 			}
 		});
@@ -539,7 +534,7 @@ public class TiendaGUI extends JFrame {
 		
 	//#############################################################################
 		btnMasComprados = new JButton(Idiomas.seleccionarPalabra("masComprados"));
-		btnMasComprados.setBounds(370, 10, 122, 23);
+		btnMasComprados.setBounds(356, 10, 136, 23);
 		contentPane.add(btnMasComprados);
 		btnMasComprados.setEnabled(true);
 		btnMasComprados.addActionListener(new ActionListener() {
@@ -610,15 +605,15 @@ public class TiendaGUI extends JFrame {
 		TiendaGUI.cliente = cliente;
 	}
 	
-	/**
-	 * Método que permite cargar la lista de los productos deseados
-	 */
-	private static void cargarLista() {
-		productos_deseados.removeAll(productos_deseados);
-		for (Producto p :TiendaGUI.getCliente().getProductosDeseados()){
-			productos_deseados.add(p);
-		}
-	}
+//	/**
+//	 * Método que permite cargar la lista de los productos deseados
+//	 */
+//	private static void cargarLista() {
+//		productos_deseados.removeAll(productos_deseados);
+//		for (Producto p :TiendaGUI.getCliente().getProductosDeseados()){
+//			productos_deseados.add(p);
+//		}
+//	}
 	
 	/**
 	 * Método que permite devolver el cliente logeado en la tienda

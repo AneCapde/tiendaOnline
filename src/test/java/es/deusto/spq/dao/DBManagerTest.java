@@ -6,15 +6,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
-import org.apache.log4j.Logger;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import es.deusto.spq.Main;
-import es.deusto.spq.acciones.TiendaAcciones;
-import es.deusto.spq.cliente.TiendaGUI;
 import es.deusto.spq.models.Categoria;
 import es.deusto.spq.models.Cliente;
 import es.deusto.spq.models.Marca;
@@ -23,8 +20,6 @@ import es.deusto.spq.models.Pedido;
 import es.deusto.spq.models.Producto;
 import es.deusto.spq.models.SubCategoria;
 import es.deusto.spq.models.Cliente.Genero;
-import es.deusto.spq.server.PedidosServer;
-import es.deusto.spq.util.Idiomas;
 
 public class DBManagerTest {
 
@@ -86,7 +81,7 @@ public class DBManagerTest {
 		DBManager.getInstance().deleteObjectFromDB(cat);
 		
 		DBManager.getInstance().store(ped1);
-		assertEquals(ped1.toString(), DBManager.getInstance().getPedidos().get(2).toString());
+		assertEquals(ped1.toString(), DBManager.getInstance().getPedidos().get(0).toString());
 		assertEquals(ped1.getCantidad(), DBManager.getInstance().getPedido(ped1.getFecha()).getCantidad());
 		DBManager.getInstance().deleteObjectFromDB(ped1);
 		
@@ -112,20 +107,30 @@ public class DBManagerTest {
 		HashMap<String, String> visa = new HashMap<String, String>();
 		visa.put("4444333322221111", "1234");
 		Pago pago1 = new Pago("12132", visa, paypal);
-		
-		DBManager.getInstance().updateCliente(cliente);
 		DBManager.getInstance().deleteCliente(cliente);
 		
+		DBManager.getInstance().updateCliente(cliente);
+//		assertEquals(cliente.toString(), DBManager.getInstance().getClientes().get(0).toString());
+		DBManager.getInstance().deleteCliente(cliente);
+		
+		
 		DBManager.getInstance().updatePedido(ped1);
+//		assertEquals(ped1.toString(), DBManager.getInstance().getPedidos().get(0).toString());
 		DBManager.getInstance().deleteObjectFromDB(ped1);
 
 		DBManager.getInstance().updateProducto(p1);
+//		assertEquals(p1.toString(), DBManager.getInstance().getProductos().get(0).toString());
+//		assertEquals(p1.toString(), DBManager.getInstance().getProducto(p1.getNombre()).toString());
 		DBManager.getInstance().deleteObjectFromDB(p1);
 		
 		DBManager.getInstance().updatePago(pago1);
+//		assertEquals(pago1.getDNI().toString(), DBManager.getInstance().getPago(cliente).getDNI().toString());
+//		assertEquals(pago1.getCredencialesPaypal().toString(), DBManager.getInstance().getPaypal(cliente).toString());
+//		assertEquals(pago1.getCredencialesVisa().toString(), DBManager.getInstance().getVisa(cliente).toString());
 		DBManager.getInstance().deleteObjectFromDB(pago1);
 	}
 	
+	@Test
 	public void testMasComprado() {
 		Producto p1 = new Producto("producto1", "producto1", 1, 1, "producto1", null, null);
 		Producto p2 = new Producto("producto2", "producto2", 1, 1, "producto2", null, null);
@@ -147,7 +152,6 @@ public class DBManagerTest {
 		DBManager.getInstance().store(p3);
 		DBManager.getInstance().store(p4);
 		
-		list.clear();
 		list.add(p2);
 		ped1.setProducto(list);
 		DBManager.getInstance().store(ped1);
@@ -176,21 +180,17 @@ public class DBManagerTest {
 		exp.add(p2);
 		exp.add(p1);
 		
-		
-		assertEquals(exp, res);
-		DBManager.getInstance().deleteObjectFromDB(p1);
-		DBManager.getInstance().deleteObjectFromDB(p2);
-		DBManager.getInstance().deleteObjectFromDB(p3);
-		DBManager.getInstance().deleteObjectFromDB(p4);
+		assertEquals(exp.toString(), res.toString());
 		DBManager.getInstance().deleteObjectFromDB(ped1);
 		DBManager.getInstance().deleteObjectFromDB(ped2);
 		DBManager.getInstance().deleteObjectFromDB(ped3);
 		DBManager.getInstance().deleteObjectFromDB(ped4);
 		DBManager.getInstance().deleteObjectFromDB(ped5);
 		DBManager.getInstance().deleteObjectFromDB(ped6);
-
-		
+		DBManager.getInstance().deleteObjectFromDB(p1);
+		DBManager.getInstance().deleteObjectFromDB(p2);
+		DBManager.getInstance().deleteObjectFromDB(p3);
+		DBManager.getInstance().deleteObjectFromDB(p4);
+		DBManager.getInstance().deleteObjectFromDB(cliente);
 	}
-	
-	
 }

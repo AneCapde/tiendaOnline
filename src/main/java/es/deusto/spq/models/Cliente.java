@@ -26,7 +26,7 @@ public class Cliente {
 	private int cod_postal;
 	private String provincia;
 	private String localidad;
-	private String idioma;
+
 
 	@Persistent(defaultFetchGroup = "true")
 	@Join
@@ -154,13 +154,6 @@ public class Cliente {
 
 	public void setProductosDeseados(ArrayList<Producto> productosDeseados) {
 		this.productosDeseados = productosDeseados;
-	}
-
-	public String getIdioma(){
-		return idioma;
-	}
-	public void setIdioma(String idioma){
-		this.idioma = idioma;
 	}
 
 	public String toStringDebug() {

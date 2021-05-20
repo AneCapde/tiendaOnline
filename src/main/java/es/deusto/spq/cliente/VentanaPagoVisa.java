@@ -7,7 +7,6 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map.Entry;
 
 import javax.swing.JButton;
@@ -17,7 +16,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-import javax.swing.UIManager;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
@@ -25,11 +23,14 @@ import javax.ws.rs.core.MediaType;
 
 import es.deusto.spq.models.Pago;
 import es.deusto.spq.models.Pedido;
-import es.deusto.spq.models.Producto;
 
 public class VentanaPagoVisa extends JFrame{
     
-    private JPanel pCentral;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private JPanel pCentral;
     private JPanel pSuperior;
     private JPanel pInferior;
     private JTextField numTarjetaField;
@@ -42,8 +43,6 @@ public class VentanaPagoVisa extends JFrame{
     private JButton bAceptar;
 	private JButton bCredenciales; //Aceptar creación de nuevas credenciales
     private JButton bCrearCuenta;
-	private String numVisa = null;
-	private String cvcVisa = null;
 
     public VentanaPagoVisa(final JFrame ventanaPadre, Pedido pedido, WebTarget appTarget) {
        

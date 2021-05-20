@@ -40,6 +40,10 @@ public class CestaGUITest {
 		cestaGUI = new CestaGUI(tiendaGUI, productos, web);
 	}
 	
+	@Test
+	public void testBotonInicio() {
+		cestaGUI.botonInicio(tiendaGUI);
+	}
 	
 	@Test
 	public void testGetProductos() {

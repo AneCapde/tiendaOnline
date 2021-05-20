@@ -54,7 +54,7 @@ public class VentanaLugarEntregaGUITest {
 	 */
 	@Test 
 	public void testCancelar() {
-		ventanaLugarEntregaGUI.Cancelar(tiendaGUI);
+		ventanaLugarEntregaGUI.cancelar(tiendaGUI);
 	}
 	
 	/**

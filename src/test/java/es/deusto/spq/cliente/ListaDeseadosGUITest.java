@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 import org.mockito.*;
 
 import org.mockito.junit.MockitoJUnitRunner;
-import static org.mockito.Mockito.verify;
 
 import java.util.ArrayList;
 import org.mockito.Mock;
@@ -122,7 +121,7 @@ public class ListaDeseadosGUITest {
 	@Ignore
 	@Test
 	public void testInicio() {
-		listaDeseadosGUI.Inicio(web);
+		listaDeseadosGUI.inicio(web);
 		listaDeseadosGUI.updateClient(web);
 	}
 

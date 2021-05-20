@@ -51,19 +51,6 @@ public class Producto {
 		this.marca = marca;
 	}
 	
-//	public Producto( String nombre, String descripcion, int stock, int precio, String imagen, SubCategoria subcategoria, Marca marca, ArrayList<String> comentarios) {
-//		super();
-//		this.nombre = nombre;
-//		this.descripcion = descripcion;
-//		this.stock = stock;
-//		this.precio = precio;
-//		this.imagen = imagen;
-//		this.subcategoria = subcategoria;
-//		this.marca = marca;
-//		this.comentarios = new ArrayList<>();
-//	}
-	
-	
 	public Producto( String nombre, String descripcion, int stock, int precio, String imagen, SubCategoria subcategoria, Marca marca, ArrayList<Colores> colores, ArrayList<Tallas> tallas) {
 		super();
 		this.nombre = nombre;

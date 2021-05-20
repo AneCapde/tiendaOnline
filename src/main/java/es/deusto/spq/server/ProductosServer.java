@@ -1,6 +1,5 @@
 package es.deusto.spq.server;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -14,7 +13,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import es.deusto.spq.dao.DBManager;
-import es.deusto.spq.models.Cliente;
 import es.deusto.spq.models.Producto;
 
 @Path("/productos")

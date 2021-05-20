@@ -5,8 +5,6 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.Date;
 
-import javax.print.attribute.standard.PDLOverrideSupported;
-
 import org.junit.Before;
 import org.junit.Test;
 

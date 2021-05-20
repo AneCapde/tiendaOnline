@@ -140,16 +140,21 @@ public class VentanaLugarEntregaGUI extends JFrame {
 		pCentral.add(btnCancelar);
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Cancelar(ventanaPadre);
+				cancelar(ventanaPadre);
 			}
 		});
+		addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent e) {
+            	ventanaPadre.setEnabled(true);
+            }
+        }); 
 	}
 
 	/**
 	 * Metodo para cancelar la selccion de lugar realizada
 	 * @param ventanaPadre Ventana anterior, a traves de la cual se a llegado a esta
 	 */
-	public void Cancelar(JFrame ventanaPadre) {
+	public void cancelar(JFrame ventanaPadre) {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		ventanaPadre.setEnabled(true);
 		ventanaPadre.setVisible(true);

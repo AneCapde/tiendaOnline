@@ -465,13 +465,11 @@ public class DBManager implements IDBManager{
 		try {
 			
 			tx.begin();
-			//Query<?> query = pm.newQuery( "SELECT p FROM "+ Producto.class.getName() + " p LEFT OUTER JOIN " + Pedido.class.getName() + " pe");// GROUP BY p.nombre order by count(p.nombre) ");
-			//Query<?> query = pm.newQuery("javax.jdo.query.SQL" , "select NOMBRE FROM producto where DESCRIPCION in (\"Chaqueta vaquera azul\","+
-			//							 "\"Camisa blanca elegante\") ;");
 			Query<?> query = pm.newQuery("javax.jdo.query.SQL", "SELECT NOMBRE FROM producto LEFT OUTER JOIN pedido_productopedido ON producto.PRODUCTO_ID" + 
 										 " = pedido_productopedido.PRODUCTO_ID_EID GROUP BY producto.NOMBRE order by count(PEDIDO_ID_OID) desc ;");
 
 			Producto prod = null;
+			@SuppressWarnings("rawtypes")
 			List productosBusque = (List) query.execute();
 			
 			for (int i = 0; i < productosBusque.size(); i++) {
@@ -480,7 +478,6 @@ public class DBManager implements IDBManager{
 				prod = (Producto) query2.execute();
 				productos.add(prod);
 				System.out.println(prod.toStringDebug());
-				//productos.add((Producto) prod.get(i));
 			}
 //			
 			System.out.println(productos);

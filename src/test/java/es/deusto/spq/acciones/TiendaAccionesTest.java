@@ -4,24 +4,17 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-
 import org.junit.Before;
 import org.junit.Test;
 
-import es.deusto.spq.cliente.TiendaGUI;
 import es.deusto.spq.models.Categoria;
 import es.deusto.spq.models.Marca;
 import es.deusto.spq.models.Producto;
 import es.deusto.spq.models.SubCategoria;
-import es.deusto.spq.util.Idiomas;
 
 public class TiendaAccionesTest {
 	Categoria cat;
 	Categoria cat2;
-	TiendaAcciones acciones;
 	SubCategoria subCat;
 	SubCategoria subCat2;
 	SubCategoria subCat3;
@@ -33,7 +26,6 @@ public class TiendaAccionesTest {
 	ArrayList<SubCategoria> subcats = new ArrayList<SubCategoria>();
 	@Before
 	public void inicializar() {
-		acciones = new TiendaAcciones();
 		cat = new Categoria("NombreCat", "DescripcionCat");
 		cat2 = new Categoria("NombreCat2", "DescripcionCat");
 		subCat = new SubCategoria("NombreSub", "DescripcionSub", cat);
@@ -48,12 +40,11 @@ public class TiendaAccionesTest {
 		subcats.add(subCat3);
 		arr.add(prod);
 		arr.add(prod2);
-//		fail("Not yet implemented");
 	}
 	
 	@Test
 	public void testBuscarSubca() {
-		ArrayList<Producto> res = acciones.buscar("", null, subCat, null, null, null, arr);
+		ArrayList<Producto> res = TiendaAcciones.getInstance().buscar("", null, subCat, null, null, null, arr);
 		ArrayList<Producto> exp = new ArrayList<Producto>();
 		exp.add(prod);
 		assertEquals(exp, res);
@@ -61,14 +52,14 @@ public class TiendaAccionesTest {
 	
 	@Test
 	public void testBuscarCat() {
-		ArrayList<Producto> res = acciones.buscar("", cat, null, null, null, null, arr);
+		ArrayList<Producto> res = TiendaAcciones.getInstance().buscar("", cat, null, null, null, null, arr);
 		ArrayList<Producto> exp = new ArrayList<Producto>();
 		exp.add(prod);
 		assertEquals(exp, res);
 	}
 	@Test
 	public void testBuscarMarc() {
-		ArrayList<Producto> res = acciones.buscar("", null, null, marc2 , null, null, arr);
+		ArrayList<Producto> res = TiendaAcciones.getInstance().buscar("", null, null, marc2 , null, null, arr);
 		ArrayList<Producto> exp = new ArrayList<Producto>();
 		exp.add(prod2);
 		assertEquals(exp, res);
@@ -76,14 +67,14 @@ public class TiendaAccionesTest {
 	
 	@Test
 	public void testBuscarText() {
-		ArrayList<Producto> res = acciones.buscar("2prod", null, null, null, null, null, arr);
+		ArrayList<Producto> res = TiendaAcciones.getInstance().buscar("2prod", null, null, null, null, null, arr);
 		ArrayList<Producto> exp = new ArrayList<Producto>();
 		exp.add(prod2);
 		assertEquals(exp, res);
 	}
 	@Test
 	public void rellenarSubcategoriasTest() {
-		ArrayList<SubCategoria> res = acciones.rellenarSubcategorias(cat2, subcats);
+		ArrayList<SubCategoria> res = TiendaAcciones.getInstance().rellenarSubcategorias(cat2, subcats);
 		ArrayList<SubCategoria> exp = new ArrayList<SubCategoria>();
 		exp.add(subCat2);
 		exp.add(subCat3);
@@ -91,7 +82,7 @@ public class TiendaAccionesTest {
 	}
 	@Test
 	public void rellenarSubcategoriasTestVacio() {
-		ArrayList<SubCategoria> res = acciones.rellenarSubcategorias(null, subcats);
+		ArrayList<SubCategoria> res = TiendaAcciones.getInstance().rellenarSubcategorias(null, subcats);
 		ArrayList<SubCategoria> exp = new ArrayList<SubCategoria>();
 		assertEquals(exp, res);
 	}	

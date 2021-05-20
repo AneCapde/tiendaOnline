@@ -1,11 +1,7 @@
 package es.deusto.spq.cliente;
 
-import java.awt.BorderLayout;
-
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -132,18 +128,22 @@ public class ComentariosGUI extends JFrame{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				setVisible(false);
-				TiendaGUI tienda = new TiendaGUI();
-				tienda.setVisible(true);
-				TiendaGUI.setCliente(TiendaGUI.getCliente());
-				dispose();
+				botonCancelar(ventanaPadre);
+//				setVisible(false);
+//				TiendaGUI tienda = new TiendaGUI();
+//				tienda.setVisible(true);
+//				TiendaGUI.setCliente(TiendaGUI.getCliente());
+//				dispose();
 				
 			}
 			
 		});
-		
-		
-		
 	}
-
+	public void botonCancelar(JFrame ventanaPadre) {
+		ventanaPadre.setVisible(false);
+//		TiendaGUI tienda = new TiendaGUI();
+//		tienda.setVisible(true);
+//		TiendaGUI.setCliente(TiendaGUI.getCliente());
+		dispose();
+	}
 }

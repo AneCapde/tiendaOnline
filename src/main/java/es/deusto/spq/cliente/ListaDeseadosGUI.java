@@ -124,7 +124,7 @@ public class ListaDeseadosGUI extends JFrame {
 		contentPane.add(btnInicio);
 		btnInicio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Inicio(appTarget);
+				inicio(appTarget);
 			}
 		});	
 	}
@@ -133,7 +133,7 @@ public class ListaDeseadosGUI extends JFrame {
 	 * Metodo para volver a la ventana de inicio de la tienda
 	 * @param appTarget Objeto para la comunicacion con el server
 	 */
-	public void Inicio(final WebTarget appTarget) {
+	public void inicio(final WebTarget appTarget) {
 		setVisible(false);
 		updateClient(appTarget);
 		TiendaGUI tienda = new TiendaGUI();

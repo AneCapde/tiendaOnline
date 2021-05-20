@@ -179,7 +179,7 @@ public class CestaGUI extends JFrame{
 		contentPane.add(btnInicio);
 		btnInicio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				botonInicio();			
+				botonInicio(ventanaPadre);			
 			}
 		
 		});
@@ -189,11 +189,12 @@ public class CestaGUI extends JFrame{
 	/**
 	 * Método que permite volver a la ventana principal TiendaGUI
 	 */
-	private void botonInicio() {
+	public void botonInicio(JFrame ventanaPadre) {
 		setVisible(false);
-		TiendaGUI tienda = new TiendaGUI();
-		tienda.setVisible(true);
-		TiendaGUI.setCliente(TiendaGUI.getCliente());
+		ventanaPadre.setEnabled(true);
+//		TiendaGUI tienda = new TiendaGUI();
+//		tienda.setVisible(true);
+//		TiendaGUI.setCliente(TiendaGUI.getCliente());
 		dispose();	
 		productos2.clear();
 		productos_cantidad.clear();

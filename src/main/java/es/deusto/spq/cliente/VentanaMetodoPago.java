@@ -33,7 +33,6 @@ public class VentanaMetodoPago extends JFrame{
 	// LA VENTANA PADRE DEBE SER LA TiendaGUI   +   SE RECIBE EL PEDIDO, QUE SOLO SE COMPLETARÁ AL COMPLETAR EL PAGO
     public VentanaMetodoPago(final JFrame ventanaPadre, Pedido pedido, WebTarget appTarget) {
         
-        final WebTarget metodoTarget = appTarget.path("/metodos");
 		final VentanaMetodoPago esto = this;
      
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
