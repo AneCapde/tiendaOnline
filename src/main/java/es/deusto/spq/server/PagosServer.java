@@ -56,29 +56,4 @@ public class PagosServer {
         //SE AÑADE UN OBJETO NUEVO
         DBManager.getInstance().store(p);
 	}
-    // @POST
-    // @Path("/update/paypal")
-    // @Consumes(MediaType.APPLICATION_JSON)
-    // public void updatePaypal(Pago pago) {
-    //     System.out.println(pago.getDNI() + " " + pago.getCredencialesPaypal() + " " + pago.getCredencialesVisa());
-
-    //     pago.setCredencialesVisa(DBManager.getInstance().getVisa(DBManager.getInstance().getCliente(pago.getDNI())));
-    //     System.out.println(pago.getDNI() + " " + pago.getCredencialesPaypal() + " " + pago.getCredencialesVisa());
-
-    //     //SE AÑADE UN OBJETO NUEVO
-    //     // DBManager.getInstance().store(pago);
-    //     DBManager.getInstance().updatePago(pago);
-    //     // DBManager.getInstance().store(pago);
-	// }
-    // @POST
-    // @Path("/update/visa")
-    // @Consumes(MediaType.APPLICATION_JSON)
-    // public void updateVisa(Pago pago) {
-    //     pago.setCredencialesPaypal(DBManager.getInstance().getPaypal(DBManager.getInstance().getCliente(pago.getDNI())));
-    //     System.out.println(pago.getDNI() + " " + pago.getCredencialesPaypal() + " " + pago.getCredencialesVisa());
-    //     //SE AÑADE UN OBJETO NUEVO
-    //     // DBManager.getInstance().store(pago);
-    //     DBManager.getInstance().updatePago(pago);
-    //     // DBManager.getInstance().store(pago);
-	// }
 }
