@@ -1,7 +1,0 @@
-var searchData=
-[
-  ['pago_685',['Pago',['../classes_1_1deusto_1_1spq_1_1models_1_1_pago.html#a47596b0b0e93c317c1e5df1497d98080',1,'es::deusto::spq::models::Pago']]],
-  ['pago_686',['pago',['../classes_1_1deusto_1_1spq_1_1server_1_1_pagos_server.html#abeb30691e660f98a22d8b9d97ba824d2',1,'es::deusto::spq::server::PagosServer']]],
-  ['pedido_687',['Pedido',['../classes_1_1deusto_1_1spq_1_1models_1_1_pedido.html#ab52ef7627fcb664d211048aa75754c24',1,'es::deusto::spq::models::Pedido']]],
-  ['producto_688',['Producto',['../classes_1_1deusto_1_1spq_1_1models_1_1_producto.html#aa26c94c33e23eb9b05d3de93b16a1c43',1,'es.deusto.spq.models.Producto.Producto(String nombre, String descripcion, int stock, int precio, String imagen, SubCategoria subcategoria, Marca marca)'],['../classes_1_1deusto_1_1spq_1_1models_1_1_producto.html#aa42c58ca64b539753ca7cb6b7010bbd6',1,'es.deusto.spq.models.Producto.Producto(String nombre, String descripcion, int stock, int precio, String imagen, SubCategoria subcategoria, Marca marca, ArrayList&lt; String &gt; comentarios)'],['../classes_1_1deusto_1_1spq_1_1models_1_1_producto.html#a2074f1f1e525fa9364df8962790f45af',1,'es.deusto.spq.models.Producto.Producto(String nombre, String descripcion, int stock, int precio, String imagen, SubCategoria subcategoria, Marca marca, ArrayList&lt; Colores &gt; colores, ArrayList&lt; Tallas &gt; tallas, ArrayList&lt; String &gt; comentarios)']]]
-];
