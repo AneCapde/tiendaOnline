@@ -72,7 +72,6 @@ public class CestaGUI extends JFrame{
 		lblCarro.setBounds(10, 11, 134, 14);
 		contentPane.add(lblCarro);
 
-		
 		btnNewButton = new JButton(Idiomas.seleccionarPalabra("comprarBoton"));
 		btnNewButton.setFont(new Font("Segoe UI Black", Font.PLAIN, 20));
 		btnNewButton.setBounds(346, 417, 143, 48);
@@ -89,7 +88,6 @@ public class CestaGUI extends JFrame{
 		panel.setBounds(269, 27, 309, 339);
 		contentPane.add(panel);
 		
-	
 		list = new JList<>(model);
 		list.setBorder(new LineBorder(new Color(0, 0, 0)));
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -158,8 +156,10 @@ public class CestaGUI extends JFrame{
 		});
 	}
 	
+
 	/**
 	 * Método que permite volver a la ventana principal TiendaGUI
+	 * @param ventanaPadre	Ventana anterior, a traves de la cual se a llegado a esta
 	 */
 	public void botonInicio(JFrame ventanaPadre) {
 		setVisible(false);
@@ -184,22 +184,26 @@ public class CestaGUI extends JFrame{
 		return precioTotal;
 	}
 
-	
-	/** 
+	/**  Devuelve una lista con todos los productos que el usuario a marcado que desea comprar
 	 * @return List<Producto> lista de productos que el usuario a añadido a la cesta
 	 */
 	public List<Producto> getProductos(){
         return productos2;
 	}
 	
-	
 	/** 
+	 * Metodo que indica la cantidad que se desea comprar de cada producto
 	 * @return HashMap<Producto, Integer> cada producto dispone de un int con la cantidad que se desea pedir
 	 */
 	public HashMap<Producto, Integer> getProductosCantidad() {
 		return productos_cantidad;
 	}
 	
+	/**
+	 * Boton para comprar un producto o varios
+	 * @param ventanaPadre	Ventana anterior, a traves de la cual se a llegado a esta
+	 * @param appTarget Objeto para la comunicacion con el server
+	 */
 	public void botonComprar(JFrame ventanaPadre, WebTarget appTarget) {
 		System.out.println("Boton Aceptar: " +productos2);
 		VentanaLugarEntregaGUI vle = new VentanaLugarEntregaGUI(ventanaPadre, productos2, appTarget, calcularPrecio() );
@@ -207,6 +211,9 @@ public class CestaGUI extends JFrame{
 		ventanaPadre.setEnabled(false);
 	}
 	
+	/**
+	 *  Metodo que al seleccionar un producto muestra su imagen
+	 */
 	public void imagenes() {
 		btnNewButton.setVisible(true);
 		panel.removeAll();
@@ -222,6 +229,9 @@ public class CestaGUI extends JFrame{
 		}
 	}
 	
+	/**
+	 * Boton para indicar la cantidad de cada prdocuto que se desea comprar
+	 */
 	public void botonOK() {
 		Producto producto = list.getSelectedValue();
 		int cantidad = Integer.valueOf(String.valueOf(Math.round((double) spinner.getValue())));
@@ -236,6 +246,9 @@ public class CestaGUI extends JFrame{
 		}
 	}
 	
+	/**
+	 * Metodo para eliminar un producto de la Cesta
+	 */
 	public void eliminar() {
 		Producto producto = list.getSelectedValue();
 		getProductos().remove(producto);
