@@ -84,3 +84,7 @@ Para copiar el directorio html generado en la carpeta de documentos
 Para eliminar los archivos de destino generados, incluidos los documentos de directorio con código html
 
 	mvn clean
+	
+Enlace de la documenatcion en Internet
+
+	https://anecapde.github.io/tiendaOnline/
