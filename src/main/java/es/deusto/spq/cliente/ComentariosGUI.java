@@ -148,7 +148,8 @@ public class ComentariosGUI extends JFrame{
 	 * @param ventanaPadre ventana principal 
 	 */
 	public void botonCancelar(JFrame ventanaPadre) {
-		ventanaPadre.setVisible(false);
+		ventanaPadre.setVisible(true);
+		ventanaPadre.setEnabled(true);
 		dispose();
 	}
 }
