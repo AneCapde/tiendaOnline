@@ -93,6 +93,11 @@
 			<artifactId>log4j</artifactId>
 			<version>[1.2.17, )</version>
 		</dependency>
+		<dependency>
+			<groupId>com.soebes.maven.plugins.dmg</groupId>
+			<artifactId>doxygen-maven-plugin</artifactId>
+			<version>1.0.1</version>
+		</dependency>
     </dependencies>
 
     <build>
