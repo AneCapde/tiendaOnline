@@ -135,46 +135,6 @@ public class DBManagerTest {
 	}
 	
 	@Test
-	public void testServerVentanasPago() {
-		// SERVER Y TARGETS
-		server = Main.startServer();
-		Client client = ClientBuilder.newClient();
-        WebTarget appTarget = client.target("http://localhost:8080/myapp");
-
-		Cliente cliente = new Cliente("12132", "usuario", "usuario", "usuario", "usuario", 1213124, "usuario",
-		Genero.MUJER, 48920, "usuario", "usuario");
-
-		HashMap<String,String> paypal = new HashMap<String,String>();
-		paypal.put("usuario@gmail.com", "1234");
-		HashMap<String,String> visa = new HashMap<String,String>();
-		visa.put("4444333322221111", "1234");
-		Pago credPago = new Pago("12132", visa, paypal);
-		DBManager.getInstance().store(credPago);
-
-		Pedido pedido = new Pedido(cliente, new Date(1619342158), "estado",22 ,2, "Munitibar");
-
-		WebTarget pedidoTarget = appTarget.path("/pedidos");
-		WebTarget updateTarget = appTarget.path("/pagos/update");
-
-		//METODO CREAR PEDIDO (Se crea el pedido si las credenciales son correctas)
-		pedidoTarget.request(MediaType.APPLICATION_JSON).post(Entity.entity(pedido, MediaType.APPLICATION_JSON));
-		assertEquals(pedido, DBManager.getInstance().getPedido(pedido.getFecha()));
-		DBManager.getInstance().deleteObjectFromDB(pedido);
-
-		//METODO ACTUALIZAR PEDIDO (Se actualiza el pedido si se cambian credenciales)
-		HashMap<String,String> paypal2 = new HashMap<String,String>();
-		paypal.put("usuario@gmail.com", "111");
-		HashMap<String,String> visa2 = new HashMap<String,String>();
-		visa.put("4444333322221111", "111");
-		credPago.setCredencialesPaypal(paypal2);
-		credPago.setCredencialesVisa(visa2);
-
-		updateTarget.request(MediaType.APPLICATION_JSON).post(Entity.entity(credPago, MediaType.APPLICATION_JSON));
-		assertEquals(DBManager.getInstance().getPago(cliente), credPago);
-		DBManager.getInstance().deleteObjectFromDB(credPago);
-	}
-	
-	@Test
 	public void testMasComprado() {
 		Producto p1 = new Producto("producto1", "producto1", 1, 1, "producto1", null, null);
 		Producto p2 = new Producto("producto2", "producto2", 1, 1, "producto2", null, null);
@@ -236,5 +196,43 @@ public class DBManagerTest {
 		DBManager.getInstance().deleteObjectFromDB(p3);
 		DBManager.getInstance().deleteObjectFromDB(p4);
 		DBManager.getInstance().deleteObjectFromDB(cliente);
+	}
+	@Test
+	public void testServerVentanasPago() {
+		// SERVER Y TARGETS
+		Client client = ClientBuilder.newClient();
+        WebTarget appTarget = client.target("http://localhost:8080/myapp");
+
+		Cliente cliente = new Cliente("12132", "usuario", "usuario", "usuario", "usuario", 1213124, "usuario",
+		Genero.MUJER, 48920, "usuario", "usuario");
+
+		HashMap<String,String> paypal = new HashMap<String,String>();
+		paypal.put("usuario@gmail.com", "1234");
+		HashMap<String,String> visa = new HashMap<String,String>();
+		visa.put("4444333322221111", "1234");
+		Pago credPago = new Pago("12132", visa, paypal);
+		DBManager.getInstance().store(credPago);
+
+		Pedido pedido = new Pedido(cliente, new Date(1619342158), "estado",22 ,2, "Munitibar");
+
+		WebTarget pedidoTarget = appTarget.path("/pedidos");
+		WebTarget updateTarget = appTarget.path("/pagos/update");
+
+		//METODO CREAR PEDIDO (Se crea el pedido si las credenciales son correctas)
+		pedidoTarget.request(MediaType.APPLICATION_JSON).post(Entity.entity(pedido, MediaType.APPLICATION_JSON));
+		assertEquals(pedido.getFecha(), DBManager.getInstance().getPedido(pedido.getFecha()).getFecha());
+		DBManager.getInstance().deleteObjectFromDB(DBManager.getInstance().getPedido(pedido.getFecha()));
+
+		//METODO ACTUALIZAR PEDIDO (Se actualiza el pedido si se cambian credenciales)
+		HashMap<String,String> paypal2 = new HashMap<String,String>();
+		paypal.put("usuario@gmail.com", "111");
+		HashMap<String,String> visa2 = new HashMap<String,String>();
+		visa.put("4444333322221111", "111");
+		credPago.setCredencialesPaypal(paypal2);
+		credPago.setCredencialesVisa(visa2);
+
+		updateTarget.request(MediaType.APPLICATION_JSON).post(Entity.entity(credPago, MediaType.APPLICATION_JSON));
+		assertEquals(DBManager.getInstance().getPago(cliente).getDNI(), credPago.getDNI());
+		DBManager.getInstance().deleteObjectFromDB(credPago);
 	}
 }
