@@ -16,9 +16,20 @@ import es.deusto.spq.models.Cliente;
 import es.deusto.spq.models.Pedido;
 import es.deusto.spq.models.Producto;
 
+/**
+ * Clase server para los Pedidos para la comunicación 
+ * con la BD
+ *
+ */
+
 @Path("/pedidos")
 public class PedidosServer {
-
+	
+	/**
+	 * Devuelve los pedidos de un cliente concreto
+	 * @param Dni el Dni de el cliente
+	 * @return lista de pedidos del cliente
+	 */
     @GET
     @Path("{dni}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -41,6 +52,10 @@ public class PedidosServer {
 		
     }
     
+    /**
+     * Guarda un pedido en la BD
+     * @param pedido el pedido a guardar
+     */
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public void addPedido(Pedido pedido) {
@@ -55,6 +70,10 @@ public class PedidosServer {
         DBManager.getInstance().store(pedido);
     }
     
+    /**
+     * Actualiza el estado de un pedido
+     * @param pedido el pedido a actualizar
+     */
     @POST
     @Path("/update")
     @Consumes(MediaType.APPLICATION_JSON)

@@ -15,9 +15,18 @@ import javax.ws.rs.core.Response;
 import es.deusto.spq.dao.DBManager;
 import es.deusto.spq.models.Producto;
 
+/**
+ * Clase server para los Productos para la comunicación 
+ * con la BD
+ */
+
 @Path("/productos")
 public class ProductosServer {
 
+	/**
+	 * Devuelve una lista de productos de la BD
+	 * @return lista de productos
+	 */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<Producto> getProductos() {
@@ -25,6 +34,10 @@ public class ProductosServer {
 		return productos;
     }
     
+    /**
+     * Devuelve una lista de los productos más buscados en la tiendaOnline
+     * @return lista de los productos más buscados
+     */
     @GET
     @Path("/masBuscado")
     @Produces(MediaType.APPLICATION_JSON)
@@ -34,12 +47,20 @@ public class ProductosServer {
 		return productos;
     }
     
+    /**
+     * Guarda un producto en la BD
+     * @param producto el producto que se quiere guardar
+     */
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public void addProducto(Producto producto) {
         DBManager.getInstance().store(producto);
     }
     
+    /**
+     * Actualiza un producto en la BD
+     * @param producto el producto a actualizar
+     */
     @POST
     @Path("/update")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -50,7 +71,11 @@ public class ProductosServer {
     	
     	DBManager.getInstance().store(produc);
 }
-    
+    /**
+     * Borra un producto de la BD
+     * @param code el code
+     * @return devuelve ok o not found dependiendo de si ha encontrado la subcategoria
+     */
     @DELETE
     @Path("/{code}")
     public Response deleteUser(@PathParam("code") int code) {
