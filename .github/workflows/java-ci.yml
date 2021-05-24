@@ -36,7 +36,7 @@ jobs:
           mvn --batch-mode --update-snapshots datanucleus:schema-create
           mvn --batch-mode --update-snapshots test -PintegrationTest
           mvn --batch-mode --update-snapshots test -PpreformingTest 
-	  - name: Install doxygen
+	    - name: Install doxygen
         run: sudo apt-get install -y doxygen
       - name: Test with Maven
         run: mvn test -DargLine="-Dcontiperf.active=false"
